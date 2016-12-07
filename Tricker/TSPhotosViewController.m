@@ -180,7 +180,7 @@ static NSString * const reuseIdntifierButton = @"cellButton";
     
     //сжатие и добавление в массив фото
     
-    CGSize newSize = CGSizeMake(300, 300);
+    CGSize newSize = CGSizeMake(500, 500);
     
     UIGraphicsBeginImageContext(newSize);
     [image drawInRect:CGRectMake(0, 0, newSize.width, newSize.height)];

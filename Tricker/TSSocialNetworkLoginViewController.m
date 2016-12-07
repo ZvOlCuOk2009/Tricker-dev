@@ -39,6 +39,9 @@
     [super viewDidLoad];
 
     self.ref = [[FIRDatabase database] reference];
+    
+    [self.ref keepSynced:NO];
+    
     [self configureController];
 }
 

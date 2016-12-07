@@ -20,11 +20,7 @@
     
     [self.viewControllers enumerateObjectsUsingBlock:^(UIViewController *vc, NSUInteger idx, BOOL *stop) {
         vc.title = nil;
-        
     }];
-
-//    [[UITabBar appearance] setTintColor:DARK_GRAY_COLOR];
-    
 }
 
 - (void)didReceiveMemoryWarning {

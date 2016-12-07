@@ -27,7 +27,7 @@ static NSString * const reuseIdntifier = @"cell";
 
 - (void)drawRect:(CGRect)rect {
     
-    //добавление кнопки
+    //добавление кнопки cencel
     
     self.cancelButton = [[UIButton alloc]initWithFrame:CGRectMake(265, 9, 20, 20)];
     [self.cancelButton setImage:[UIImage imageNamed:@"cancel"] forState:UIControlStateNormal];

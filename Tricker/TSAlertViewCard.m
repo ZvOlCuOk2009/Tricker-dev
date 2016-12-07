@@ -66,15 +66,15 @@
 - (IBAction)buttonsAction:(UIButton *)sender
 {
     
-    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"CardsStoryboard" bundle:[NSBundle mainBundle]];
-    TSCardsViewController *controller = [storyboard instantiateViewControllerWithIdentifier:@"TSCardsViewController"];
+//    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"CardsStoryboard" bundle:[NSBundle mainBundle]];
+//    TSCardsViewController *controller = [storyboard instantiateViewControllerWithIdentifier:@"TSCardsViewController"];
     
     switch (sender.tag) {
         case 1:
-            [controller changeActionAlertView];
+//            [controller changeActionAlertView];
             break;
         case 2:
-            [controller repeatActionAlertView];
+//            [controller repeatActionAlertView];
             break;
         default:
             break;

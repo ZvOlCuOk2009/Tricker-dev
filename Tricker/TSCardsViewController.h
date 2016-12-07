@@ -12,8 +12,4 @@
 
 @property (strong, nonatomic) NSMutableArray *selectedUsers;
 
-- (void)changeActionAlertView;
-- (void)repeatActionAlertView;
-- (void)rotationViewToClockwise;
-
 @end

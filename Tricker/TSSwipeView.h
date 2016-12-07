@@ -8,6 +8,8 @@
 
 #import <UIKit/UIKit.h>
 
+extern NSString *const TSSwipeViewInterlocutorNotification;
+
 @interface TSSwipeView : UIView
 
 @property (weak, nonatomic) IBOutlet UILabel *nameLabel;
@@ -20,6 +22,8 @@
 @property (weak, nonatomic) IBOutlet UIButton *chatButton;
 @property (weak, nonatomic) IBOutlet UIButton *likeButton;
 
+@property (strong, nonatomic) NSString *interlocutorUid;
+@property (strong, nonatomic) UIImage *interlocutorAvatar;
 @property (strong, nonatomic) NSDictionary *parameterUser;
 @property (strong, nonatomic) NSMutableArray *photos;
 

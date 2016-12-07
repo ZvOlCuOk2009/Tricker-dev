@@ -13,6 +13,7 @@
 #import "TSSwipeView.h"
 #import "TSAlertViewCard.h"
 #import "TSSettingsTableViewController.h"
+#import "TSTabBarViewController.h"
 #import "TSTrickerPrefixHeader.pch"
 
 @interface TSCardsViewController () <ZLSwipeableViewDataSource, ZLSwipeableViewDelegate>
@@ -95,6 +96,7 @@
         NSString *displayName = [selectedUserData objectForKey:@"displayName"];
         NSString *age = [selectedUserData objectForKey:@"age"];
         NSString *online = [selectedUserData objectForKey:@"online"];
+        NSString *uid = [selectedUserData objectForKey:@"userID"];
         
         
         if ([online isEqualToString:@"оффлайн"]) {
@@ -104,6 +106,7 @@
         }
             
         NSURL *url = [NSURL URLWithString:photoURL];
+        UIImage *convertImage = nil;
         
         if (url && url.scheme && url.host) {
             
@@ -118,7 +121,7 @@
             }
             
             NSData *data = [[NSData alloc]initWithBase64EncodedString:photoURL options:NSDataBase64DecodingIgnoreUnknownCharacters];
-            UIImage *convertImage = [UIImage imageWithData:data];
+            convertImage = [UIImage imageWithData:data];
             self.swipeView.backgroundImageView.image = convertImage;
             self.swipeView.avatarImageView.image = convertImage;
         }
@@ -143,6 +146,8 @@
         
         self.swipeView.parameterUser = parametersUser;
         self.swipeView.photos = photosUser;
+        self.swipeView.interlocutorUid = uid;
+        self.swipeView.interlocutorAvatar = convertImage;
         
         self.counterIndexPath++;
         
@@ -166,32 +171,10 @@
         
     } else {
         
-        
+        //alert!!!
     }
     
     return self.swipeView;
-}
-
-
-- (void)changeActionAlertView
-{
-    NSLog(@"changeActionAlertView");
-    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"SettingStoryboard" bundle:[NSBundle mainBundle]];
-    TSSettingsTableViewController *controller =
-    [storyboard instantiateViewControllerWithIdentifier:@"SettingStoryboard"];
-    [self.navigationController pushViewController:controller animated:YES];
-}
-
-
-- (void)repeatActionAlertView
-{
-    NSLog(@"repeatActionAlertView");
-}
-
-
-- (void)rotationViewToClockwise
-{
-
 }
 
 

@@ -40,7 +40,14 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    [SVProgressHUD show];
+    [SVProgressHUD setDefaultStyle:SVProgressHUDStyleCustom];
+    [SVProgressHUD setBackgroundColor:YELLOW_COLOR];
+    [SVProgressHUD setForegroundColor:DARK_GRAY_COLOR];
+    
     self.ref = [[FIRDatabase database] reference];
+    
+    [self.ref keepSynced:NO];
     
     [self.ref observeEventType:FIRDataEventTypeValue withBlock:^(FIRDataSnapshot * _Nonnull snapshot) {
         
@@ -64,6 +71,7 @@
 -(void)viewDidDisappear:(BOOL)animated
 {
     [super viewDidDisappear:animated];
+    [SVProgressHUD dismiss];
 }
 
 

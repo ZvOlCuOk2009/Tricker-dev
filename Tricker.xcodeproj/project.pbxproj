@@ -46,6 +46,7 @@
 		FDF4BB201DF03F38003D3841 /* TSPhotosViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FDF4BB1F1DF03F38003D3841 /* TSPhotosViewController.m */; };
 		FDF4BB241DF076B2003D3841 /* TSCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = FDF4BB231DF076B2003D3841 /* TSCollectionViewCell.m */; };
 		FDF7FF8E1DCFE6AE00846997 /* libVK-ios-sdk.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FDF7FF8D1DCFE6AE00846997 /* libVK-ios-sdk.a */; };
+		FDF901581DF89F700067DE87 /* TSChatTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = FDF901571DF89F6F0067DE87 /* TSChatTableViewCell.m */; };
 		FDF963991DD10890000877B5 /* TSRegistrationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FDF963981DD10890000877B5 /* TSRegistrationViewController.m */; };
 		FDF9639C1DD14598000877B5 /* TSPhotoAndNameViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FDF9639B1DD14598000877B5 /* TSPhotoAndNameViewController.m */; };
 		FDFDFC951DD26A28007811EF /* TSAutorizationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FDFDFC941DD26A27007811EF /* TSAutorizationViewController.m */; };
@@ -141,6 +142,8 @@
 		FDF7FE891DCF56EA00846997 /* TSTrickerPrefixHeader.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TSTrickerPrefixHeader.pch; sourceTree = "<group>"; };
 		FDF7FE8A1DCFBB4B00846997 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Default-568h@2x.png"; path = "../Default-568h@2x.png"; sourceTree = "<group>"; };
 		FDF7FF8D1DCFE6AE00846997 /* libVK-ios-sdk.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libVK-ios-sdk.a"; path = "../../../Library/Developer/Xcode/DerivedData/Tricker-geyfrjksvtsjmcanpyukuhryfnnq/Build/Products/Debug-iphoneos/VK-ios-sdk/libVK-ios-sdk.a"; sourceTree = "<group>"; };
+		FDF901561DF89F6F0067DE87 /* TSChatTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSChatTableViewCell.h; sourceTree = "<group>"; };
+		FDF901571DF89F6F0067DE87 /* TSChatTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSChatTableViewCell.m; sourceTree = "<group>"; };
 		FDF963971DD10890000877B5 /* TSRegistrationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSRegistrationViewController.h; sourceTree = "<group>"; };
 		FDF963981DD10890000877B5 /* TSRegistrationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSRegistrationViewController.m; sourceTree = "<group>"; };
 		FDF9639A1DD14598000877B5 /* TSPhotoAndNameViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSPhotoAndNameViewController.h; sourceTree = "<group>"; };
@@ -345,6 +348,8 @@
 				FD45D0841DD7CF4200EB2640 /* TSTableViewCell.m */,
 				FDF4BB221DF076B2003D3841 /* TSCollectionViewCell.h */,
 				FDF4BB231DF076B2003D3841 /* TSCollectionViewCell.m */,
+				FDF901561DF89F6F0067DE87 /* TSChatTableViewCell.h */,
+				FDF901571DF89F6F0067DE87 /* TSChatTableViewCell.m */,
 			);
 			name = Cell;
 			sourceTree = "<group>";
@@ -627,6 +632,7 @@
 				FD1C4F691DCE282100CF63E9 /* TSSocialNetworkLoginViewController.m in Sources */,
 				FDF4BB201DF03F38003D3841 /* TSPhotosViewController.m in Sources */,
 				FDBDDDDF1DDB8745008EE73E /* TSSettingsTableViewController.m in Sources */,
+				FDF901581DF89F700067DE87 /* TSChatTableViewCell.m in Sources */,
 				FDF4BB181DF01FB7003D3841 /* TSViewCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

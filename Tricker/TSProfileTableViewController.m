@@ -56,7 +56,9 @@
     [super viewDidLoad];
     
     self.ref = [[FIRDatabase database] reference];
-        
+    
+    [self.ref keepSynced:NO];
+    
     [self.ref observeEventType:FIRDataEventTypeValue withBlock:^(FIRDataSnapshot * _Nonnull snapshot) {
         
         self.fireUser = [TSFireUser initWithSnapshot:snapshot];

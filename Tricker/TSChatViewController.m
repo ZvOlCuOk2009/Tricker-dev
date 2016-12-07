@@ -8,14 +8,13 @@
 
 #import "TSChatViewController.h"
 #import "TSFireUser.h"
+#import "TSSwipeView.h"
 #import "TSTrickerPrefixHeader.pch"
 
 @import Firebase;
 @import FirebaseDatabase;
 
 @interface TSChatViewController () <JSQMessagesCollectionViewDataSource>
-
-@property (strong, nonatomic) NSString *interlocutor;
 
 @property (strong, nonatomic) FIRUser *user;
 @property (strong, nonatomic) TSFireUser *fireUser;
@@ -28,8 +27,9 @@
 @property (strong, nonatomic) JSQMessagesBubbleImage *outgoingBubbleImageView;
 @property (strong, nonatomic) JSQMessagesBubbleImage *incomingBubbleImageView;
 
-@property (strong, nonatomic) UIImage *interlocutorImage;
-@property (strong, nonatomic) UIImage *userImage;
+@property (strong, nonatomic) NSString *interlocutorID;
+@property (strong, nonatomic) UIImage *interlocutorAvatar;
+@property (strong, nonatomic) UIImage *userAvatar;
 
 @end
 
@@ -39,6 +39,8 @@
     [super viewDidLoad];
 
     self.ref = [[FIRDatabase database] reference];
+    [self.ref keepSynced:NO];
+    
     self.user = [FIRAuth auth].currentUser;
     self.messages = [NSMutableArray array];
     
@@ -75,24 +77,26 @@
 - (void)configureCurrentChat
 {
     
-    [self.ref observeEventType:FIRDataEventTypeValue withBlock:^(FIRDataSnapshot * _Nonnull snapshot) {
-        
-//        self.friends = [TSRetriveFriendsFBDatabase retriveFriendsDatabase:snapshot];
-        self.fireUser = [TSFireUser initWithSnapshot:snapshot];
-        
-        NSURL *url = [NSURL URLWithString:self.fireUser.photoURL];
-        NSData *dataImage = [NSData dataWithContentsOfURL:url];
-        self.userImage = [UIImage imageWithData:dataImage];
-        
-        
-        if (!self.interlocutor) {
-            
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(heandlerNotification:) name:TSSwipeViewInterlocutorNotification object:nil];
+    
+//    [self.ref observeEventType:FIRDataEventTypeValue withBlock:^(FIRDataSnapshot * _Nonnull snapshot) {
+//        
+////        self.friends = [TSRetriveFriendsFBDatabase retriveFriendsDatabase:snapshot];
+//        self.fireUser = [TSFireUser initWithSnapshot:snapshot];
+//        
+//        NSURL *url = [NSURL URLWithString:self.fireUser.photoURL];
+//        NSData *dataImage = [NSData dataWithContentsOfURL:url];
+//        self.userAvatar = [UIImage imageWithData:dataImage];
+//        
+//        
+//        if (!self.interlocutorID) {
+    
 //            if (self.friends.count > 0) {
             
 //                NSDictionary *temporaryDict = [self.friends objectAtIndex:0];
 //                NSString * temporaryID = [temporaryDict objectForKey:@"fireUserID"];
 //                self.interlocutor = temporaryID;
-            }
+//            }
 //            else {
 //                self.interlocutor = @"";
 //            }
@@ -101,13 +105,27 @@
         
 //        [self getImageInterlocutor:self.friends];
         
-        if (![self.interlocutor isEqualToString:@""]) {
-            
-            self.messageRefUser = [[[[[self.ref child:@"dataBase"] child:@"users"] child:self.fireUser.uid] child:@"chat"] child:self.interlocutor];
-            self.messageRefInterlocutor = [[[[[self.ref child:@"dataBase"] child:@"users"] child:self.interlocutor] child:@"chat"] child:self.user.uid];
-        }
+    
         
-    }];
+//    }];
+    
+    
+    
+}
+
+
+- (void)heandlerNotification:(NSNotification *)notification
+{
+    
+    self.interlocutorID = [[notification object] objectForKey:@"intelocID"];
+    self.interlocutorAvatar = [[notification object] objectForKey:@"intelocAvatar"];
+    
+    
+    if (self.interlocutorID != nil) {
+        
+        self.messageRefUser = [[[[[self.ref child:@"dataBase"] child:@"users"] child:self.fireUser.uid] child:@"chat"] child:self.interlocutorID];
+        self.messageRefInterlocutor = [[[[[self.ref child:@"dataBase"] child:@"users"] child:self.interlocutorID] child:@"chat"] child:self.user.uid];
+    }
     
 }
 
@@ -117,12 +135,12 @@
     for (NSDictionary *data in friends) {
         
         NSString *ID = [data objectForKey:@"fireUserID"];
-        if ([ID isEqualToString:self.interlocutor]) {
+        if ([ID isEqualToString:self.interlocutorID]) {
             
             NSString *urlString = [data objectForKey:@"photoURL"];
             NSURL *url = [NSURL URLWithString:urlString];
             NSData *dataImage = [NSData dataWithContentsOfURL:url];
-            self.interlocutorImage = [UIImage imageWithData:dataImage];
+            self.interlocutorAvatar = [UIImage imageWithData:dataImage];
         }
     }
 }
@@ -136,7 +154,7 @@
         self.fireUser = [TSFireUser initWithSnapshot:snapshot];
         NSURL *url = [NSURL URLWithString:self.fireUser.photoURL];
         NSData *dataImage = [NSData dataWithContentsOfURL:url];
-        self.userImage = [UIImage imageWithData:dataImage];
+        self.userAvatar = [UIImage imageWithData:dataImage];
     }];
     
 }
@@ -198,8 +216,8 @@
         
         UIImage *userImage = nil;
         
-        if (self.userImage) {
-            userImage = self.userImage;
+        if (self.userAvatar) {
+            userImage = self.userAvatar;
         } else {
             userImage = [UIImage imageNamed:@"placeholder_message"];
         }
@@ -210,8 +228,8 @@
         
         UIImage *interlocutorImage = nil;
         
-        if (self.interlocutorImage) {
-            interlocutorImage = self.interlocutorImage;
+        if (self.interlocutorAvatar) {
+            interlocutorImage = self.interlocutorAvatar;
         } else {
             interlocutorImage = [UIImage imageNamed:@"placeholder_message"];
         }
@@ -276,6 +294,12 @@
         [self finishReceivingMessageAnimated:YES];
     }];
     
+}
+
+
+-(void)dealloc
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 

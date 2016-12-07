@@ -13,6 +13,8 @@
 #import "TSPhotoView.h"
 #import "TSTrickerPrefixHeader.pch"
 
+NSString *const TSSwipeViewInterlocutorNotification = @"TSSwipeViewInterlocutorNotification";
+
 @interface TSSwipeView () <UITableViewDataSource, UITableViewDelegate, UIGestureRecognizerDelegate>
 
 @property (strong, nonatomic) NSArray *dataSource;
@@ -178,14 +180,16 @@
 
 - (IBAction)chatActionButton:(id)sender
 {
-    UIStoryboard *mainStoryboard = [UIStoryboard storyboardWithName:@"Main" bundle:[NSBundle mainBundle]];
-    UIStoryboard *cardStoryboard = [UIStoryboard storyboardWithName:@"CardsStoryboard" bundle:[NSBundle mainBundle]];
-    TSTabBarViewController *tabBarController = [mainStoryboard instantiateViewControllerWithIdentifier:@"TSTabBarViewController"];
     
-    TSCardsViewController *cardController = [cardStoryboard instantiateViewControllerWithIdentifier:@"TSCardsViewController"];
-    
-    [cardController presentViewController:tabBarController animated:YES completion:nil];
+    TSTabBarViewController *tabBarController = (TSTabBarViewController *)[[[[UIApplication sharedApplication] delegate] window] rootViewController];
     tabBarController.selectedIndex = 3;
+    
+    NSDictionary *interlocutorParameters = @{@"intelocAvatar":self.interlocutorAvatar,
+                                             @"intelocID":self.interlocutorUid};
+    
+    [[NSNotificationCenter defaultCenter] postNotificationName:TSSwipeViewInterlocutorNotification
+                                                        object:interlocutorParameters];
+    
 }
 
 
@@ -193,9 +197,6 @@
 
 - (IBAction)parametersActionButton:(id)sender
 {
-    
-//    self.backgroundTableView.hidden = NO;
-    //self.tableView.hidden = NO;
     
     self.tableView.dataSource = self;
     self.tableView.delegate = self;
@@ -209,7 +210,7 @@
     
     [self.tableView reloadData];
     
-    [UIView animateWithDuration:0.5
+    [UIView animateWithDuration:1.0
                      animations:^{
                          self.backgroundTableView.alpha = 1;
                          self.tableView.alpha = 1;
@@ -222,11 +223,9 @@
 
 //возвращение карточки в исходное положение
 
+
 - (void)handleSingleTap:(UITapGestureRecognizer *)recognizer
 {
-    
-//    self.backgroundTableView.hidden = YES;
-//    self.tableView.hidden = YES;
     
     CGContextRef context = UIGraphicsGetCurrentContext();
     [UIView beginAnimations:nil context:context];
@@ -235,13 +234,12 @@
     [UIView setAnimationDuration:0.5];
     [UIView commitAnimations];
     
-    [UIView animateWithDuration:0.5
+    [UIView animateWithDuration:1.0
                      animations:^{
                          self.backgroundTableView.alpha = 0;
                          self.tableView.alpha = 0;
-                         
                      }];
-    
+
     self.tapGesture.enabled = NO;
     
 }
