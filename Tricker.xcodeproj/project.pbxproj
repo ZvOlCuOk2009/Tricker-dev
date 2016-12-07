@@ -1,0 +1,897 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		2C27B593A68DE82F875D0227 /* libPods-Tricker.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 28CCB341251CEF3778160ABF /* libPods-Tricker.a */; };
+		FD0C1C9D1DE7810000D37B61 /* TSCardsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FD0C1C9C1DE7810000D37B61 /* TSCardsViewController.m */; };
+		FD0C1CA01DE783B500D37B61 /* TSSwipeView.xib in Resources */ = {isa = PBXBuildFile; fileRef = FD0C1C9F1DE783B500D37B61 /* TSSwipeView.xib */; };
+		FD0C1CA31DE78B9B00D37B61 /* TSSwipeView.m in Sources */ = {isa = PBXBuildFile; fileRef = FD0C1CA21DE78B9B00D37B61 /* TSSwipeView.m */; };
+		FD0C1CA61DE7930100D37B61 /* TSMapViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FD0C1CA51DE7930100D37B61 /* TSMapViewController.m */; };
+		FD0E42831DF7051200399621 /* TSChatViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FD0E42821DF7051200399621 /* TSChatViewController.m */; };
+		FD1C4F331DCE252200CF63E9 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = FD1C4F321DCE252200CF63E9 /* main.m */; };
+		FD1C4F361DCE252200CF63E9 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = FD1C4F351DCE252200CF63E9 /* AppDelegate.m */; };
+		FD1C4F3C1DCE252200CF63E9 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FD1C4F3A1DCE252200CF63E9 /* Main.storyboard */; };
+		FD1C4F3E1DCE252200CF63E9 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FD1C4F3D1DCE252200CF63E9 /* Assets.xcassets */; };
+		FD1C4F411DCE252200CF63E9 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FD1C4F3F1DCE252200CF63E9 /* LaunchScreen.storyboard */; };
+		FD1C4F4C1DCE252300CF63E9 /* TrickerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = FD1C4F4B1DCE252300CF63E9 /* TrickerTests.m */; };
+		FD1C4F571DCE252300CF63E9 /* TrickerUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = FD1C4F561DCE252300CF63E9 /* TrickerUITests.m */; };
+		FD1C4F661DCE280400CF63E9 /* TSTabBarViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FD1C4F651DCE280400CF63E9 /* TSTabBarViewController.m */; };
+		FD1C4F691DCE282100CF63E9 /* TSSocialNetworkLoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FD1C4F681DCE282100CF63E9 /* TSSocialNetworkLoginViewController.m */; };
+		FD1C4F6F1DCE86E800CF63E9 /* TSFacebookManager.m in Sources */ = {isa = PBXBuildFile; fileRef = FD1C4F6E1DCE86E800CF63E9 /* TSFacebookManager.m */; };
+		FD1C4F731DCE9F4400CF63E9 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = FD1C4F721DCE9F4400CF63E9 /* GoogleService-Info.plist */; };
+		FD1C4F761DCEA49700CF63E9 /* TSFireUser.m in Sources */ = {isa = PBXBuildFile; fileRef = FD1C4F751DCEA49700CF63E9 /* TSFireUser.m */; };
+		FD45D0801DD7BE0F00EB2640 /* TSSearchBar.m in Sources */ = {isa = PBXBuildFile; fileRef = FD45D07F1DD7BE0E00EB2640 /* TSSearchBar.m */; };
+		FD45D0851DD7CF4200EB2640 /* TSTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = FD45D0841DD7CF4200EB2640 /* TSTableViewCell.m */; };
+		FD5CD4941DD3D6CF0056C1A6 /* TSSitysViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FD5CD4931DD3D6CF0056C1A6 /* TSSitysViewController.m */; };
+		FD68B4591DDA7C5A00EF19C3 /* ProfileStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FD68B4581DDA7C5A00EF19C3 /* ProfileStoryboard.storyboard */; };
+		FD68B45B1DDA7CC100EF19C3 /* MapStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FD68B45A1DDA7CC100EF19C3 /* MapStoryboard.storyboard */; };
+		FD68B45D1DDA7CEC00EF19C3 /* CardsStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FD68B45C1DDA7CEC00EF19C3 /* CardsStoryboard.storyboard */; };
+		FD68B45F1DDA7CFC00EF19C3 /* ChatStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FD68B45E1DDA7CFC00EF19C3 /* ChatStoryboard.storyboard */; };
+		FD68B4611DDA7D0C00EF19C3 /* SettingStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FD68B4601DDA7D0C00EF19C3 /* SettingStoryboard.storyboard */; };
+		FDBDDDDF1DDB8745008EE73E /* TSSettingsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FDBDDDDE1DDB8745008EE73E /* TSSettingsTableViewController.m */; };
+		FDE927391DE840EC00FF884F /* TSFireBase.m in Sources */ = {isa = PBXBuildFile; fileRef = FDE927381DE840EC00FF884F /* TSFireBase.m */; };
+		FDE9273C1DE8EC4600FF884F /* TSIntermediateViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FDE9273B1DE8EC4600FF884F /* TSIntermediateViewController.m */; };
+		FDEBE3E81DF1C4AB0073A0FF /* TSCollCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = FDEBE3E71DF1C4AB0073A0FF /* TSCollCell.xib */; };
+		FDEBE3F11DF1C7F40073A0FF /* TSCollCell.m in Sources */ = {isa = PBXBuildFile; fileRef = FDEBE3F01DF1C7F40073A0FF /* TSCollCell.m */; };
+		FDEF72631DD65CAB00CAF773 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FDEF72621DD65CAA00CAF773 /* CoreLocation.framework */; };
+		FDF4BB121DF019D4003D3841 /* TSViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = FDF4BB111DF019D4003D3841 /* TSViewCell.xib */; };
+		FDF4BB181DF01FB7003D3841 /* TSViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = FDF4BB171DF01FB7003D3841 /* TSViewCell.m */; };
+		FDF4BB1A1DF02C3E003D3841 /* TSPhotoView.xib in Resources */ = {isa = PBXBuildFile; fileRef = FDF4BB191DF02C3E003D3841 /* TSPhotoView.xib */; };
+		FDF4BB1D1DF02DB1003D3841 /* TSPhotoView.m in Sources */ = {isa = PBXBuildFile; fileRef = FDF4BB1C1DF02DB1003D3841 /* TSPhotoView.m */; };
+		FDF4BB201DF03F38003D3841 /* TSPhotosViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FDF4BB1F1DF03F38003D3841 /* TSPhotosViewController.m */; };
+		FDF4BB241DF076B2003D3841 /* TSCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = FDF4BB231DF076B2003D3841 /* TSCollectionViewCell.m */; };
+		FDF7FF8E1DCFE6AE00846997 /* libVK-ios-sdk.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FDF7FF8D1DCFE6AE00846997 /* libVK-ios-sdk.a */; };
+		FDF963991DD10890000877B5 /* TSRegistrationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FDF963981DD10890000877B5 /* TSRegistrationViewController.m */; };
+		FDF9639C1DD14598000877B5 /* TSPhotoAndNameViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FDF9639B1DD14598000877B5 /* TSPhotoAndNameViewController.m */; };
+		FDFDFC951DD26A28007811EF /* TSAutorizationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FDFDFC941DD26A27007811EF /* TSAutorizationViewController.m */; };
+		FDFDFC981DD293E0007811EF /* TSProfileTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FDFDFC971DD293E0007811EF /* TSProfileTableViewController.m */; };
+		FDFF9D831DEA251E00F4971B /* TSAlertViewCard.xib in Resources */ = {isa = PBXBuildFile; fileRef = FDFF9D821DEA251E00F4971B /* TSAlertViewCard.xib */; };
+		FDFF9D861DEA277500F4971B /* TSAlertViewCard.m in Sources */ = {isa = PBXBuildFile; fileRef = FDFF9D851DEA277500F4971B /* TSAlertViewCard.m */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		FD1C4F481DCE252300CF63E9 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = FD1C4F261DCE252200CF63E9 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = FD1C4F2D1DCE252200CF63E9;
+			remoteInfo = Tricker;
+		};
+		FD1C4F531DCE252300CF63E9 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = FD1C4F261DCE252200CF63E9 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = FD1C4F2D1DCE252200CF63E9;
+			remoteInfo = Tricker;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		1FBEFE542591B48DB688ED44 /* Pods-Tricker.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Tricker.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Tricker/Pods-Tricker.debug.xcconfig"; sourceTree = "<group>"; };
+		28CCB341251CEF3778160ABF /* libPods-Tricker.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Tricker.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		94B94787D384A5D991ACF5EE /* Pods-Tricker.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Tricker.release.xcconfig"; path = "Pods/Target Support Files/Pods-Tricker/Pods-Tricker.release.xcconfig"; sourceTree = "<group>"; };
+		FD0C1C9B1DE7810000D37B61 /* TSCardsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSCardsViewController.h; sourceTree = "<group>"; };
+		FD0C1C9C1DE7810000D37B61 /* TSCardsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSCardsViewController.m; sourceTree = "<group>"; };
+		FD0C1C9F1DE783B500D37B61 /* TSSwipeView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TSSwipeView.xib; sourceTree = "<group>"; };
+		FD0C1CA11DE78B9B00D37B61 /* TSSwipeView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSSwipeView.h; sourceTree = "<group>"; };
+		FD0C1CA21DE78B9B00D37B61 /* TSSwipeView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSSwipeView.m; sourceTree = "<group>"; };
+		FD0C1CA41DE7930100D37B61 /* TSMapViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSMapViewController.h; sourceTree = "<group>"; };
+		FD0C1CA51DE7930100D37B61 /* TSMapViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSMapViewController.m; sourceTree = "<group>"; };
+		FD0E42811DF7051200399621 /* TSChatViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSChatViewController.h; sourceTree = "<group>"; };
+		FD0E42821DF7051200399621 /* TSChatViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSChatViewController.m; sourceTree = "<group>"; };
+		FD1C4F2E1DCE252200CF63E9 /* Tricker.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Tricker.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		FD1C4F321DCE252200CF63E9 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		FD1C4F341DCE252200CF63E9 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		FD1C4F351DCE252200CF63E9 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		FD1C4F3B1DCE252200CF63E9 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		FD1C4F3D1DCE252200CF63E9 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		FD1C4F401DCE252200CF63E9 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		FD1C4F421DCE252200CF63E9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		FD1C4F471DCE252300CF63E9 /* TrickerTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TrickerTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		FD1C4F4B1DCE252300CF63E9 /* TrickerTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TrickerTests.m; sourceTree = "<group>"; };
+		FD1C4F4D1DCE252300CF63E9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		FD1C4F521DCE252300CF63E9 /* TrickerUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TrickerUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		FD1C4F561DCE252300CF63E9 /* TrickerUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TrickerUITests.m; sourceTree = "<group>"; };
+		FD1C4F581DCE252300CF63E9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		FD1C4F641DCE280400CF63E9 /* TSTabBarViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSTabBarViewController.h; sourceTree = "<group>"; };
+		FD1C4F651DCE280400CF63E9 /* TSTabBarViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSTabBarViewController.m; sourceTree = "<group>"; };
+		FD1C4F671DCE282100CF63E9 /* TSSocialNetworkLoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSSocialNetworkLoginViewController.h; sourceTree = "<group>"; };
+		FD1C4F681DCE282100CF63E9 /* TSSocialNetworkLoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSSocialNetworkLoginViewController.m; sourceTree = "<group>"; };
+		FD1C4F6D1DCE86E800CF63E9 /* TSFacebookManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSFacebookManager.h; sourceTree = "<group>"; };
+		FD1C4F6E1DCE86E800CF63E9 /* TSFacebookManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSFacebookManager.m; sourceTree = "<group>"; };
+		FD1C4F721DCE9F4400CF63E9 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		FD1C4F741DCEA49700CF63E9 /* TSFireUser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSFireUser.h; sourceTree = "<group>"; };
+		FD1C4F751DCEA49700CF63E9 /* TSFireUser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSFireUser.m; sourceTree = "<group>"; };
+		FD45D07E1DD7BE0E00EB2640 /* TSSearchBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSSearchBar.h; sourceTree = "<group>"; };
+		FD45D07F1DD7BE0E00EB2640 /* TSSearchBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSSearchBar.m; sourceTree = "<group>"; };
+		FD45D0831DD7CF4200EB2640 /* TSTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSTableViewCell.h; sourceTree = "<group>"; };
+		FD45D0841DD7CF4200EB2640 /* TSTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSTableViewCell.m; sourceTree = "<group>"; };
+		FD5CD4921DD3D6CF0056C1A6 /* TSSitysViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSSitysViewController.h; sourceTree = "<group>"; };
+		FD5CD4931DD3D6CF0056C1A6 /* TSSitysViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSSitysViewController.m; sourceTree = "<group>"; };
+		FD68B4581DDA7C5A00EF19C3 /* ProfileStoryboard.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = ProfileStoryboard.storyboard; sourceTree = "<group>"; };
+		FD68B45A1DDA7CC100EF19C3 /* MapStoryboard.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = MapStoryboard.storyboard; sourceTree = "<group>"; };
+		FD68B45C1DDA7CEC00EF19C3 /* CardsStoryboard.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = CardsStoryboard.storyboard; sourceTree = "<group>"; };
+		FD68B45E1DDA7CFC00EF19C3 /* ChatStoryboard.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = ChatStoryboard.storyboard; sourceTree = "<group>"; };
+		FD68B4601DDA7D0C00EF19C3 /* SettingStoryboard.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = SettingStoryboard.storyboard; sourceTree = "<group>"; };
+		FDBDDDDD1DDB8745008EE73E /* TSSettingsTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSSettingsTableViewController.h; sourceTree = "<group>"; };
+		FDBDDDDE1DDB8745008EE73E /* TSSettingsTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSSettingsTableViewController.m; sourceTree = "<group>"; };
+		FDE927371DE840EC00FF884F /* TSFireBase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSFireBase.h; sourceTree = "<group>"; };
+		FDE927381DE840EC00FF884F /* TSFireBase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSFireBase.m; sourceTree = "<group>"; };
+		FDE9273A1DE8EC4600FF884F /* TSIntermediateViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSIntermediateViewController.h; sourceTree = "<group>"; };
+		FDE9273B1DE8EC4600FF884F /* TSIntermediateViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSIntermediateViewController.m; sourceTree = "<group>"; };
+		FDEBE3E71DF1C4AB0073A0FF /* TSCollCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TSCollCell.xib; sourceTree = "<group>"; };
+		FDEBE3EF1DF1C7F40073A0FF /* TSCollCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSCollCell.h; sourceTree = "<group>"; };
+		FDEBE3F01DF1C7F40073A0FF /* TSCollCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSCollCell.m; sourceTree = "<group>"; };
+		FDEF72621DD65CAA00CAF773 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
+		FDF4BB111DF019D4003D3841 /* TSViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TSViewCell.xib; sourceTree = "<group>"; };
+		FDF4BB161DF01FB7003D3841 /* TSViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSViewCell.h; sourceTree = "<group>"; };
+		FDF4BB171DF01FB7003D3841 /* TSViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSViewCell.m; sourceTree = "<group>"; };
+		FDF4BB191DF02C3E003D3841 /* TSPhotoView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TSPhotoView.xib; sourceTree = "<group>"; };
+		FDF4BB1B1DF02DB1003D3841 /* TSPhotoView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSPhotoView.h; sourceTree = "<group>"; };
+		FDF4BB1C1DF02DB1003D3841 /* TSPhotoView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSPhotoView.m; sourceTree = "<group>"; };
+		FDF4BB1E1DF03F38003D3841 /* TSPhotosViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSPhotosViewController.h; sourceTree = "<group>"; };
+		FDF4BB1F1DF03F38003D3841 /* TSPhotosViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSPhotosViewController.m; sourceTree = "<group>"; };
+		FDF4BB221DF076B2003D3841 /* TSCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSCollectionViewCell.h; sourceTree = "<group>"; };
+		FDF4BB231DF076B2003D3841 /* TSCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSCollectionViewCell.m; sourceTree = "<group>"; };
+		FDF7FE891DCF56EA00846997 /* TSTrickerPrefixHeader.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TSTrickerPrefixHeader.pch; sourceTree = "<group>"; };
+		FDF7FE8A1DCFBB4B00846997 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Default-568h@2x.png"; path = "../Default-568h@2x.png"; sourceTree = "<group>"; };
+		FDF7FF8D1DCFE6AE00846997 /* libVK-ios-sdk.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libVK-ios-sdk.a"; path = "../../../Library/Developer/Xcode/DerivedData/Tricker-geyfrjksvtsjmcanpyukuhryfnnq/Build/Products/Debug-iphoneos/VK-ios-sdk/libVK-ios-sdk.a"; sourceTree = "<group>"; };
+		FDF963971DD10890000877B5 /* TSRegistrationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSRegistrationViewController.h; sourceTree = "<group>"; };
+		FDF963981DD10890000877B5 /* TSRegistrationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSRegistrationViewController.m; sourceTree = "<group>"; };
+		FDF9639A1DD14598000877B5 /* TSPhotoAndNameViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSPhotoAndNameViewController.h; sourceTree = "<group>"; };
+		FDF9639B1DD14598000877B5 /* TSPhotoAndNameViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSPhotoAndNameViewController.m; sourceTree = "<group>"; };
+		FDFDFC921DD1C99E007811EF /* Tricker.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Tricker.entitlements; sourceTree = "<group>"; };
+		FDFDFC931DD26A27007811EF /* TSAutorizationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSAutorizationViewController.h; sourceTree = "<group>"; };
+		FDFDFC941DD26A27007811EF /* TSAutorizationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSAutorizationViewController.m; sourceTree = "<group>"; };
+		FDFDFC961DD293E0007811EF /* TSProfileTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSProfileTableViewController.h; sourceTree = "<group>"; };
+		FDFDFC971DD293E0007811EF /* TSProfileTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSProfileTableViewController.m; sourceTree = "<group>"; };
+		FDFF9D821DEA251E00F4971B /* TSAlertViewCard.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TSAlertViewCard.xib; sourceTree = "<group>"; };
+		FDFF9D841DEA277500F4971B /* TSAlertViewCard.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSAlertViewCard.h; sourceTree = "<group>"; };
+		FDFF9D851DEA277500F4971B /* TSAlertViewCard.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSAlertViewCard.m; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		FD1C4F2B1DCE252200CF63E9 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				FDEF72631DD65CAB00CAF773 /* CoreLocation.framework in Frameworks */,
+				FDF7FF8E1DCFE6AE00846997 /* libVK-ios-sdk.a in Frameworks */,
+				2C27B593A68DE82F875D0227 /* libPods-Tricker.a in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		FD1C4F441DCE252300CF63E9 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		FD1C4F4F1DCE252300CF63E9 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		59452B679435EF299964D07D /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				FDEF72621DD65CAA00CAF773 /* CoreLocation.framework */,
+				FDF7FF8D1DCFE6AE00846997 /* libVK-ios-sdk.a */,
+				28CCB341251CEF3778160ABF /* libPods-Tricker.a */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		BF14510272C93E322C52DF4E /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				1FBEFE542591B48DB688ED44 /* Pods-Tricker.debug.xcconfig */,
+				94B94787D384A5D991ACF5EE /* Pods-Tricker.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
+		FD0C1C9A1DE780BC00D37B61 /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				FD1C4F641DCE280400CF63E9 /* TSTabBarViewController.h */,
+				FD1C4F651DCE280400CF63E9 /* TSTabBarViewController.m */,
+				FDFDFC961DD293E0007811EF /* TSProfileTableViewController.h */,
+				FDFDFC971DD293E0007811EF /* TSProfileTableViewController.m */,
+				FD5CD4921DD3D6CF0056C1A6 /* TSSitysViewController.h */,
+				FD5CD4931DD3D6CF0056C1A6 /* TSSitysViewController.m */,
+				FDF4BB1E1DF03F38003D3841 /* TSPhotosViewController.h */,
+				FDF4BB1F1DF03F38003D3841 /* TSPhotosViewController.m */,
+				FD0C1CA41DE7930100D37B61 /* TSMapViewController.h */,
+				FD0C1CA51DE7930100D37B61 /* TSMapViewController.m */,
+				FDE9273A1DE8EC4600FF884F /* TSIntermediateViewController.h */,
+				FDE9273B1DE8EC4600FF884F /* TSIntermediateViewController.m */,
+				FD0C1C9B1DE7810000D37B61 /* TSCardsViewController.h */,
+				FD0C1C9C1DE7810000D37B61 /* TSCardsViewController.m */,
+				FD0E42811DF7051200399621 /* TSChatViewController.h */,
+				FD0E42821DF7051200399621 /* TSChatViewController.m */,
+				FDBDDDDD1DDB8745008EE73E /* TSSettingsTableViewController.h */,
+				FDBDDDDE1DDB8745008EE73E /* TSSettingsTableViewController.m */,
+			);
+			name = Controllers;
+			sourceTree = "<group>";
+		};
+		FD0C1C9E1DE7833100D37B61 /* Xib */ = {
+			isa = PBXGroup;
+			children = (
+				FD0C1C9F1DE783B500D37B61 /* TSSwipeView.xib */,
+				FD0C1CA11DE78B9B00D37B61 /* TSSwipeView.h */,
+				FD0C1CA21DE78B9B00D37B61 /* TSSwipeView.m */,
+				FDF4BB111DF019D4003D3841 /* TSViewCell.xib */,
+				FDF4BB161DF01FB7003D3841 /* TSViewCell.h */,
+				FDF4BB171DF01FB7003D3841 /* TSViewCell.m */,
+				FDF4BB191DF02C3E003D3841 /* TSPhotoView.xib */,
+				FDF4BB1B1DF02DB1003D3841 /* TSPhotoView.h */,
+				FDF4BB1C1DF02DB1003D3841 /* TSPhotoView.m */,
+				FDEBE3E71DF1C4AB0073A0FF /* TSCollCell.xib */,
+				FDEBE3EF1DF1C7F40073A0FF /* TSCollCell.h */,
+				FDEBE3F01DF1C7F40073A0FF /* TSCollCell.m */,
+				FDFF9D821DEA251E00F4971B /* TSAlertViewCard.xib */,
+				FDFF9D841DEA277500F4971B /* TSAlertViewCard.h */,
+				FDFF9D851DEA277500F4971B /* TSAlertViewCard.m */,
+			);
+			name = Xib;
+			sourceTree = "<group>";
+		};
+		FD1C4F251DCE252200CF63E9 = {
+			isa = PBXGroup;
+			children = (
+				FD1C4F301DCE252200CF63E9 /* Tricker */,
+				FD1C4F4A1DCE252300CF63E9 /* TrickerTests */,
+				FD1C4F551DCE252300CF63E9 /* TrickerUITests */,
+				FD1C4F2F1DCE252200CF63E9 /* Products */,
+				BF14510272C93E322C52DF4E /* Pods */,
+				59452B679435EF299964D07D /* Frameworks */,
+			);
+			sourceTree = "<group>";
+		};
+		FD1C4F2F1DCE252200CF63E9 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				FD1C4F2E1DCE252200CF63E9 /* Tricker.app */,
+				FD1C4F471DCE252300CF63E9 /* TrickerTests.xctest */,
+				FD1C4F521DCE252300CF63E9 /* TrickerUITests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		FD1C4F301DCE252200CF63E9 /* Tricker */ = {
+			isa = PBXGroup;
+			children = (
+				FD45D0811DD7BE1C00EB2640 /* App */,
+				FDF716C71DEB32A10014171F /* Managers */,
+				FDE927361DE840B900FF884F /* Models */,
+				FD0C1C9E1DE7833100D37B61 /* Xib */,
+				FD45D0821DD7CEDC00EB2640 /* Cell */,
+				FD45D07D1DD7BDD900EB2640 /* SearchBar */,
+				FDF9639D1DD145B0000877B5 /* Registration controllers */,
+				FD0C1C9A1DE780BC00D37B61 /* Controllers */,
+				FDF8CDB31DDA768400E159B1 /* Storyboards */,
+				FD1C4F3D1DCE252200CF63E9 /* Assets.xcassets */,
+				FD1C4F421DCE252200CF63E9 /* Info.plist */,
+				FD1C4F721DCE9F4400CF63E9 /* GoogleService-Info.plist */,
+				FDFDFC921DD1C99E007811EF /* Tricker.entitlements */,
+				FDF7FE8A1DCFBB4B00846997 /* Default-568h@2x.png */,
+				FD1C4F311DCE252200CF63E9 /* Supporting Files */,
+				FDF7FE891DCF56EA00846997 /* TSTrickerPrefixHeader.pch */,
+			);
+			path = Tricker;
+			sourceTree = "<group>";
+		};
+		FD1C4F311DCE252200CF63E9 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				FD1C4F321DCE252200CF63E9 /* main.m */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		FD1C4F4A1DCE252300CF63E9 /* TrickerTests */ = {
+			isa = PBXGroup;
+			children = (
+				FD1C4F4B1DCE252300CF63E9 /* TrickerTests.m */,
+				FD1C4F4D1DCE252300CF63E9 /* Info.plist */,
+			);
+			path = TrickerTests;
+			sourceTree = "<group>";
+		};
+		FD1C4F551DCE252300CF63E9 /* TrickerUITests */ = {
+			isa = PBXGroup;
+			children = (
+				FD1C4F561DCE252300CF63E9 /* TrickerUITests.m */,
+				FD1C4F581DCE252300CF63E9 /* Info.plist */,
+			);
+			path = TrickerUITests;
+			sourceTree = "<group>";
+		};
+		FD45D07D1DD7BDD900EB2640 /* SearchBar */ = {
+			isa = PBXGroup;
+			children = (
+				FD45D07E1DD7BE0E00EB2640 /* TSSearchBar.h */,
+				FD45D07F1DD7BE0E00EB2640 /* TSSearchBar.m */,
+			);
+			name = SearchBar;
+			sourceTree = "<group>";
+		};
+		FD45D0811DD7BE1C00EB2640 /* App */ = {
+			isa = PBXGroup;
+			children = (
+				FD1C4F341DCE252200CF63E9 /* AppDelegate.h */,
+				FD1C4F351DCE252200CF63E9 /* AppDelegate.m */,
+			);
+			name = App;
+			sourceTree = "<group>";
+		};
+		FD45D0821DD7CEDC00EB2640 /* Cell */ = {
+			isa = PBXGroup;
+			children = (
+				FD45D0831DD7CF4200EB2640 /* TSTableViewCell.h */,
+				FD45D0841DD7CF4200EB2640 /* TSTableViewCell.m */,
+				FDF4BB221DF076B2003D3841 /* TSCollectionViewCell.h */,
+				FDF4BB231DF076B2003D3841 /* TSCollectionViewCell.m */,
+			);
+			name = Cell;
+			sourceTree = "<group>";
+		};
+		FDE927361DE840B900FF884F /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				FD1C4F741DCEA49700CF63E9 /* TSFireUser.h */,
+				FD1C4F751DCEA49700CF63E9 /* TSFireUser.m */,
+				FDE927371DE840EC00FF884F /* TSFireBase.h */,
+				FDE927381DE840EC00FF884F /* TSFireBase.m */,
+			);
+			name = Models;
+			sourceTree = "<group>";
+		};
+		FDF716C71DEB32A10014171F /* Managers */ = {
+			isa = PBXGroup;
+			children = (
+				FD1C4F6D1DCE86E800CF63E9 /* TSFacebookManager.h */,
+				FD1C4F6E1DCE86E800CF63E9 /* TSFacebookManager.m */,
+			);
+			name = Managers;
+			sourceTree = "<group>";
+		};
+		FDF8CDB31DDA768400E159B1 /* Storyboards */ = {
+			isa = PBXGroup;
+			children = (
+				FD1C4F3A1DCE252200CF63E9 /* Main.storyboard */,
+				FD68B4581DDA7C5A00EF19C3 /* ProfileStoryboard.storyboard */,
+				FD68B45A1DDA7CC100EF19C3 /* MapStoryboard.storyboard */,
+				FD68B45C1DDA7CEC00EF19C3 /* CardsStoryboard.storyboard */,
+				FD68B45E1DDA7CFC00EF19C3 /* ChatStoryboard.storyboard */,
+				FD68B4601DDA7D0C00EF19C3 /* SettingStoryboard.storyboard */,
+				FD1C4F3F1DCE252200CF63E9 /* LaunchScreen.storyboard */,
+			);
+			name = Storyboards;
+			sourceTree = "<group>";
+		};
+		FDF9639D1DD145B0000877B5 /* Registration controllers */ = {
+			isa = PBXGroup;
+			children = (
+				FD1C4F671DCE282100CF63E9 /* TSSocialNetworkLoginViewController.h */,
+				FD1C4F681DCE282100CF63E9 /* TSSocialNetworkLoginViewController.m */,
+				FDF963971DD10890000877B5 /* TSRegistrationViewController.h */,
+				FDF963981DD10890000877B5 /* TSRegistrationViewController.m */,
+				FDF9639A1DD14598000877B5 /* TSPhotoAndNameViewController.h */,
+				FDF9639B1DD14598000877B5 /* TSPhotoAndNameViewController.m */,
+				FDFDFC931DD26A27007811EF /* TSAutorizationViewController.h */,
+				FDFDFC941DD26A27007811EF /* TSAutorizationViewController.m */,
+			);
+			name = "Registration controllers";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		FD1C4F2D1DCE252200CF63E9 /* Tricker */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = FD1C4F5B1DCE252300CF63E9 /* Build configuration list for PBXNativeTarget "Tricker" */;
+			buildPhases = (
+				96FAD7630B6616A5B784E964 /* [CP] Check Pods Manifest.lock */,
+				FD1C4F2A1DCE252200CF63E9 /* Sources */,
+				FD1C4F2B1DCE252200CF63E9 /* Frameworks */,
+				FD1C4F2C1DCE252200CF63E9 /* Resources */,
+				8F89708B86C62A225A02BF8D /* [CP] Embed Pods Frameworks */,
+				DDAEED5903104A6B91C319E4 /* [CP] Copy Pods Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = Tricker;
+			productName = Tricker;
+			productReference = FD1C4F2E1DCE252200CF63E9 /* Tricker.app */;
+			productType = "com.apple.product-type.application";
+		};
+		FD1C4F461DCE252300CF63E9 /* TrickerTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = FD1C4F5E1DCE252300CF63E9 /* Build configuration list for PBXNativeTarget "TrickerTests" */;
+			buildPhases = (
+				FD1C4F431DCE252300CF63E9 /* Sources */,
+				FD1C4F441DCE252300CF63E9 /* Frameworks */,
+				FD1C4F451DCE252300CF63E9 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				FD1C4F491DCE252300CF63E9 /* PBXTargetDependency */,
+			);
+			name = TrickerTests;
+			productName = TrickerTests;
+			productReference = FD1C4F471DCE252300CF63E9 /* TrickerTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		FD1C4F511DCE252300CF63E9 /* TrickerUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = FD1C4F611DCE252300CF63E9 /* Build configuration list for PBXNativeTarget "TrickerUITests" */;
+			buildPhases = (
+				FD1C4F4E1DCE252300CF63E9 /* Sources */,
+				FD1C4F4F1DCE252300CF63E9 /* Frameworks */,
+				FD1C4F501DCE252300CF63E9 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				FD1C4F541DCE252300CF63E9 /* PBXTargetDependency */,
+			);
+			name = TrickerUITests;
+			productName = TrickerUITests;
+			productReference = FD1C4F521DCE252300CF63E9 /* TrickerUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		FD1C4F261DCE252200CF63E9 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				CLASSPREFIX = TS;
+				LastUpgradeCheck = 0800;
+				ORGANIZATIONNAME = Mac;
+				TargetAttributes = {
+					FD1C4F2D1DCE252200CF63E9 = {
+						CreatedOnToolsVersion = 8.0;
+						DevelopmentTeam = 5D7GRV784H;
+						ProvisioningStyle = Automatic;
+						SystemCapabilities = {
+							com.apple.Keychain = {
+								enabled = 1;
+							};
+						};
+					};
+					FD1C4F461DCE252300CF63E9 = {
+						CreatedOnToolsVersion = 8.0;
+						ProvisioningStyle = Automatic;
+						TestTargetID = FD1C4F2D1DCE252200CF63E9;
+					};
+					FD1C4F511DCE252300CF63E9 = {
+						CreatedOnToolsVersion = 8.0;
+						ProvisioningStyle = Automatic;
+						TestTargetID = FD1C4F2D1DCE252200CF63E9;
+					};
+				};
+			};
+			buildConfigurationList = FD1C4F291DCE252200CF63E9 /* Build configuration list for PBXProject "Tricker" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+				ru,
+				he,
+			);
+			mainGroup = FD1C4F251DCE252200CF63E9;
+			productRefGroup = FD1C4F2F1DCE252200CF63E9 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				FD1C4F2D1DCE252200CF63E9 /* Tricker */,
+				FD1C4F461DCE252300CF63E9 /* TrickerTests */,
+				FD1C4F511DCE252300CF63E9 /* TrickerUITests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		FD1C4F2C1DCE252200CF63E9 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				FDEBE3E81DF1C4AB0073A0FF /* TSCollCell.xib in Resources */,
+				FD68B4611DDA7D0C00EF19C3 /* SettingStoryboard.storyboard in Resources */,
+				FD68B45B1DDA7CC100EF19C3 /* MapStoryboard.storyboard in Resources */,
+				FDF4BB1A1DF02C3E003D3841 /* TSPhotoView.xib in Resources */,
+				FDFF9D831DEA251E00F4971B /* TSAlertViewCard.xib in Resources */,
+				FD68B45F1DDA7CFC00EF19C3 /* ChatStoryboard.storyboard in Resources */,
+				FD1C4F411DCE252200CF63E9 /* LaunchScreen.storyboard in Resources */,
+				FD68B45D1DDA7CEC00EF19C3 /* CardsStoryboard.storyboard in Resources */,
+				FD1C4F3E1DCE252200CF63E9 /* Assets.xcassets in Resources */,
+				FD1C4F731DCE9F4400CF63E9 /* GoogleService-Info.plist in Resources */,
+				FD1C4F3C1DCE252200CF63E9 /* Main.storyboard in Resources */,
+				FDF4BB121DF019D4003D3841 /* TSViewCell.xib in Resources */,
+				FD0C1CA01DE783B500D37B61 /* TSSwipeView.xib in Resources */,
+				FD68B4591DDA7C5A00EF19C3 /* ProfileStoryboard.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		FD1C4F451DCE252300CF63E9 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		FD1C4F501DCE252300CF63E9 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		8F89708B86C62A225A02BF8D /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Tricker/Pods-Tricker-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		96FAD7630B6616A5B784E964 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		DDAEED5903104A6B91C319E4 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Tricker/Pods-Tricker-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		FD1C4F2A1DCE252200CF63E9 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				FDFF9D861DEA277500F4971B /* TSAlertViewCard.m in Sources */,
+				FDE9273C1DE8EC4600FF884F /* TSIntermediateViewController.m in Sources */,
+				FD45D0801DD7BE0F00EB2640 /* TSSearchBar.m in Sources */,
+				FD1C4F661DCE280400CF63E9 /* TSTabBarViewController.m in Sources */,
+				FD0C1CA31DE78B9B00D37B61 /* TSSwipeView.m in Sources */,
+				FDF963991DD10890000877B5 /* TSRegistrationViewController.m in Sources */,
+				FD1C4F6F1DCE86E800CF63E9 /* TSFacebookManager.m in Sources */,
+				FD5CD4941DD3D6CF0056C1A6 /* TSSitysViewController.m in Sources */,
+				FD1C4F761DCEA49700CF63E9 /* TSFireUser.m in Sources */,
+				FD1C4F361DCE252200CF63E9 /* AppDelegate.m in Sources */,
+				FD1C4F331DCE252200CF63E9 /* main.m in Sources */,
+				FD45D0851DD7CF4200EB2640 /* TSTableViewCell.m in Sources */,
+				FDF9639C1DD14598000877B5 /* TSPhotoAndNameViewController.m in Sources */,
+				FDFDFC951DD26A28007811EF /* TSAutorizationViewController.m in Sources */,
+				FDEBE3F11DF1C7F40073A0FF /* TSCollCell.m in Sources */,
+				FD0C1C9D1DE7810000D37B61 /* TSCardsViewController.m in Sources */,
+				FDF4BB241DF076B2003D3841 /* TSCollectionViewCell.m in Sources */,
+				FDE927391DE840EC00FF884F /* TSFireBase.m in Sources */,
+				FDF4BB1D1DF02DB1003D3841 /* TSPhotoView.m in Sources */,
+				FD0C1CA61DE7930100D37B61 /* TSMapViewController.m in Sources */,
+				FDFDFC981DD293E0007811EF /* TSProfileTableViewController.m in Sources */,
+				FD0E42831DF7051200399621 /* TSChatViewController.m in Sources */,
+				FD1C4F691DCE282100CF63E9 /* TSSocialNetworkLoginViewController.m in Sources */,
+				FDF4BB201DF03F38003D3841 /* TSPhotosViewController.m in Sources */,
+				FDBDDDDF1DDB8745008EE73E /* TSSettingsTableViewController.m in Sources */,
+				FDF4BB181DF01FB7003D3841 /* TSViewCell.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		FD1C4F431DCE252300CF63E9 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				FD1C4F4C1DCE252300CF63E9 /* TrickerTests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		FD1C4F4E1DCE252300CF63E9 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				FD1C4F571DCE252300CF63E9 /* TrickerUITests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		FD1C4F491DCE252300CF63E9 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = FD1C4F2D1DCE252200CF63E9 /* Tricker */;
+			targetProxy = FD1C4F481DCE252300CF63E9 /* PBXContainerItemProxy */;
+		};
+		FD1C4F541DCE252300CF63E9 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = FD1C4F2D1DCE252200CF63E9 /* Tricker */;
+			targetProxy = FD1C4F531DCE252300CF63E9 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		FD1C4F3A1DCE252200CF63E9 /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				FD1C4F3B1DCE252200CF63E9 /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		FD1C4F3F1DCE252200CF63E9 /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				FD1C4F401DCE252200CF63E9 /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		FD1C4F591DCE252300CF63E9 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_SUSPICIOUS_MOVES = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		FD1C4F5A1DCE252300CF63E9 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_SUSPICIOUS_MOVES = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		FD1C4F5C1DCE252300CF63E9 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 1FBEFE542591B48DB688ED44 /* Pods-Tricker.debug.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = Tricker/Tricker.entitlements;
+				DEVELOPMENT_TEAM = 5D7GRV784H;
+				INFOPLIST_FILE = Tricker/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "Tsvigun-Sasha.Tricker";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		FD1C4F5D1DCE252300CF63E9 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 94B94787D384A5D991ACF5EE /* Pods-Tricker.release.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = Tricker/Tricker.entitlements;
+				DEVELOPMENT_TEAM = 5D7GRV784H;
+				INFOPLIST_FILE = Tricker/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "Tsvigun-Sasha.Tricker";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+		FD1C4F5F1DCE252300CF63E9 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				INFOPLIST_FILE = TrickerTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "Tsvigun-Sasha.TrickerTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Tricker.app/Tricker";
+			};
+			name = Debug;
+		};
+		FD1C4F601DCE252300CF63E9 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				INFOPLIST_FILE = TrickerTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "Tsvigun-Sasha.TrickerTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Tricker.app/Tricker";
+			};
+			name = Release;
+		};
+		FD1C4F621DCE252300CF63E9 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				INFOPLIST_FILE = TrickerUITests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "Tsvigun-Sasha.TrickerUITests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_TARGET_NAME = Tricker;
+			};
+			name = Debug;
+		};
+		FD1C4F631DCE252300CF63E9 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				INFOPLIST_FILE = TrickerUITests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "Tsvigun-Sasha.TrickerUITests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_TARGET_NAME = Tricker;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		FD1C4F291DCE252200CF63E9 /* Build configuration list for PBXProject "Tricker" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				FD1C4F591DCE252300CF63E9 /* Debug */,
+				FD1C4F5A1DCE252300CF63E9 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		FD1C4F5B1DCE252300CF63E9 /* Build configuration list for PBXNativeTarget "Tricker" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				FD1C4F5C1DCE252300CF63E9 /* Debug */,
+				FD1C4F5D1DCE252300CF63E9 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		FD1C4F5E1DCE252300CF63E9 /* Build configuration list for PBXNativeTarget "TrickerTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				FD1C4F5F1DCE252300CF63E9 /* Debug */,
+				FD1C4F601DCE252300CF63E9 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		FD1C4F611DCE252300CF63E9 /* Build configuration list for PBXNativeTarget "TrickerUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				FD1C4F621DCE252300CF63E9 /* Debug */,
+				FD1C4F631DCE252300CF63E9 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = FD1C4F261DCE252200CF63E9 /* Project object */;
+}

@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11542" systemVersion="15G31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11524"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--Intermediate View Controller-->
+        <scene sceneID="Zkg-Re-NEd">
+            <objects>
+                <viewController storyboardIdentifier="TSIntermediateViewController" id="k29-4q-45z" customClass="TSIntermediateViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="1o1-5V-4V4"/>
+                        <viewControllerLayoutGuide type="bottom" id="Fg5-Kq-l1D"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="JDo-HK-4Rb">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="background" translatesAutoresizingMaskIntoConstraints="NO" id="YVr-6R-HNr">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                            </imageView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="Fg5-Kq-l1D" firstAttribute="top" secondItem="YVr-6R-HNr" secondAttribute="bottom" id="06z-Cq-18Q"/>
+                            <constraint firstAttribute="trailing" secondItem="YVr-6R-HNr" secondAttribute="trailing" id="4aT-nr-bDT"/>
+                            <constraint firstItem="YVr-6R-HNr" firstAttribute="top" secondItem="JDo-HK-4Rb" secondAttribute="top" id="IHG-Hc-Zzr"/>
+                            <constraint firstItem="YVr-6R-HNr" firstAttribute="leading" secondItem="JDo-HK-4Rb" secondAttribute="leading" id="cMX-l4-rYC"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" id="r53-S1-AJU"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="1Vw-No-xNu" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3500" y="968.36581709145435"/>
+        </scene>
+        <!--Cards View Controller-->
+        <scene sceneID="zGx-fy-LGe">
+            <objects>
+                <viewController storyboardIdentifier="TSCardsViewController" id="8wN-Rq-AlW" customClass="TSCardsViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="1SS-LL-vdK"/>
+                        <viewControllerLayoutGuide type="bottom" id="beQ-u9-99I"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="Ft8-CO-yD8">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="background" translatesAutoresizingMaskIntoConstraints="NO" id="69q-dD-i2x">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                            </imageView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="69q-dD-i2x" firstAttribute="top" secondItem="Ft8-CO-yD8" secondAttribute="top" id="3vB-R8-3ji"/>
+                            <constraint firstAttribute="trailing" secondItem="69q-dD-i2x" secondAttribute="trailing" id="7A7-bZ-5El"/>
+                            <constraint firstItem="beQ-u9-99I" firstAttribute="top" secondItem="69q-dD-i2x" secondAttribute="bottom" id="QEm-7v-sWw"/>
+                            <constraint firstItem="69q-dD-i2x" firstAttribute="leading" secondItem="Ft8-CO-yD8" secondAttribute="leading" id="zFN-gc-0Zb"/>
+                        </constraints>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="6ug-3r-mwp" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3972" y="968"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="fGx-hp-Ndz">
+            <objects>
+                <navigationController storyboardIdentifier="CardsStoryboard" automaticallyAdjustsScrollViewInsets="NO" id="ij3-6e-Kvm" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="" image="cards_no" selectedImage="cards_click" id="0WO-vY-BHo">
+                        <inset key="imageInsets" minX="0.0" minY="5" maxX="0.0" maxY="-5"/>
+                    </tabBarItem>
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="4wp-ym-Ca1">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="k29-4q-45z" kind="relationship" relationship="rootViewController" id="iGI-bq-f6M"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Kb2-wc-KWE" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3026" y="968"/>
+        </scene>
+    </scenes>
+    <resources>
+        <image name="background" width="187" height="333"/>
+        <image name="cards_click" width="26" height="26"/>
+        <image name="cards_no" width="26" height="26"/>
+    </resources>
+</document>
