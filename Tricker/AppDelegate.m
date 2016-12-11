@@ -70,7 +70,7 @@
     
     self.ref = [[FIRDatabase database] reference];
     
-    [self.ref keepSynced:NO];
+    [FIRDatabase setLoggingEnabled:YES];
     
     return YES;
 }

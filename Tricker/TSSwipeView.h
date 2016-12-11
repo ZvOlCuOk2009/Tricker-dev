@@ -20,7 +20,7 @@ extern NSString *const TSSwipeViewInterlocutorNotification;
 @property (weak, nonatomic) IBOutlet UIView *onlineView;
 @property (weak, nonatomic) IBOutlet UIButton *nopeButton;
 @property (weak, nonatomic) IBOutlet UIButton *chatButton;
-@property (weak, nonatomic) IBOutlet UIButton *likeButton;
+@property (weak, nonatomic) IBOutlet UIButton *photoButton;
 
 @property (strong, nonatomic) NSString *interlocutorUid;
 @property (strong, nonatomic) UIImage *interlocutorAvatar;
@@ -29,7 +29,7 @@ extern NSString *const TSSwipeViewInterlocutorNotification;
 
 + (instancetype)initProfileView;
 
-- (IBAction)likeActionButton:(id)sender;
+- (IBAction)photoActionButton:(id)sender;
 - (IBAction)parametersActionButton:(id)sender;
 - (IBAction)chatActionButton:(id)sender;
 

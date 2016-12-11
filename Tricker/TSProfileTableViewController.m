@@ -39,6 +39,7 @@
 
 @property (strong, nonatomic) UIImage *pointImage;
 @property (strong, nonatomic) UIImage *circleImage;
+@property (strong, nonatomic) UIImage *avatarImage;
 
 @property (strong, nonatomic) NSString *positionButtonGender;
 
@@ -126,6 +127,7 @@
     
 }
 
+
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
 
@@ -153,15 +155,15 @@
     [SVProgressHUD setForegroundColor:DARK_GRAY_COLOR];
     
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        
+    
         NSURL *urlPhoto = [NSURL URLWithString:self.fireUser.photoURL];
-        UIImage *imagePhoto = [UIImage imageWithData:[NSData dataWithContentsOfURL:urlPhoto]];
+        self.avatarImage = [UIImage imageWithData:[NSData dataWithContentsOfURL:urlPhoto]];
         
         if (urlPhoto && urlPhoto.scheme && urlPhoto.host) {
             
             dispatch_async(dispatch_get_main_queue(), ^{
-                
-                [self setAvatarAndBackground:imagePhoto];
+            
+                [self setAvatarAndBackground:self.avatarImage];
                 [self setParametrUser:self.fireUser];
                 
                 [SVProgressHUD dismiss];
@@ -170,11 +172,11 @@
         } else {
             
             dispatch_async(dispatch_get_main_queue(), ^{
-                
+            
                 NSData *data = [[NSData alloc] initWithBase64EncodedString:self.fireUser.photoURL options:NSDataBase64DecodingIgnoreUnknownCharacters];
-                UIImage *convertImage = [UIImage imageWithData:data];
+                self.avatarImage = [UIImage imageWithData:data];
                 
-                [self setAvatarAndBackground:convertImage];
+                [self setAvatarAndBackground:self.avatarImage];
                 [self setParametrUser:self.fireUser];
                 
                 [SVProgressHUD dismiss];
@@ -658,7 +660,7 @@
 #pragma mark - UITextFieldDelegate
 
 
-- (BOOL)textFieldShouldReturn:(UITextField *)textField{
+- (BOOL)textFieldShouldReturn:(UITextField *)textField {
     
     [textField resignFirstResponder];
     return YES;

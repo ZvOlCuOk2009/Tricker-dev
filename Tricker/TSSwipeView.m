@@ -9,6 +9,7 @@
 #import "TSSwipeView.h"
 #import "TSCardsViewController.h"
 #import "TSTabBarViewController.h"
+#import "TSProfileTableViewController.h"
 #import "TSViewCell.h"
 #import "TSPhotoView.h"
 #import "TSTrickerPrefixHeader.pch"
@@ -28,6 +29,7 @@ NSString *const TSSwipeViewInterlocutorNotification = @"TSSwipeViewInterlocutorN
 
 @property (strong, nonatomic) UITapGestureRecognizer *tapGesture;
 @property (strong, nonatomic) TSPhotoView *photoView;
+@property (strong, nonatomic) NSString *photosView;
 
 @property (assign, nonatomic) NSInteger counter;
 
@@ -114,6 +116,25 @@ NSString *const TSSwipeViewInterlocutorNotification = @"TSSwipeViewInterlocutorN
         counterParamArray++;
     }
     
+    
+    if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone)
+    {
+        if (IS_IPHONE_4) {
+            
+            self.photosView = kTSPhotoView;
+            
+        } else if (IS_IPHONE_5) {
+            
+            
+        } else if (IS_IPHONE_6) {
+            
+            
+        } else if (IS_IPHONE_6_PLUS) {
+            
+            self.photosView = kTSPhotoView_6_Plus;
+        }
+    }
+    
 }
 
 
@@ -153,18 +174,40 @@ NSString *const TSSwipeViewInterlocutorNotification = @"TSSwipeViewInterlocutorN
     
     TSSwipeView *view = nil;
     
-    UINib *nib = [UINib nibWithNibName:@"TSSwipeView" bundle:nil];
-    view = [nib instantiateWithOwner:self options:nil][0];
-    view.frame = CGRectMake(10, 30, 300, 396);
+    
+    if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone)
+    {
+        if (IS_IPHONE_4) {
+            
+            UINib *nib = [UINib nibWithNibName:@"TSSwipeView" bundle:nil];
+            view = [nib instantiateWithOwner:self options:nil][0];
+            view.frame = kTSSwipeViewFrame
+            
+        } else if (IS_IPHONE_5) {
+            
+
+            
+        } else if (IS_IPHONE_6) {
+
+            
+            
+        } else if (IS_IPHONE_6_PLUS) {
+            
+            UINib *nib = [UINib nibWithNibName:@"TSSwipeView6plus" bundle:nil];
+            view = [nib instantiateWithOwner:self options:nil][0];
+            view.frame = kTSSwipeView6PlusFrame
+        }
+    }
     
     return view;
     
 }
 
 
-- (IBAction)likeActionButton:(id)sender
+- (IBAction)photoActionButton:(id)sender
 {
-    self.photoView = [[[NSBundle mainBundle] loadNibNamed:@"TSPhotoView" owner:self options:nil] firstObject];
+    self.photoView = [[[NSBundle mainBundle] loadNibNamed:self.photosView
+                                                    owner:self options:nil] firstObject];
     
     [self addSubview:self.photoView];
     [self.photoView setFrame:CGRectMake(0.0f, self.photoView.frame.size.height,
@@ -184,8 +227,11 @@ NSString *const TSSwipeViewInterlocutorNotification = @"TSSwipeViewInterlocutorN
     TSTabBarViewController *tabBarController = (TSTabBarViewController *)[[[[UIApplication sharedApplication] delegate] window] rootViewController];
     tabBarController.selectedIndex = 3;
     
-    NSDictionary *interlocutorParameters = @{@"intelocAvatar":self.interlocutorAvatar,
-                                             @"intelocID":self.interlocutorUid};
+    UIImage * interlocAvatar = self.interlocutorAvatar;
+    NSString * interlocUid = self.interlocutorUid;
+    
+    NSDictionary *interlocutorParameters = @{@"intelocAvatar":interlocAvatar,
+                                             @"intelocID":interlocUid};
     
     [[NSNotificationCenter defaultCenter] postNotificationName:TSSwipeViewInterlocutorNotification
                                                         object:interlocutorParameters];

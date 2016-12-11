@@ -131,7 +131,7 @@
             [photosUser removeObjectAtIndex:0];
         }
         
-        self.swipeView.avatarImageView.layer.cornerRadius = 110;
+//        self.swipeView.avatarImageView.layer.cornerRadius = 110;
         
         self.swipeView.nameLabel.text = displayName;
         self.swipeView.ageLabel.text = age;

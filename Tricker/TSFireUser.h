@@ -23,6 +23,7 @@
 @property (strong, nonatomic) NSString *gender;
 @property (strong, nonatomic) NSString *online;
 @property (strong, nonatomic) NSMutableDictionary *parameters;
+@property (strong, nonatomic) NSDictionary *chats;
 @property (strong, nonatomic) NSMutableArray *photos;
 
 + (TSFireUser *)initWithSnapshot:(FIRDataSnapshot *)snapshot;

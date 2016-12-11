@@ -25,10 +25,12 @@
         NSString *keyUserData = [NSString stringWithFormat:@"dataBase/users/%@/userData", fireUser.uid];
         NSString *keyToParameters = [NSString stringWithFormat:@"dataBase/users/%@", fireUser.uid];
         NSString *keyToPhotos = [NSString stringWithFormat:@"dataBase/users/%@", fireUser.uid];
+        NSString *keyToChats = [NSString stringWithFormat:@"dataBase/users/%@", fireUser.uid];
         
         FIRDataSnapshot *fireUser = [snapshot childSnapshotForPath:keyUserData];
         FIRDataSnapshot *fireUserParameters = [snapshot childSnapshotForPath:keyToParameters];
         FIRDataSnapshot *fireUserPhotos = [snapshot childSnapshotForPath:keyToPhotos];
+        FIRDataSnapshot *fireUserChats = [snapshot childSnapshotForPath:keyToChats];
         
         FIRDataSnapshot *userIdent = fireUser.value[@"userID"]; 
         FIRDataSnapshot *userName = fireUser.value[@"displayName"];
@@ -41,6 +43,7 @@
         FIRDataSnapshot *online = fireUser.value[@"online"];
         FIRDataSnapshot *parameters = fireUserParameters.value[@"parameters"];
         FIRDataSnapshot *photos = fireUserPhotos.value[@"photos"];
+        FIRDataSnapshot *chats = fireUserChats.value[@"chat"];
         
         
         user.uid = (NSString *)userIdent;
@@ -53,6 +56,7 @@
         user.gender = (NSString *)gender;
         user.online = (NSString *)online;
         user.parameters = (NSMutableDictionary *)parameters;
+        user.chats = (NSDictionary *)chats;
         user.photos = (NSMutableArray *)photos;
         
     }

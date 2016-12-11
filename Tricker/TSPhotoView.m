@@ -9,6 +9,7 @@
 #import "TSPhotoView.h"
 #import "TSSwipeView.h"
 #import "TSCollCell.h"
+#import "TSTrickerPrefixHeader.pch"
 
 @interface TSPhotoView () <UICollectionViewDataSource, UICollectionViewDelegate, UIGestureRecognizerDelegate>
 
@@ -16,6 +17,8 @@
 @property (strong, nonatomic) IBOutlet UIButton *cancelButton;
 @property (strong, nonatomic) UIImageView *zoomImage;
 @property (assign, nonatomic) CGRect prevFrame;
+@property (assign, nonatomic) CGRect rectButton;
+@property (assign, nonatomic) CGSize cellSize;
 @property (assign, nonatomic) BOOL zoomPhotoState;
 
 @end
@@ -27,9 +30,31 @@ static NSString * const reuseIdntifier = @"cell";
 
 - (void)drawRect:(CGRect)rect {
     
+    
+    if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone)
+    {
+        if (IS_IPHONE_4) {
+            
+            self.cellSize = kTSCollCellSize;
+            self.rectButton = kTSPhotoViewButtonCancelRect;
+            
+        } else if (IS_IPHONE_5) {
+            
+            
+        } else if (IS_IPHONE_6) {
+            
+            
+        } else if (IS_IPHONE_6_PLUS) {
+            
+            self.cellSize = kTSCollCellSize_6_Plus;
+            self.rectButton = kTSPhotoViewButtonCancelRect_6_Plus;
+        }
+    }
+    
+    
     //добавление кнопки cencel
     
-    self.cancelButton = [[UIButton alloc]initWithFrame:CGRectMake(265, 9, 20, 20)];
+    self.cancelButton = [[UIButton alloc]initWithFrame:self.rectButton];
     [self.cancelButton setImage:[UIImage imageNamed:@"cancel"] forState:UIControlStateNormal];
     [self.cancelButton addTarget:self action:@selector(cancelPhoto) forControlEvents:UIControlEventTouchUpInside];
     [self.navigationView addSubview:self.cancelButton];
@@ -45,6 +70,7 @@ static NSString * const reuseIdntifier = @"cell";
         label.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:20.f];
         [self addSubview:label];
     }
+    
 }
 
 
@@ -171,7 +197,7 @@ static NSString * const reuseIdntifier = @"cell";
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout
   sizeForItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    return CGSizeMake(74, 74);
+    return self.cellSize;
 }
 
 

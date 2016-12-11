@@ -11,6 +11,7 @@
 @interface TSChatTableViewCell : UITableViewCell
 
 @property (strong, nonatomic) IBOutlet UIImageView *interlocutorAvatar;
+@property (strong, nonatomic) IBOutlet UILabel *interlocutorNameLabel;
 @property (strong, nonatomic) IBOutlet UILabel *correspondenceLabel;
 
 @end

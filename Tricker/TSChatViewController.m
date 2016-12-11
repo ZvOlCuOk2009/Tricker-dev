@@ -7,6 +7,7 @@
 //
 
 #import "TSChatViewController.h"
+#import "TSProfileTableViewController.h"
 #import "TSFireUser.h"
 #import "TSSwipeView.h"
 #import "TSTrickerPrefixHeader.pch"
@@ -38,6 +39,11 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
 
+    [self.inputToolbar.contentView.rightBarButtonItem setTitleColor:DARK_GRAY_COLOR forState:UIControlStateNormal];
+    [self.inputToolbar.contentView.rightBarButtonItem setTitle:@"Отпр" forState:UIControlStateNormal];
+    self.inputToolbar.contentView.textView.placeHolder = @"Новое сообщение";
+    self.inputToolbar.contentView.textView.font = [UIFont fontWithName:@"System-light" size:18.0];
+    
     self.ref = [[FIRDatabase database] reference];
     [self.ref keepSynced:NO];
     
@@ -61,7 +67,14 @@
     self.collectionView.collectionViewLayout.outgoingAvatarViewSize = rect;
     self.collectionView.collectionViewLayout.incomingAvatarViewSize = rect;
     
-    [self configureCurrentChat];
+    
+    [self.ref observeEventType:FIRDataEventTypeValue withBlock:^(FIRDataSnapshot * _Nonnull snapshot) {
+        
+        self.fireUser = [TSFireUser initWithSnapshot:snapshot];
+        [self configureCurrentChat];
+        
+    }];
+    
 }
 
 
@@ -70,6 +83,7 @@
     
     [super viewDidAppear:animated];
     [self observeMessages];
+    [self.messages removeAllObjects];
     
 }
 
@@ -77,39 +91,20 @@
 - (void)configureCurrentChat
 {
     
+    NSURL *urlPhoto = [NSURL URLWithString:self.fireUser.photoURL];
+    UIImage *imagePhoto = [UIImage imageWithData:[NSData dataWithContentsOfURL:urlPhoto]];
+    
+    if (urlPhoto && urlPhoto.scheme && urlPhoto.host) {
+        self.userAvatar = imagePhoto;
+    } else {
+        NSData *data = [[NSData alloc] initWithBase64EncodedString:self.fireUser.photoURL
+                                                           options:NSDataBase64DecodingIgnoreUnknownCharacters];
+        self.userAvatar = [UIImage imageWithData:data];
+    }
+    
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(heandlerNotification:) name:TSSwipeViewInterlocutorNotification object:nil];
     
-//    [self.ref observeEventType:FIRDataEventTypeValue withBlock:^(FIRDataSnapshot * _Nonnull snapshot) {
-//        
-////        self.friends = [TSRetriveFriendsFBDatabase retriveFriendsDatabase:snapshot];
-//        self.fireUser = [TSFireUser initWithSnapshot:snapshot];
-//        
-//        NSURL *url = [NSURL URLWithString:self.fireUser.photoURL];
-//        NSData *dataImage = [NSData dataWithContentsOfURL:url];
-//        self.userAvatar = [UIImage imageWithData:dataImage];
-//        
-//        
-//        if (!self.interlocutorID) {
-    
-//            if (self.friends.count > 0) {
-            
-//                NSDictionary *temporaryDict = [self.friends objectAtIndex:0];
-//                NSString * temporaryID = [temporaryDict objectForKey:@"fireUserID"];
-//                self.interlocutor = temporaryID;
-//            }
-//            else {
-//                self.interlocutor = @"";
-//            }
-        
-//        }
-        
-//        [self getImageInterlocutor:self.friends];
-        
-    
-        
-//    }];
-    
-    
+    [self setupBubbles];
     
 }
 
@@ -120,42 +115,11 @@
     self.interlocutorID = [[notification object] objectForKey:@"intelocID"];
     self.interlocutorAvatar = [[notification object] objectForKey:@"intelocAvatar"];
     
-    
     if (self.interlocutorID != nil) {
         
-        self.messageRefUser = [[[[[self.ref child:@"dataBase"] child:@"users"] child:self.fireUser.uid] child:@"chat"] child:self.interlocutorID];
+        self.messageRefUser = [[[[[self.ref child:@"dataBase"] child:@"users"] child:self.user.uid] child:@"chat"] child:self.interlocutorID];
         self.messageRefInterlocutor = [[[[[self.ref child:@"dataBase"] child:@"users"] child:self.interlocutorID] child:@"chat"] child:self.user.uid];
     }
-    
-}
-
-
-- (void)getImageInterlocutor:(NSMutableArray *)friends
-{
-    for (NSDictionary *data in friends) {
-        
-        NSString *ID = [data objectForKey:@"fireUserID"];
-        if ([ID isEqualToString:self.interlocutorID]) {
-            
-            NSString *urlString = [data objectForKey:@"photoURL"];
-            NSURL *url = [NSURL URLWithString:urlString];
-            NSData *dataImage = [NSData dataWithContentsOfURL:url];
-            self.interlocutorAvatar = [UIImage imageWithData:dataImage];
-        }
-    }
-}
-
-
-- (void)getImageUser
-{
-    
-    [self.ref observeEventType:FIRDataEventTypeValue withBlock:^(FIRDataSnapshot * _Nonnull snapshot) {
-        
-        self.fireUser = [TSFireUser initWithSnapshot:snapshot];
-        NSURL *url = [NSURL URLWithString:self.fireUser.photoURL];
-        NSData *dataImage = [NSData dataWithContentsOfURL:url];
-        self.userAvatar = [UIImage imageWithData:dataImage];
-    }];
     
 }
 
@@ -202,6 +166,8 @@
         cell.textView.textColor = [UIColor darkGrayColor];
     }
     
+    cell.textView.font = [UIFont fontWithName:@"System-light" size:32.0];
+    
     return cell;
     
 }
@@ -219,7 +185,7 @@
         if (self.userAvatar) {
             userImage = self.userAvatar;
         } else {
-            userImage = [UIImage imageNamed:@"placeholder_message"];
+            userImage = [UIImage imageNamed:@"placeholder_avarar"];
         }
         
         return [JSQMessagesAvatarImageFactory avatarImageWithImage:userImage
@@ -284,6 +250,8 @@
 - (void)observeMessages
 {
     
+    [self.messages removeAllObjects];
+    
     FIRDatabaseQuery *messagesQuery = [self.messageRefUser queryLimitedToLast:20];
     [messagesQuery observeEventType:FIRDataEventTypeChildAdded withBlock:^(FIRDataSnapshot * _Nonnull snapshot) {
         
@@ -297,7 +265,7 @@
 }
 
 
--(void)dealloc
+- (void)dealloc
 {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }

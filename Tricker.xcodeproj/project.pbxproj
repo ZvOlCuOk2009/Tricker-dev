@@ -8,6 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		2C27B593A68DE82F875D0227 /* libPods-Tricker.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 28CCB341251CEF3778160ABF /* libPods-Tricker.a */; };
+		FD002C651DFA162900D47428 /* TSChatsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FD002C641DFA162900D47428 /* TSChatsTableViewController.m */; };
+		FD06541C1DFCA24200AE45EF /* TSSwipeView6plus.xib in Resources */ = {isa = PBXBuildFile; fileRef = FD06541B1DFCA24200AE45EF /* TSSwipeView6plus.xib */; };
+		FD06541E1DFCBDD200AE45EF /* TSPhotoView6Plus.xib in Resources */ = {isa = PBXBuildFile; fileRef = FD06541D1DFCBDD200AE45EF /* TSPhotoView6Plus.xib */; };
 		FD0C1C9D1DE7810000D37B61 /* TSCardsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FD0C1C9C1DE7810000D37B61 /* TSCardsViewController.m */; };
 		FD0C1CA01DE783B500D37B61 /* TSSwipeView.xib in Resources */ = {isa = PBXBuildFile; fileRef = FD0C1C9F1DE783B500D37B61 /* TSSwipeView.xib */; };
 		FD0C1CA31DE78B9B00D37B61 /* TSSwipeView.m in Sources */ = {isa = PBXBuildFile; fileRef = FD0C1CA21DE78B9B00D37B61 /* TSSwipeView.m */; };
@@ -76,6 +79,10 @@
 		1FBEFE542591B48DB688ED44 /* Pods-Tricker.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Tricker.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Tricker/Pods-Tricker.debug.xcconfig"; sourceTree = "<group>"; };
 		28CCB341251CEF3778160ABF /* libPods-Tricker.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Tricker.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		94B94787D384A5D991ACF5EE /* Pods-Tricker.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Tricker.release.xcconfig"; path = "Pods/Target Support Files/Pods-Tricker/Pods-Tricker.release.xcconfig"; sourceTree = "<group>"; };
+		FD002C631DFA162900D47428 /* TSChatsTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSChatsTableViewController.h; sourceTree = "<group>"; };
+		FD002C641DFA162900D47428 /* TSChatsTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSChatsTableViewController.m; sourceTree = "<group>"; };
+		FD06541B1DFCA24200AE45EF /* TSSwipeView6plus.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TSSwipeView6plus.xib; sourceTree = "<group>"; };
+		FD06541D1DFCBDD200AE45EF /* TSPhotoView6Plus.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TSPhotoView6Plus.xib; sourceTree = "<group>"; };
 		FD0C1C9B1DE7810000D37B61 /* TSCardsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSCardsViewController.h; sourceTree = "<group>"; };
 		FD0C1C9C1DE7810000D37B61 /* TSCardsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSCardsViewController.m; sourceTree = "<group>"; };
 		FD0C1C9F1DE783B500D37B61 /* TSSwipeView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TSSwipeView.xib; sourceTree = "<group>"; };
@@ -224,6 +231,8 @@
 				FD0C1C9C1DE7810000D37B61 /* TSCardsViewController.m */,
 				FD0E42811DF7051200399621 /* TSChatViewController.h */,
 				FD0E42821DF7051200399621 /* TSChatViewController.m */,
+				FD002C631DFA162900D47428 /* TSChatsTableViewController.h */,
+				FD002C641DFA162900D47428 /* TSChatsTableViewController.m */,
 				FDBDDDDD1DDB8745008EE73E /* TSSettingsTableViewController.h */,
 				FDBDDDDE1DDB8745008EE73E /* TSSettingsTableViewController.m */,
 			);
@@ -233,21 +242,8 @@
 		FD0C1C9E1DE7833100D37B61 /* Xib */ = {
 			isa = PBXGroup;
 			children = (
-				FD0C1C9F1DE783B500D37B61 /* TSSwipeView.xib */,
-				FD0C1CA11DE78B9B00D37B61 /* TSSwipeView.h */,
-				FD0C1CA21DE78B9B00D37B61 /* TSSwipeView.m */,
-				FDF4BB111DF019D4003D3841 /* TSViewCell.xib */,
-				FDF4BB161DF01FB7003D3841 /* TSViewCell.h */,
-				FDF4BB171DF01FB7003D3841 /* TSViewCell.m */,
-				FDF4BB191DF02C3E003D3841 /* TSPhotoView.xib */,
-				FDF4BB1B1DF02DB1003D3841 /* TSPhotoView.h */,
-				FDF4BB1C1DF02DB1003D3841 /* TSPhotoView.m */,
-				FDEBE3E71DF1C4AB0073A0FF /* TSCollCell.xib */,
-				FDEBE3EF1DF1C7F40073A0FF /* TSCollCell.h */,
-				FDEBE3F01DF1C7F40073A0FF /* TSCollCell.m */,
-				FDFF9D821DEA251E00F4971B /* TSAlertViewCard.xib */,
-				FDFF9D841DEA277500F4971B /* TSAlertViewCard.h */,
-				FDFF9D851DEA277500F4971B /* TSAlertViewCard.m */,
+				FDFEA3CF1DFC9C1D00FB4363 /* View */,
+				FDFEA3CE1DFC9BFB00FB4363 /* Xib */,
 			);
 			name = Xib;
 			sourceTree = "<group>";
@@ -403,6 +399,37 @@
 			name = "Registration controllers";
 			sourceTree = "<group>";
 		};
+		FDFEA3CE1DFC9BFB00FB4363 /* Xib */ = {
+			isa = PBXGroup;
+			children = (
+				FD0C1C9F1DE783B500D37B61 /* TSSwipeView.xib */,
+				FD06541B1DFCA24200AE45EF /* TSSwipeView6plus.xib */,
+				FDF4BB111DF019D4003D3841 /* TSViewCell.xib */,
+				FDF4BB191DF02C3E003D3841 /* TSPhotoView.xib */,
+				FD06541D1DFCBDD200AE45EF /* TSPhotoView6Plus.xib */,
+				FDFF9D821DEA251E00F4971B /* TSAlertViewCard.xib */,
+				FDEBE3E71DF1C4AB0073A0FF /* TSCollCell.xib */,
+			);
+			name = Xib;
+			sourceTree = "<group>";
+		};
+		FDFEA3CF1DFC9C1D00FB4363 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				FD0C1CA11DE78B9B00D37B61 /* TSSwipeView.h */,
+				FD0C1CA21DE78B9B00D37B61 /* TSSwipeView.m */,
+				FDF4BB161DF01FB7003D3841 /* TSViewCell.h */,
+				FDF4BB171DF01FB7003D3841 /* TSViewCell.m */,
+				FDF4BB1B1DF02DB1003D3841 /* TSPhotoView.h */,
+				FDF4BB1C1DF02DB1003D3841 /* TSPhotoView.m */,
+				FDEBE3EF1DF1C7F40073A0FF /* TSCollCell.h */,
+				FDEBE3F01DF1C7F40073A0FF /* TSCollCell.m */,
+				FDFF9D841DEA277500F4971B /* TSAlertViewCard.h */,
+				FDFF9D851DEA277500F4971B /* TSAlertViewCard.m */,
+			);
+			name = View;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -528,9 +555,11 @@
 				FDFF9D831DEA251E00F4971B /* TSAlertViewCard.xib in Resources */,
 				FD68B45F1DDA7CFC00EF19C3 /* ChatStoryboard.storyboard in Resources */,
 				FD1C4F411DCE252200CF63E9 /* LaunchScreen.storyboard in Resources */,
+				FD06541C1DFCA24200AE45EF /* TSSwipeView6plus.xib in Resources */,
 				FD68B45D1DDA7CEC00EF19C3 /* CardsStoryboard.storyboard in Resources */,
 				FD1C4F3E1DCE252200CF63E9 /* Assets.xcassets in Resources */,
 				FD1C4F731DCE9F4400CF63E9 /* GoogleService-Info.plist in Resources */,
+				FD06541E1DFCBDD200AE45EF /* TSPhotoView6Plus.xib in Resources */,
 				FD1C4F3C1DCE252200CF63E9 /* Main.storyboard in Resources */,
 				FDF4BB121DF019D4003D3841 /* TSViewCell.xib in Resources */,
 				FD0C1CA01DE783B500D37B61 /* TSSwipeView.xib in Resources */,
@@ -607,6 +636,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FD002C651DFA162900D47428 /* TSChatsTableViewController.m in Sources */,
 				FDFF9D861DEA277500F4971B /* TSAlertViewCard.m in Sources */,
 				FDE9273C1DE8EC4600FF884F /* TSIntermediateViewController.m in Sources */,
 				FD45D0801DD7BE0F00EB2640 /* TSSearchBar.m in Sources */,

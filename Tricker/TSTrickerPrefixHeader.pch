@@ -37,6 +37,20 @@
 #define kHeightCell 44.0
 #define kHeightCellButtonSaveAndOut 65.0
 
+#define kTSSwipeViewFrame CGRectMake(10, 30, 300, 396);
+#define kTSSwipeView6PlusFrame CGRectMake(15, 81, 384, 627);
+
+#define kTSPhotoView @"TSPhotoView"
+#define kTSPhotoView6Plus @"TSPhotoView6Plus"
+#define kTSPhotoView6Plus @"TSPhotoView6Plus"
+#define kTSPhotoView_6_Plus @"TSPhotoView6Plus"
+
+#define kTSCollCellSize CGSizeMake(74, 74);
+#define kTSCollCellSize_6_Plus CGSizeMake(95, 95);
+
+#define kTSPhotoViewButtonCancelRect CGRectMake(265, 9, 20, 20)
+#define kTSPhotoViewButtonCancelRect_6_Plus CGRectMake(345, 9, 30, 30)
+
 #define RGB(r,g,b) [UIColor colorWithRed:r/255.0 green:g/255.0 blue: b/255.0 alpha:1.0]
 #define YELLOW_COLOR RGB(252, 228, 184)
 #define LIGHT_YELLOW_COLOR RGB(254, 250, 240)

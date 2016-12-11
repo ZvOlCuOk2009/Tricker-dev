@@ -17,13 +17,18 @@
                 <rect key="frame" x="0.0" y="0.0" width="75" height="75"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Xpz-Lw-Ak2">
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Xpz-Lw-Ak2">
                         <rect key="frame" x="0.0" y="0.0" width="74" height="74"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     </imageView>
                 </subviews>
             </view>
             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+            <constraints>
+                <constraint firstItem="Xpz-Lw-Ak2" firstAttribute="top" secondItem="vyl-ri-wqY" secondAttribute="top" id="lv5-3q-tuz"/>
+                <constraint firstAttribute="trailing" secondItem="Xpz-Lw-Ak2" secondAttribute="trailing" constant="1" id="rDj-Y6-uYn"/>
+                <constraint firstItem="Xpz-Lw-Ak2" firstAttribute="leading" secondItem="vyl-ri-wqY" secondAttribute="leading" id="tB4-5H-Hev"/>
+                <constraint firstAttribute="bottom" secondItem="Xpz-Lw-Ak2" secondAttribute="bottom" constant="1" id="wmg-nh-krW"/>
+            </constraints>
             <connections>
                 <outlet property="imageView" destination="Xpz-Lw-Ak2" id="cGx-yl-eaV"/>
             </connections>
