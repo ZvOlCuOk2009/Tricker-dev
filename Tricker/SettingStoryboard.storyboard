@@ -17,7 +17,7 @@
                         <inset key="imageInsets" minX="0.0" minY="5" maxX="0.0" maxY="-5"/>
                     </tabBarItem>
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="pJ8-Zt-EHu">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="pJ8-Zt-EHu">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="barTintColor" red="0.98823529409999999" green="0.87450980389999999" blue="0.6588235294" alpha="1" colorSpace="calibratedRGB"/>
@@ -103,7 +103,7 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Хочу найти" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7s2-yv-Umc">
-                                                    <rect key="frame" x="15" y="0.0" width="153" height="44"/>
+                                                    <rect key="frame" x="15" y="0.0" width="153" height="43"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="153" id="ijL-hg-Wzn"/>
                                                     </constraints>
@@ -115,7 +115,6 @@
                                             <constraints>
                                                 <constraint firstItem="7s2-yv-Umc" firstAttribute="top" secondItem="hmp-80-03d" secondAttribute="top" id="5eX-An-ncN"/>
                                                 <constraint firstAttribute="bottom" secondItem="7s2-yv-Umc" secondAttribute="bottom" id="I28-bN-8Hb"/>
-                                                <constraint firstItem="7s2-yv-Umc" firstAttribute="centerY" secondItem="hmp-80-03d" secondAttribute="centerY" id="Yz8-Uz-BC5"/>
                                                 <constraint firstItem="7s2-yv-Umc" firstAttribute="leading" secondItem="hmp-80-03d" secondAttribute="leading" constant="15" id="hJ1-ga-eUl"/>
                                             </constraints>
                                         </tableViewCellContentView>

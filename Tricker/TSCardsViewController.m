@@ -148,6 +148,7 @@
         self.swipeView.photos = photosUser;
         self.swipeView.interlocutorUid = uid;
         self.swipeView.interlocutorAvatar = convertImage;
+        self.swipeView.interlocutorName = displayName;
         
         self.counterIndexPath++;
         

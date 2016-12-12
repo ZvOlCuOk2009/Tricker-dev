@@ -8,6 +8,7 @@
 
 #import "TSSwipeView.h"
 #import "TSCardsViewController.h"
+#import "TSChatViewController.h"
 #import "TSTabBarViewController.h"
 #import "TSProfileTableViewController.h"
 #import "TSViewCell.h"
@@ -227,11 +228,17 @@ NSString *const TSSwipeViewInterlocutorNotification = @"TSSwipeViewInterlocutorN
     TSTabBarViewController *tabBarController = (TSTabBarViewController *)[[[[UIApplication sharedApplication] delegate] window] rootViewController];
     tabBarController.selectedIndex = 3;
     
+//    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"ChatStoryboard" bundle:[NSBundle mainBundle]];
+//    TSChatViewController *chatController =
+//    [storyboard instantiateViewControllerWithIdentifier:@"TSChatViewController"];
+    
     UIImage * interlocAvatar = self.interlocutorAvatar;
     NSString * interlocUid = self.interlocutorUid;
+    NSString * interlocName = self.interlocutorName;
     
     NSDictionary *interlocutorParameters = @{@"intelocAvatar":interlocAvatar,
-                                             @"intelocID":interlocUid};
+                                             @"intelocID":interlocUid,
+                                             @"interlocName":interlocName};
     
     [[NSNotificationCenter defaultCenter] postNotificationName:TSSwipeViewInterlocutorNotification
                                                         object:interlocutorParameters];

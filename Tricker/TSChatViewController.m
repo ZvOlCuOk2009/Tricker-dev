@@ -28,9 +28,11 @@
 @property (strong, nonatomic) JSQMessagesBubbleImage *outgoingBubbleImageView;
 @property (strong, nonatomic) JSQMessagesBubbleImage *incomingBubbleImageView;
 
-@property (strong, nonatomic) NSString *interlocutorID;
+@property (strong, nonatomic) NSString *interlocName;
 @property (strong, nonatomic) UIImage *interlocutorAvatar;
 @property (strong, nonatomic) UIImage *userAvatar;
+
+@property (strong, nonatomic) UIImageView *interlocutorAvatarToNavBar;
 
 @end
 
@@ -38,14 +40,8 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-
-    [self.inputToolbar.contentView.rightBarButtonItem setTitleColor:DARK_GRAY_COLOR forState:UIControlStateNormal];
-    [self.inputToolbar.contentView.rightBarButtonItem setTitle:@"Отпр" forState:UIControlStateNormal];
-    self.inputToolbar.contentView.textView.placeHolder = @"Новое сообщение";
-    self.inputToolbar.contentView.textView.font = [UIFont fontWithName:@"System-light" size:18.0];
     
     self.ref = [[FIRDatabase database] reference];
-    [self.ref keepSynced:NO];
     
     self.user = [FIRAuth auth].currentUser;
     self.messages = [NSMutableArray array];
@@ -67,6 +63,7 @@
     self.collectionView.collectionViewLayout.outgoingAvatarViewSize = rect;
     self.collectionView.collectionViewLayout.incomingAvatarViewSize = rect;
     
+    [self setupBubbles];
     
     [self.ref observeEventType:FIRDataEventTypeValue withBlock:^(FIRDataSnapshot * _Nonnull snapshot) {
         
@@ -78,18 +75,44 @@
 }
 
 
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    
+    if ([self.messages count] > 0) {
+        [self.messages removeAllObjects];
+    }
+}
+
+
 - (void)viewDidAppear:(BOOL)animated
 {
     
     [super viewDidAppear:animated];
     [self observeMessages];
-    [self.messages removeAllObjects];
     
 }
 
 
 - (void)configureCurrentChat
 {
+    
+    //    self.navigationController.navigationBar.tintColor = DARK_GRAY_COLOR;
+    
+    [self.inputToolbar.contentView.rightBarButtonItem setTitleColor:DARK_GRAY_COLOR forState:UIControlStateNormal];
+    [self.inputToolbar.contentView.rightBarButtonItem setTitle:@"Отпр" forState:UIControlStateNormal];
+    self.inputToolbar.contentView.textView.placeHolder = @"Новое сообщение";
+    
+    [self.navigationController.navigationBar setTitleTextAttributes:
+     @{NSForegroundColorAttributeName:DARK_GRAY_COLOR,
+       NSFontAttributeName:[UIFont fontWithName:@"HelveticaNeue-Light" size:18.f]}];
+    
+    self.interlocutorAvatarToNavBar = [[UIImageView alloc] init];
+    self.interlocutorAvatarToNavBar.frame = CGRectMake(40, 4, 35, 35);
+    self.interlocutorAvatarToNavBar.layer.cornerRadius = self.interlocutorAvatarToNavBar.frame.size.width / 2;
+    self.interlocutorAvatarToNavBar.layer.masksToBounds = YES;
+    [self.navigationController.navigationBar addSubview:self.interlocutorAvatarToNavBar];
+    
     
     NSURL *urlPhoto = [NSURL URLWithString:self.fireUser.photoURL];
     UIImage *imagePhoto = [UIImage imageWithData:[NSData dataWithContentsOfURL:urlPhoto]];
@@ -104,9 +127,10 @@
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(heandlerNotification:) name:TSSwipeViewInterlocutorNotification object:nil];
     
-    [self setupBubbles];
-    
 }
+
+
+//нотифтикация
 
 
 - (void)heandlerNotification:(NSNotification *)notification
@@ -114,6 +138,10 @@
     
     self.interlocutorID = [[notification object] objectForKey:@"intelocID"];
     self.interlocutorAvatar = [[notification object] objectForKey:@"intelocAvatar"];
+    self.interlocName = [[notification object] objectForKey:@"interlocName"];
+    
+    self.title = self.interlocName;
+    self.interlocutorAvatarToNavBar.image = self.interlocutorAvatar;
     
     if (self.interlocutorID != nil) {
         
@@ -165,8 +193,6 @@
     } else {
         cell.textView.textColor = [UIColor darkGrayColor];
     }
-    
-    cell.textView.font = [UIFont fontWithName:@"System-light" size:32.0];
     
     return cell;
     

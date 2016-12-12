@@ -22,8 +22,9 @@ extern NSString *const TSSwipeViewInterlocutorNotification;
 @property (weak, nonatomic) IBOutlet UIButton *chatButton;
 @property (weak, nonatomic) IBOutlet UIButton *photoButton;
 
-@property (strong, nonatomic) NSString *interlocutorUid;
 @property (strong, nonatomic) UIImage *interlocutorAvatar;
+@property (strong, nonatomic) NSString *interlocutorUid;
+@property (strong, nonatomic) NSString *interlocutorName;
 @property (strong, nonatomic) NSDictionary *parameterUser;
 @property (strong, nonatomic) NSMutableArray *photos;
 

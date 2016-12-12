@@ -8,6 +8,7 @@
 
 #import "TSChatsTableViewController.h"
 #import "TSChatTableViewCell.h"
+#import "TSChatViewController.h"
 #import "TSFireUser.h"
 #import "TSFireBase.h"
 
@@ -144,6 +145,18 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    
+    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"ChatStoryboard" bundle:[NSBundle mainBundle]];
+    TSChatViewController *chatController =
+    [storyboard instantiateViewControllerWithIdentifier:@"TSChatViewController"];
+    
+    NSDictionary *interlocutor = [self.interlocutors objectAtIndex:indexPath.row];
+    NSDictionary *interlocutorData = [interlocutor objectForKey:@"userData"];
+    NSString *interlocutorID = [interlocutorData objectForKey:@"userID"];
+    
+    [self.navigationController pushViewController:chatController animated:YES];
+    chatController.interlocutorID = interlocutorID;
+
 }
 
 
