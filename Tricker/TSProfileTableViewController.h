@@ -12,6 +12,7 @@
 
 @import Firebase;
 @import FirebaseAuth;
+@import FirebaseStorage;
 @import FirebaseDatabase;
 
 @interface TSProfileTableViewController : UITableViewController
@@ -20,6 +21,7 @@
 @property (strong, nonatomic) NSUserDefaults *userDefaults;
 @property (strong, nonatomic) UIBarButtonItem *doneButton;
 @property (strong, nonatomic) FIRDatabaseReference *ref;
+@property (strong, nonatomic) FIRStorageReference *storageRef;
 @property (strong, nonatomic) TSFireUser *fireUser;
 @property (strong, nonatomic) TSFireBase *fireBase;
 

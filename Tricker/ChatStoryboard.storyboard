@@ -11,7 +11,7 @@
         <!--Диалоги-->
         <scene sceneID="3IC-zD-yje">
             <objects>
-                <viewController id="eNa-Eu-rOp" customClass="TSChatsTableViewController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="TSChatsTableViewController" id="eNa-Eu-rOp" customClass="TSChatsTableViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="CTH-Gh-YbC"/>
                         <viewControllerLayoutGuide type="bottom" id="Z7L-mT-BVS"/>
@@ -100,6 +100,10 @@
                                     <outlet property="delegate" destination="eNa-Eu-rOp" id="sOp-lT-h5Y"/>
                                 </connections>
                             </tableView>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="t94-sg-BTM">
+                                <rect key="frame" x="60" y="24" width="35" height="35"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
@@ -115,6 +119,7 @@
                     </view>
                     <navigationItem key="navigationItem" title="Диалоги" id="d4k-qf-pmT"/>
                     <connections>
+                        <outlet property="navAvatarInterlocutorButton" destination="t94-sg-BTM" id="Iq5-8L-xfl"/>
                         <outlet property="tableView" destination="jpp-jt-OQG" id="5y6-oh-6hb"/>
                     </connections>
                 </viewController>
@@ -154,6 +159,10 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="barTintColor" red="0.98823529409999999" green="0.87450980389999999" blue="0.6588235294" alpha="1" colorSpace="calibratedRGB"/>
+                        <textAttributes key="titleTextAttributes">
+                            <fontDescription key="fontDescription" type="system" weight="light" pointSize="18"/>
+                            <color key="textColor" red="0.51372549020000002" green="0.61960784310000006" blue="0.69803921570000005" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        </textAttributes>
                     </navigationBar>
                     <nil name="viewControllers"/>
                     <connections>

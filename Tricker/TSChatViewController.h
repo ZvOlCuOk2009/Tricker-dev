@@ -12,5 +12,7 @@
 @interface TSChatViewController : JSQMessagesViewController
 
 @property (strong, nonatomic) NSString *interlocutorID;
+@property (strong, nonatomic) NSString *interlocName;
+@property (strong, nonatomic) UIImage *interlocutorAvatar;
 
 @end

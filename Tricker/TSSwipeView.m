@@ -1,4 +1,4 @@
-//
+
 //  TSSwipeView.m
 //  Tricker
 //
@@ -9,13 +9,14 @@
 #import "TSSwipeView.h"
 #import "TSCardsViewController.h"
 #import "TSChatViewController.h"
+#import "TSChatsTableViewController.h"
 #import "TSTabBarViewController.h"
-#import "TSProfileTableViewController.h"
 #import "TSViewCell.h"
 #import "TSPhotoView.h"
 #import "TSTrickerPrefixHeader.pch"
 
 NSString *const TSSwipeViewInterlocutorNotification = @"TSSwipeViewInterlocutorNotification";
+NSInteger recognizer;
 
 @interface TSSwipeView () <UITableViewDataSource, UITableViewDelegate, UIGestureRecognizerDelegate>
 
@@ -225,24 +226,55 @@ NSString *const TSSwipeViewInterlocutorNotification = @"TSSwipeViewInterlocutorN
 - (IBAction)chatActionButton:(id)sender
 {
     
-    TSTabBarViewController *tabBarController = (TSTabBarViewController *)[[[[UIApplication sharedApplication] delegate] window] rootViewController];
-    tabBarController.selectedIndex = 3;
+    if (recognizer == 2) {
+        
+        [self removeFromSuperview];
+        
+        recognizer = 0;
+        
+    } else {
+        
+        TSTabBarViewController *tabBarController = (TSTabBarViewController *)[[[[UIApplication sharedApplication] delegate] window] rootViewController];
+        tabBarController.selectedIndex = 3;
+        
+        recognizer = 1;
+        
+        //    UIImage * interlocAvatar = self.interlocutorAvatar;
+        //    NSString * interlocUid = self.interlocutorUid;
+        //    NSString * interlocName = self.interlocutorName;
+        //
+        //    NSDictionary *interlocutorParameters = @{@"intelocAvatar":interlocAvatar,
+        //                                             @"intelocID":interlocUid,
+        //                                             @"interlocName":interlocName};
+        
+        CGSize newSize = CGSizeMake(100, 100);
+        
+        UIGraphicsBeginImageContext(newSize);
+        [self.interlocutorAvatar drawInRect:CGRectMake(0, 0, newSize.width, newSize.height)];
+        UIImage *miniAvatar = UIGraphicsGetImageFromCurrentImageContext();
+        UIGraphicsEndImageContext();
+        
+        NSData *dataAvatar = UIImagePNGRepresentation(miniAvatar);
+        NSString *stringAvatar = [dataAvatar base64EncodedStringWithOptions:NSDataBase64EncodingEndLineWithLineFeed];
+        
+        NSUserDefaults *userDefault = [NSUserDefaults standardUserDefaults];
+        
+        [userDefault setObject:stringAvatar forKey:@"intelocAvatar"];
+        [userDefault setObject:self.interlocutorUid forKey:@"intelocID"];
+        [userDefault setObject:self.interlocutorName forKey:@"interlocName"];
+        [userDefault synchronize];
+        
+    }
     
-//    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"ChatStoryboard" bundle:[NSBundle mainBundle]];
-//    TSChatViewController *chatController =
-//    [storyboard instantiateViewControllerWithIdentifier:@"TSChatViewController"];
-    
-    UIImage * interlocAvatar = self.interlocutorAvatar;
-    NSString * interlocUid = self.interlocutorUid;
-    NSString * interlocName = self.interlocutorName;
-    
-    NSDictionary *interlocutorParameters = @{@"intelocAvatar":interlocAvatar,
-                                             @"intelocID":interlocUid,
-                                             @"interlocName":interlocName};
-    
-    [[NSNotificationCenter defaultCenter] postNotificationName:TSSwipeViewInterlocutorNotification
-                                                        object:interlocutorParameters];
-    
+}
+
+- (UIViewController *)currentTopViewController
+{
+    UIViewController *topVC = [[[[UIApplication sharedApplication] delegate] window] rootViewController];
+    while (topVC.presentedViewController) {
+        topVC = topVC.presentedViewController;
+    }
+    return topVC;
 }
 
 
@@ -296,6 +328,12 @@ NSString *const TSSwipeViewInterlocutorNotification = @"TSSwipeViewInterlocutorN
     self.tapGesture.enabled = NO;
     
 }
+
+
+//- (void)cancelInteraction
+//{
+//    [self.navigationController dismissViewControllerAnimated:YES completion:nil];
+//}
 
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section

@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 
 extern NSString *const TSSwipeViewInterlocutorNotification;
+extern NSInteger recognizer;
 
 @interface TSSwipeView : UIView
 

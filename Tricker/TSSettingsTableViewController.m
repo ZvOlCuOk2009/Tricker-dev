@@ -237,7 +237,6 @@ NSString * const UpdateParametersNotification = @"UpdateParametersNotification";
     
     self.nameLabel.text = fireUser.displayName;
     
-    
     //установка параметров из базы если уже есть данные
     if (fireUser.parameters) {
         

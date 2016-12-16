@@ -15,7 +15,7 @@
 #import <FBSDKCoreKit/FBSDKCoreKit.h>
 #import <GoogleSignIn/GoogleSignIn.h>
 #import <GGLCore/GGLCore.h>
-#import <GoogleMaps/GoogleMaps.h>
+//#import <GoogleMaps/GoogleMaps.h>
 #import <VKSdk.h>
 
 @import Firebase;
@@ -59,7 +59,7 @@
     
     [FIRApp configure];
     
-    [GMSServices provideAPIKey:API_KEY_GOOGLE_MAPS];
+//    [GMSServices provideAPIKey:API_KEY_GOOGLE_MAPS];
     
     NSError* configureError;
     [[GGLContext sharedInstance] configureWithError: &configureError];
@@ -69,9 +69,7 @@
     [GIDSignIn sharedInstance].delegate = self;
     
     self.ref = [[FIRDatabase database] reference];
-    
-    [FIRDatabase setLoggingEnabled:YES];
-    
+        
     return YES;
 }
 

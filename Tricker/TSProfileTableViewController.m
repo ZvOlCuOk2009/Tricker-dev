@@ -6,6 +6,8 @@
 //  Copyright © 2016 Mac. All rights reserved.
 //
 
+@import Photos;
+
 #import "TSProfileTableViewController.h"
 #import "TSSocialNetworkLoginViewController.h"
 #import "TSFacebookManager.h"
@@ -43,6 +45,8 @@
 
 @property (strong, nonatomic) NSString *positionButtonGender;
 
+@property (strong, nonatomic) NSString *filePath;
+
 @property (assign, nonatomic) NSInteger heightHeader;
 @property (assign, nonatomic) CGFloat fixSide;
 @property (assign, nonatomic) CGFloat fixOffset;
@@ -58,7 +62,18 @@
     
     self.ref = [[FIRDatabase database] reference];
     
-    [self.ref keepSynced:NO];
+    self.storageRef = [[FIRStorage storage] reference];
+    
+//    if (![FIRAuth auth].currentUser) {
+//        [[FIRAuth auth] signInAnonymouslyWithCompletion:^(FIRUser * _Nullable user,
+//                                                          NSError * _Nullable error) {
+//            if (error) {
+//                NSLog(@"error %@", error.description);
+//            } else {
+//                NSLog(@"user %@", user.description);
+//            }
+//        }];
+//    }
     
     [self.ref observeEventType:FIRDataEventTypeValue withBlock:^(FIRDataSnapshot * _Nonnull snapshot) {
         
@@ -66,6 +81,7 @@
         [self configureController];
         
     }];
+    
     
     
     UIImageView *imageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"background"]];
@@ -333,7 +349,7 @@
     [alertController addAction:cancel];
     
     [self presentViewController:alertController animated:YES completion:nil];
-    
+        
 }
 
 
@@ -368,21 +384,94 @@
 {
     
     [picker dismissViewControllerAnimated:YES completion:nil];
-    UIImage *image = [info objectForKey:UIImagePickerControllerEditedImage];
+//    
+//    UIImage *image = [info objectForKey:UIImagePickerControllerEditedImage];
+//    
+//    //сжатие и добавление фото в массив
+//    
+//    CGSize newSize = CGSizeMake(500, 500);
+//    
+//    UIGraphicsBeginImageContext(newSize);
+//    [image drawInRect:CGRectMake(0, 0, newSize.width, newSize.height)];
+//    UIImage *newImage = UIGraphicsGetImageFromCurrentImageContext();
+//    UIGraphicsEndImageContext();
+//    
+//    NSData *dataImage = UIImagePNGRepresentation(newImage);
+//    NSString *stringImage = [dataImage base64EncodedStringWithOptions:NSDataBase64EncodingEndLineWithLineFeed];
     
-    //сжатие и добавление в массив фото
     
-    CGSize newSize = CGSizeMake(300, 300);
+    ///
     
-    UIGraphicsBeginImageContext(newSize);
-    [image drawInRect:CGRectMake(0, 0, newSize.width, newSize.height)];
-    UIImage *newImage = UIGraphicsGetImageFromCurrentImageContext();
-    UIGraphicsEndImageContext();
+    NSURL *referenceUrl = info[UIImagePickerControllerReferenceURL];
     
-    NSData *dataImage = UIImagePNGRepresentation(newImage);
-    NSString *stringImage = [dataImage base64EncodedStringWithOptions:NSDataBase64EncodingEndLineWithLineFeed];
+    if (referenceUrl) {
+        
+        PHFetchResult* assets = [PHAsset fetchAssetsWithALAssetURLs:@[referenceUrl] options:nil];
+        PHAsset *asset = [assets firstObject];
+        
+        PHImageManager *manager = [PHImageManager defaultManager];
+        
+        [manager requestImageDataForAsset:asset options:0 resultHandler:^(NSData * _Nullable imageData, NSString * _Nullable dataUTI, UIImageOrientation orientation, NSDictionary * _Nullable info) {
+            
+            UIImage *image = [UIImage imageWithData:imageData];
+            
+            
+//            NSString *filePath = [NSString stringWithFormat:@"%@/%lld/", [FIRAuth auth].currentUser.uid,
+//             (long long)([[NSDate date] timeIntervalSince1970] * 1000.0)];
+
+            self.filePath = [NSString stringWithFormat:@"filePath/%@", [FIRAuth auth].currentUser.uid];
+            
+            [[self.storageRef child:self.filePath] putData:imageData metadata:nil
+                                           completion:^(FIRStorageMetadata *metadata, NSError *error) {
+                                               if (error) {
+                                                   NSLog(@"Error uploading: %@", error);
+                                                   return;
+                                               }
+                                           }];
+
+        }];
+        
+        ////
+        
+//        [asset requestContentEditingInputWithOptions:nil
+//                                   completionHandler:^(PHContentEditingInput *contentEditingInput,
+//                                                       NSDictionary *info) {
+//                                       NSURL *imageFile = contentEditingInput.fullSizeImageURL;
+//                                       
+//                                       NSString *filePath = @"new/FilePath/path/";
+//
+//                                       [[_storageRef child:filePath] putFile:imageFile metadata:nil
+//                                        completion:^(FIRStorageMetadata *metadata, NSError *error) {
+//                                            if (error) {
+//                                                NSLog(@"Error uploading: %@", error);
+//                                                return;
+//                                            }
+//                                        }];
+//
+//                                   }];
+//        
+    }
     
-    [self updateDataUser:stringImage];
+    ///
+    
+}
+
+
+- (IBAction)downloadImage:(id)sender
+{
+    
+    FIRStorageReference *islandRef = [self.storageRef child:self.filePath];
+    
+    [[islandRef child:self.filePath] dataWithMaxSize:1 * 1024 * 1024 completion:^(NSData *data, NSError *error) {
+        
+        if (error != nil) {
+            NSLog(@"error %@", error.description);
+        } else {
+            UIImage *image = [UIImage imageWithData:data];
+            self.avatarImageView.image = image;
+        }
+        
+    }];
     
 }
 

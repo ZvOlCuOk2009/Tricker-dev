@@ -20,6 +20,7 @@
 
 @property (strong, nonatomic) ZLSwipeableView *swipeableView;
 @property (weak, nonatomic) TSSwipeView *swipeView;
+@property (strong, nonatomic) UIImage *convertImage;
 
 @property (assign, nonatomic) NSInteger counterIndexPath;
 
@@ -111,8 +112,11 @@
         if (url && url.scheme && url.host) {
             
             NSData *dataImage = [NSData dataWithContentsOfURL:url];
-            self.swipeView.backgroundImageView.image = [UIImage imageWithData:dataImage];
-            self.swipeView.avatarImageView.image = [UIImage imageWithData:dataImage];
+            
+            convertImage = [UIImage imageWithData:dataImage];
+            
+            self.swipeView.backgroundImageView.image = convertImage;
+            self.swipeView.avatarImageView.image = convertImage;
             
         } else {
             

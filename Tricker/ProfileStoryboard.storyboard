@@ -436,6 +436,12 @@
                                 <action selector="changeAvatarActionButton:" destination="v8L-TM-BDS" id="0ag-UO-iva"/>
                             </connections>
                         </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="0rH-Km-eCP">
+                            <color key="tintColor" red="0.51372549020000002" green="0.61960784310000006" blue="0.69803921570000005" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <connections>
+                                <action selector="downloadImage:" destination="v8L-TM-BDS" id="L9R-6A-wez"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
                     <connections>
                         <outlet property="avatarImageView" destination="WQV-oK-Bxh" id="dzr-hn-XQV"/>

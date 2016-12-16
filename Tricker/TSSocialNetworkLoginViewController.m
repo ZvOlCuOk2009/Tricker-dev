@@ -15,7 +15,6 @@
 #import <FBSDKCoreKit/FBSDKCoreKit.h>
 #import <FBSDKLoginKit/FBSDKLoginKit.h>
 #import <VKSdk.h>
-#import <CBZSplashView.h>
 #import <GoogleSignIn/GoogleSignIn.h>
 
 @import Firebase;

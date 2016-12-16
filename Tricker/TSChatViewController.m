@@ -10,6 +10,7 @@
 #import "TSProfileTableViewController.h"
 #import "TSFireUser.h"
 #import "TSSwipeView.h"
+#import "TSTabBarViewController.h"
 #import "TSTrickerPrefixHeader.pch"
 
 @import Firebase;
@@ -28,11 +29,9 @@
 @property (strong, nonatomic) JSQMessagesBubbleImage *outgoingBubbleImageView;
 @property (strong, nonatomic) JSQMessagesBubbleImage *incomingBubbleImageView;
 
-@property (strong, nonatomic) NSString *interlocName;
-@property (strong, nonatomic) UIImage *interlocutorAvatar;
 @property (strong, nonatomic) UIImage *userAvatar;
 
-@property (strong, nonatomic) UIImageView *interlocutorAvatarToNavBar;
+@property (strong, nonatomic) UIButton *interlocutorAvatarButtonNavBar;
 
 @end
 
@@ -72,16 +71,22 @@
         
     }];
     
+    
+    UIBarButtonItem *backItem = [[UIBarButtonItem alloc] init];
+    [backItem setImage:[UIImage imageNamed:@"back"]];
+    [backItem setTintColor:DARK_GRAY_COLOR];
+    self.navigationItem.leftBarButtonItem = backItem;
+    
+    [backItem setTarget:self];
+    [backItem setAction:@selector(cancelInteraction)];
+    
 }
 
 
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    
-    if ([self.messages count] > 0) {
-        [self.messages removeAllObjects];
-    }
+ 
 }
 
 
@@ -94,10 +99,26 @@
 }
 
 
-- (void)configureCurrentChat
+//очиста чата от сообщений в момент скрытия контроллера с экрана
+
+
+- (void)viewDidDisappear:(BOOL)animated
 {
     
-    //    self.navigationController.navigationBar.tintColor = DARK_GRAY_COLOR;
+    [super viewDidDisappear:animated];
+    
+    if ([self.messages count] > 0) {
+        [self.messages removeAllObjects];
+    }
+    
+    [self.navigationController popToViewController:[self.navigationController.viewControllers firstObject] animated:YES];
+   
+    [self.interlocutorAvatarButtonNavBar setImage:nil forState:UIControlStateNormal];
+}
+
+
+- (void)configureCurrentChat
+{
     
     [self.inputToolbar.contentView.rightBarButtonItem setTitleColor:DARK_GRAY_COLOR forState:UIControlStateNormal];
     [self.inputToolbar.contentView.rightBarButtonItem setTitle:@"Отпр" forState:UIControlStateNormal];
@@ -107,11 +128,15 @@
      @{NSForegroundColorAttributeName:DARK_GRAY_COLOR,
        NSFontAttributeName:[UIFont fontWithName:@"HelveticaNeue-Light" size:18.f]}];
     
-    self.interlocutorAvatarToNavBar = [[UIImageView alloc] init];
-    self.interlocutorAvatarToNavBar.frame = CGRectMake(40, 4, 35, 35);
-    self.interlocutorAvatarToNavBar.layer.cornerRadius = self.interlocutorAvatarToNavBar.frame.size.width / 2;
-    self.interlocutorAvatarToNavBar.layer.masksToBounds = YES;
-    [self.navigationController.navigationBar addSubview:self.interlocutorAvatarToNavBar];
+    self.interlocutorAvatarButtonNavBar = [[UIButton alloc] init];
+    self.interlocutorAvatarButtonNavBar.frame = CGRectMake(60, 4, 35, 35);
+    self.interlocutorAvatarButtonNavBar.layer.cornerRadius = self.interlocutorAvatarButtonNavBar.frame.size.width / 2;
+    self.interlocutorAvatarButtonNavBar.layer.masksToBounds = YES;
+    self.interlocutorAvatarButtonNavBar.tag = 3;
+    [self.interlocutorAvatarButtonNavBar addTarget:self
+                                            action:@selector(interlocutorButtonNavBarActoin)
+                                  forControlEvents:UIControlEventTouchUpInside];
+    [self.navigationController.navigationBar addSubview:self.interlocutorAvatarButtonNavBar];
     
     
     NSURL *urlPhoto = [NSURL URLWithString:self.fireUser.photoURL];
@@ -125,29 +150,76 @@
         self.userAvatar = [UIImage imageWithData:data];
     }
     
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(heandlerNotification:) name:TSSwipeViewInterlocutorNotification object:nil];
+    
+    if (self.interlocutorID) {
+        [self setMessageRef];
+    } else {
+        
+        NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+        
+        self.interlocName = [userDefaults objectForKey:@"interlocName"];
+        self.interlocutorID = [userDefaults objectForKey:@"intelocID"];
+        NSString *stringAvatar = [userDefaults objectForKey:@"intelocAvatar"];
+        
+        NSData *dataAvatar = [[NSData alloc] initWithBase64EncodedString:stringAvatar
+                                                           options:NSDataBase64DecodingIgnoreUnknownCharacters];
+        self.interlocutorAvatar = [UIImage imageWithData:dataAvatar];
+        
+        [self setMessageRef];
+    }
     
 }
 
 
-//нотифтикация
+//селектор кнопки назад
 
 
-- (void)heandlerNotification:(NSNotification *)notification
+- (void)cancelInteraction
+{
+    [self.navigationController popToViewController:[self.navigationController.viewControllers firstObject] animated:YES];
+}
+
+
+//создание ссылок на сообщения пользователя и собеседника в базу
+
+
+- (void)setMessageRef
 {
     
-    self.interlocutorID = [[notification object] objectForKey:@"intelocID"];
-    self.interlocutorAvatar = [[notification object] objectForKey:@"intelocAvatar"];
-    self.interlocName = [[notification object] objectForKey:@"interlocName"];
+    NSArray *namesComponent = [self.interlocName componentsSeparatedByString:@" "];
     
-    self.title = self.interlocName;
-    self.interlocutorAvatarToNavBar.image = self.interlocutorAvatar;
+    if ([namesComponent count] > 1) {
+        self.title = [namesComponent firstObject];
+    } else {
+        self.title = self.interlocName;
+    }
+    
+    [self.interlocutorAvatarButtonNavBar setImage:self.interlocutorAvatar forState:UIControlStateNormal];
     
     if (self.interlocutorID != nil) {
         
         self.messageRefUser = [[[[[self.ref child:@"dataBase"] child:@"users"] child:self.user.uid] child:@"chat"] child:self.interlocutorID];
         self.messageRefInterlocutor = [[[[[self.ref child:@"dataBase"] child:@"users"] child:self.interlocutorID] child:@"chat"] child:self.user.uid];
     }
+    
+}
+
+
+- (void)interlocutorButtonNavBarActoin
+{
+    
+    TSSwipeView *swipeView = [TSSwipeView initProfileView];  
+    swipeView.frame = kTSSwipeViewFrame;
+    swipeView.nameLabel.text = self.interlocName;
+    swipeView.avatarImageView.image = self.interlocutorAvatar;
+    swipeView.backgroundImageView.image = self.interlocutorAvatar;
+    
+    [swipeView.chatButton setImage:nil forState:UIControlStateNormal];
+    [swipeView.chatButton setImage:[UIImage imageNamed:@"cancel_view"] forState:UIControlStateNormal];
+    
+    [self.view addSubview:swipeView];
+    
+    recognizer = 2;
     
 }
 
@@ -165,6 +237,9 @@
 {
     return self.messages.count;
 }
+
+
+//входящие и исходящие пузыри
 
 
 - (id<JSQMessageBubbleImageDataSource>)collectionView:(JSQMessagesCollectionView *)collectionView messageBubbleImageDataForItemAtIndexPath:(NSIndexPath *)indexPath
@@ -194,9 +269,13 @@
         cell.textView.textColor = [UIColor darkGrayColor];
     }
     
+    cell.textView.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:16.f];
+    
     return cell;
     
 }
+
+//установки аватаров напротив сообщений
 
 
 - (id<JSQMessageAvatarImageDataSource>)collectionView:(JSQMessagesCollectionView *)collectionView avatarImageDataForItemAtIndexPath:(NSIndexPath *)indexPath
@@ -233,6 +312,9 @@
 }
 
 
+//добавление пузырей в чат
+
+
 - (void)setupBubbles
 {
     
@@ -245,6 +327,9 @@
 }
 
 
+//добавление сообщение в массив для отображения в чате
+
+
 - (void)addMessage:(NSString *)idString text:(NSString *)text
 {
     
@@ -252,6 +337,9 @@
     [self.messages addObject:message];
     
 }
+
+
+//нажатие кнопки "отправить"
 
 
 - (void)didPressSendButton:(UIButton *)button withMessageText:(NSString *)text senderId:(NSString *)senderId
@@ -273,6 +361,9 @@
 }
 
 
+//добавление наблюдателя за новыми сообщениями
+
+
 - (void)observeMessages
 {
     
@@ -288,12 +379,6 @@
         [self finishReceivingMessageAnimated:YES];
     }];
     
-}
-
-
-- (void)dealloc
-{
-    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 
