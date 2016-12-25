@@ -11,6 +11,7 @@
 		FD002C651DFA162900D47428 /* TSChatsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FD002C641DFA162900D47428 /* TSChatsTableViewController.m */; };
 		FD06541C1DFCA24200AE45EF /* TSSwipeView6plus.xib in Resources */ = {isa = PBXBuildFile; fileRef = FD06541B1DFCA24200AE45EF /* TSSwipeView6plus.xib */; };
 		FD06541E1DFCBDD200AE45EF /* TSPhotoView6Plus.xib in Resources */ = {isa = PBXBuildFile; fileRef = FD06541D1DFCBDD200AE45EF /* TSPhotoView6Plus.xib */; };
+		FD08BFA81E0F5AA900F90FA2 /* TSFireImage.m in Sources */ = {isa = PBXBuildFile; fileRef = FD08BFA71E0F5AA900F90FA2 /* TSFireImage.m */; };
 		FD0C1C9D1DE7810000D37B61 /* TSCardsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FD0C1C9C1DE7810000D37B61 /* TSCardsViewController.m */; };
 		FD0C1CA01DE783B500D37B61 /* TSSwipeView.xib in Resources */ = {isa = PBXBuildFile; fileRef = FD0C1C9F1DE783B500D37B61 /* TSSwipeView.xib */; };
 		FD0C1CA31DE78B9B00D37B61 /* TSSwipeView.m in Sources */ = {isa = PBXBuildFile; fileRef = FD0C1CA21DE78B9B00D37B61 /* TSSwipeView.m */; };
@@ -31,6 +32,7 @@
 		FD45D0801DD7BE0F00EB2640 /* TSSearchBar.m in Sources */ = {isa = PBXBuildFile; fileRef = FD45D07F1DD7BE0E00EB2640 /* TSSearchBar.m */; };
 		FD45D0851DD7CF4200EB2640 /* TSTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = FD45D0841DD7CF4200EB2640 /* TSTableViewCell.m */; };
 		FD5CD4941DD3D6CF0056C1A6 /* TSSitysViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FD5CD4931DD3D6CF0056C1A6 /* TSSitysViewController.m */; };
+		FD5FFB231E05DA5900CB807F /* TSFireInterlocutor.m in Sources */ = {isa = PBXBuildFile; fileRef = FD5FFB221E05DA5900CB807F /* TSFireInterlocutor.m */; };
 		FD68B4591DDA7C5A00EF19C3 /* ProfileStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FD68B4581DDA7C5A00EF19C3 /* ProfileStoryboard.storyboard */; };
 		FD68B45B1DDA7CC100EF19C3 /* MapStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FD68B45A1DDA7CC100EF19C3 /* MapStoryboard.storyboard */; };
 		FD68B45D1DDA7CEC00EF19C3 /* CardsStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FD68B45C1DDA7CEC00EF19C3 /* CardsStoryboard.storyboard */; };
@@ -41,6 +43,7 @@
 		FDE9273C1DE8EC4600FF884F /* TSIntermediateViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FDE9273B1DE8EC4600FF884F /* TSIntermediateViewController.m */; };
 		FDEBE3E81DF1C4AB0073A0FF /* TSCollCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = FDEBE3E71DF1C4AB0073A0FF /* TSCollCell.xib */; };
 		FDEBE3F11DF1C7F40073A0FF /* TSCollCell.m in Sources */ = {isa = PBXBuildFile; fileRef = FDEBE3F01DF1C7F40073A0FF /* TSCollCell.m */; };
+		FDED429F1E06BC8A005E0948 /* TSDetailView.xib in Resources */ = {isa = PBXBuildFile; fileRef = FDED429E1E06BC8A005E0948 /* TSDetailView.xib */; };
 		FDEF72631DD65CAB00CAF773 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FDEF72621DD65CAA00CAF773 /* CoreLocation.framework */; };
 		FDF4BB121DF019D4003D3841 /* TSViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = FDF4BB111DF019D4003D3841 /* TSViewCell.xib */; };
 		FDF4BB181DF01FB7003D3841 /* TSViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = FDF4BB171DF01FB7003D3841 /* TSViewCell.m */; };
@@ -83,6 +86,8 @@
 		FD002C641DFA162900D47428 /* TSChatsTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSChatsTableViewController.m; sourceTree = "<group>"; };
 		FD06541B1DFCA24200AE45EF /* TSSwipeView6plus.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TSSwipeView6plus.xib; sourceTree = "<group>"; };
 		FD06541D1DFCBDD200AE45EF /* TSPhotoView6Plus.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TSPhotoView6Plus.xib; sourceTree = "<group>"; };
+		FD08BFA61E0F5AA900F90FA2 /* TSFireImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSFireImage.h; sourceTree = "<group>"; };
+		FD08BFA71E0F5AA900F90FA2 /* TSFireImage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSFireImage.m; sourceTree = "<group>"; };
 		FD0C1C9B1DE7810000D37B61 /* TSCardsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSCardsViewController.h; sourceTree = "<group>"; };
 		FD0C1C9C1DE7810000D37B61 /* TSCardsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSCardsViewController.m; sourceTree = "<group>"; };
 		FD0C1C9F1DE783B500D37B61 /* TSSwipeView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TSSwipeView.xib; sourceTree = "<group>"; };
@@ -121,6 +126,8 @@
 		FD45D0841DD7CF4200EB2640 /* TSTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSTableViewCell.m; sourceTree = "<group>"; };
 		FD5CD4921DD3D6CF0056C1A6 /* TSSitysViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSSitysViewController.h; sourceTree = "<group>"; };
 		FD5CD4931DD3D6CF0056C1A6 /* TSSitysViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSSitysViewController.m; sourceTree = "<group>"; };
+		FD5FFB211E05DA5900CB807F /* TSFireInterlocutor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSFireInterlocutor.h; sourceTree = "<group>"; };
+		FD5FFB221E05DA5900CB807F /* TSFireInterlocutor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSFireInterlocutor.m; sourceTree = "<group>"; };
 		FD68B4581DDA7C5A00EF19C3 /* ProfileStoryboard.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = ProfileStoryboard.storyboard; sourceTree = "<group>"; };
 		FD68B45A1DDA7CC100EF19C3 /* MapStoryboard.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = MapStoryboard.storyboard; sourceTree = "<group>"; };
 		FD68B45C1DDA7CEC00EF19C3 /* CardsStoryboard.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = CardsStoryboard.storyboard; sourceTree = "<group>"; };
@@ -135,6 +142,7 @@
 		FDEBE3E71DF1C4AB0073A0FF /* TSCollCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TSCollCell.xib; sourceTree = "<group>"; };
 		FDEBE3EF1DF1C7F40073A0FF /* TSCollCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSCollCell.h; sourceTree = "<group>"; };
 		FDEBE3F01DF1C7F40073A0FF /* TSCollCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSCollCell.m; sourceTree = "<group>"; };
+		FDED429E1E06BC8A005E0948 /* TSDetailView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TSDetailView.xib; sourceTree = "<group>"; };
 		FDEF72621DD65CAA00CAF773 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		FDF4BB111DF019D4003D3841 /* TSViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TSViewCell.xib; sourceTree = "<group>"; };
 		FDF4BB161DF01FB7003D3841 /* TSViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSViewCell.h; sourceTree = "<group>"; };
@@ -357,6 +365,10 @@
 				FD1C4F751DCEA49700CF63E9 /* TSFireUser.m */,
 				FDE927371DE840EC00FF884F /* TSFireBase.h */,
 				FDE927381DE840EC00FF884F /* TSFireBase.m */,
+				FD5FFB211E05DA5900CB807F /* TSFireInterlocutor.h */,
+				FD5FFB221E05DA5900CB807F /* TSFireInterlocutor.m */,
+				FD08BFA61E0F5AA900F90FA2 /* TSFireImage.h */,
+				FD08BFA71E0F5AA900F90FA2 /* TSFireImage.m */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -403,6 +415,7 @@
 			isa = PBXGroup;
 			children = (
 				FD0C1C9F1DE783B500D37B61 /* TSSwipeView.xib */,
+				FDED429E1E06BC8A005E0948 /* TSDetailView.xib */,
 				FD06541B1DFCA24200AE45EF /* TSSwipeView6plus.xib */,
 				FDF4BB111DF019D4003D3841 /* TSViewCell.xib */,
 				FDF4BB191DF02C3E003D3841 /* TSPhotoView.xib */,
@@ -530,6 +543,37 @@
 				Base,
 				ru,
 				he,
+				ar,
+				ca,
+				cs,
+				da,
+				de,
+				el,
+				en_GB,
+				es,
+				fi,
+				fr,
+				hr,
+				hu,
+				id,
+				it,
+				ja,
+				ko,
+				ms,
+				nb,
+				nl,
+				pl,
+				pt,
+				pt_PT,
+				ro,
+				sk,
+				sv,
+				th,
+				tr,
+				uk,
+				vi,
+				zh_CN,
+				zh_TW,
 			);
 			mainGroup = FD1C4F251DCE252200CF63E9;
 			productRefGroup = FD1C4F2F1DCE252200CF63E9 /* Products */;
@@ -555,6 +599,7 @@
 				FDFF9D831DEA251E00F4971B /* TSAlertViewCard.xib in Resources */,
 				FD68B45F1DDA7CFC00EF19C3 /* ChatStoryboard.storyboard in Resources */,
 				FD1C4F411DCE252200CF63E9 /* LaunchScreen.storyboard in Resources */,
+				FDED429F1E06BC8A005E0948 /* TSDetailView.xib in Resources */,
 				FD06541C1DFCA24200AE45EF /* TSSwipeView6plus.xib in Resources */,
 				FD68B45D1DDA7CEC00EF19C3 /* CardsStoryboard.storyboard in Resources */,
 				FD1C4F3E1DCE252200CF63E9 /* Assets.xcassets in Resources */,
@@ -611,7 +656,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
 		DDAEED5903104A6B91C319E4 /* [CP] Copy Pods Resources */ = {
@@ -653,6 +698,7 @@
 				FDFDFC951DD26A28007811EF /* TSAutorizationViewController.m in Sources */,
 				FDEBE3F11DF1C7F40073A0FF /* TSCollCell.m in Sources */,
 				FD0C1C9D1DE7810000D37B61 /* TSCardsViewController.m in Sources */,
+				FD5FFB231E05DA5900CB807F /* TSFireInterlocutor.m in Sources */,
 				FDF4BB241DF076B2003D3841 /* TSCollectionViewCell.m in Sources */,
 				FDE927391DE840EC00FF884F /* TSFireBase.m in Sources */,
 				FDF4BB1D1DF02DB1003D3841 /* TSPhotoView.m in Sources */,
@@ -662,6 +708,7 @@
 				FD1C4F691DCE282100CF63E9 /* TSSocialNetworkLoginViewController.m in Sources */,
 				FDF4BB201DF03F38003D3841 /* TSPhotosViewController.m in Sources */,
 				FDBDDDDF1DDB8745008EE73E /* TSSettingsTableViewController.m in Sources */,
+				FD08BFA81E0F5AA900F90FA2 /* TSFireImage.m in Sources */,
 				FDF901581DF89F700067DE87 /* TSChatTableViewCell.m in Sources */,
 				FDF4BB181DF01FB7003D3841 /* TSViewCell.m in Sources */,
 			);
@@ -819,6 +866,11 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = Tricker/Tricker.entitlements;
 				DEVELOPMENT_TEAM = 5D7GRV784H;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Tricker/GoogleMaps/Frameworks",
+					"$(PROJECT_DIR)/Tricker/GoogleMaps/GoogleMapsSDKDemos",
+				);
 				INFOPLIST_FILE = Tricker/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -834,6 +886,11 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = Tricker/Tricker.entitlements;
 				DEVELOPMENT_TEAM = 5D7GRV784H;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Tricker/GoogleMaps/Frameworks",
+					"$(PROJECT_DIR)/Tricker/GoogleMaps/GoogleMapsSDKDemos",
+				);
 				INFOPLIST_FILE = Tricker/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";

@@ -30,9 +30,6 @@ extern NSInteger recognizer;
 @property (strong, nonatomic) NSMutableArray *photos;
 
 + (instancetype)initProfileView;
-
-- (IBAction)photoActionButton:(id)sender;
-- (IBAction)parametersActionButton:(id)sender;
-- (IBAction)chatActionButton:(id)sender;
++ (instancetype)initDetailView;
 
 @end

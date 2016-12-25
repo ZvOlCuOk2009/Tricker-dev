@@ -41,7 +41,7 @@ NSInteger recognizer;
 
 - (void)drawRect:(CGRect)rect {
     
-    //[self awakeFromNib];
+    [self awakeFromNib];
     
     self.dataSource = @[@"Ищу", @"Возраст", @"С целью", @"Рост", @"Вес", @"Фигура", @"Глаза", @"Волосы", @"Отношения", @"Дети", @"Доход", @"Образование", @"Жильё", @"Автомобиль", @"Отношение к курению", @"Алкоголь"];
     self.counter = 0;
@@ -206,6 +206,39 @@ NSInteger recognizer;
 }
 
 
++ (instancetype)initDetailView
+{
+    
+    TSSwipeView *view = nil;
+    
+    
+    if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone)
+    {
+        if (IS_IPHONE_4) {
+            
+            UINib *nib = [UINib nibWithNibName:@"TSDetailView" bundle:nil];
+            view = [nib instantiateWithOwner:self options:nil][0];
+            view.frame = CGRectMake(10, 74, 300, 352);
+            
+        } else if (IS_IPHONE_5) {
+            
+            
+            
+        } else if (IS_IPHONE_6) {
+            
+            
+            
+        } else if (IS_IPHONE_6_PLUS) {
+            
+        }
+    }
+    
+    return view;
+    
+}
+
+
+
 - (IBAction)photoActionButton:(id)sender
 {
     self.photoView = [[[NSBundle mainBundle] loadNibNamed:self.photosView
@@ -228,7 +261,18 @@ NSInteger recognizer;
     
     if (recognizer == 2) {
         
-        [self removeFromSuperview];
+        [UIView animateWithDuration:0.35
+                              delay:0
+             usingSpringWithDamping:0.7
+              initialSpringVelocity:0.6
+                            options:0
+                         animations:^{
+                             self.frame = CGRectMake(10, 480, self.frame.size.width, self.frame.size.height);
+                         } completion:nil];
+        
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.35 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            [self removeFromSuperview];
+        });
         
         recognizer = 0;
         
@@ -238,14 +282,6 @@ NSInteger recognizer;
         tabBarController.selectedIndex = 3;
         
         recognizer = 1;
-        
-        //    UIImage * interlocAvatar = self.interlocutorAvatar;
-        //    NSString * interlocUid = self.interlocutorUid;
-        //    NSString * interlocName = self.interlocutorName;
-        //
-        //    NSDictionary *interlocutorParameters = @{@"intelocAvatar":interlocAvatar,
-        //                                             @"intelocID":interlocUid,
-        //                                             @"interlocName":interlocName};
         
         CGSize newSize = CGSizeMake(100, 100);
         
@@ -266,15 +302,6 @@ NSInteger recognizer;
         
     }
     
-}
-
-- (UIViewController *)currentTopViewController
-{
-    UIViewController *topVC = [[[[UIApplication sharedApplication] delegate] window] rootViewController];
-    while (topVC.presentedViewController) {
-        topVC = topVC.presentedViewController;
-    }
-    return topVC;
 }
 
 
@@ -330,10 +357,7 @@ NSInteger recognizer;
 }
 
 
-//- (void)cancelInteraction
-//{
-//    [self.navigationController dismissViewControllerAnimated:YES completion:nil];
-//}
+#pragma mark - UITableViewDataSource
 
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section

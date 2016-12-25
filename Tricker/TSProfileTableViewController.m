@@ -11,6 +11,7 @@
 #import "TSProfileTableViewController.h"
 #import "TSSocialNetworkLoginViewController.h"
 #import "TSFacebookManager.h"
+#import "TSFireImage.h"
 #import "TSTrickerPrefixHeader.pch"
 
 #import "TSTabBarViewController.h"
@@ -41,7 +42,6 @@
 
 @property (strong, nonatomic) UIImage *pointImage;
 @property (strong, nonatomic) UIImage *circleImage;
-@property (strong, nonatomic) UIImage *avatarImage;
 
 @property (strong, nonatomic) NSString *positionButtonGender;
 
@@ -61,19 +61,7 @@
     [super viewDidLoad];
     
     self.ref = [[FIRDatabase database] reference];
-    
     self.storageRef = [[FIRStorage storage] reference];
-    
-//    if (![FIRAuth auth].currentUser) {
-//        [[FIRAuth auth] signInAnonymouslyWithCompletion:^(FIRUser * _Nullable user,
-//                                                          NSError * _Nullable error) {
-//            if (error) {
-//                NSLog(@"error %@", error.description);
-//            } else {
-//                NSLog(@"user %@", user.description);
-//            }
-//        }];
-//    }
     
     [self.ref observeEventType:FIRDataEventTypeValue withBlock:^(FIRDataSnapshot * _Nonnull snapshot) {
         
@@ -81,7 +69,6 @@
         [self configureController];
         
     }];
-    
     
     
     UIImageView *imageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"background"]];
@@ -159,7 +146,7 @@
     
 }
 
-#pragma mark - configure the controller
+#pragma mark - configure the k
 
 
 - (void)configureController
@@ -171,34 +158,37 @@
     [SVProgressHUD setForegroundColor:DARK_GRAY_COLOR];
     
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-    
-        NSURL *urlPhoto = [NSURL URLWithString:self.fireUser.photoURL];
-        self.avatarImage = [UIImage imageWithData:[NSData dataWithContentsOfURL:urlPhoto]];
         
-        if (urlPhoto && urlPhoto.scheme && urlPhoto.host) {
+        NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+        NSString *documentsDirectory = paths[0];
+        NSString *filePath = [NSString stringWithFormat:@"file:%@/myimage.jpg", documentsDirectory];
+        NSURL *fileURL = [NSURL URLWithString:filePath];
+        NSString *storagePath = [[NSUserDefaults standardUserDefaults] objectForKey:@"avatarUser"];
+        
+        __block UIImage *avatar = nil;
+        
+        [[self.storageRef child:storagePath] writeToFile:fileURL completion:^(NSURL * _Nullable URL, NSError * _Nullable error) {
             
-            dispatch_async(dispatch_get_main_queue(), ^{
-            
-                [self setAvatarAndBackground:self.avatarImage];
-                [self setParametrUser:self.fireUser];
+            if (error) {
+                NSLog(@"Error downloading: %@", error);
+                return;
+            } else if (URL) {
                 
-                [SVProgressHUD dismiss];
-            });
-            
-        } else {
-            
-            dispatch_async(dispatch_get_main_queue(), ^{
-            
-                NSData *data = [[NSData alloc] initWithBase64EncodedString:self.fireUser.photoURL options:NSDataBase64DecodingIgnoreUnknownCharacters];
-                self.avatarImage = [UIImage imageWithData:data];
-                
-                [self setAvatarAndBackground:self.avatarImage];
-                [self setParametrUser:self.fireUser];
-                
-                [SVProgressHUD dismiss];
-            });
-            
-        }
+                avatar = [UIImage imageWithContentsOfFile:URL.path];
+        
+//        UIImage *avatar = [TSFireImage downloadImage:nil byPath:@"avatarUser"];
+        
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    
+                    [self setAvatarAndBackground:avatar];
+                    [self setParametrUser:self.fireUser];
+                    
+                    [SVProgressHUD dismiss];
+                });
+            }
+        }];
+        
+        
         
     });
     
@@ -228,10 +218,10 @@
 //установка аватара и данных в лейблы
 
 
-- (void)setAvatarAndBackground:(UIImage *)image
+- (void)setAvatarAndBackground:(UIImage *)avatar
 {
-    self.avatarImageView.image = image;
-    self.backgroundImageView.image = image;
+    self.avatarImageView.image = avatar;
+    self.backgroundImageView.image = avatar;
 }
 
 
@@ -383,96 +373,59 @@
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
 {
     
-    [picker dismissViewControllerAnimated:YES completion:nil];
-//    
-//    UIImage *image = [info objectForKey:UIImagePickerControllerEditedImage];
-//    
-//    //сжатие и добавление фото в массив
-//    
-//    CGSize newSize = CGSizeMake(500, 500);
-//    
-//    UIGraphicsBeginImageContext(newSize);
-//    [image drawInRect:CGRectMake(0, 0, newSize.width, newSize.height)];
-//    UIImage *newImage = UIGraphicsGetImageFromCurrentImageContext();
-//    UIGraphicsEndImageContext();
-//    
-//    NSData *dataImage = UIImagePNGRepresentation(newImage);
-//    NSString *stringImage = [dataImage base64EncodedStringWithOptions:NSDataBase64EncodingEndLineWithLineFeed];
+    [picker dismissViewControllerAnimated:YES completion:NULL];
     
+    UIImage *image = info[UIImagePickerControllerEditedImage];
+    NSData *imageData = UIImageJPEGRepresentation(image, 0.8);
     
-    ///
+    NSString *imagePath = [NSString stringWithFormat:@"%@/%lld.jpg",
+                           [FIRAuth auth].currentUser.uid,
+                           (long long)([NSDate date].timeIntervalSince1970 * 1000.0)];
     
-    NSURL *referenceUrl = info[UIImagePickerControllerReferenceURL];
+    FIRStorageMetadata *metadata = [FIRStorageMetadata new];
     
-    if (referenceUrl) {
-        
-        PHFetchResult* assets = [PHAsset fetchAssetsWithALAssetURLs:@[referenceUrl] options:nil];
-        PHAsset *asset = [assets firstObject];
-        
-        PHImageManager *manager = [PHImageManager defaultManager];
-        
-        [manager requestImageDataForAsset:asset options:0 resultHandler:^(NSData * _Nullable imageData, NSString * _Nullable dataUTI, UIImageOrientation orientation, NSDictionary * _Nullable info) {
-            
-            UIImage *image = [UIImage imageWithData:imageData];
-            
-            
-//            NSString *filePath = [NSString stringWithFormat:@"%@/%lld/", [FIRAuth auth].currentUser.uid,
-//             (long long)([[NSDate date] timeIntervalSince1970] * 1000.0)];
+    metadata.contentType = @"image/jpeg";
+    [[_storageRef child:imagePath] putData:imageData
+                                  metadata:metadata
+                                completion:^(FIRStorageMetadata * _Nullable metadata, NSError * _Nullable error) {
+                                    if (error) {
+                                        NSLog(@"Error uploading: %@", error);
+                                        return;
+                                    }
+                                    [self uploadSuccess:metadata storagePath:imagePath];
+                                }];
+    
+}
 
-            self.filePath = [NSString stringWithFormat:@"filePath/%@", [FIRAuth auth].currentUser.uid];
-            
-            [[self.storageRef child:self.filePath] putData:imageData metadata:nil
-                                           completion:^(FIRStorageMetadata *metadata, NSError *error) {
-                                               if (error) {
-                                                   NSLog(@"Error uploading: %@", error);
-                                                   return;
-                                               }
-                                           }];
 
-        }];
-        
-        ////
-        
-//        [asset requestContentEditingInputWithOptions:nil
-//                                   completionHandler:^(PHContentEditingInput *contentEditingInput,
-//                                                       NSDictionary *info) {
-//                                       NSURL *imageFile = contentEditingInput.fullSizeImageURL;
-//                                       
-//                                       NSString *filePath = @"new/FilePath/path/";
-//
-//                                       [[_storageRef child:filePath] putFile:imageFile metadata:nil
-//                                        completion:^(FIRStorageMetadata *metadata, NSError *error) {
-//                                            if (error) {
-//                                                NSLog(@"Error uploading: %@", error);
-//                                                return;
-//                                            }
-//                                        }];
-//
-//                                   }];
-//        
-    }
-    
-    ///
-    
+- (void)uploadSuccess:(FIRStorageMetadata *)metadata storagePath:(NSString *)storagePath
+{
+    NSLog(@"Upload Succeeded!");
+    [[NSUserDefaults standardUserDefaults] setObject:storagePath forKey:@"storagePath"];
+    [[NSUserDefaults standardUserDefaults] synchronize];
 }
 
 
 - (IBAction)downloadImage:(id)sender
 {
     
-    FIRStorageReference *islandRef = [self.storageRef child:self.filePath];
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString *documentsDirectory = paths[0];
+    NSString *filePath = [NSString stringWithFormat:@"file:%@/myimage.jpg", documentsDirectory];
+    NSURL *fileURL = [NSURL URLWithString:filePath];
+    NSString *storagePath = [[NSUserDefaults standardUserDefaults] objectForKey:@"storagePath"];
     
-    [[islandRef child:self.filePath] dataWithMaxSize:1 * 1024 * 1024 completion:^(NSData *data, NSError *error) {
-        
-        if (error != nil) {
-            NSLog(@"error %@", error.description);
-        } else {
-            UIImage *image = [UIImage imageWithData:data];
-            self.avatarImageView.image = image;
-        }
-        
-    }];
-    
+
+    [[_storageRef child:storagePath] writeToFile:fileURL completion:^(NSURL * _Nullable URL, NSError * _Nullable
+                                                                      error) {
+        if (error) {
+             NSLog(@"Error downloading: %@", error);
+             return;
+         } else if (URL) {
+             self.avatarImageView.image = [UIImage imageWithContentsOfFile:URL.path];
+         }
+     }];
+
 }
 
 
@@ -492,10 +445,8 @@
     
     NSString *userID = nil;
     NSString *name = nil;
-    NSString *photoURL = nil;
     NSString *email = nil;
     NSString *online = nil;
-    
     NSString *gender = nil;
     NSString *dateOfBirth = nil;
     NSString *age = nil;
@@ -512,12 +463,6 @@
         name = self.textFieldName.text;
     } else {
         name = self.fireUser.displayName;
-    }
-    
-    if (photo) {
-        photoURL = photo; 
-    } else {
-        photoURL = self.fireUser.photoURL;
     }
     
     if (self.positionButtonGender) {
@@ -566,7 +511,6 @@
         
         NSDictionary *userData = @{@"userID":userID,
                                    @"displayName":name,
-                                   @"photoURL":photoURL,
                                    @"email":email,
                                    @"dateOfBirth":dateOfBirth,
                                    @"gender":gender,

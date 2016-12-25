@@ -100,12 +100,16 @@
         NSString *uid = [selectedUserData objectForKey:@"userID"];
         
         
+        //установка индикации онлайн
+        
         if ([online isEqualToString:@"оффлайн"]) {
             self.swipeView.onlineView.backgroundColor = [UIColor redColor];
         } else if ([online isEqualToString:@"онлайн"]) {
             self.swipeView.onlineView.backgroundColor = [UIColor greenColor];
         }
-            
+        
+        //установка изображения и фона
+        
         NSURL *url = [NSURL URLWithString:photoURL];
         UIImage *convertImage = nil;
         
@@ -122,6 +126,7 @@
             
             if (!photoURL) {
                 photoURL = @"";
+                self.swipeView.avatarImageView.image = [UIImage imageNamed:@"placeholder"];
             }
             
             NSData *data = [[NSData alloc]initWithBase64EncodedString:photoURL options:NSDataBase64DecodingIgnoreUnknownCharacters];
@@ -135,7 +140,7 @@
             [photosUser removeObjectAtIndex:0];
         }
         
-//        self.swipeView.avatarImageView.layer.cornerRadius = 110;
+        //установка параметров
         
         self.swipeView.nameLabel.text = displayName;
         self.swipeView.ageLabel.text = age;
@@ -153,6 +158,8 @@
         self.swipeView.interlocutorUid = uid;
         self.swipeView.interlocutorAvatar = convertImage;
         self.swipeView.interlocutorName = displayName;
+        
+        [self.swipeView.chatButton setImage:[UIImage imageNamed:@"chat"] forState:UIControlStateNormal];
         
         self.counterIndexPath++;
         

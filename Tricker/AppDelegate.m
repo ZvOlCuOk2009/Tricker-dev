@@ -104,7 +104,7 @@
         
         self.fireUser = [TSFireUser initWithSnapshot:snapshot];
         
-        [self updateOnlineParameter:@"онлайн"];
+//        [self updateOnlineParameter:@"онлайн"];
     }];
     
 }
@@ -192,21 +192,21 @@
     // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
     // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
     self.counter = 0;
-    [self updateOnlineParameter:@"оффлайн"];
+//    [self updateOnlineParameter:@"оффлайн"];
 }
 
 
 - (void)applicationWillEnterForeground:(UIApplication *)application {
     // Called as part of the transition from the background to the active state; here you can undo many of the changes made on entering the background.
     self.counter = 0;
-    [self updateOnlineParameter:@"онлайн"];
+//    [self updateOnlineParameter:@"онлайн"];
 }
 
 
 - (void)applicationWillTerminate:(UIApplication *)application {
     
     self.counter = 0;
-    [self updateOnlineParameter:@"оффлайн"];
+//    [self updateOnlineParameter:@"оффлайн"];
 }
 
 
@@ -223,7 +223,7 @@
         NSString *userID = self.fireUser.uid;
         NSString *name = self.fireUser.displayName;
         NSString *email = self.fireUser.email;
-        NSString *photoURL = self.fireUser.photoURL;
+//        NSString *photoURL = self.fireUser.photoURL;
         NSString *dateOfBirth = self.fireUser.dateOfBirth;
         NSString *location = self.fireUser.location;
         NSString *gender = self.fireUser.gender;
@@ -232,7 +232,7 @@
         
         NSDictionary *userData = @{@"userID":userID,
                                    @"displayName":name,
-                                   @"photoURL":photoURL,
+//                                   @"photoURL":photoURL,
                                    @"email":email,
                                    @"dateOfBirth":dateOfBirth,
                                    @"location":location,

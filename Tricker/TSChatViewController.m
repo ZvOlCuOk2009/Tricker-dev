@@ -9,17 +9,21 @@
 #import "TSChatViewController.h"
 #import "TSProfileTableViewController.h"
 #import "TSFireUser.h"
+#import "TSFireInterlocutor.h"
 #import "TSSwipeView.h"
 #import "TSTabBarViewController.h"
 #import "TSTrickerPrefixHeader.pch"
 
+#import <SVProgressHUD.h>
+
 @import Firebase;
 @import FirebaseDatabase;
 
-@interface TSChatViewController () <JSQMessagesCollectionViewDataSource>
+@interface TSChatViewController () <JSQMessagesCollectionViewDataSource, UIGestureRecognizerDelegate>
 
 @property (strong, nonatomic) FIRUser *user;
 @property (strong, nonatomic) TSFireUser *fireUser;
+@property (strong, nonatomic) TSFireInterlocutor *fireInterlocutor;
 @property (strong, nonatomic) FIRDatabaseReference *ref;
 @property (strong, nonatomic) FIRDatabaseReference *messageRefUser;
 @property (strong, nonatomic) FIRDatabaseReference *messageRefInterlocutor;
@@ -33,17 +37,37 @@
 
 @property (strong, nonatomic) UIButton *interlocutorAvatarButtonNavBar;
 
+@property (strong, nonatomic) NSDictionary *parametersInterlocutor;
+
 @end
 
 @implementation TSChatViewController
 
 - (void)viewDidLoad {
+    
     [super viewDidLoad];
     
     self.ref = [[FIRDatabase database] reference];
     
     self.user = [FIRAuth auth].currentUser;
     self.messages = [NSMutableArray array];
+    
+    
+    //проверяю есть ли ID собеседника если отсутствует, достаю из предварительно сохранившемуся в NSUserDefaults
+    //вызывается метод заполнения данными
+    
+    if (self.interlocutorID) {
+        
+        [self setDataInterlocutorToCard:self.interlocutorID];
+        
+    } else {
+        
+        NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+        self.interlocutorID = [userDefaults objectForKey:@"intelocID"];
+        [self setDataInterlocutorToCard:self.interlocutorID];
+        
+    }
+    
     
     self.senderId = self.user.uid;
     self.senderDisplayName = self.user.displayName;
@@ -86,7 +110,6 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
- 
 }
 
 
@@ -95,6 +118,26 @@
     
     [super viewDidAppear:animated];
     [self observeMessages];
+    
+}
+
+//наполнение данными карточки собеседника
+
+
+- (void)setDataInterlocutorToCard:(NSString *)identifier
+{
+    
+    [self.ref observeEventType:FIRDataEventTypeValue withBlock:^(FIRDataSnapshot * _Nonnull snapshot) {
+        
+        self.fireInterlocutor = [TSFireInterlocutor initWithSnapshot:snapshot
+                                                        byIdentifier:identifier];
+        
+        self.interlocutorAvatar =
+        [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:self.fireInterlocutor.photoURL]]];
+        self.interlocName = self.fireInterlocutor.displayName;
+        self.parametersInterlocutor = self.fireInterlocutor.parameters;
+        
+    }];
     
 }
 
@@ -111,9 +154,11 @@
         [self.messages removeAllObjects];
     }
     
-    [self.navigationController popToViewController:[self.navigationController.viewControllers firstObject] animated:YES];
-   
+    [self.navigationController popToViewController:[self.navigationController.viewControllers firstObject]
+                                          animated:YES];
+    
     [self.interlocutorAvatarButtonNavBar setImage:nil forState:UIControlStateNormal];
+    
 }
 
 
@@ -124,50 +169,34 @@
     [self.inputToolbar.contentView.rightBarButtonItem setTitle:@"Отпр" forState:UIControlStateNormal];
     self.inputToolbar.contentView.textView.placeHolder = @"Новое сообщение";
     
+    
     [self.navigationController.navigationBar setTitleTextAttributes:
      @{NSForegroundColorAttributeName:DARK_GRAY_COLOR,
        NSFontAttributeName:[UIFont fontWithName:@"HelveticaNeue-Light" size:18.f]}];
     
-    self.interlocutorAvatarButtonNavBar = [[UIButton alloc] init];
-    self.interlocutorAvatarButtonNavBar.frame = CGRectMake(60, 4, 35, 35);
+    
+    self.interlocutorAvatarButtonNavBar = [[UIButton alloc] initWithFrame:CGRectMake(60, 4, 35, 35)];
     self.interlocutorAvatarButtonNavBar.layer.cornerRadius = self.interlocutorAvatarButtonNavBar.frame.size.width / 2;
     self.interlocutorAvatarButtonNavBar.layer.masksToBounds = YES;
-    self.interlocutorAvatarButtonNavBar.tag = 3;
     [self.interlocutorAvatarButtonNavBar addTarget:self
                                             action:@selector(interlocutorButtonNavBarActoin)
                                   forControlEvents:UIControlEventTouchUpInside];
     [self.navigationController.navigationBar addSubview:self.interlocutorAvatarButtonNavBar];
     
     
-    NSURL *urlPhoto = [NSURL URLWithString:self.fireUser.photoURL];
-    UIImage *imagePhoto = [UIImage imageWithData:[NSData dataWithContentsOfURL:urlPhoto]];
+//    NSURL *urlPhoto = [NSURL URLWithString:self.fireUser.photoURL];
+//    UIImage *imagePhoto = [UIImage imageWithData:[NSData dataWithContentsOfURL:urlPhoto]];
+//    
+//    if (urlPhoto && urlPhoto.scheme && urlPhoto.host) {
+//        self.userAvatar = imagePhoto;
+//    } else {
+//        NSData *data = [[NSData alloc] initWithBase64EncodedString:self.fireUser.photoURL
+//                                                           options:NSDataBase64DecodingIgnoreUnknownCharacters];
+//        self.userAvatar = [UIImage imageWithData:data];
+//    }
     
-    if (urlPhoto && urlPhoto.scheme && urlPhoto.host) {
-        self.userAvatar = imagePhoto;
-    } else {
-        NSData *data = [[NSData alloc] initWithBase64EncodedString:self.fireUser.photoURL
-                                                           options:NSDataBase64DecodingIgnoreUnknownCharacters];
-        self.userAvatar = [UIImage imageWithData:data];
-    }
-    
-    
-    if (self.interlocutorID) {
-        [self setMessageRef];
-    } else {
-        
-        NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
-        
-        self.interlocName = [userDefaults objectForKey:@"interlocName"];
-        self.interlocutorID = [userDefaults objectForKey:@"intelocID"];
-        NSString *stringAvatar = [userDefaults objectForKey:@"intelocAvatar"];
-        
-        NSData *dataAvatar = [[NSData alloc] initWithBase64EncodedString:stringAvatar
-                                                           options:NSDataBase64DecodingIgnoreUnknownCharacters];
-        self.interlocutorAvatar = [UIImage imageWithData:dataAvatar];
-        
-        [self setMessageRef];
-    }
-    
+    [self setMessageRef];
+
 }
 
 
@@ -176,11 +205,12 @@
 
 - (void)cancelInteraction
 {
-    [self.navigationController popToViewController:[self.navigationController.viewControllers firstObject] animated:YES];
+    [self.navigationController popToViewController:[self.navigationController.viewControllers firstObject]
+                                          animated:YES];
 }
 
 
-//создание ссылок на сообщения пользователя и собеседника в базу
+//создание ссылок для сохранения разговора пользователя и собеседника в базу
 
 
 - (void)setMessageRef
@@ -196,7 +226,7 @@
     
     [self.interlocutorAvatarButtonNavBar setImage:self.interlocutorAvatar forState:UIControlStateNormal];
     
-    if (self.interlocutorID != nil) {
+    if (self.interlocutorID) {
         
         self.messageRefUser = [[[[[self.ref child:@"dataBase"] child:@"users"] child:self.user.uid] child:@"chat"] child:self.interlocutorID];
         self.messageRefInterlocutor = [[[[[self.ref child:@"dataBase"] child:@"users"] child:self.interlocutorID] child:@"chat"] child:self.user.uid];
@@ -205,19 +235,30 @@
 }
 
 
+#pragma mark - Action
+
+
 - (void)interlocutorButtonNavBarActoin
 {
     
-    TSSwipeView *swipeView = [TSSwipeView initProfileView];  
-    swipeView.frame = kTSSwipeViewFrame;
+    TSSwipeView *swipeView = [TSSwipeView initDetailView];
+    swipeView.frame = CGRectMake(10, - 400, swipeView.frame.size.width, swipeView.frame.size.width);
     swipeView.nameLabel.text = self.interlocName;
+    swipeView.ageLabel.text = self.fireInterlocutor.age;
     swipeView.avatarImageView.image = self.interlocutorAvatar;
     swipeView.backgroundImageView.image = self.interlocutorAvatar;
-    
-    [swipeView.chatButton setImage:nil forState:UIControlStateNormal];
-    [swipeView.chatButton setImage:[UIImage imageNamed:@"cancel_view"] forState:UIControlStateNormal];
+    swipeView.parameterUser = self.fireInterlocutor.parameters;
     
     [self.view addSubview:swipeView];
+        
+    [UIView animateWithDuration:0.35
+                          delay:0
+         usingSpringWithDamping:0.6
+          initialSpringVelocity:1.2
+                        options:0
+                     animations:^{
+                         swipeView.frame = CGRectMake(10, 72, 300, 352);
+                     } completion:nil];
     
     recognizer = 2;
     

@@ -10,6 +10,7 @@
 #import "TSTabBarViewController.h"
 #import "TSRegistrationViewController.h"
 #import "TSFacebookManager.h"
+#import "TSFireImage.h"
 #import "TSTrickerPrefixHeader.pch"
 
 #import <FBSDKCoreKit/FBSDKCoreKit.h>
@@ -19,6 +20,7 @@
 
 @import Firebase;
 @import FirebaseAuth;
+@import FirebaseStorage;
 @import FirebaseDatabase;
 
 @interface TSSocialNetworkLoginViewController () <FBSDKLoginButtonDelegate, VKSdkDelegate, VKSdkUIDelegate, GIDSignInUIDelegate>
@@ -27,6 +29,7 @@
 @property (weak, nonatomic) IBOutlet GIDSignInButton *signInButton;
 
 @property (strong, nonatomic) FIRDatabaseReference *ref;
+@property (strong, nonatomic) FIRStorageReference *storageRef;
 
 @property (strong, nonatomic) NSArray *scope;
 
@@ -38,6 +41,7 @@
     [super viewDidLoad];
 
     self.ref = [[FIRDatabase database] reference];
+    self.storageRef = [[FIRStorage storage] reference];
     
     [self.ref keepSynced:NO];
     
@@ -169,10 +173,10 @@
         
         stringPhoto = [[[dictionaryValues objectForKey:@"picture"] objectForKey:@"data"] objectForKey:@"url"];
 
+        NSString *imagePath = [NSString stringWithFormat:@"%@/%lld.jpg", [FIRAuth auth].currentUser.uid, (long long)([NSDate date].timeIntervalSince1970 * 1000.0)];
         
         NSString *userID = user.uid;
         NSString *name = user.displayName;
-        NSString *photoURL = stringPhoto;
         NSString *email = user.email;
         NSString *dateOfBirth = @"";
         NSString *location = @"";
@@ -187,8 +191,8 @@
         
         userData = @{@"userID":userID,
                      @"displayName":name,
-                     @"photoURL":photoURL,
                      @"email":email,
+                     @"imagePath":imagePath,
                      @"dateOfBirth":dateOfBirth,
                      @"location":location,
                      @"gender":gender,
@@ -197,6 +201,9 @@
         
         [[[[[self.ref child:@"dataBase"] child:@"users"] child:user.uid] child:@"userData"] setValue:userData];
         
+        NSData *avatarData = [NSData dataWithContentsOfURL:[NSURL URLWithString:stringPhoto]];
+        
+        [TSFireImage saveImage:avatarData byKey:@"avatarUser" byPath:imagePath];
         [self openTabBarcontroller];
         
     }];
@@ -208,7 +215,6 @@
     [[NSUserDefaults standardUserDefaults] synchronize];
     
 }
-
 
 
 - (void)loginButtonDidLogOut:(FBSDKLoginButton *)loginButton
@@ -288,11 +294,8 @@
         }];
         
         
-        
-        
 //        [[[[[self.ref child:@"dataBase"] child:@"users"] child:user.uid] child:@"userData"] setValue:userData];
 
-        
 //        [self openTabBarcontroller];
         
         

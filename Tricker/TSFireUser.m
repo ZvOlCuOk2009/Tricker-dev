@@ -35,7 +35,7 @@
         FIRDataSnapshot *userIdent = fireUser.value[@"userID"]; 
         FIRDataSnapshot *userName = fireUser.value[@"displayName"];
         FIRDataSnapshot *userEmail = fireUser.value[@"email"];
-        FIRDataSnapshot *userPhoto = fireUser.value[@"photoURL"];
+        FIRDataSnapshot *userImagePath = fireUser.value[@"imagePath"];
         FIRDataSnapshot *dateOfBirth = fireUser.value[@"dateOfBirth"];
         FIRDataSnapshot *age = fireUser.value[@"age"];
         FIRDataSnapshot *location = fireUser.value[@"location"];
@@ -49,7 +49,7 @@
         user.uid = (NSString *)userIdent;
         user.displayName = (NSString *)userName;
         user.email = (NSString *)userEmail;
-        user.photoURL = (NSString *)userPhoto;
+        user.imagePath = (NSString *)userImagePath;
         user.dateOfBirth = (NSString *)dateOfBirth;
         user.age = (NSString *)age;
         user.location = (NSString *)location;

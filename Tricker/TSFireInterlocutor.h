@@ -1,8 +1,8 @@
 //
-//  TSFireUser.h
+//  TSFireInterlocutor.h
 //  Tricker
 //
-//  Created by Mac on 06.11.16.
+//  Created by Mac on 17.12.16.
 //  Copyright © 2016 Mac. All rights reserved.
 //
 
@@ -11,21 +11,20 @@
 @import FirebaseAuth;
 @import FirebaseDatabase;
 
-@interface TSFireUser : NSObject
+@interface TSFireInterlocutor : NSObject
 
 @property (strong, nonatomic) NSString *displayName;
 @property (strong, nonatomic) NSString *uid;
 @property (strong, nonatomic) NSString *email;
-@property (strong, nonatomic) NSString *imagePath;
+@property (strong, nonatomic) NSString *photoURL;
 @property (strong, nonatomic) NSString *dateOfBirth;
 @property (strong, nonatomic) NSString *age;
 @property (strong, nonatomic) NSString *location;
 @property (strong, nonatomic) NSString *gender;
 @property (strong, nonatomic) NSString *online;
 @property (strong, nonatomic) NSMutableDictionary *parameters;
-@property (strong, nonatomic) NSDictionary *chats;
 @property (strong, nonatomic) NSMutableArray *photos;
 
-+ (TSFireUser *)initWithSnapshot:(FIRDataSnapshot *)snapshot;
++ (TSFireInterlocutor *)initWithSnapshot:(FIRDataSnapshot *)snapshot byIdentifier:(NSString *)identifier;
 
 @end
