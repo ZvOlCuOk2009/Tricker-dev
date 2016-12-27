@@ -11,7 +11,12 @@
 
 @interface TSFireImage : NSObject
 
-+ (void)saveImage:(NSData *)imageData byKey:(NSString *)key byPath:(NSString *)path;
-+ (UIImage *)downloadImage:(NSString *)byKey byPath:(NSString *)path;
++ (TSFireImage *) sharedManager;
++ (void)saveAvatarInTheDatabase:(NSData *)avatarDataByPath byPath:(NSString *)path
+                      dictParam:(NSMutableDictionary *)params;
++ (void)savePhotos:(NSData *)imageDataByPath byPath:(NSString *)path photos:(NSMutableArray *)photos;
+
+//- (void)savePhotosInTheDatabase:(NSData *)photoDataByPath byPath:(NSString *)path
+//                         photos:(void(^)(NSMutableArray *photos))success;
 
 @end

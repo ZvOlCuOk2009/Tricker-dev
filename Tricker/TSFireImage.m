@@ -8,63 +8,91 @@
 
 #import "TSFireImage.h"
 
+@import Firebase;
 @import FirebaseAuth;
 @import FirebaseStorage;
 
 @interface TSFireImage ()
 
-//@property (strong, nonatomic) FIRStorageReference *storageRef;
-
 @end
 
 @implementation TSFireImage
 
-+ (void)saveImage:(NSData *)imageData byKey:(NSString *)key byPath:(NSString *)path
+
++(TSFireImage *)sharedManager {
+    
+    static TSFireImage * manager = nil;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        manager = [[TSFireImage alloc] init];
+    });
+    return manager;
+}
+
+
++ (void)saveAvatarInTheDatabase:(NSData *)avatarDataByPath byPath:(NSString *)path
+                      dictParam:(NSMutableDictionary *)params
 {
     
+    FIRUser *fireUser = [FIRAuth auth].currentUser;
+    FIRDatabaseReference *ref = [[FIRDatabase database] reference];
     FIRStorageReference *storageRef = [[FIRStorage storage] reference];
+    FIRStorageReference *imagesRef = [storageRef child:path];
     FIRStorageMetadata *metadata = [FIRStorageMetadata new];
     metadata.contentType = @"image/jpeg";
     
-    [[storageRef child:path] putData:imageData metadata:metadata
-                               completion:^(FIRStorageMetadata * _Nullable metadata, NSError * _Nullable error) {
+    [[storageRef child:path] putData:avatarDataByPath metadata:metadata
+                          completion:^(FIRStorageMetadata * _Nullable metadata, NSError * _Nullable error) {
                                    
                                    if (error) {
                                        NSLog(@"Error uploading: %@", error);
                                    }
                                    
-                                   [[NSUserDefaults standardUserDefaults] setObject:path forKey:key];
-                                   [[NSUserDefaults standardUserDefaults] synchronize];
-                                    
-                                }];
+                                   [imagesRef downloadURLWithCompletion:^(NSURL * _Nullable URL, NSError * _Nullable error) {
+                                       
+                                       NSString *photoURL = [NSString stringWithFormat:@"%@", URL];
+                                       
+                                       [params setObject:photoURL forKey:@"photoURL"];
+                                       
+                                       [[[[[ref child:@"dataBase"] child:@"users"] child:fireUser.uid] child:@"userData"] setValue:params];
+                                       
+                                   }];
+                                   
+                               }];
+    
+    
 }
 
 
-+ (UIImage *)downloadImage:(NSString *)byKey byPath:(NSString *)path
++ (void)savePhotos:(NSData *)imageDataByPath byPath:(NSString *)path photos:(NSMutableArray *)photos
 {
-    
-    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-    NSString *documentsDirectory = paths[0];
-    NSString *filePath = [NSString stringWithFormat:@"file:%@/myimage.jpg", documentsDirectory];
-    NSURL *fileURL = [NSURL URLWithString:filePath];
-    NSString *storagePath = [[NSUserDefaults standardUserDefaults] objectForKey:path];
-    
-    __block UIImage *image = nil;
-    
+    FIRUser *fireUser = [FIRAuth auth].currentUser;
+    FIRDatabaseReference *ref = [[FIRDatabase database] reference];
     FIRStorageReference *storageRef = [[FIRStorage storage] reference];
+    FIRStorageReference *imagesRef = [storageRef child:path];
+    FIRStorageMetadata *metadata = [FIRStorageMetadata new];
+    metadata.contentType = @"image/jpeg";
     
-    [[storageRef child:storagePath] writeToFile:fileURL completion:^(NSURL * _Nullable URL, NSError * _Nullable error) {
-        
-        if (error) {
-            NSLog(@"Error downloading: %@", error);
-            return;
-        } else if (URL) {
-            
-           image = [UIImage imageWithContentsOfFile:URL.path];
-        }
-    }];
-    
-    return image;
+    [[storageRef child:path] putData:imageDataByPath metadata:metadata
+                          completion:^(FIRStorageMetadata * _Nullable metadata, NSError * _Nullable error) {
+                              
+                              if (error) {
+                                  NSLog(@"Error uploading: %@", error);
+                              }
+                              
+                              [imagesRef downloadURLWithCompletion:^(NSURL * _Nullable URL, NSError * _Nullable error) {
+                                  
+                                  NSString *photoURL = [NSString stringWithFormat:@"%@", URL];
+                                  
+                                  [photos addObject:photoURL];
+                                  
+                                  [[[[[ref child:@"dataBase"] child:@"users"] child:fireUser.uid] child:@"photos"] setValue:photos];
+                                  [[NSUserDefaults standardUserDefaults] setObject:photos forKey:@"photos"];
+                                  [[NSUserDefaults standardUserDefaults] synchronize];
+                              }];
+                              
+                          }];
 }
+
 
 @end

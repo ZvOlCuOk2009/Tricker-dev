@@ -10,6 +10,7 @@
 #import "TSSocialNetworkLoginViewController.h"
 #import "TSFacebookManager.h"
 #import "TSFireUser.h"
+#import "TSFireImage.h"
 #import "TSTrickerPrefixHeader.pch"
 
 #import <SVProgressHUD.h>
@@ -99,8 +100,6 @@ NSString * const UpdateParametersNotification = @"UpdateParametersNotification";
     
     self.ref = [[FIRDatabase database] reference];
     
-    [self.ref keepSynced:NO];
-    
     [self.ref observeEventType:FIRDataEventTypeValue withBlock:^(FIRDataSnapshot * _Nonnull snapshot) {
         
         self.fireUser = [TSFireUser initWithSnapshot:snapshot];
@@ -177,47 +176,30 @@ NSString * const UpdateParametersNotification = @"UpdateParametersNotification";
     
     //получение модели пользователя из базы
     
-//    [SVProgressHUD show];
-//    [SVProgressHUD setDefaultStyle:SVProgressHUDStyleCustom];
-//    [SVProgressHUD setBackgroundColor:YELLOW_COLOR];
-//    [SVProgressHUD setForegroundColor:DARK_GRAY_COLOR];
-//    
-//    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-//        
-//        
-//        NSURL *urlPhoto = [NSURL URLWithString:self.fireUser.photoURL];
-//        
-//        UIImage *imagePhoto = [UIImage imageWithData:[NSData dataWithContentsOfURL:urlPhoto]];
-//        
-//        //проверка является ли изображение url или оно кодировано
-//        if (urlPhoto && urlPhoto.scheme && urlPhoto.host) {
-//            
-//            dispatch_async(dispatch_get_main_queue(), ^{
-//                
-//                self.avatarImageView.image = imagePhoto;
-//                [self setParametrUser:self.fireUser];
-//                
-//                [SVProgressHUD dismiss];
-//            });
-//            
-//        } else {
-//            
-//            dispatch_async(dispatch_get_main_queue(), ^{
-//                
-//                NSData *data = [[NSData alloc] initWithBase64EncodedString:self.fireUser.photoURL options:NSDataBase64DecodingIgnoreUnknownCharacters];
-//                UIImage *convertImage = [UIImage imageWithData:data];
-//                self.avatarImageView.image = convertImage;
-//                [self setParametrUser:self.fireUser];
-//                
-//                [SVProgressHUD dismiss];
-//            });
-//            
-//        }
-//        
-//        self.avatarImageView.layer.cornerRadius = 40;
-//        self.avatarImageView.clipsToBounds = YES;
-//        
-//    });
+    [SVProgressHUD show];
+    [SVProgressHUD setDefaultStyle:SVProgressHUDStyleCustom];
+    [SVProgressHUD setBackgroundColor:YELLOW_COLOR];
+    [SVProgressHUD setForegroundColor:DARK_GRAY_COLOR];
+    
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        
+        UIImage *avatar = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:self.fireUser.photoURL]]];
+        
+        dispatch_async(dispatch_get_main_queue(), ^{
+
+            if (self.fireUser) {
+                
+                [self setParametrUser:self.fireUser];
+                self.avatarImageView.image = avatar;
+                [SVProgressHUD dismiss];
+            }
+            
+            self.avatarImageView.layer.cornerRadius = 40;
+            self.avatarImageView.clipsToBounds = YES;
+            
+        });
+        
+    });
     
 }
 

@@ -15,8 +15,7 @@
 
 @property (strong, nonatomic) NSString *displayName;
 @property (strong, nonatomic) NSString *uid;
-@property (strong, nonatomic) NSString *email;
-@property (strong, nonatomic) NSString *imagePath;
+@property (strong, nonatomic) NSString *photoURL;
 @property (strong, nonatomic) NSString *dateOfBirth;
 @property (strong, nonatomic) NSString *age;
 @property (strong, nonatomic) NSString *location;

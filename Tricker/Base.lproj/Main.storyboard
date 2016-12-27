@@ -611,7 +611,7 @@
         <image name="chat_no" width="26" height="26"/>
         <image name="facebook" width="40" height="40"/>
         <image name="google_Plus" width="40" height="40"/>
-        <image name="photo-camera" width="25" height="25"/>
+        <image name="photo-camera" width="75" height="75"/>
         <image name="tabbar" width="187" height="24"/>
         <image name="user_click" width="26" height="26"/>
         <image name="user_no" width="26" height="26"/>

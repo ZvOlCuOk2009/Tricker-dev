@@ -146,7 +146,7 @@
     
 }
 
-#pragma mark - configure the k
+#pragma mark - configure the Controller
 
 
 - (void)configureController
@@ -159,36 +159,18 @@
     
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         
-        NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-        NSString *documentsDirectory = paths[0];
-        NSString *filePath = [NSString stringWithFormat:@"file:%@/myimage.jpg", documentsDirectory];
-        NSURL *fileURL = [NSURL URLWithString:filePath];
-        NSString *storagePath = [[NSUserDefaults standardUserDefaults] objectForKey:@"avatarUser"];
+        UIImage *avatar = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:self.fireUser.photoURL]]];
         
-        __block UIImage *avatar = nil;
-        
-        [[self.storageRef child:storagePath] writeToFile:fileURL completion:^(NSURL * _Nullable URL, NSError * _Nullable error) {
+        dispatch_async(dispatch_get_main_queue(), ^{
             
-            if (error) {
-                NSLog(@"Error downloading: %@", error);
-                return;
-            } else if (URL) {
+            if (self.fireUser) {
+                [self setAvatarAndBackground:avatar];
+                [self setParametrUser:self.fireUser];
+                [SVProgressHUD dismiss];
                 
-                avatar = [UIImage imageWithContentsOfFile:URL.path];
-        
-//        UIImage *avatar = [TSFireImage downloadImage:nil byPath:@"avatarUser"];
-        
-                dispatch_async(dispatch_get_main_queue(), ^{
-                    
-                    [self setAvatarAndBackground:avatar];
-                    [self setParametrUser:self.fireUser];
-                    
-                    [SVProgressHUD dismiss];
-                });
             }
-        }];
-        
-        
+            
+        });
         
     });
     
@@ -366,7 +348,6 @@
     
     [self presentViewController:picker animated:YES completion:NULL];
     
-    
 }
 
 
@@ -375,57 +356,39 @@
     
     [picker dismissViewControllerAnimated:YES completion:NULL];
     
-    UIImage *image = info[UIImagePickerControllerEditedImage];
-    NSData *imageData = UIImageJPEGRepresentation(image, 0.8);
+    [SVProgressHUD show];
+    [SVProgressHUD setDefaultStyle:SVProgressHUDStyleCustom];
+    [SVProgressHUD setBackgroundColor:YELLOW_COLOR];
+    [SVProgressHUD setForegroundColor:DARK_GRAY_COLOR];
     
-    NSString *imagePath = [NSString stringWithFormat:@"%@/%lld.jpg",
-                           [FIRAuth auth].currentUser.uid,
-                           (long long)([NSDate date].timeIntervalSince1970 * 1000.0)];
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        
+        UIImage *image = info[UIImagePickerControllerEditedImage];
+        NSData *imageData = UIImageJPEGRepresentation(image, 0.8);
+        
+        NSString *imagePath = [NSString stringWithFormat:@"%@/%lld.jpg",
+                               [FIRAuth auth].currentUser.uid,
+                               (long long)([NSDate date].timeIntervalSince1970 * 1000.0)];
+        
+        NSMutableDictionary *userData = [NSMutableDictionary dictionary];
+        
+        [userData setObject:self.fireUser.uid forKey:@"userID"];
+        [userData setObject:self.fireUser.displayName forKey:@"displayName"];
+        [userData setObject:self.fireUser.dateOfBirth forKey:@"dateOfBirth"];
+        [userData setObject:self.fireUser.photoURL forKey:@"photoURL"];
+        [userData setObject:self.fireUser.location forKey:@"location"];
+        [userData setObject:self.fireUser.gender forKey:@"gender"];
+        [userData setObject:self.fireUser.age forKey:@"age"];
+        [userData setObject:self.fireUser.online forKey:@"online"];
+        
+        dispatch_async(dispatch_get_main_queue(), ^{
+            
+            [TSFireImage saveAvatarInTheDatabase:imageData byPath:imagePath dictParam:userData];
+            
+        });
+        
+    });
     
-    FIRStorageMetadata *metadata = [FIRStorageMetadata new];
-    
-    metadata.contentType = @"image/jpeg";
-    [[_storageRef child:imagePath] putData:imageData
-                                  metadata:metadata
-                                completion:^(FIRStorageMetadata * _Nullable metadata, NSError * _Nullable error) {
-                                    if (error) {
-                                        NSLog(@"Error uploading: %@", error);
-                                        return;
-                                    }
-                                    [self uploadSuccess:metadata storagePath:imagePath];
-                                }];
-    
-}
-
-
-- (void)uploadSuccess:(FIRStorageMetadata *)metadata storagePath:(NSString *)storagePath
-{
-    NSLog(@"Upload Succeeded!");
-    [[NSUserDefaults standardUserDefaults] setObject:storagePath forKey:@"storagePath"];
-    [[NSUserDefaults standardUserDefaults] synchronize];
-}
-
-
-- (IBAction)downloadImage:(id)sender
-{
-    
-    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-    NSString *documentsDirectory = paths[0];
-    NSString *filePath = [NSString stringWithFormat:@"file:%@/myimage.jpg", documentsDirectory];
-    NSURL *fileURL = [NSURL URLWithString:filePath];
-    NSString *storagePath = [[NSUserDefaults standardUserDefaults] objectForKey:@"storagePath"];
-    
-
-    [[_storageRef child:storagePath] writeToFile:fileURL completion:^(NSURL * _Nullable URL, NSError * _Nullable
-                                                                      error) {
-        if (error) {
-             NSLog(@"Error downloading: %@", error);
-             return;
-         } else if (URL) {
-             self.avatarImageView.image = [UIImage imageWithContentsOfFile:URL.path];
-         }
-     }];
-
 }
 
 
@@ -445,9 +408,9 @@
     
     NSString *userID = nil;
     NSString *name = nil;
-    NSString *email = nil;
     NSString *online = nil;
     NSString *gender = nil;
+    NSString *photoURL = nil;
     NSString *dateOfBirth = nil;
     NSString *age = nil;
     NSString *location = nil;
@@ -455,8 +418,8 @@
     
     userID = self.fireUser.uid;
     name = self.fireUser.displayName;
-    email = self.fireUser.email;
     online = self.fireUser.online;
+    photoURL = self.fireUser.photoURL;
     age = self.fireUser.age;
     
     if ([self.textFieldName.text length] > 0) {
@@ -489,16 +452,24 @@
         location = self.fireUser.location;
     }
     
-    if (!gender) {
+    if ([age length] == 0) {
+        age = @"";
+    }
+    
+    if ([gender length] == 0) {
         gender = @"";
     }
     
-    if (!dateOfBirth) {
+    if ([dateOfBirth length] == 0) {
         dateOfBirth = @"";
     }
     
-    if (!location) {
+    if ([location length] == 0) {
         location = @"";
+    }
+    
+    if ([online length] == 0) {
+        online = @"";
     }
     
     
@@ -511,9 +482,9 @@
         
         NSDictionary *userData = @{@"userID":userID,
                                    @"displayName":name,
-                                   @"email":email,
                                    @"dateOfBirth":dateOfBirth,
                                    @"gender":gender,
+                                   @"photoURL":photoURL,
                                    @"age":age,
                                    @"location":location,
                                    @"online":online};

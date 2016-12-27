@@ -9,10 +9,12 @@
 #import "TSPhotoAndNameViewController.h"
 #import "TSRegistrationViewController.h"
 #import "TSTabBarViewController.h"
+#import "TSFireImage.h"
 #import "TSTrickerPrefixHeader.pch"
 
 @import Firebase;
 @import FirebaseAuth;
+@import FirebaseStorage;
 @import FirebaseDatabase;
 
 @interface TSPhotoAndNameViewController () <UIImagePickerControllerDelegate, UINavigationControllerDelegate>
@@ -22,7 +24,7 @@
 @property (weak, nonatomic) IBOutlet UIImage *image;
 
 @property (strong, nonatomic) FIRDatabaseReference *ref;
-
+@property (strong, nonatomic) FIRStorageReference *storageRef;
 
 @end
 
@@ -32,8 +34,7 @@
     [super viewDidLoad];
     
     self.ref = [[FIRDatabase database] reference];
-    
-    [self.ref keepSynced:NO];
+    self.storageRef = [[FIRStorage storage] reference];
     
     [self configureController];
 }
@@ -149,9 +150,9 @@
 {
     
     [picker dismissViewControllerAnimated:YES completion:nil];
+    
     self.image = [info objectForKey:UIImagePickerControllerEditedImage];
     [self.cameraButton setImage:self.image forState:UIControlStateNormal];
-    
 }
 
 
@@ -159,18 +160,6 @@
 {
     
     if (![self.nameTextField.text isEqualToString:@""]) {
-        
-        CGSize newSize = CGSizeMake(300, 300);
-        
-        UIGraphicsBeginImageContext(newSize);
-        [self.image drawInRect:CGRectMake(0, 0, newSize.width, newSize.height)];
-        UIImage *newImage = UIGraphicsGetImageFromCurrentImageContext();
-        UIGraphicsEndImageContext();
-        
-        
-        NSData *dataImage = UIImagePNGRepresentation(newImage);
-        NSString *stringImage = [dataImage base64EncodedStringWithOptions:NSDataBase64EncodingEndLineWithLineFeed];
-        
         
         NSString *email = self.email;
         NSString *password = self.password;
@@ -185,31 +174,60 @@
                                              
                                              NSString *dateOfBirth = @"";
                                              NSString *location = @"";
+                                             NSString *photoURL = @"";
                                              NSString *gender = @"";
                                              NSString *age = @"";
                                              NSString *online = @"";
+
+                                             NSData *imageData = UIImageJPEGRepresentation(self.image, 0.8);
                                              
-                                             NSDictionary *userData = @{@"userID":user.uid,
-                                                                        @"displayName":displayName,
-                                                                        @"email":email,
-                                                                        @"photoURL":stringImage,
-                                                                        @"dateOfBirth":dateOfBirth,
-                                                                        @"location":location,
-                                                                        @"gender":gender,
-                                                                        @"age":age,
-                                                                        @"online":online};
+                                             NSString *imagePath = [NSString stringWithFormat:@"%@/%lld.jpg", user.uid, (long long)([NSDate date].timeIntervalSince1970 * 1000.0)];
                                              
-                                             NSString *token = user.uid;
                                              
-                                             [[NSUserDefaults standardUserDefaults] setObject:token forKey:@"token"];
-                                             [[NSUserDefaults standardUserDefaults] synchronize];
+                                             NSMutableDictionary *userData = [NSMutableDictionary dictionary];
                                              
-                                             [[[[[self.ref child:@"dataBase"] child:@"users"] child:user.uid] child:@"userData"] setValue:userData];
+                                             [userData setObject:user.uid forKey:@"userID"];
+                                             [userData setObject:displayName forKey:@"displayName"];
+                                             [userData setObject:dateOfBirth forKey:@"dateOfBirth"];
+                                             [userData setObject:photoURL forKey:@"photoURL"];
+                                             [userData setObject:location forKey:@"location"];
+                                             [userData setObject:gender forKey:@"gender"];
+                                             [userData setObject:age forKey:@"age"];
+                                             [userData setObject:online forKey:@"online"];
+                                             
+                                             
+                                             FIRStorageReference *imagesRef = [self.storageRef child:imagePath];
+                                             FIRStorageMetadata *metadata = [FIRStorageMetadata new];
+                                             metadata.contentType = @"image/jpeg";
+                                             
+                                             [[self.storageRef child:imagePath] putData:imageData metadata:metadata
+                                                                   completion:^(FIRStorageMetadata * _Nullable metadata, NSError * _Nullable error) {
+                                                                       
+                                                                       if (error) {
+                                                                           NSLog(@"Error uploading: %@", error);
+                                                                       }
+                                                                       
+                                                                       [imagesRef downloadURLWithCompletion:^(NSURL * _Nullable URL, NSError * _Nullable error) {
+                                                                           
+                                                                           NSString *photoURL = [NSString stringWithFormat:@"%@", URL];
+                                                                           
+                                                                           [userData setObject:photoURL forKey:@"photoURL"];
+                                                                           
+                                                                           [[[[[self.ref child:@"dataBase"] child:@"users"] child:user.uid] child:@"userData"] setValue:userData];
+                                                                           
+                                                                           NSString *token = user.uid;
+                                                                           
+                                                                           [[NSUserDefaults standardUserDefaults] setObject:token forKey:@"token"];
+                                                                           [[NSUserDefaults standardUserDefaults] synchronize];
+                                                                           
+                                                                           TSTabBarViewController *controller = [self.storyboard instantiateViewControllerWithIdentifier:@"TSTabBarViewController"];
+                                                                           [self presentViewController:controller animated:YES completion:nil];
+                                                                           
+                                                                       }];
+                                                                       
+                                                                   }];
                                              
                                          }
-                                         
-                                         TSTabBarViewController *controller = [self.storyboard instantiateViewControllerWithIdentifier:@"TSTabBarViewController"];
-                                         [self presentViewController:controller animated:YES completion:nil];
                                          
                                      } else {
                                          NSLog(@"Error - %@", error.localizedDescription);
@@ -219,7 +237,7 @@
                                  }];
         
     } else {
-        
+        NSLog(@"Пустой текстфилд");
 //        [self alertControllerTextFieldNil];
     }
     

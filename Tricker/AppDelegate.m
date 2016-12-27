@@ -10,6 +10,7 @@
 #import "TSSocialNetworkLoginViewController.h"
 #import "TSTabBarViewController.h"
 #import "TSFireUser.h"
+#import "TSFireImage.h"
 #import "TSTrickerPrefixHeader.pch"
 
 #import <FBSDKCoreKit/FBSDKCoreKit.h>
@@ -129,31 +130,39 @@
                                           
                                           if (accessToken) {
                                               
+                                              NSString *imagePath = [NSString stringWithFormat:@"%@/%lld.jpg",
+                                                                     [FIRAuth auth].currentUser.uid, (long long)([NSDate date].timeIntervalSince1970 * 1000.0)];
+                                              
                                               NSString *userID = user.uid;
                                               NSString *name = user.displayName;
-                                              NSString *email = user.email;
-                                              NSString *photoURL = nil;
                                               NSString *dateOfBirth = @"";
                                               NSString *location = @"";
                                               NSString *gender = @"";
                                               NSString *age = @"";
                                               NSString *online = @"";
                                               
+                                              NSString *stringPhoto = nil;
+                                              
                                               if (self.googleUser.profile.hasImage) {
-                                                  photoURL = [[self.googleUser.profile imageURLWithDimension:600] absoluteString];
+                                                  stringPhoto = [[self.googleUser.profile imageURLWithDimension:600] absoluteString];
                                               }
                                               
-                                              NSDictionary *userData = @{@"userID":userID,
-                                                                         @"displayName":name,
-                                                                         @"photoURL":photoURL,
-                                                                         @"email":email,
-                                                                         @"dateOfBirth":dateOfBirth,
-                                                                         @"location":location,
-                                                                         @"gender":gender,
-                                                                         @"age":age,
-                                                                         @"online":online};
+                                              NSMutableDictionary *userData = [NSMutableDictionary dictionary];
                                               
-                                              [[[[[self.ref child:@"dataBase"] child:@"users"] child:user.uid] child:@"userData"] setValue:userData];
+                                              [userData setObject:userID forKey:@"userID"];
+                                              [userData setObject:name forKey:@"displayName"];
+                                              [userData setObject:dateOfBirth forKey:@"dateOfBirth"];
+                                              [userData setObject:location forKey:@"location"];
+                                              [userData setObject:gender forKey:@"gender"];
+                                              [userData setObject:age forKey:@"age"];
+                                              [userData setObject:online forKey:@"online"];
+                                              
+                                              
+                                              NSData *avatarData = [NSData dataWithContentsOfURL:[NSURL URLWithString:stringPhoto]];
+                                              
+                                              
+                                              [TSFireImage saveAvatarInTheDatabase:avatarData byPath:imagePath
+                                                                         dictParam:userData];
                                               
                                               NSString *token = user.uid;
                                               
@@ -222,8 +231,6 @@
         
         NSString *userID = self.fireUser.uid;
         NSString *name = self.fireUser.displayName;
-        NSString *email = self.fireUser.email;
-//        NSString *photoURL = self.fireUser.photoURL;
         NSString *dateOfBirth = self.fireUser.dateOfBirth;
         NSString *location = self.fireUser.location;
         NSString *gender = self.fireUser.gender;
@@ -232,8 +239,6 @@
         
         NSDictionary *userData = @{@"userID":userID,
                                    @"displayName":name,
-//                                   @"photoURL":photoURL,
-                                   @"email":email,
                                    @"dateOfBirth":dateOfBirth,
                                    @"location":location,
                                    @"gender":gender,

@@ -9,10 +9,14 @@
 #import "TSPhotosViewController.h"
 #import "TSCollectionViewCell.h"
 #import "TSFireUser.h"
+#import "TSFireImage.h"
 #import "TSTrickerPrefixHeader.pch"
+
+#import <SVProgressHUD.h>
 
 @import Firebase;
 @import FirebaseAuth;
+@import FirebaseStorage;
 @import FirebaseDatabase;
 
 @interface TSPhotosViewController () <UICollectionViewDataSource, UICollectionViewDelegate, UINavigationControllerDelegate, UIImagePickerControllerDelegate>
@@ -20,6 +24,7 @@
 @property (strong, nonatomic) IBOutlet UICollectionView *collectionView;
 @property (strong, nonatomic) IBOutlet UIImagePickerController *picker;
 @property (strong, nonatomic) FIRDatabaseReference *ref;
+@property (strong, nonatomic) FIRStorageReference *storageRef;
 @property (strong, nonatomic) TSFireUser *fireUser;
 
 @property (strong, nonatomic) NSMutableArray *photos;
@@ -42,21 +47,9 @@ static NSString * const reuseIdntifierButton = @"cellButton";
     self.title = @"Мои фото";
     
     self.ref = [[FIRDatabase database] reference];
+    self.storageRef = [[FIRStorage storage] reference];
     
-    [self.ref observeEventType:FIRDataEventTypeValue withBlock:^(FIRDataSnapshot * _Nonnull snapshot) {
-        
-        self.fireUser = [TSFireUser initWithSnapshot:snapshot];
-        
-        if (self.fireUser.photos) {
-            self.photos = self.fireUser.photos;
-        } else {
-            self.photos = [NSMutableArray array];
-            
-            NSString *cap = @"";
-            [self.photos addObject:cap];
-        }
-        [self.collectionView reloadData];
-    }];
+    [self loadPhotos];
 
     UIBarButtonItem *leftItem = [[UIBarButtonItem alloc] init];
     [leftItem setImage:[UIImage imageNamed:@"back"]];
@@ -73,6 +66,43 @@ static NSString * const reuseIdntifierButton = @"cellButton";
     self.regognizerMark = 0;
     self.regognizer = NO;
     self.mark = NO;
+}
+
+
+- (void)loadPhotos
+{
+    
+    [SVProgressHUD show];
+    [SVProgressHUD setDefaultStyle:SVProgressHUDStyleCustom];
+    [SVProgressHUD setBackgroundColor:YELLOW_COLOR];
+    [SVProgressHUD setForegroundColor:DARK_GRAY_COLOR];
+    
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        
+        [self.ref observeEventType:FIRDataEventTypeValue withBlock:^(FIRDataSnapshot * _Nonnull snapshot) {
+            
+            self.fireUser = [TSFireUser initWithSnapshot:snapshot];
+            
+            if (self.fireUser.photos) {
+                self.photos = self.fireUser.photos;
+            } else {
+                self.photos = [NSMutableArray array];
+                
+                NSString *cap = @"";
+                [self.photos addObject:cap];
+            }
+            
+            dispatch_async(dispatch_get_main_queue(), ^{
+                
+                [self.collectionView reloadData];
+                [SVProgressHUD dismiss];
+                
+            });
+            
+        }];
+        
+    });
+    
 }
 
 
@@ -168,7 +198,6 @@ static NSString * const reuseIdntifierButton = @"cellButton";
     
     [self presentViewController:picker animated:YES completion:NULL];
     
-    
 }
 
 
@@ -176,22 +205,28 @@ static NSString * const reuseIdntifierButton = @"cellButton";
 {
     
     [picker dismissViewControllerAnimated:YES completion:nil];
-    UIImage *image = [info objectForKey:UIImagePickerControllerEditedImage];
     
-    //сжатие и добавление в массив фото
+    UIImage *image = info[UIImagePickerControllerEditedImage];
+    NSData *imageData = UIImageJPEGRepresentation(image, 0.8);
     
-    CGSize newSize = CGSizeMake(500, 500);
+    NSString *imagePath = [NSString stringWithFormat:@"%@/photos/%lld.jpg",
+                           [FIRAuth auth].currentUser.uid,
+                           (long long)([NSDate date].timeIntervalSince1970 * 1000.0)];
     
-    UIGraphicsBeginImageContext(newSize);
-    [image drawInRect:CGRectMake(0, 0, newSize.width, newSize.height)];
-    UIImage *newImage = UIGraphicsGetImageFromCurrentImageContext();
-    UIGraphicsEndImageContext();
+    if (self.fireUser.photos) {
+        self.photos = self.fireUser.photos;
+    } else {
+        self.photos = [NSMutableArray array];
+        
+        [[NSUserDefaults standardUserDefaults] setObject:self.photos forKey:@"photos"];
+        
+        NSString *cap = @"";
+        [self.photos addObject:cap];
+    }
     
-    NSData *dataImage = UIImagePNGRepresentation(newImage);
-    NSString *stringImage = [dataImage base64EncodedStringWithOptions:NSDataBase64EncodingEndLineWithLineFeed];
-    
-    [self.photos addObject:stringImage];
-    [self.collectionView reloadData];
+    [TSFireImage savePhotos:imageData byPath:imagePath photos:self.photos];
+
+    [self loadPhotos];
     
     self.regognizer = YES;
 }
@@ -210,7 +245,9 @@ static NSString * const reuseIdntifierButton = @"cellButton";
 {
     TSCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:reuseIdntifier
                                                                            forIndexPath:indexPath];
-    NSString *photo = [self.photos objectAtIndex:indexPath.item];
+    
+    NSInteger myIndexPaht = indexPath.item;
+    NSString *photo = [self.photos objectAtIndex:myIndexPaht];
     
     if (indexPath.row == 0) {
         TSCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:reuseIdntifierButton
@@ -219,12 +256,8 @@ static NSString * const reuseIdntifierButton = @"cellButton";
 
     } else {
         
-        //раскодирование изображение перед отображением
-        
-        NSData *data = [[NSData alloc] initWithBase64EncodedString:photo
-                                                           options:NSDataBase64DecodingIgnoreUnknownCharacters];
-        UIImage *convertImage = [UIImage imageWithData:data];
-        cell.imageView.image = convertImage;
+        UIImage *resultingPhoto = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:photo]]];
+        cell.imageView.image = resultingPhoto;
     }
     
     return cell;

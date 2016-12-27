@@ -110,30 +110,16 @@
         
         //установка изображения и фона
         
-        NSURL *url = [NSURL URLWithString:photoURL];
-        UIImage *convertImage = nil;
+        UIImage *avatar = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:photoURL]]];
         
-        if (url && url.scheme && url.host) {
-            
-            NSData *dataImage = [NSData dataWithContentsOfURL:url];
-            
-            convertImage = [UIImage imageWithData:dataImage];
-            
-            self.swipeView.backgroundImageView.image = convertImage;
-            self.swipeView.avatarImageView.image = convertImage;
-            
-        } else {
-            
-            if (!photoURL) {
-                photoURL = @"";
-                self.swipeView.avatarImageView.image = [UIImage imageNamed:@"placeholder"];
-            }
-            
-            NSData *data = [[NSData alloc]initWithBase64EncodedString:photoURL options:NSDataBase64DecodingIgnoreUnknownCharacters];
-            convertImage = [UIImage imageWithData:data];
-            self.swipeView.backgroundImageView.image = convertImage;
-            self.swipeView.avatarImageView.image = convertImage;
+        self.swipeView.backgroundImageView.image = avatar;
+        self.swipeView.avatarImageView.image = avatar;
+        
+        if (!photoURL) {
+            photoURL = @"";
+            self.swipeView.avatarImageView.image = [UIImage imageNamed:@"placeholder"];
         }
+        
         
         NSString *firstString = [photosUser firstObject];
         if ([firstString isEqualToString:@""]) {
@@ -156,7 +142,7 @@
         self.swipeView.parameterUser = parametersUser;
         self.swipeView.photos = photosUser;
         self.swipeView.interlocutorUid = uid;
-        self.swipeView.interlocutorAvatar = convertImage;
+        self.swipeView.interlocutorAvatar = avatar;
         self.swipeView.interlocutorName = displayName;
         
         [self.swipeView.chatButton setImage:[UIImage imageNamed:@"chat"] forState:UIControlStateNormal];

@@ -18,7 +18,7 @@
 
     NSString *token = [[NSUserDefaults standardUserDefaults] valueForKey:@"token"];
     FIRUser *fireUser = [FIRAuth auth].currentUser;
-    
+
     if(token)
     {
         
@@ -34,8 +34,7 @@
         
         FIRDataSnapshot *userIdent = fireUser.value[@"userID"]; 
         FIRDataSnapshot *userName = fireUser.value[@"displayName"];
-        FIRDataSnapshot *userEmail = fireUser.value[@"email"];
-        FIRDataSnapshot *userImagePath = fireUser.value[@"imagePath"];
+        FIRDataSnapshot *userPhotoURL = fireUser.value[@"photoURL"];
         FIRDataSnapshot *dateOfBirth = fireUser.value[@"dateOfBirth"];
         FIRDataSnapshot *age = fireUser.value[@"age"];
         FIRDataSnapshot *location = fireUser.value[@"location"];
@@ -48,8 +47,7 @@
         
         user.uid = (NSString *)userIdent;
         user.displayName = (NSString *)userName;
-        user.email = (NSString *)userEmail;
-        user.imagePath = (NSString *)userImagePath;
+        user.photoURL = (NSString *)userPhotoURL;
         user.dateOfBirth = (NSString *)dateOfBirth;
         user.age = (NSString *)age;
         user.location = (NSString *)location;

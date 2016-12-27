@@ -42,9 +42,7 @@
 
     self.ref = [[FIRDatabase database] reference];
     self.storageRef = [[FIRStorage storage] reference];
-    
-    [self.ref keepSynced:NO];
-    
+        
     [self configureController];
 }
 
@@ -166,44 +164,35 @@
 - (void)saveUserToFirebase:(FIRUser *)user
 {
     
-    __block NSString *stringPhoto = nil;
-    __block NSDictionary *userData = nil;
-    
     [[TSFacebookManager sharedManager] requestUserDataTheServerFacebook:^(NSDictionary *dictionaryValues) {
         
-        stringPhoto = [[[dictionaryValues objectForKey:@"picture"] objectForKey:@"data"] objectForKey:@"url"];
+        NSMutableDictionary *userData = [NSMutableDictionary dictionary];
+        
+        NSString *stringPhoto =
+        [[[dictionaryValues objectForKey:@"picture"] objectForKey:@"data"] objectForKey:@"url"];
 
         NSString *imagePath = [NSString stringWithFormat:@"%@/%lld.jpg", [FIRAuth auth].currentUser.uid, (long long)([NSDate date].timeIntervalSince1970 * 1000.0)];
         
         NSString *userID = user.uid;
         NSString *name = user.displayName;
-        NSString *email = user.email;
         NSString *dateOfBirth = @"";
         NSString *location = @"";
         NSString *gender = @"";
         NSString *age = @"";
         NSString *online = @"";
+    
         
-        if (!email) {
-            email = @"email";
-        }
-        
-        
-        userData = @{@"userID":userID,
-                     @"displayName":name,
-                     @"email":email,
-                     @"imagePath":imagePath,
-                     @"dateOfBirth":dateOfBirth,
-                     @"location":location,
-                     @"gender":gender,
-                     @"age":age,
-                     @"online":online};
-        
-        [[[[[self.ref child:@"dataBase"] child:@"users"] child:user.uid] child:@"userData"] setValue:userData];
+        [userData setObject:userID forKey:@"userID"];
+        [userData setObject:name forKey:@"displayName"];
+        [userData setObject:dateOfBirth forKey:@"dateOfBirth"];
+        [userData setObject:location forKey:@"location"];
+        [userData setObject:gender forKey:@"gender"];
+        [userData setObject:age forKey:@"age"];
+        [userData setObject:online forKey:@"online"];
         
         NSData *avatarData = [NSData dataWithContentsOfURL:[NSURL URLWithString:stringPhoto]];
         
-        [TSFireImage saveImage:avatarData byKey:@"avatarUser" byPath:imagePath];
+        [TSFireImage saveAvatarInTheDatabase:avatarData byPath:imagePath dictParam:userData];
         [self openTabBarcontroller];
         
     }];
