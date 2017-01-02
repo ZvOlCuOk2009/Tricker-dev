@@ -57,6 +57,7 @@
 		FDF9639C1DD14598000877B5 /* TSPhotoAndNameViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FDF9639B1DD14598000877B5 /* TSPhotoAndNameViewController.m */; };
 		FDFDFC951DD26A28007811EF /* TSAutorizationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FDFDFC941DD26A27007811EF /* TSAutorizationViewController.m */; };
 		FDFDFC981DD293E0007811EF /* TSProfileTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FDFDFC971DD293E0007811EF /* TSProfileTableViewController.m */; };
+		FDFED0D61E1ADD0E00AB6805 /* TSPhotoDetailView.xib in Resources */ = {isa = PBXBuildFile; fileRef = FDFED0D51E1ADD0D00AB6805 /* TSPhotoDetailView.xib */; };
 		FDFF9D831DEA251E00F4971B /* TSAlertViewCard.xib in Resources */ = {isa = PBXBuildFile; fileRef = FDFF9D821DEA251E00F4971B /* TSAlertViewCard.xib */; };
 		FDFF9D861DEA277500F4971B /* TSAlertViewCard.m in Sources */ = {isa = PBXBuildFile; fileRef = FDFF9D851DEA277500F4971B /* TSAlertViewCard.m */; };
 /* End PBXBuildFile section */
@@ -168,6 +169,7 @@
 		FDFDFC941DD26A27007811EF /* TSAutorizationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSAutorizationViewController.m; sourceTree = "<group>"; };
 		FDFDFC961DD293E0007811EF /* TSProfileTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSProfileTableViewController.h; sourceTree = "<group>"; };
 		FDFDFC971DD293E0007811EF /* TSProfileTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSProfileTableViewController.m; sourceTree = "<group>"; };
+		FDFED0D51E1ADD0D00AB6805 /* TSPhotoDetailView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TSPhotoDetailView.xib; sourceTree = "<group>"; };
 		FDFF9D821DEA251E00F4971B /* TSAlertViewCard.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TSAlertViewCard.xib; sourceTree = "<group>"; };
 		FDFF9D841DEA277500F4971B /* TSAlertViewCard.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSAlertViewCard.h; sourceTree = "<group>"; };
 		FDFF9D851DEA277500F4971B /* TSAlertViewCard.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSAlertViewCard.m; sourceTree = "<group>"; };
@@ -227,8 +229,8 @@
 				FD1C4F651DCE280400CF63E9 /* TSTabBarViewController.m */,
 				FDFDFC961DD293E0007811EF /* TSProfileTableViewController.h */,
 				FDFDFC971DD293E0007811EF /* TSProfileTableViewController.m */,
-				FD5CD4921DD3D6CF0056C1A6 /* TSSitysViewController.h */,
 				FD5CD4931DD3D6CF0056C1A6 /* TSSitysViewController.m */,
+				FD5CD4921DD3D6CF0056C1A6 /* TSSitysViewController.h */,
 				FDF4BB1E1DF03F38003D3841 /* TSPhotosViewController.h */,
 				FDF4BB1F1DF03F38003D3841 /* TSPhotosViewController.m */,
 				FD0C1CA41DE7930100D37B61 /* TSMapViewController.h */,
@@ -414,11 +416,9 @@
 		FDFEA3CE1DFC9BFB00FB4363 /* Xib */ = {
 			isa = PBXGroup;
 			children = (
-				FD0C1C9F1DE783B500D37B61 /* TSSwipeView.xib */,
-				FDED429E1E06BC8A005E0948 /* TSDetailView.xib */,
+				FDFED0D71E1ADD2F00AB6805 /* Iphone4 */,
 				FD06541B1DFCA24200AE45EF /* TSSwipeView6plus.xib */,
 				FDF4BB111DF019D4003D3841 /* TSViewCell.xib */,
-				FDF4BB191DF02C3E003D3841 /* TSPhotoView.xib */,
 				FD06541D1DFCBDD200AE45EF /* TSPhotoView6Plus.xib */,
 				FDFF9D821DEA251E00F4971B /* TSAlertViewCard.xib */,
 				FDEBE3E71DF1C4AB0073A0FF /* TSCollCell.xib */,
@@ -441,6 +441,17 @@
 				FDFF9D851DEA277500F4971B /* TSAlertViewCard.m */,
 			);
 			name = View;
+			sourceTree = "<group>";
+		};
+		FDFED0D71E1ADD2F00AB6805 /* Iphone4 */ = {
+			isa = PBXGroup;
+			children = (
+				FD0C1C9F1DE783B500D37B61 /* TSSwipeView.xib */,
+				FDED429E1E06BC8A005E0948 /* TSDetailView.xib */,
+				FDF4BB191DF02C3E003D3841 /* TSPhotoView.xib */,
+				FDFED0D51E1ADD0D00AB6805 /* TSPhotoDetailView.xib */,
+			);
+			name = Iphone4;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -605,6 +616,7 @@
 				FD1C4F3E1DCE252200CF63E9 /* Assets.xcassets in Resources */,
 				FD1C4F731DCE9F4400CF63E9 /* GoogleService-Info.plist in Resources */,
 				FD06541E1DFCBDD200AE45EF /* TSPhotoView6Plus.xib in Resources */,
+				FDFED0D61E1ADD0E00AB6805 /* TSPhotoDetailView.xib in Resources */,
 				FD1C4F3C1DCE252200CF63E9 /* Main.storyboard in Resources */,
 				FDF4BB121DF019D4003D3841 /* TSViewCell.xib in Resources */,
 				FD0C1CA01DE783B500D37B61 /* TSSwipeView.xib in Resources */,

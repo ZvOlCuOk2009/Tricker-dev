@@ -131,7 +131,13 @@
         self.swipeView.nameLabel.text = displayName;
         self.swipeView.ageLabel.text = age;
         
-        NSString *countPhoto = [NSString stringWithFormat:@"%ld", (long)[photosUser count]];
+        NSInteger countPhotos = [photosUser count];
+        
+        if (countPhotos > 0) {
+            countPhotos = countPhotos - 1;
+        }
+        
+        NSString *countPhoto = [NSString stringWithFormat:@"%ld", (long)countPhotos];
         
         if ([countPhoto isEqualToString:@"0"]) {
             countPhoto = @"";

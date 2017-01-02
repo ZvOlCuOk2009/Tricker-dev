@@ -28,6 +28,9 @@
 @property (strong, nonatomic) TSFireUser *fireUser;
 
 @property (strong, nonatomic) NSMutableArray *photos;
+@property (strong, nonatomic) NSMutableArray *urlPhotos;
+@property (strong, nonatomic) NSMutableArray *selectedPhotos;
+@property (strong, nonatomic) NSMutableArray *addPhotos;
 @property (strong, nonatomic) UIImageView *chackMark;
 
 @property (assign, nonatomic) NSInteger regognizerMark;
@@ -49,6 +52,10 @@ static NSString * const reuseIdntifierButton = @"cellButton";
     self.ref = [[FIRDatabase database] reference];
     self.storageRef = [[FIRStorage storage] reference];
     
+    self.photos = [NSMutableArray array];
+    self.addPhotos = [NSMutableArray array];
+    self.selectedPhotos = [NSMutableArray array];
+
     [self loadPhotos];
 
     UIBarButtonItem *leftItem = [[UIBarButtonItem alloc] init];
@@ -72,36 +79,53 @@ static NSString * const reuseIdntifierButton = @"cellButton";
 - (void)loadPhotos
 {
     
-    [SVProgressHUD show];
-    [SVProgressHUD setDefaultStyle:SVProgressHUDStyleCustom];
-    [SVProgressHUD setBackgroundColor:YELLOW_COLOR];
-    [SVProgressHUD setForegroundColor:DARK_GRAY_COLOR];
-    
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+    [self.ref observeEventType:FIRDataEventTypeValue withBlock:^(FIRDataSnapshot * _Nonnull snapshot) {
         
-        [self.ref observeEventType:FIRDataEventTypeValue withBlock:^(FIRDataSnapshot * _Nonnull snapshot) {
-            
-            self.fireUser = [TSFireUser initWithSnapshot:snapshot];
-            
+        self.fireUser = [TSFireUser initWithSnapshot:snapshot];
+
+        [self showProgressHud];
+        NSLog(@"TSPhotosViewController");
+//        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        
             if (self.fireUser.photos) {
-                self.photos = self.fireUser.photos;
+                self.urlPhotos = self.fireUser.photos;
             } else {
-                self.photos = [NSMutableArray array];
+                self.urlPhotos = [NSMutableArray array];
                 
-                NSString *cap = @"";
+                NSString *cap = @"a";
+                [self.urlPhotos addObject:cap];
                 [self.photos addObject:cap];
             }
             
-            dispatch_async(dispatch_get_main_queue(), ^{
+            if (self.fireUser.photos) {
                 
-                [self.collectionView reloadData];
-                [SVProgressHUD dismiss];
-                
-            });
+                for (int i = 0; i < [self.fireUser.photos count]; i++) {
+                    
+                    NSString *url = [self.fireUser.photos objectAtIndex:i];
+                    
+                    if ([url isEqual:[NSNull null]]) {
+                        
+                    } else {
+                        if ([url length] > 1) {
+                            UIImage *convertPhoto = [self photoWithPhoto:url];
+                            [self.photos addObject:convertPhoto];
+                        } else {
+                            UIImage *capImage = [UIImage imageNamed:@"photo-camera1"];
+                            [self.photos addObject:capImage];
+                        }
+                    }
+                }
+            }
             
-        }];
+//            dispatch_async(dispatch_get_main_queue(), ^{
         
-    });
+                [self.collectionView reloadData];
+                [self dissmisProgressHud];
+//            });
+//
+//        });
+//        
+    }];
     
 }
 
@@ -119,9 +143,31 @@ static NSString * const reuseIdntifierButton = @"cellButton";
     
     if (!parent) {
         if (self.regognizer == YES) {
-            [[[[[self.ref child:@"dataBase"] child:@"users"] child:self.fireUser.uid] child:@"photos"] setValue:self.photos];
+            
+//            dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+//                
+//                dispatch_sync(dispatch_get_main_queue(), ^{
+            
+                    for (NSDictionary *selectPhoto in self.selectedPhotos) {
+                        NSData *currentData = [selectPhoto objectForKey:@"currentData"];
+                        NSString *currentPath = [selectPhoto objectForKey:@"currentPath"];
+                        
+                        [TSFireImage savePhotos:currentData byPath:currentPath photos:self.urlPhotos];
+                    }
+//                });
+//            });
         }
     }
+}
+
+
+#pragma mark - compression photo
+
+
+- (UIImage *)photoWithPhoto:(NSString *)url
+{
+    UIImage *photo = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:url]]];
+    return photo;
 }
 
 
@@ -209,24 +255,19 @@ static NSString * const reuseIdntifierButton = @"cellButton";
     UIImage *image = info[UIImagePickerControllerEditedImage];
     NSData *imageData = UIImageJPEGRepresentation(image, 0.8);
     
-    NSString *imagePath = [NSString stringWithFormat:@"%@/photos/%lld.jpg",
-                           [FIRAuth auth].currentUser.uid,
+    NSString *imagePath = [NSString stringWithFormat:@"%@/photos/%lld.jpg", [FIRAuth auth].currentUser.uid,
                            (long long)([NSDate date].timeIntervalSince1970 * 1000.0)];
     
-    if (self.fireUser.photos) {
-        self.photos = self.fireUser.photos;
-    } else {
-        self.photos = [NSMutableArray array];
-        
-        [[NSUserDefaults standardUserDefaults] setObject:self.photos forKey:@"photos"];
-        
-        NSString *cap = @"";
-        [self.photos addObject:cap];
+    NSDictionary *paramsSelectedPhoto = @{@"currentData":imageData, @"currentPath":imagePath};
+    [self.selectedPhotos addObject:paramsSelectedPhoto];
+    
+    if ([self.addPhotos count] > 0) {
+        [self.addPhotos removeAllObjects];
     }
     
-    [TSFireImage savePhotos:imageData byPath:imagePath photos:self.photos];
-
-    [self loadPhotos];
+    [self.addPhotos addObject:image];
+    [self.photos addObjectsFromArray:self.addPhotos];
+    [self.collectionView reloadData];
     
     self.regognizer = YES;
 }
@@ -243,11 +284,14 @@ static NSString * const reuseIdntifierButton = @"cellButton";
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
 {
+    
     TSCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:reuseIdntifier
                                                                            forIndexPath:indexPath];
     
+    NSLog(@"Count photos %ld", (long)[self.photos count]);
+    
     NSInteger myIndexPaht = indexPath.item;
-    NSString *photo = [self.photos objectAtIndex:myIndexPaht];
+    UIImage *photo = [self.photos objectAtIndex:myIndexPaht];
     
     if (indexPath.row == 0) {
         TSCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:reuseIdntifierButton
@@ -256,8 +300,7 @@ static NSString * const reuseIdntifierButton = @"cellButton";
 
     } else {
         
-        UIImage *resultingPhoto = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:photo]]];
-        cell.imageView.image = resultingPhoto;
+        cell.imageView.image = photo;
     }
     
     return cell;
@@ -301,6 +344,24 @@ static NSString * const reuseIdntifierButton = @"cellButton";
         self.mark = NO;
     }
     
+}
+
+
+#pragma mark - ProgressHUD
+
+
+- (void)showProgressHud
+{
+    [SVProgressHUD show];
+    [SVProgressHUD setDefaultStyle:SVProgressHUDStyleCustom];
+    [SVProgressHUD setBackgroundColor:YELLOW_COLOR];
+    [SVProgressHUD setForegroundColor:DARK_GRAY_COLOR];
+}
+
+
+- (void)dissmisProgressHud
+{
+    [SVProgressHUD dismiss];
 }
 
 

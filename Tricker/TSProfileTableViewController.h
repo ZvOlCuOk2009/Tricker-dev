@@ -20,11 +20,10 @@
 @property (strong, nonatomic) NSString *selectCity;
 @property (strong, nonatomic) NSUserDefaults *userDefaults;
 @property (strong, nonatomic) UIBarButtonItem *doneButton;
-@property (strong, nonatomic) FIRDatabaseReference *ref;
-@property (strong, nonatomic) FIRStorageReference *storageRef;
 @property (strong, nonatomic) TSFireUser *fireUser;
-@property (strong, nonatomic) TSFireBase *fireBase;
 
 - (void)doneAction:(id)sender;
+- (void)showProgressHud;
+- (void)dissmisProgressHud;
 
 @end

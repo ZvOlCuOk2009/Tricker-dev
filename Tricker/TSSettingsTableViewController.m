@@ -105,6 +105,7 @@ NSString * const UpdateParametersNotification = @"UpdateParametersNotification";
         self.fireUser = [TSFireUser initWithSnapshot:snapshot];
         [self configureController];
         [self setDataUser];
+        NSLog(@"TSSettingsTableViewController");
     }];
     
 }
@@ -124,6 +125,7 @@ NSString * const UpdateParametersNotification = @"UpdateParametersNotification";
     self.statePickerView = NO;
     
     //создание массивов с источниками данных для UIPickerView
+    
     self.dataSourseAge = [NSMutableArray array];
     self.dataSourseGrowth = [NSMutableArray array];
     self.dataSourseWeight = [NSMutableArray array];
@@ -176,30 +178,27 @@ NSString * const UpdateParametersNotification = @"UpdateParametersNotification";
     
     //получение модели пользователя из базы
     
-    [SVProgressHUD show];
-    [SVProgressHUD setDefaultStyle:SVProgressHUDStyleCustom];
-    [SVProgressHUD setBackgroundColor:YELLOW_COLOR];
-    [SVProgressHUD setForegroundColor:DARK_GRAY_COLOR];
+    [self showProgressHud];
     
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        
+//    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+    
         UIImage *avatar = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:self.fireUser.photoURL]]];
         
-        dispatch_async(dispatch_get_main_queue(), ^{
+//        dispatch_async(dispatch_get_main_queue(), ^{
 
             if (self.fireUser) {
                 
                 [self setParametrUser:self.fireUser];
                 self.avatarImageView.image = avatar;
-                [SVProgressHUD dismiss];
+                [self dissmisProgressHud];
             }
             
             self.avatarImageView.layer.cornerRadius = 40;
             self.avatarImageView.clipsToBounds = YES;
             
-        });
-        
-    });
+//        });
+//        
+//    });
     
 }
 
@@ -781,5 +780,24 @@ NSString * const UpdateParametersNotification = @"UpdateParametersNotification";
     [self setDataUser];
     
 }
+
+
+#pragma mark - ProgressHUD
+
+
+- (void)showProgressHud
+{
+    [SVProgressHUD show];
+    [SVProgressHUD setDefaultStyle:SVProgressHUDStyleCustom];
+    [SVProgressHUD setBackgroundColor:YELLOW_COLOR];
+    [SVProgressHUD setForegroundColor:DARK_GRAY_COLOR];
+}
+
+
+- (void)dissmisProgressHud
+{
+    [SVProgressHUD dismiss];
+}
+
 
 @end

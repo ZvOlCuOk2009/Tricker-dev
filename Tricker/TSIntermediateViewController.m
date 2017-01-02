@@ -12,8 +12,6 @@
 #import "TSFireBase.h"
 #import "TSTrickerPrefixHeader.pch"
 
-#import <SVProgressHUD.h>
-
 @import Firebase;
 @import FirebaseAuth;
 @import FirebaseDatabase;
@@ -40,14 +38,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    [SVProgressHUD show];
-    [SVProgressHUD setDefaultStyle:SVProgressHUDStyleCustom];
-    [SVProgressHUD setBackgroundColor:YELLOW_COLOR];
-    [SVProgressHUD setForegroundColor:DARK_GRAY_COLOR];
-    
     self.ref = [[FIRDatabase database] reference];
-    
-    [self.ref keepSynced:NO];
     
     [self.ref observeEventType:FIRDataEventTypeValue withBlock:^(FIRDataSnapshot * _Nonnull snapshot) {
         
@@ -55,7 +46,7 @@
         self.fireBase = [TSFireBase initWithSnapshot:snapshot];
         
         [self configureController];
-
+        NSLog(@"TSIntermediateViewController");
     }];
     
     [[self navigationController] setNavigationBarHidden:YES animated:YES];
@@ -71,7 +62,6 @@
 -(void)viewDidDisappear:(BOOL)animated
 {
     [super viewDidDisappear:animated];
-    [SVProgressHUD dismiss];
 }
 
 

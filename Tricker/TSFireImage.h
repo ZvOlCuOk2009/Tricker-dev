@@ -16,7 +16,4 @@
                       dictParam:(NSMutableDictionary *)params;
 + (void)savePhotos:(NSData *)imageDataByPath byPath:(NSString *)path photos:(NSMutableArray *)photos;
 
-//- (void)savePhotosInTheDatabase:(NSData *)photoDataByPath byPath:(NSString *)path
-//                         photos:(void(^)(NSMutableArray *photos))success;
-
 @end

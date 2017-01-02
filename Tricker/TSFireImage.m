@@ -7,6 +7,7 @@
 //
 
 #import "TSFireImage.h"
+#import "AppDelegate.h"
 
 @import Firebase;
 @import FirebaseAuth;
@@ -19,7 +20,7 @@
 @implementation TSFireImage
 
 
-+(TSFireImage *)sharedManager {
++ (TSFireImage *)sharedManager {
     
     static TSFireImage * manager = nil;
     static dispatch_once_t onceToken;
@@ -87,8 +88,6 @@
                                   [photos addObject:photoURL];
                                   
                                   [[[[[ref child:@"dataBase"] child:@"users"] child:fireUser.uid] child:@"photos"] setValue:photos];
-                                  [[NSUserDefaults standardUserDefaults] setObject:photos forKey:@"photos"];
-                                  [[NSUserDefaults standardUserDefaults] synchronize];
                               }];
                               
                           }];

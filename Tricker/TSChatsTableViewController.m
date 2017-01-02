@@ -29,6 +29,9 @@
 @property (strong, nonatomic) NSMutableArray *interlocutors;
 @property (strong, nonatomic) NSMutableArray *lastPosts;
 
+@property (strong, nonatomic) NSMutableArray *interlocutorName;
+@property (strong, nonatomic) NSMutableArray *interlocAvatar;
+
 @end
 
 @implementation TSChatsTableViewController
@@ -61,9 +64,11 @@
         allKeys = [self.fireUser.chats allKeys];
         self.interlocutors = [NSMutableArray array];
         self.lastPosts = [NSMutableArray array];
+        self.interlocutorName = [NSMutableArray array];
+        self.interlocAvatar = [NSMutableArray array];
     }
     
-    for (int i = 0; i < [chats count]; i++) {
+    for (int i = 0; i < [allKeys count]; i++) {
         
         NSDictionary *chat = [chats objectForKey:[allKeys objectAtIndex:i]];
         NSArray *chatKeys = [chat allKeys];
@@ -74,9 +79,18 @@
         
         [self.lastPosts addObject:lastPost];
         
-        TSFireUser *interlocutor = [self.fireBase objectForKey:[allKeys objectAtIndex:i]];
+        NSDictionary *interlocutor = [self.fireBase objectForKey:[allKeys objectAtIndex:i]];
         
-        [self.interlocutors addObject:interlocutor];
+        NSDictionary *interlocutorData = [interlocutor objectForKey:@"userData"];
+        
+        NSString *idInterloc = [interlocutorData objectForKey:@"userID"];
+        NSString *nameInterloc = [interlocutorData objectForKey:@"displayName"];
+        NSString *avatarUrlInterloc = [interlocutorData objectForKey:@"photoURL"];
+        UIImage *avatarInterlocutor = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:avatarUrlInterloc]]];
+        
+        [self.interlocutorName addObject:nameInterloc];
+        [self.interlocAvatar addObject:avatarInterlocutor];
+        [self.interlocutors addObject:idInterloc];
     }
     
     [self.tableView reloadData];
@@ -90,9 +104,7 @@
 {
     [super viewWillAppear:animated];
     
-//    [[self.navigationController.view viewWithTag:3] removeFromSuperview];
-    
-    [self configureController];
+     [self configureController];
     
     //проверка откуда вызван контроллер из чат тейблвью контроллера или свайп вью
     
@@ -146,36 +158,9 @@
 - (void)configureCell:(TSChatTableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath
 {
     
-    NSDictionary *interlocutor = [self.interlocutors objectAtIndex:indexPath.row];
-    NSDictionary *interlocutorData = [interlocutor objectForKey:@"userData"];
-    
-    NSString *interlocutorName = [interlocutorData objectForKey:@"displayName"];
-    NSString *interlocStringAvatar = [interlocutorData objectForKey:@"photoURL"];
-    
-    UIImage *interlocutorAvatar = [self convertImage:interlocStringAvatar];
-    
-    cell.interlocutorAvatar.image = interlocutorAvatar;
-    cell.interlocutorNameLabel.text = interlocutorName;
+    cell.interlocutorAvatar.image = [self.interlocAvatar objectAtIndex:indexPath.row];
+    cell.interlocutorNameLabel.text = [self.interlocutorName objectAtIndex:indexPath.row];
     cell.correspondenceLabel.text = [self.lastPosts objectAtIndex:indexPath.row];
-    
-}
-
-
-- (UIImage *)convertImage:(NSString *)photoURL
-{
-    
-    NSURL *urlPhoto = [NSURL URLWithString:photoURL];
-    UIImage *imagePhoto = [UIImage imageWithData:[NSData dataWithContentsOfURL:urlPhoto]];
-    UIImage *avatar = nil;
-    
-    if (urlPhoto && urlPhoto.scheme && urlPhoto.host) {
-        avatar = imagePhoto;
-    } else {
-        NSData *data = [[NSData alloc] initWithBase64EncodedString:photoURL
-                                                           options:NSDataBase64DecodingIgnoreUnknownCharacters];
-        avatar = [UIImage imageWithData:data];
-    }
-    return avatar;
     
 }
 
@@ -197,19 +182,11 @@
     TSChatViewController *chatController =
     [storyboard instantiateViewControllerWithIdentifier:@"TSChatViewController"];
     
-    NSDictionary *interlocutor = [self.interlocutors objectAtIndex:indexPath.row];
-    NSDictionary *interlocutorData = [interlocutor objectForKey:@"userData"];
-    NSString *interlocutorID = [interlocutorData objectForKey:@"userID"];
-    NSString *interlocutorName = [interlocutorData objectForKey:@"displayName"];
-    NSString *interlocStringAvatar = [interlocutorData objectForKey:@"photoURL"];
-    
-    UIImage *interlocutorAvatar = [self convertImage:interlocStringAvatar];
-    
     [self.navigationController pushViewController:chatController animated:YES];
     
-    chatController.interlocutorID = interlocutorID;
-    chatController.interlocName = interlocutorName;
-    chatController.interlocutorAvatar = interlocutorAvatar;
+    chatController.interlocutorID = [self.interlocutors objectAtIndex:indexPath.row];
+    chatController.interlocName = [self.interlocutorName objectAtIndex:indexPath.row];
+    chatController.interlocutorAvatar = [self.interlocAvatar objectAtIndex:indexPath.row];
 
 }
 

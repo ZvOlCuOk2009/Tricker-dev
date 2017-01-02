@@ -53,7 +53,7 @@
     self.messages = [NSMutableArray array];
     
     
-    //проверяю есть ли ID собеседника если отсутствует, достаю из предварительно сохранившемуся в NSUserDefaults
+    //проверяю есть ли ID собеседника если отсутствует, достаю из предварительно сохранившегося в NSUserDefaults
     //вызывается метод заполнения данными
     
     if (self.interlocutorID) {
@@ -104,6 +104,7 @@
     [backItem setTarget:self];
     [backItem setAction:@selector(cancelInteraction)];
     
+    [self showProgressHud];
 }
 
 
@@ -142,7 +143,7 @@
 }
 
 
-//очиста чата от сообщений в момент скрытия контроллера с экрана
+//очистка чата от сообщений в момент скрытия контроллера с экрана
 
 
 - (void)viewDidDisappear:(BOOL)animated
@@ -164,7 +165,7 @@
 
 - (void)configureCurrentChat
 {
-    
+
     [self.inputToolbar.contentView.rightBarButtonItem setTitleColor:DARK_GRAY_COLOR forState:UIControlStateNormal];
     [self.inputToolbar.contentView.rightBarButtonItem setTitle:@"Отпр" forState:UIControlStateNormal];
     self.inputToolbar.contentView.textView.placeHolder = @"Новое сообщение";
@@ -184,19 +185,13 @@
     [self.navigationController.navigationBar addSubview:self.interlocutorAvatarButtonNavBar];
     
     
-//    NSURL *urlPhoto = [NSURL URLWithString:self.fireUser.photoURL];
-//    UIImage *imagePhoto = [UIImage imageWithData:[NSData dataWithContentsOfURL:urlPhoto]];
-//    
-//    if (urlPhoto && urlPhoto.scheme && urlPhoto.host) {
-//        self.userAvatar = imagePhoto;
-//    } else {
-//        NSData *data = [[NSData alloc] initWithBase64EncodedString:self.fireUser.photoURL
-//                                                           options:NSDataBase64DecodingIgnoreUnknownCharacters];
-//        self.userAvatar = [UIImage imageWithData:data];
-//    }
+    NSURL *urlPhoto = [NSURL URLWithString:self.fireUser.photoURL];
+    UIImage *imagePhoto = [UIImage imageWithData:[NSData dataWithContentsOfURL:urlPhoto]];
+    
+    self.userAvatar = imagePhoto;
     
     [self setMessageRef];
-
+    
 }
 
 
@@ -237,6 +232,7 @@
 
 #pragma mark - Action
 
+//селектор вызова вьюхи деталей
 
 - (void)interlocutorButtonNavBarActoin
 {
@@ -245,9 +241,16 @@
     swipeView.frame = CGRectMake(10, - 400, swipeView.frame.size.width, swipeView.frame.size.width);
     swipeView.nameLabel.text = self.interlocName;
     swipeView.ageLabel.text = self.fireInterlocutor.age;
+    
+    if ([self.fireInterlocutor.photos count] > 0) {
+        swipeView.countPhotoLabel.text = [NSString stringWithFormat:@"%ld",
+                                          (long)[self.fireInterlocutor.photos count] - 1];
+    }
+    
     swipeView.avatarImageView.image = self.interlocutorAvatar;
     swipeView.backgroundImageView.image = self.interlocutorAvatar;
     swipeView.parameterUser = self.fireInterlocutor.parameters;
+    swipeView.photos = self.fireInterlocutor.photos;
     
     [self.view addSubview:swipeView];
         
@@ -321,6 +324,8 @@
 
 - (id<JSQMessageAvatarImageDataSource>)collectionView:(JSQMessagesCollectionView *)collectionView avatarImageDataForItemAtIndexPath:(NSIndexPath *)indexPath
 {
+    
+    [self dissmisProgressHud];
     
     JSQMessage *message = self.messages[indexPath.item];
     
@@ -420,6 +425,24 @@
         [self finishReceivingMessageAnimated:YES];
     }];
     
+}
+
+
+#pragma mark - ProgressHUD
+
+
+- (void)showProgressHud
+{
+    [SVProgressHUD show];
+    [SVProgressHUD setDefaultStyle:SVProgressHUDStyleCustom];
+    [SVProgressHUD setBackgroundColor:YELLOW_COLOR];
+    [SVProgressHUD setForegroundColor:DARK_GRAY_COLOR];
+}
+
+
+- (void)dissmisProgressHud
+{
+    [SVProgressHUD dismiss];
 }
 
 

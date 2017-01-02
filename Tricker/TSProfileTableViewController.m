@@ -12,13 +12,15 @@
 #import "TSSocialNetworkLoginViewController.h"
 #import "TSFacebookManager.h"
 #import "TSFireImage.h"
-#import "TSTrickerPrefixHeader.pch"
-
 #import "TSTabBarViewController.h"
+#import "TSTrickerPrefixHeader.pch"
 
 #import <SVProgressHUD.h>
 
 @interface TSProfileTableViewController () <UINavigationControllerDelegate, UIImagePickerControllerDelegate>
+
+@property (strong, nonatomic) FIRDatabaseReference *ref;
+@property (strong, nonatomic) FIRStorageReference *storageRef;
 
 @property (weak, nonatomic) IBOutlet UIImageView *backgroundImageView;
 @property (weak, nonatomic) IBOutlet UIImageView *avatarImageView;
@@ -67,6 +69,7 @@
         
         self.fireUser = [TSFireUser initWithSnapshot:snapshot];
         [self configureController];
+        NSLog(@"TSProfileTableViewController");
         
     }];
     
@@ -152,28 +155,25 @@
 - (void)configureController
 {
     
-    [SVProgressHUD show];
-    [SVProgressHUD setDefaultStyle:SVProgressHUDStyleCustom];
-    [SVProgressHUD setBackgroundColor:YELLOW_COLOR];
-    [SVProgressHUD setForegroundColor:DARK_GRAY_COLOR];
+    [self showProgressHud];
     
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        
+//    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+    
         UIImage *avatar = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:self.fireUser.photoURL]]];
         
-        dispatch_async(dispatch_get_main_queue(), ^{
-            
+//        dispatch_async(dispatch_get_main_queue(), ^{
+    
             if (self.fireUser) {
                 [self setAvatarAndBackground:avatar];
                 [self setParametrUser:self.fireUser];
-                [SVProgressHUD dismiss];
+                [self dissmisProgressHud];
                 
             }
             
-        });
-        
-    });
-    
+//        });
+//        
+//    });
+
     
     self.pointImage = [UIImage imageNamed:@"click"];
     self.circleImage = [UIImage imageNamed:@"no_click"];
@@ -356,19 +356,12 @@
     
     [picker dismissViewControllerAnimated:YES completion:NULL];
     
-    [SVProgressHUD show];
-    [SVProgressHUD setDefaultStyle:SVProgressHUDStyleCustom];
-    [SVProgressHUD setBackgroundColor:YELLOW_COLOR];
-    [SVProgressHUD setForegroundColor:DARK_GRAY_COLOR];
+//    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
     
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        
         UIImage *image = info[UIImagePickerControllerEditedImage];
         NSData *imageData = UIImageJPEGRepresentation(image, 0.8);
         
-        NSString *imagePath = [NSString stringWithFormat:@"%@/%lld.jpg",
-                               [FIRAuth auth].currentUser.uid,
-                               (long long)([NSDate date].timeIntervalSince1970 * 1000.0)];
+        NSString *imagePath = [NSString stringWithFormat:@"%@/avatar", [FIRAuth auth].currentUser.uid];
         
         NSMutableDictionary *userData = [NSMutableDictionary dictionary];
         
@@ -381,14 +374,14 @@
         [userData setObject:self.fireUser.age forKey:@"age"];
         [userData setObject:self.fireUser.online forKey:@"online"];
         
-        dispatch_async(dispatch_get_main_queue(), ^{
-            
+//        dispatch_async(dispatch_get_main_queue(), ^{
+    
             [TSFireImage saveAvatarInTheDatabase:imageData byPath:imagePath dictParam:userData];
             
-        });
-        
-    });
-    
+//        });
+//        
+//    });
+
 }
 
 
@@ -473,13 +466,10 @@
     }
     
     
-    [SVProgressHUD show];
-    [SVProgressHUD setDefaultStyle:SVProgressHUDStyleCustom];
-    [SVProgressHUD setBackgroundColor:YELLOW_COLOR];
-    [SVProgressHUD setForegroundColor:DARK_GRAY_COLOR];
+    [self showProgressHud];
     
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        
+//    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+    
         NSDictionary *userData = @{@"userID":userID,
                                    @"displayName":name,
                                    @"dateOfBirth":dateOfBirth,
@@ -491,17 +481,16 @@
         
         [[[[[self.ref child:@"dataBase"] child:@"users"] child:userID] child:@"userData"] setValue:userData];
         
-        dispatch_async(dispatch_get_main_queue(), ^{
-            
-            [SVProgressHUD dismiss];
-            
+//        dispatch_async(dispatch_get_main_queue(), ^{
+    
+            [self dissmisProgressHud];
             [self configureController];
             
             self.textFieldName.text = @"";
-        });
-        
-    });
-    
+//        });
+//        
+//    });
+
 }
 
 
@@ -706,6 +695,24 @@
         self.avatarImageView.hidden = YES;
     }
     
+}
+
+
+#pragma mark - ProgressHUD
+
+
+- (void)showProgressHud
+{
+    [SVProgressHUD show];
+    [SVProgressHUD setDefaultStyle:SVProgressHUDStyleCustom];
+    [SVProgressHUD setBackgroundColor:YELLOW_COLOR];
+    [SVProgressHUD setForegroundColor:DARK_GRAY_COLOR];
+}
+
+
+- (void)dissmisProgressHud
+{
+    [SVProgressHUD dismiss];
 }
 
 

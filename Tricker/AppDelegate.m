@@ -21,6 +21,7 @@
 
 @import Firebase;
 @import FirebaseAuth;
+@import FirebaseStorage;
 @import FirebaseDatabase;
 
 @interface AppDelegate () <GIDSignInDelegate>
@@ -160,18 +161,43 @@
                                               
                                               NSData *avatarData = [NSData dataWithContentsOfURL:[NSURL URLWithString:stringPhoto]];
                                               
-                                              
                                               [TSFireImage saveAvatarInTheDatabase:avatarData byPath:imagePath
                                                                          dictParam:userData];
+                                              
+                                              FIRUser *fireUser = [FIRAuth auth].currentUser;
+                                              FIRDatabaseReference *ref = [[FIRDatabase database] reference];
+                                              FIRStorageReference *storageRef = [[FIRStorage storage] reference];
+                                              FIRStorageReference *imagesRef = [storageRef child:imagePath];
+                                              FIRStorageMetadata *metadata = [FIRStorageMetadata new];
+                                              metadata.contentType = @"image/jpeg";
+                                              
+                                              [[storageRef child:imagePath] putData:avatarData metadata:metadata
+                                                                    completion:^(FIRStorageMetadata * _Nullable metadata, NSError * _Nullable error) {
+                                                                        
+                                                                        if (error) {
+                                                                            NSLog(@"Error uploading: %@", error);
+                                                                        }
+                                                                        
+                                                                        [imagesRef downloadURLWithCompletion:^(NSURL * _Nullable URL, NSError * _Nullable error) {
+                                                                            
+                                                                            NSString *photoURL = [NSString stringWithFormat:@"%@", URL];
+                                                                            
+                                                                            [userData setObject:photoURL forKey:@"photoURL"];
+                                                                            
+                                                                            [[[[[ref child:@"dataBase"] child:@"users"] child:fireUser.uid] child:@"userData"] setValue:userData];
+                                                                            
+                                                                            TSTabBarViewController *controller = [self.storyBoard instantiateViewControllerWithIdentifier:@"TSTabBarViewController"];
+                                                                            self.window.rootViewController = controller;
+                                                                            
+                                                                        }];
+                                                                        
+                                                                    }];
                                               
                                               NSString *token = user.uid;
                                               
                                               [[NSUserDefaults standardUserDefaults] setObject:token forKey:@"token"];
                                               [[NSUserDefaults standardUserDefaults] synchronize];
                                               
-                                            
-                                              TSTabBarViewController *controller = [self.storyBoard instantiateViewControllerWithIdentifier:@"TSTabBarViewController"];
-                                              self.window.rootViewController = controller;
                                           }
                                           
                                       } else {
@@ -188,6 +214,7 @@
     }
     
 }
+
 
 
 - (void)applicationWillResignActive:(UIApplication *)application {
