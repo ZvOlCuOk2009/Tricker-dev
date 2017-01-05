@@ -9,9 +9,13 @@
 #import "TSChatsTableViewController.h"
 #import "TSChatTableViewCell.h"
 #import "TSChatViewController.h"
+#import "TSFireInterlocutor.h"
 #import "TSFireUser.h"
 #import "TSFireBase.h"
 #import "TSSwipeView.h"
+#import "TSTrickerPrefixHeader.pch"
+
+#import <SVProgressHUD.h>
 
 @import Firebase;
 @import FirebaseDatabase;
@@ -31,6 +35,7 @@
 
 @property (strong, nonatomic) NSMutableArray *interlocutorName;
 @property (strong, nonatomic) NSMutableArray *interlocAvatar;
+@property (assign, nonatomic) NSInteger count;
 
 @end
 
@@ -39,61 +44,9 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
 
-    
+    self.count = 0;
     self.ref = [[FIRDatabase database] reference];
     
-    [self.ref observeEventType:FIRDataEventTypeValue withBlock:^(FIRDataSnapshot * _Nonnull snapshot) {
-        
-        self.fireUser = [TSFireUser initWithSnapshot:snapshot];
-        self.fireBase = [TSFireBase initWithSnapshot:snapshot];
-        
-        [self configureController];
-        
-    }];
-    
-}
-
-
-- (void)configureController
-{
-    
-    NSDictionary *chats = self.fireUser.chats;
-    NSArray *allKeys = nil;
-    
-    if (chats) {
-        allKeys = [self.fireUser.chats allKeys];
-        self.interlocutors = [NSMutableArray array];
-        self.lastPosts = [NSMutableArray array];
-        self.interlocutorName = [NSMutableArray array];
-        self.interlocAvatar = [NSMutableArray array];
-    }
-    
-    for (int i = 0; i < [allKeys count]; i++) {
-        
-        NSDictionary *chat = [chats objectForKey:[allKeys objectAtIndex:i]];
-        NSArray *chatKeys = [chat allKeys];
-        NSString *lastKey = [chatKeys lastObject];
-        
-        NSDictionary *lastDict = [chat objectForKey:lastKey];
-        NSString *lastPost = [lastDict objectForKey:@"text"];
-        
-        [self.lastPosts addObject:lastPost];
-        
-        NSDictionary *interlocutor = [self.fireBase objectForKey:[allKeys objectAtIndex:i]];
-        
-        NSDictionary *interlocutorData = [interlocutor objectForKey:@"userData"];
-        
-        NSString *idInterloc = [interlocutorData objectForKey:@"userID"];
-        NSString *nameInterloc = [interlocutorData objectForKey:@"displayName"];
-        NSString *avatarUrlInterloc = [interlocutorData objectForKey:@"photoURL"];
-        UIImage *avatarInterlocutor = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:avatarUrlInterloc]]];
-        
-        [self.interlocutorName addObject:nameInterloc];
-        [self.interlocAvatar addObject:avatarInterlocutor];
-        [self.interlocutors addObject:idInterloc];
-    }
-    
-    [self.tableView reloadData];
 }
 
 
@@ -104,7 +57,16 @@
 {
     [super viewWillAppear:animated];
     
-     [self configureController];
+    [self.ref observeEventType:FIRDataEventTypeValue withBlock:^(FIRDataSnapshot * _Nonnull snapshot) {
+        
+        self.fireUser = [TSFireUser initWithSnapshot:snapshot];
+        self.fireBase = [TSFireBase initWithSnapshot:snapshot];
+        
+        [self configureController];
+        NSLog(@"Call chats %ld", (long)self.count);
+        ++self.count;
+        
+    }];
     
     //проверка откуда вызван контроллер из чат тейблвью контроллера или свайп вью
     
@@ -112,6 +74,73 @@
         [self transitionToChatViewController];
         recognizer = 0;
     }
+    
+}
+
+
+- (void)viewDidDisappear:(BOOL)animated
+{
+    [super viewDidDisappear:animated];
+    [self.ref removeAllObservers];
+}
+
+
+- (void)configureController
+{
+    
+    if (!self.interlocutors) {
+        
+        [SVProgressHUD show];
+        [SVProgressHUD setDefaultStyle:SVProgressHUDStyleCustom];
+        [SVProgressHUD setBackgroundColor:YELLOW_COLOR];
+        [SVProgressHUD setForegroundColor:DARK_GRAY_COLOR];
+        
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+            
+            NSDictionary *chats = self.fireUser.chats;
+            NSArray *allKeys = nil;
+            
+            if (chats) {
+                allKeys = [self.fireUser.chats allKeys];
+                self.interlocutors = [NSMutableArray array];
+                self.lastPosts = [NSMutableArray array];
+                self.interlocutorName = [NSMutableArray array];
+                self.interlocAvatar = [NSMutableArray array];
+            }
+            
+            for (int i = 0; i < [allKeys count]; i++) {
+                
+                NSDictionary *chat = [chats objectForKey:[allKeys objectAtIndex:i]];
+                NSArray *chatKeys = [chat allKeys];
+                NSString *lastKey = [chatKeys lastObject];
+                
+                NSDictionary *lastDict = [chat objectForKey:lastKey];
+                NSString *lastPost = [lastDict objectForKey:@"text"];
+                
+                [self.lastPosts addObject:lastPost];
+                
+                NSString *interlocetorIdent = [allKeys objectAtIndex:i];
+                
+                [self.ref observeEventType:FIRDataEventTypeValue withBlock:^(FIRDataSnapshot * _Nonnull snapshot) {
+                    
+                    TSFireInterlocutor *fireInterlocutor = [TSFireInterlocutor initWithSnapshot:snapshot
+                                                                                   byIdentifier:interlocetorIdent];
+                    [self.interlocutors addObject:fireInterlocutor];
+                    [self.interlocAvatar addObject:[self setInterlocutorsAvatarByUrl:fireInterlocutor.photoURL]];
+                    
+                    dispatch_async(dispatch_get_main_queue(), ^{
+                        
+                        [self.tableView reloadData];
+                        [SVProgressHUD dismiss];
+                    });
+                    
+                }];
+                
+            }
+            
+        });
+        
+    }    
     
 }
 
@@ -125,7 +154,6 @@
     [storyboard instantiateViewControllerWithIdentifier:@"TSChatViewController"];
     
     [self.navigationController pushViewController:controller animated:NO];
-
 }
 
 
@@ -158,10 +186,18 @@
 - (void)configureCell:(TSChatTableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath
 {
     
-    cell.interlocutorAvatar.image = [self.interlocAvatar objectAtIndex:indexPath.row];
-    cell.interlocutorNameLabel.text = [self.interlocutorName objectAtIndex:indexPath.row];
-    cell.correspondenceLabel.text = [self.lastPosts objectAtIndex:indexPath.row];
+    TSFireInterlocutor *fireInterlocutor = [self.interlocutors objectAtIndex:indexPath.row];
     
+    cell.interlocutorAvatar.image = [self.interlocAvatar objectAtIndex:indexPath.row];
+    cell.interlocutorNameLabel.text = fireInterlocutor.displayName;
+    cell.correspondenceLabel.text = fireInterlocutor.age;
+}
+
+
+- (UIImage *)setInterlocutorsAvatarByUrl:(NSString *)url
+{
+    UIImage *avatar = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:url]]];
+    return avatar;
 }
 
 
@@ -184,8 +220,10 @@
     
     [self.navigationController pushViewController:chatController animated:YES];
     
-    chatController.interlocutorID = [self.interlocutors objectAtIndex:indexPath.row];
-    chatController.interlocName = [self.interlocutorName objectAtIndex:indexPath.row];
+    TSFireInterlocutor *fireInterlocutor = [self.interlocutors objectAtIndex:indexPath.row];
+    
+    chatController.interlocutorID = fireInterlocutor.uid;
+    chatController.interlocName = fireInterlocutor.displayName;
     chatController.interlocutorAvatar = [self.interlocAvatar objectAtIndex:indexPath.row];
 
 }

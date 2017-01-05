@@ -145,7 +145,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="q3s-o1-9nF" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="6846" y="179"/>
+            <point key="canvasLocation" x="6873" y="179"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="yYO-uN-qVI">
@@ -155,7 +155,7 @@
                         <inset key="imageInsets" minX="0.0" minY="5" maxX="0.0" maxY="-5"/>
                     </tabBarItem>
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="Q0G-Nf-lDr">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="Q0G-Nf-lDr">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="barTintColor" red="0.98823529409999999" green="0.87450980389999999" blue="0.6588235294" alpha="1" colorSpace="calibratedRGB"/>

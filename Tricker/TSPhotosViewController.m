@@ -34,6 +34,7 @@
 @property (strong, nonatomic) UIImageView *chackMark;
 
 @property (assign, nonatomic) NSInteger regognizerMark;
+@property (assign, nonatomic) NSInteger progressHUD;
 @property (assign, nonatomic) BOOL regognizer;
 @property (assign, nonatomic) BOOL mark;
 
@@ -56,8 +57,6 @@ static NSString * const reuseIdntifierButton = @"cellButton";
     self.addPhotos = [NSMutableArray array];
     self.selectedPhotos = [NSMutableArray array];
 
-    [self loadPhotos];
-
     UIBarButtonItem *leftItem = [[UIBarButtonItem alloc] init];
     [leftItem setImage:[UIImage imageNamed:@"back"]];
     [leftItem setTintColor:DARK_GRAY_COLOR];
@@ -70,9 +69,23 @@ static NSString * const reuseIdntifierButton = @"cellButton";
     self.chackMark = [[UIImageView alloc] initWithImage:chackMarkImage];
     self.chackMark.frame = CGRectMake(50, 50, 25, 25);
     
+    self.progressHUD = 0;
     self.regognizerMark = 0;
     self.regognizer = NO;
     self.mark = NO;
+}
+
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    [self loadPhotos];
+}
+
+
+- (void)viewDidDisappear:(BOOL)animated
+{
+    [super viewDidDisappear:animated];
 }
 
 
@@ -83,48 +96,51 @@ static NSString * const reuseIdntifierButton = @"cellButton";
         
         self.fireUser = [TSFireUser initWithSnapshot:snapshot];
 
-        [self showProgressHud];
-        NSLog(@"TSPhotosViewController");
-//        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        
-            if (self.fireUser.photos) {
-                self.urlPhotos = self.fireUser.photos;
-            } else {
-                self.urlPhotos = [NSMutableArray array];
-                
-                NSString *cap = @"a";
-                [self.urlPhotos addObject:cap];
-                [self.photos addObject:cap];
-            }
+        if (self.progressHUD == 0) {
+            [self showProgressHud];
             
-            if (self.fireUser.photos) {
+            dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
                 
-                for (int i = 0; i < [self.fireUser.photos count]; i++) {
+                if (self.fireUser.photos) {
+                    self.urlPhotos = self.fireUser.photos;
+                } else {
+                    self.urlPhotos = [NSMutableArray array];
                     
-                    NSString *url = [self.fireUser.photos objectAtIndex:i];
+                    NSString *cap = @"a";
+                    [self.urlPhotos addObject:cap];
+                    [self.photos addObject:cap];
+                }
+                
+                if (self.fireUser.photos) {
                     
-                    if ([url isEqual:[NSNull null]]) {
+                    for (int i = 0; i < [self.fireUser.photos count]; i++) {
                         
-                    } else {
-                        if ([url length] > 1) {
-                            UIImage *convertPhoto = [self photoWithPhoto:url];
-                            [self.photos addObject:convertPhoto];
+                        NSString *url = [self.fireUser.photos objectAtIndex:i];
+                        
+                        if ([url isEqual:[NSNull null]]) {
+                            
                         } else {
-                            UIImage *capImage = [UIImage imageNamed:@"photo-camera1"];
-                            [self.photos addObject:capImage];
+                            if ([url length] > 1) {
+                                UIImage *convertPhoto = [self photoWithPhoto:url];
+                                [self.photos addObject:convertPhoto];
+                            } else {
+                                UIImage *capImage = [UIImage imageNamed:@"photo-camera1"];
+                                [self.photos addObject:capImage];
+                            }
                         }
                     }
                 }
-            }
+                
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    
+                    [self.collectionView reloadData];
+                    [self dissmisProgressHud];
+                });
+                
+            });
             
-//            dispatch_async(dispatch_get_main_queue(), ^{
+        }
         
-                [self.collectionView reloadData];
-                [self dissmisProgressHud];
-//            });
-//
-//        });
-//        
     }];
     
 }
@@ -144,18 +160,19 @@ static NSString * const reuseIdntifierButton = @"cellButton";
     if (!parent) {
         if (self.regognizer == YES) {
             
-//            dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-//                
-//                dispatch_sync(dispatch_get_main_queue(), ^{
+            dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+                
+                dispatch_sync(dispatch_get_main_queue(), ^{
             
                     for (NSDictionary *selectPhoto in self.selectedPhotos) {
                         NSData *currentData = [selectPhoto objectForKey:@"currentData"];
                         NSString *currentPath = [selectPhoto objectForKey:@"currentPath"];
                         
                         [TSFireImage savePhotos:currentData byPath:currentPath photos:self.urlPhotos];
+                        self.progressHUD = 1;
                     }
-//                });
-//            });
+                });
+            });
         }
     }
 }
@@ -249,6 +266,7 @@ static NSString * const reuseIdntifierButton = @"cellButton";
 
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
 {
+    self.progressHUD = 1;
     
     [picker dismissViewControllerAnimated:YES completion:nil];
     

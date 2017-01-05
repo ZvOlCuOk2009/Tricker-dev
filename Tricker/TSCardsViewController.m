@@ -21,6 +21,7 @@
 @property (strong, nonatomic) ZLSwipeableView *swipeableView;
 @property (weak, nonatomic) TSSwipeView *swipeView;
 @property (strong, nonatomic) UIImage *convertImage;
+@property (strong, nonatomic) UIView *cap;
 
 @property (assign, nonatomic) NSInteger counterIndexPath;
 
@@ -61,15 +62,25 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    [[[[self.tabBarController tabBar] items] objectAtIndex:2] setEnabled:NO];
+
+    if (self.cap) {
+        self.cap.hidden = NO;
+    } else {
+        
+        self.cap = [[UIView alloc] initWithFrame:CGRectMake((self.view.frame.size.width / 5) * 2, self.view.frame.size.height - 44, self.view.frame.size.width / 5, 44)];
+        self.cap.backgroundColor = [UIColor redColor];
+        NSArray *buttons = @[@"", @"", self.cap];
+        [self.tabBarController setToolbarItems:buttons];
+    }
+    
 }
 
 
 - (void)viewDidDisappear:(BOOL)animated
 {
     [super viewDidDisappear:animated];
-    [[[[self.tabBarController tabBar] items] objectAtIndex:2] setEnabled:YES];
-    [self.tabBarItem setImage:[UIImage imageNamed:@"cards_click"]];
+
+    self.cap.hidden = YES;
 }
 
 

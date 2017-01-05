@@ -19,6 +19,13 @@
 
 @interface TSProfileTableViewController () <UINavigationControllerDelegate, UIImagePickerControllerDelegate>
 
+
+@property (strong, nonatomic) NSString *selectCity;
+@property (strong, nonatomic) NSUserDefaults *userDefaults;
+@property (strong, nonatomic) UIBarButtonItem *doneButton;
+@property (strong, nonatomic) TSFireUser *fireUser;
+
+
 @property (strong, nonatomic) FIRDatabaseReference *ref;
 @property (strong, nonatomic) FIRStorageReference *storageRef;
 
@@ -49,6 +56,7 @@
 
 @property (strong, nonatomic) NSString *filePath;
 
+@property (assign, nonatomic) NSInteger progressHUD;
 @property (assign, nonatomic) NSInteger heightHeader;
 @property (assign, nonatomic) CGFloat fixSide;
 @property (assign, nonatomic) CGFloat fixOffset;
@@ -61,18 +69,6 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
-    self.ref = [[FIRDatabase database] reference];
-    self.storageRef = [[FIRStorage storage] reference];
-    
-    [self.ref observeEventType:FIRDataEventTypeValue withBlock:^(FIRDataSnapshot * _Nonnull snapshot) {
-        
-        self.fireUser = [TSFireUser initWithSnapshot:snapshot];
-        [self configureController];
-        NSLog(@"TSProfileTableViewController");
-        
-    }];
-    
     
     UIImageView *imageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"background"]];
     self.tableView.backgroundView = imageView;
@@ -114,6 +110,7 @@
             self.fixOffset = kAvatarOffset_6_S;
             self.fixCornerRadius = kAvatarCornerRadius_6_S;
         }
+        
     } else if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
         
         if (IS_IPAD_2) {
@@ -131,6 +128,7 @@
     
     [self.tableView setSeparatorColor:DARK_GRAY_COLOR];
     
+    self.progressHUD = 0;
 }
 
 
@@ -143,11 +141,32 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     
+//    self.ref = [[FIRDatabase database] reference];
+//    self.storageRef = [[FIRStorage storage] reference];
+//    
+//    [self.ref observeEventType:FIRDataEventTypeValue withBlock:^(FIRDataSnapshot * _Nonnull snapshot) {
+//        
+//        self.fireUser = [TSFireUser initWithSnapshot:snapshot];
+//        [self configureController];
+//        NSLog(@"TSProfileTableViewController");
+//        
+//    }];
+    
+    [self configureController];
+    
     if (self.selectCity) {
         self.cityLabel.text = self.selectCity;
     }
     
 }
+
+
+- (void)viewDidDisappear:(BOOL)animated
+{
+    [super viewDidDisappear:animated];
+    [self.ref removeAllObservers];
+}
+
 
 #pragma mark - configure the Controller
 
@@ -155,25 +174,37 @@
 - (void)configureController
 {
     
-    [self showProgressHud];
+    if (self.progressHUD == 0) {
+        [self showProgressHud];
+        ++self.progressHUD;
+    }
     
-//    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+    self.ref = [[FIRDatabase database] reference];
+    self.storageRef = [[FIRStorage storage] reference];
     
-        UIImage *avatar = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:self.fireUser.photoURL]]];
+    [self.ref observeEventType:FIRDataEventTypeValue withBlock:^(FIRDataSnapshot * _Nonnull snapshot) {
         
-//        dispatch_async(dispatch_get_main_queue(), ^{
-    
-            if (self.fireUser) {
-                [self setAvatarAndBackground:avatar];
-                [self setParametrUser:self.fireUser];
-                [self dissmisProgressHud];
-                
-            }
+        self.fireUser = [TSFireUser initWithSnapshot:snapshot];
+        
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
             
-//        });
-//        
-//    });
-
+            UIImage *avatar = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:self.fireUser.photoURL]]];
+            
+            dispatch_async(dispatch_get_main_queue(), ^{
+                
+                if (self.fireUser) {
+                    [self setAvatarAndBackground:avatar];
+                    [self setParametrUser:self.fireUser];
+                    [self dissmisProgressHud];
+                    
+                }
+                
+            });
+            
+        });
+        
+    }];
+    
     
     self.pointImage = [UIImage imageNamed:@"click"];
     self.circleImage = [UIImage imageNamed:@"no_click"];
@@ -356,7 +387,7 @@
     
     [picker dismissViewControllerAnimated:YES completion:NULL];
     
-//    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
     
         UIImage *image = info[UIImagePickerControllerEditedImage];
         NSData *imageData = UIImageJPEGRepresentation(image, 0.8);
@@ -374,13 +405,13 @@
         [userData setObject:self.fireUser.age forKey:@"age"];
         [userData setObject:self.fireUser.online forKey:@"online"];
         
-//        dispatch_async(dispatch_get_main_queue(), ^{
+        dispatch_async(dispatch_get_main_queue(), ^{
     
             [TSFireImage saveAvatarInTheDatabase:imageData byPath:imagePath dictParam:userData];
             
-//        });
-//        
-//    });
+        });
+        
+    });
 
 }
 
@@ -390,9 +421,7 @@
 
 - (IBAction)saveUserAtionButton:(id)sender
 {
- 
     [self updateDataUser:nil];
-    
 }
 
 
@@ -466,9 +495,9 @@
     }
     
     
-    [self showProgressHud];
+//    [self showProgressHud];
     
-//    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
     
         NSDictionary *userData = @{@"userID":userID,
                                    @"displayName":name,
@@ -481,15 +510,16 @@
         
         [[[[[self.ref child:@"dataBase"] child:@"users"] child:userID] child:@"userData"] setValue:userData];
         
-//        dispatch_async(dispatch_get_main_queue(), ^{
+        dispatch_async(dispatch_get_main_queue(), ^{
     
-            [self dissmisProgressHud];
+//            [self dissmisProgressHud];
+            self.progressHUD = 0;
             [self configureController];
             
             self.textFieldName.text = @"";
-//        });
-//        
-//    });
+        });
+        
+    });
 
 }
 

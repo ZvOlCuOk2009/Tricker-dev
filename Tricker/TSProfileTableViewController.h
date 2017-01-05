@@ -17,10 +17,10 @@
 
 @interface TSProfileTableViewController : UITableViewController
 
-@property (strong, nonatomic) NSString *selectCity;
-@property (strong, nonatomic) NSUserDefaults *userDefaults;
-@property (strong, nonatomic) UIBarButtonItem *doneButton;
-@property (strong, nonatomic) TSFireUser *fireUser;
+//@property (strong, nonatomic) NSString *selectCity;
+//@property (strong, nonatomic) NSUserDefaults *userDefaults;
+//@property (strong, nonatomic) UIBarButtonItem *doneButton;
+//@property (strong, nonatomic) TSFireUser *fireUser;
 
 - (void)doneAction:(id)sender;
 - (void)showProgressHud;

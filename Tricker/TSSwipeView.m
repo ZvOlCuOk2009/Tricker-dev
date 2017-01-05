@@ -265,7 +265,7 @@ NSInteger recognizer;
     
     if (recognizer == 2) {
         
-        [UIView animateWithDuration:0.35
+        [UIView animateWithDuration:0.5
                               delay:0
              usingSpringWithDamping:0.7
               initialSpringVelocity:0.6
@@ -274,7 +274,7 @@ NSInteger recognizer;
                              self.frame = CGRectMake(10, 480, self.frame.size.width, self.frame.size.height);
                          } completion:nil];
         
-        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.35 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
             [self removeFromSuperview];
         });
         

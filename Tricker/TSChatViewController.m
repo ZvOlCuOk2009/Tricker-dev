@@ -38,6 +38,8 @@
 @property (strong, nonatomic) UIButton *interlocutorAvatarButtonNavBar;
 
 @property (strong, nonatomic) NSDictionary *parametersInterlocutor;
+@property (assign, nonatomic) NSInteger count;
+
 
 @end
 
@@ -46,27 +48,13 @@
 - (void)viewDidLoad {
     
     [super viewDidLoad];
+    self.count = 0;
     
     self.ref = [[FIRDatabase database] reference];
     
     self.user = [FIRAuth auth].currentUser;
+    
     self.messages = [NSMutableArray array];
-    
-    
-    //проверяю есть ли ID собеседника если отсутствует, достаю из предварительно сохранившегося в NSUserDefaults
-    //вызывается метод заполнения данными
-    
-    if (self.interlocutorID) {
-        
-        [self setDataInterlocutorToCard:self.interlocutorID];
-        
-    } else {
-        
-        NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
-        self.interlocutorID = [userDefaults objectForKey:@"intelocID"];
-        [self setDataInterlocutorToCard:self.interlocutorID];
-        
-    }
     
     
     self.senderId = self.user.uid;
@@ -86,15 +74,6 @@
     self.collectionView.collectionViewLayout.outgoingAvatarViewSize = rect;
     self.collectionView.collectionViewLayout.incomingAvatarViewSize = rect;
     
-    [self setupBubbles];
-    
-    [self.ref observeEventType:FIRDataEventTypeValue withBlock:^(FIRDataSnapshot * _Nonnull snapshot) {
-        
-        self.fireUser = [TSFireUser initWithSnapshot:snapshot];
-        [self configureCurrentChat];
-        
-    }];
-    
     
     UIBarButtonItem *backItem = [[UIBarButtonItem alloc] init];
     [backItem setImage:[UIImage imageNamed:@"back"]];
@@ -104,13 +83,45 @@
     [backItem setTarget:self];
     [backItem setAction:@selector(cancelInteraction)];
     
-    [self showProgressHud];
+    [self setMessageRef];
+    
 }
 
 
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
+    [self showProgressHud];
+    [self setupBubbles];
+    
+    [self.ref observeEventType:FIRDataEventTypeValue withBlock:^(FIRDataSnapshot * _Nonnull snapshot) {
+        
+        self.fireUser = [TSFireUser initWithSnapshot:snapshot];
+        [self configureCurrentChat];
+        NSLog(@"Call %ld", (long)self.count);
+        ++self.count;
+        
+        NSURL *urlPhoto = [NSURL URLWithString:self.fireUser.photoURL];
+        UIImage *imagePhoto = [UIImage imageWithData:[NSData dataWithContentsOfURL:urlPhoto]];
+        
+        self.userAvatar = imagePhoto;
+        
+    }];
+    
+    //проверяю есть ли ID собеседника если отсутствует, достаю из предварительно сохранившегося в NSUserDefaults
+    //вызывается метод заполнения данными
+    
+    if (self.interlocutorID) {
+        
+        [self setDataInterlocutorToCard:self.interlocutorID];
+        
+    } else {
+        
+        NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+        self.interlocutorID = [userDefaults objectForKey:@"intelocID"];
+        [self setDataInterlocutorToCard:self.interlocutorID];
+        
+    }
 }
 
 
@@ -138,6 +149,8 @@
         self.interlocName = self.fireInterlocutor.displayName;
         self.parametersInterlocutor = self.fireInterlocutor.parameters;
         
+        [self.interlocutorAvatarButtonNavBar setImage:self.interlocutorAvatar forState:UIControlStateNormal];
+        
     }];
     
 }
@@ -160,6 +173,8 @@
     
     [self.interlocutorAvatarButtonNavBar setImage:nil forState:UIControlStateNormal];
     
+    self.senderId = nil;
+    self.interlocutorID = nil;
 }
 
 
@@ -183,14 +198,7 @@
                                             action:@selector(interlocutorButtonNavBarActoin)
                                   forControlEvents:UIControlEventTouchUpInside];
     [self.navigationController.navigationBar addSubview:self.interlocutorAvatarButtonNavBar];
-    
-    
-    NSURL *urlPhoto = [NSURL URLWithString:self.fireUser.photoURL];
-    UIImage *imagePhoto = [UIImage imageWithData:[NSData dataWithContentsOfURL:urlPhoto]];
-    
-    self.userAvatar = imagePhoto;
-    
-    [self setMessageRef];
+
     
 }
 
@@ -211,21 +219,29 @@
 - (void)setMessageRef
 {
     
-    NSArray *namesComponent = [self.interlocName componentsSeparatedByString:@" "];
-    
-    if ([namesComponent count] > 1) {
-        self.title = [namesComponent firstObject];
-    } else {
-        self.title = self.interlocName;
-    }
-    
-    [self.interlocutorAvatarButtonNavBar setImage:self.interlocutorAvatar forState:UIControlStateNormal];
-    
-    if (self.interlocutorID) {
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         
-        self.messageRefUser = [[[[[self.ref child:@"dataBase"] child:@"users"] child:self.user.uid] child:@"chat"] child:self.interlocutorID];
-        self.messageRefInterlocutor = [[[[[self.ref child:@"dataBase"] child:@"users"] child:self.interlocutorID] child:@"chat"] child:self.user.uid];
-    }
+        NSArray *namesComponent = [self.interlocName componentsSeparatedByString:@" "];
+        
+        if ([namesComponent count] > 1) {
+            self.title = [namesComponent firstObject];
+        } else {
+            self.title = self.interlocName;
+        }
+        
+        dispatch_async(dispatch_get_main_queue(), ^{
+            
+            if (self.interlocutorID) {
+                
+                self.messageRefUser = [[[[[self.ref child:@"dataBase"] child:@"users"] child:self.user.uid] child:@"chat"] child:self.interlocutorID];
+                self.messageRefInterlocutor = [[[[[self.ref child:@"dataBase"] child:@"users"] child:self.interlocutorID] child:@"chat"] child:self.user.uid];
+                
+                [self dissmisProgressHud];
+            }
+            
+        });
+        
+    });
     
 }
 
@@ -313,7 +329,7 @@
         cell.textView.textColor = [UIColor darkGrayColor];
     }
     
-    cell.textView.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:16.f];
+    cell.textView.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:15.f];
     
     return cell;
     
@@ -324,8 +340,6 @@
 
 - (id<JSQMessageAvatarImageDataSource>)collectionView:(JSQMessagesCollectionView *)collectionView avatarImageDataForItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    
-    [self dissmisProgressHud];
     
     JSQMessage *message = self.messages[indexPath.item];
     
@@ -402,8 +416,7 @@
     
     [JSQSystemSoundPlayer jsq_playMessageSentSound];
     
-    JSQMessagesComposerTextView *textView = self.inputToolbar.contentView.textView;
-    textView.text = @"";
+    self.inputToolbar.contentView.textView.text = @"";
 }
 
 

@@ -81,6 +81,7 @@ NSString * const UpdateParametersNotification = @"UpdateParametersNotification";
 
 @property (assign, nonatomic) NSInteger selectedRowInComponent;
 @property (assign, nonatomic) NSInteger tagSelectCell;
+@property (assign, nonatomic) NSInteger progressHUD;
 
 @property (assign, nonatomic) BOOL statePickerView;
 @property (assign, nonatomic) BOOL stateButtonBoy;
@@ -98,16 +99,34 @@ NSString * const UpdateParametersNotification = @"UpdateParametersNotification";
     
     [self.tableView setSeparatorColor:DARK_GRAY_COLOR];
     
-    self.ref = [[FIRDatabase database] reference];
+    self.progressHUD = 0;
+}
+
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
     
-    [self.ref observeEventType:FIRDataEventTypeValue withBlock:^(FIRDataSnapshot * _Nonnull snapshot) {
-        
-        self.fireUser = [TSFireUser initWithSnapshot:snapshot];
-        [self configureController];
-        [self setDataUser];
-        NSLog(@"TSSettingsTableViewController");
-    }];
     
+    [self configureController];
+    [self setDataUser];
+    
+//    self.ref = [[FIRDatabase database] reference];
+    
+//    [self.ref observeEventType:FIRDataEventTypeValue withBlock:^(FIRDataSnapshot * _Nonnull snapshot) {
+//        
+//        self.fireUser = [TSFireUser initWithSnapshot:snapshot];
+//        [self configureController];
+//        [self setDataUser];
+//        NSLog(@"TSSettingsTableViewController");
+//    }];
+}
+
+
+- (void)viewDidDisappear:(BOOL)animated
+{
+    [super viewDidDisappear:animated];
+    [self.ref removeAllObservers];
 }
 
 
@@ -116,8 +135,6 @@ NSString * const UpdateParametersNotification = @"UpdateParametersNotification";
 
 - (void)configureController
 {
-
-    [self setDataUser];
     
     self.doneButton = [[UIBarButtonItem alloc] initWithTitle:@"Готово" style:UIBarButtonItemStylePlain
                                                       target:self action:@selector(doneAction:)];
@@ -178,27 +195,38 @@ NSString * const UpdateParametersNotification = @"UpdateParametersNotification";
     
     //получение модели пользователя из базы
     
-    [self showProgressHud];
+    if (self.progressHUD == 0) {
+        [self showProgressHud];
+        ++self.progressHUD;
+    }
     
-//    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+    self.ref = [[FIRDatabase database] reference];
     
-        UIImage *avatar = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:self.fireUser.photoURL]]];
+    [self.ref observeEventType:FIRDataEventTypeValue withBlock:^(FIRDataSnapshot * _Nonnull snapshot) {
         
-//        dispatch_async(dispatch_get_main_queue(), ^{
-
-            if (self.fireUser) {
+        self.fireUser = [TSFireUser initWithSnapshot:snapshot];
+        
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+            
+            UIImage *avatar = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:self.fireUser.photoURL]]];
+            
+            dispatch_async(dispatch_get_main_queue(), ^{
                 
-                [self setParametrUser:self.fireUser];
-                self.avatarImageView.image = avatar;
-                [self dissmisProgressHud];
-            }
+                if (self.fireUser) {
+                    
+                    [self setParametrUser:self.fireUser];
+                    self.avatarImageView.image = avatar;
+                    [self dissmisProgressHud];
+                }
+                
+                self.avatarImageView.layer.cornerRadius = 40;
+                self.avatarImageView.clipsToBounds = YES;
+                
+            });
             
-            self.avatarImageView.layer.cornerRadius = 40;
-            self.avatarImageView.clipsToBounds = YES;
-            
-//        });
-//        
-//    });
+        });
+        
+    }];
     
 }
 
@@ -415,6 +443,7 @@ NSString * const UpdateParametersNotification = @"UpdateParametersNotification";
 - (void)createdUipickerView:(NSInteger)tag
 {
     //создание UIPickerView
+    
     self.pickerView = [[UIPickerView alloc] init];
     [self.pickerView setValue:DARK_GRAY_COLOR forKey:@"textColor"];
     self.pickerView.backgroundColor = LIGHT_YELLOW_COLOR;
@@ -747,6 +776,8 @@ NSString * const UpdateParametersNotification = @"UpdateParametersNotification";
 - (IBAction)logOutAtionButton:(id)sender
 {
     //добавление параметра поиска пола
+    
+    self.progressHUD = 0;
     
     NSMutableString *searchForGender = nil;
     

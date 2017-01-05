@@ -38,6 +38,14 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    [[self navigationController] setNavigationBarHidden:YES animated:YES];
+    
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    
     self.ref = [[FIRDatabase database] reference];
     
     [self.ref observeEventType:FIRDataEventTypeValue withBlock:^(FIRDataSnapshot * _Nonnull snapshot) {
@@ -48,20 +56,13 @@
         [self configureController];
         NSLog(@"TSIntermediateViewController");
     }];
-    
-    [[self navigationController] setNavigationBarHidden:YES animated:YES];
-    
-}
-
-- (void)viewWillAppear:(BOOL)animated
-{
-    [super viewWillAppear:animated];
 }
 
 
 -(void)viewDidDisappear:(BOOL)animated
 {
     [super viewDidDisappear:animated];
+    [self.ref removeAllObservers];
 }
 
 
