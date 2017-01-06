@@ -13,6 +13,7 @@
 #import "TSFacebookManager.h"
 #import "TSFireImage.h"
 #import "TSTabBarViewController.h"
+#import "UIAlertController+TSAlertController.h"
 #import "TSTrickerPrefixHeader.pch"
 
 #import <SVProgressHUD.h>
@@ -62,6 +63,8 @@
 @property (assign, nonatomic) CGFloat fixOffset;
 @property (assign, nonatomic) CGFloat fixCornerRadius;
 @property (assign, nonatomic) BOOL stateDatePicker;
+
+@property (strong, nonatomic) UIImageView *logo;
 
 @end
 
@@ -129,6 +132,11 @@
     [self.tableView setSeparatorColor:DARK_GRAY_COLOR];
     
     self.progressHUD = 0;
+    
+    UIImage *logoImage = [UIImage imageNamed:@"logo"];
+    self.logo = [[UIImageView alloc] initWithImage:logoImage];
+    self.logo.frame = CGRectMake(70, 2, 180, 36);
+    [self.navigationController.navigationBar addSubview:self.logo];
 }
 
 
@@ -140,17 +148,6 @@
 
 - (void)viewWillAppear:(BOOL)animated
 {
-    
-//    self.ref = [[FIRDatabase database] reference];
-//    self.storageRef = [[FIRStorage storage] reference];
-//    
-//    [self.ref observeEventType:FIRDataEventTypeValue withBlock:^(FIRDataSnapshot * _Nonnull snapshot) {
-//        
-//        self.fireUser = [TSFireUser initWithSnapshot:snapshot];
-//        [self configureController];
-//        NSLog(@"TSProfileTableViewController");
-//        
-//    }];
     
     [self configureController];
     
@@ -334,18 +331,7 @@
                                                        
                                                    }];
     
-    UIView *subview = alertController.view.subviews.firstObject;
-    UIView *alertContentView = subview.subviews.firstObject;
-    alertContentView.backgroundColor = YELLOW_COLOR;
-    alertContentView.layer.cornerRadius = 10;
-    alertController.view.tintColor = DARK_GRAY_COLOR;
-    
-    
-    NSMutableAttributedString *mutableAttrString = [[NSMutableAttributedString alloc] initWithString:@"Выберите фото"];
-    [mutableAttrString addAttribute:NSFontAttributeName
-                              value:[UIFont fontWithName:@"HelveticaNeue-Light" size:20.f]
-                              range:NSMakeRange(0, 13)];
-    [alertController setValue:mutableAttrString forKey:@"attributedTitle"];
+    [alertController customizationAlertView:@"Выберите фото" byLength:13 byFont:20.f];
     
     [alertController addAction:camera];
     [alertController addAction:galery];
@@ -495,8 +481,6 @@
     }
     
     
-//    [self showProgressHud];
-    
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
     
         NSDictionary *userData = @{@"userID":userID,
@@ -512,7 +496,6 @@
         
         dispatch_async(dispatch_get_main_queue(), ^{
     
-//            [self dissmisProgressHud];
             self.progressHUD = 0;
             [self configureController];
             
@@ -725,6 +708,16 @@
         self.avatarImageView.hidden = YES;
     }
     
+    if (changeHeight < 0) {
+        
+        changeHeight = 1;
+
+    }
+    
+    self.logo.frame = CGRectMake(70, - changeHeight, self.logo.frame.size.width, self.logo.frame.size.height);
+    self.logo.alpha = 4 / changeHeight;
+    
+    NSLog(@"%f", changeHeight);
 }
 
 

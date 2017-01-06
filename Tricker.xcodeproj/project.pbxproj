@@ -11,6 +11,7 @@
 		FD002C651DFA162900D47428 /* TSChatsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FD002C641DFA162900D47428 /* TSChatsTableViewController.m */; };
 		FD06541C1DFCA24200AE45EF /* TSSwipeView6plus.xib in Resources */ = {isa = PBXBuildFile; fileRef = FD06541B1DFCA24200AE45EF /* TSSwipeView6plus.xib */; };
 		FD06541E1DFCBDD200AE45EF /* TSPhotoView6Plus.xib in Resources */ = {isa = PBXBuildFile; fileRef = FD06541D1DFCBDD200AE45EF /* TSPhotoView6Plus.xib */; };
+		FD0654431E1EE1FF0080046A /* UIAlertController+TSAlertController.m in Sources */ = {isa = PBXBuildFile; fileRef = FD0654421E1EE1FE0080046A /* UIAlertController+TSAlertController.m */; };
 		FD08BFA81E0F5AA900F90FA2 /* TSFireImage.m in Sources */ = {isa = PBXBuildFile; fileRef = FD08BFA71E0F5AA900F90FA2 /* TSFireImage.m */; };
 		FD0C1C9D1DE7810000D37B61 /* TSCardsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FD0C1C9C1DE7810000D37B61 /* TSCardsViewController.m */; };
 		FD0C1CA01DE783B500D37B61 /* TSSwipeView.xib in Resources */ = {isa = PBXBuildFile; fileRef = FD0C1C9F1DE783B500D37B61 /* TSSwipeView.xib */; };
@@ -29,6 +30,7 @@
 		FD1C4F6F1DCE86E800CF63E9 /* TSFacebookManager.m in Sources */ = {isa = PBXBuildFile; fileRef = FD1C4F6E1DCE86E800CF63E9 /* TSFacebookManager.m */; };
 		FD1C4F731DCE9F4400CF63E9 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = FD1C4F721DCE9F4400CF63E9 /* GoogleService-Info.plist */; };
 		FD1C4F761DCEA49700CF63E9 /* TSFireUser.m in Sources */ = {isa = PBXBuildFile; fileRef = FD1C4F751DCEA49700CF63E9 /* TSFireUser.m */; };
+		FD45BE051E1FE64D0047E856 /* TSPhotoZoomViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FD45BE041E1FE64D0047E856 /* TSPhotoZoomViewController.m */; };
 		FD45D0801DD7BE0F00EB2640 /* TSSearchBar.m in Sources */ = {isa = PBXBuildFile; fileRef = FD45D07F1DD7BE0E00EB2640 /* TSSearchBar.m */; };
 		FD45D0851DD7CF4200EB2640 /* TSTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = FD45D0841DD7CF4200EB2640 /* TSTableViewCell.m */; };
 		FD5CD4941DD3D6CF0056C1A6 /* TSSitysViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FD5CD4931DD3D6CF0056C1A6 /* TSSitysViewController.m */; };
@@ -58,8 +60,6 @@
 		FDFDFC951DD26A28007811EF /* TSAutorizationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FDFDFC941DD26A27007811EF /* TSAutorizationViewController.m */; };
 		FDFDFC981DD293E0007811EF /* TSProfileTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FDFDFC971DD293E0007811EF /* TSProfileTableViewController.m */; };
 		FDFED0D61E1ADD0E00AB6805 /* TSPhotoDetailView.xib in Resources */ = {isa = PBXBuildFile; fileRef = FDFED0D51E1ADD0D00AB6805 /* TSPhotoDetailView.xib */; };
-		FDFF9D831DEA251E00F4971B /* TSAlertViewCard.xib in Resources */ = {isa = PBXBuildFile; fileRef = FDFF9D821DEA251E00F4971B /* TSAlertViewCard.xib */; };
-		FDFF9D861DEA277500F4971B /* TSAlertViewCard.m in Sources */ = {isa = PBXBuildFile; fileRef = FDFF9D851DEA277500F4971B /* TSAlertViewCard.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -87,10 +87,12 @@
 		FD002C641DFA162900D47428 /* TSChatsTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSChatsTableViewController.m; sourceTree = "<group>"; };
 		FD06541B1DFCA24200AE45EF /* TSSwipeView6plus.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TSSwipeView6plus.xib; sourceTree = "<group>"; };
 		FD06541D1DFCBDD200AE45EF /* TSPhotoView6Plus.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TSPhotoView6Plus.xib; sourceTree = "<group>"; };
+		FD0654411E1EE1FE0080046A /* UIAlertController+TSAlertController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIAlertController+TSAlertController.h"; sourceTree = "<group>"; };
+		FD0654421E1EE1FE0080046A /* UIAlertController+TSAlertController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIAlertController+TSAlertController.m"; sourceTree = "<group>"; };
 		FD08BFA61E0F5AA900F90FA2 /* TSFireImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSFireImage.h; sourceTree = "<group>"; };
 		FD08BFA71E0F5AA900F90FA2 /* TSFireImage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSFireImage.m; sourceTree = "<group>"; };
 		FD0C1C9B1DE7810000D37B61 /* TSCardsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSCardsViewController.h; sourceTree = "<group>"; };
-		FD0C1C9C1DE7810000D37B61 /* TSCardsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSCardsViewController.m; sourceTree = "<group>"; };
+		FD0C1C9C1DE7810000D37B61 /* TSCardsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; indentWidth = 5; lastKnownFileType = sourcecode.c.objc; path = TSCardsViewController.m; sourceTree = "<group>"; };
 		FD0C1C9F1DE783B500D37B61 /* TSSwipeView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TSSwipeView.xib; sourceTree = "<group>"; };
 		FD0C1CA11DE78B9B00D37B61 /* TSSwipeView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSSwipeView.h; sourceTree = "<group>"; };
 		FD0C1CA21DE78B9B00D37B61 /* TSSwipeView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSSwipeView.m; sourceTree = "<group>"; };
@@ -121,6 +123,8 @@
 		FD1C4F721DCE9F4400CF63E9 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		FD1C4F741DCEA49700CF63E9 /* TSFireUser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSFireUser.h; sourceTree = "<group>"; };
 		FD1C4F751DCEA49700CF63E9 /* TSFireUser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSFireUser.m; sourceTree = "<group>"; };
+		FD45BE031E1FE64D0047E856 /* TSPhotoZoomViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSPhotoZoomViewController.h; sourceTree = "<group>"; };
+		FD45BE041E1FE64D0047E856 /* TSPhotoZoomViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSPhotoZoomViewController.m; sourceTree = "<group>"; };
 		FD45D07E1DD7BE0E00EB2640 /* TSSearchBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSSearchBar.h; sourceTree = "<group>"; };
 		FD45D07F1DD7BE0E00EB2640 /* TSSearchBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSSearchBar.m; sourceTree = "<group>"; };
 		FD45D0831DD7CF4200EB2640 /* TSTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSTableViewCell.h; sourceTree = "<group>"; };
@@ -170,9 +174,6 @@
 		FDFDFC961DD293E0007811EF /* TSProfileTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSProfileTableViewController.h; sourceTree = "<group>"; };
 		FDFDFC971DD293E0007811EF /* TSProfileTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSProfileTableViewController.m; sourceTree = "<group>"; };
 		FDFED0D51E1ADD0D00AB6805 /* TSPhotoDetailView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TSPhotoDetailView.xib; sourceTree = "<group>"; };
-		FDFF9D821DEA251E00F4971B /* TSAlertViewCard.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TSAlertViewCard.xib; sourceTree = "<group>"; };
-		FDFF9D841DEA277500F4971B /* TSAlertViewCard.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSAlertViewCard.h; sourceTree = "<group>"; };
-		FDFF9D851DEA277500F4971B /* TSAlertViewCard.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSAlertViewCard.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -222,6 +223,15 @@
 			name = Pods;
 			sourceTree = "<group>";
 		};
+		FD0654401E1EE1BF0080046A /* Category */ = {
+			isa = PBXGroup;
+			children = (
+				FD0654411E1EE1FE0080046A /* UIAlertController+TSAlertController.h */,
+				FD0654421E1EE1FE0080046A /* UIAlertController+TSAlertController.m */,
+			);
+			name = Category;
+			sourceTree = "<group>";
+		};
 		FD0C1C9A1DE780BC00D37B61 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
@@ -239,6 +249,8 @@
 				FDE9273B1DE8EC4600FF884F /* TSIntermediateViewController.m */,
 				FD0C1C9B1DE7810000D37B61 /* TSCardsViewController.h */,
 				FD0C1C9C1DE7810000D37B61 /* TSCardsViewController.m */,
+				FD45BE031E1FE64D0047E856 /* TSPhotoZoomViewController.h */,
+				FD45BE041E1FE64D0047E856 /* TSPhotoZoomViewController.m */,
 				FD0E42811DF7051200399621 /* TSChatViewController.h */,
 				FD0E42821DF7051200399621 /* TSChatViewController.m */,
 				FD002C631DFA162900D47428 /* TSChatsTableViewController.h */,
@@ -289,6 +301,7 @@
 				FD0C1C9E1DE7833100D37B61 /* Xib */,
 				FD45D0821DD7CEDC00EB2640 /* Cell */,
 				FD45D07D1DD7BDD900EB2640 /* SearchBar */,
+				FD0654401E1EE1BF0080046A /* Category */,
 				FDF9639D1DD145B0000877B5 /* Registration controllers */,
 				FD0C1C9A1DE780BC00D37B61 /* Controllers */,
 				FDF8CDB31DDA768400E159B1 /* Storyboards */,
@@ -420,7 +433,6 @@
 				FD06541B1DFCA24200AE45EF /* TSSwipeView6plus.xib */,
 				FDF4BB111DF019D4003D3841 /* TSViewCell.xib */,
 				FD06541D1DFCBDD200AE45EF /* TSPhotoView6Plus.xib */,
-				FDFF9D821DEA251E00F4971B /* TSAlertViewCard.xib */,
 				FDEBE3E71DF1C4AB0073A0FF /* TSCollCell.xib */,
 			);
 			name = Xib;
@@ -437,8 +449,6 @@
 				FDF4BB1C1DF02DB1003D3841 /* TSPhotoView.m */,
 				FDEBE3EF1DF1C7F40073A0FF /* TSCollCell.h */,
 				FDEBE3F01DF1C7F40073A0FF /* TSCollCell.m */,
-				FDFF9D841DEA277500F4971B /* TSAlertViewCard.h */,
-				FDFF9D851DEA277500F4971B /* TSAlertViewCard.m */,
 			);
 			name = View;
 			sourceTree = "<group>";
@@ -447,8 +457,8 @@
 			isa = PBXGroup;
 			children = (
 				FD0C1C9F1DE783B500D37B61 /* TSSwipeView.xib */,
-				FDED429E1E06BC8A005E0948 /* TSDetailView.xib */,
 				FDF4BB191DF02C3E003D3841 /* TSPhotoView.xib */,
+				FDED429E1E06BC8A005E0948 /* TSDetailView.xib */,
 				FDFED0D51E1ADD0D00AB6805 /* TSPhotoDetailView.xib */,
 			);
 			name = Iphone4;
@@ -607,7 +617,6 @@
 				FD68B4611DDA7D0C00EF19C3 /* SettingStoryboard.storyboard in Resources */,
 				FD68B45B1DDA7CC100EF19C3 /* MapStoryboard.storyboard in Resources */,
 				FDF4BB1A1DF02C3E003D3841 /* TSPhotoView.xib in Resources */,
-				FDFF9D831DEA251E00F4971B /* TSAlertViewCard.xib in Resources */,
 				FD68B45F1DDA7CFC00EF19C3 /* ChatStoryboard.storyboard in Resources */,
 				FD1C4F411DCE252200CF63E9 /* LaunchScreen.storyboard in Resources */,
 				FDED429F1E06BC8A005E0948 /* TSDetailView.xib in Resources */,
@@ -694,7 +703,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				FD002C651DFA162900D47428 /* TSChatsTableViewController.m in Sources */,
-				FDFF9D861DEA277500F4971B /* TSAlertViewCard.m in Sources */,
 				FDE9273C1DE8EC4600FF884F /* TSIntermediateViewController.m in Sources */,
 				FD45D0801DD7BE0F00EB2640 /* TSSearchBar.m in Sources */,
 				FD1C4F661DCE280400CF63E9 /* TSTabBarViewController.m in Sources */,
@@ -702,6 +710,7 @@
 				FDF963991DD10890000877B5 /* TSRegistrationViewController.m in Sources */,
 				FD1C4F6F1DCE86E800CF63E9 /* TSFacebookManager.m in Sources */,
 				FD5CD4941DD3D6CF0056C1A6 /* TSSitysViewController.m in Sources */,
+				FD45BE051E1FE64D0047E856 /* TSPhotoZoomViewController.m in Sources */,
 				FD1C4F761DCEA49700CF63E9 /* TSFireUser.m in Sources */,
 				FD1C4F361DCE252200CF63E9 /* AppDelegate.m in Sources */,
 				FD1C4F331DCE252200CF63E9 /* main.m in Sources */,
@@ -711,6 +720,7 @@
 				FDEBE3F11DF1C7F40073A0FF /* TSCollCell.m in Sources */,
 				FD0C1C9D1DE7810000D37B61 /* TSCardsViewController.m in Sources */,
 				FD5FFB231E05DA5900CB807F /* TSFireInterlocutor.m in Sources */,
+				FD0654431E1EE1FF0080046A /* UIAlertController+TSAlertController.m in Sources */,
 				FDF4BB241DF076B2003D3841 /* TSCollectionViewCell.m in Sources */,
 				FDE927391DE840EC00FF884F /* TSFireBase.m in Sources */,
 				FDF4BB1D1DF02DB1003D3841 /* TSPhotoView.m in Sources */,

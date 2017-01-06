@@ -8,6 +8,8 @@
 
 #import "TSSettingsTableViewController.h"
 #import "TSSocialNetworkLoginViewController.h"
+#import "TSIntermediateViewController.h"
+#import "TSTabBarViewController.h"
 #import "TSFacebookManager.h"
 #import "TSFireUser.h"
 #import "TSFireImage.h"
@@ -79,6 +81,11 @@ NSString * const UpdateParametersNotification = @"UpdateParametersNotification";
 @property (strong, nonatomic) NSString *selectPosition;
 @property (strong, nonatomic) NSString *curentGender;
 
+@property (assign, nonatomic) NSInteger searchCurrentMinAge;
+@property (assign, nonatomic) NSInteger searchCurrentMaxAge;
+@property (assign, nonatomic) NSInteger updateCurrentMinAge;
+@property (assign, nonatomic) NSInteger updateCurrentMaxAge;
+
 @property (assign, nonatomic) NSInteger selectedRowInComponent;
 @property (assign, nonatomic) NSInteger tagSelectCell;
 @property (assign, nonatomic) NSInteger progressHUD;
@@ -107,26 +114,15 @@ NSString * const UpdateParametersNotification = @"UpdateParametersNotification";
 {
     [super viewWillAppear:animated];
     
-    
     [self configureController];
     [self setDataUser];
-    
-//    self.ref = [[FIRDatabase database] reference];
-    
-//    [self.ref observeEventType:FIRDataEventTypeValue withBlock:^(FIRDataSnapshot * _Nonnull snapshot) {
-//        
-//        self.fireUser = [TSFireUser initWithSnapshot:snapshot];
-//        [self configureController];
-//        [self setDataUser];
-//        NSLog(@"TSSettingsTableViewController");
-//    }];
 }
 
 
 - (void)viewDidDisappear:(BOOL)animated
 {
     [super viewDidDisappear:animated];
-    [self.ref removeAllObservers];
+//    [self.ref removeAllObservers];
 }
 
 
@@ -289,14 +285,18 @@ NSString * const UpdateParametersNotification = @"UpdateParametersNotification";
                     }
                 }
             }
-            //установка даты для поиска пользователей
+            //установка возраста для поиска пользователей
             
             if ([shortKey isEqualToString:@"2"]) {
                 NSString *ageRange = [fireUser.parameters objectForKey:key];
                 NSArray *components = [ageRange componentsSeparatedByString:@" "];
                 if ([components count] > 1) {
-                    self.minAgeUnknownPeopleLabel.text = [components objectAtIndex:0];
-                    self.maxAgeUnknownPeopleLabel.text = [components objectAtIndex:1];
+                    
+                    self.searchCurrentMinAge = [[components objectAtIndex:0] integerValue];
+                    self.searchCurrentMaxAge = [[components objectAtIndex:1] integerValue];
+                    
+                    self.minAgeUnknownPeopleLabel.text = [NSString stringWithFormat:@"%ld", (long)self.searchCurrentMinAge];
+                    self.maxAgeUnknownPeopleLabel.text = [NSString stringWithFormat:@"%ld", (long)self.searchCurrentMaxAge];
                 }
             }
         }
@@ -492,6 +492,7 @@ NSString * const UpdateParametersNotification = @"UpdateParametersNotification";
 {
     
     //скрытие UIPickerView
+    
     CGRect screenRect = [[UIScreen mainScreen] bounds];
     CGRect endFrame = self.pickerView.frame;
     endFrame.origin.y = screenRect.origin.y + screenRect.size.height;
@@ -553,6 +554,9 @@ NSString * const UpdateParametersNotification = @"UpdateParametersNotification";
                                           titleForRow:[self.pickerView selectedRowInComponent:1] forComponent:0];
         
         NSString *selectAge = [NSString stringWithFormat:@"%@ %@", minAge, maxAge];
+        
+        self.updateCurrentMinAge = [minAge integerValue];
+        self.updateCurrentMaxAge = [maxAge integerValue];
         
         self.minAgeUnknownPeopleLabel.text = minAge;
         self.maxAgeUnknownPeopleLabel.text = maxAge;
@@ -806,6 +810,29 @@ NSString * const UpdateParametersNotification = @"UpdateParametersNotification";
     
     [[[[[self.ref child:@"dataBase"] child:@"users"] child:self.fireUser.uid]
       child:@"parameters"] setValue:self.characteristicsUser];
+    
+//    NSString *ageRange = [self.fireUser.parameters objectForKey:@"key2"];
+//    NSArray *components = [ageRange componentsSeparatedByString:@" "];
+//    
+//    NSInteger currentMinAgeComponent = [[components firstObject] integerValue];
+//    NSInteger currentMaxAgeComponent = [[components lastObject] integerValue];
+//    
+//    if (self.updateCurrentMinAge == 0) {
+//        self.updateCurrentMinAge = currentMinAgeComponent;
+//    }
+//    
+//    if (self.updateCurrentMaxAge == 0) {
+//        self.updateCurrentMaxAge = currentMaxAgeComponent;
+//    }
+//    
+//    if (self.searchCurrentMinAge != self.updateCurrentMinAge || self.searchCurrentMaxAge != self.updateCurrentMaxAge) {
+//        
+//        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+//            
+//            
+//            
+//        });
+//    }
     
     //перезагрузка интерфейса в момент сохранения новых данных
     [self setDataUser];

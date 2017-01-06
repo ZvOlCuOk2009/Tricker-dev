@@ -5,6 +5,7 @@
     </device>
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11524"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -67,6 +68,93 @@
             </objects>
             <point key="canvasLocation" x="4206" y="968"/>
         </scene>
+        <!--Photo Zoom View Controller-->
+        <scene sceneID="A82-s6-GXW">
+            <objects>
+                <viewController storyboardIdentifier="TSPhotoZoomViewController" id="Bnq-nH-J9N" customClass="TSPhotoZoomViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="p5c-x4-EKE"/>
+                        <viewControllerLayoutGuide type="bottom" id="fD6-4R-HGp"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="voU-0q-TOm">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="background" translatesAutoresizingMaskIntoConstraints="NO" id="gbH-y7-Q5I">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                            </imageView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="DZS-ME-Pbq">
+                                <rect key="frame" x="20" y="29" width="22" height="22"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="22" id="Nat-GB-IHw"/>
+                                    <constraint firstAttribute="width" constant="22" id="zxd-83-t6x"/>
+                                </constraints>
+                                <state key="normal" backgroundImage="arrow_bottom"/>
+                                <connections>
+                                    <action selector="cancelButton:" destination="Bnq-nH-J9N" eventType="touchUpInside" id="ozn-Jw-fMU"/>
+                                </connections>
+                            </button>
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4Cl-ko-YIB">
+                                <rect key="frame" x="0.0" y="64" width="375" height="375"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="375" id="Xln-ta-Maw"/>
+                                    <constraint firstAttribute="height" constant="375" id="yiq-8i-VUR"/>
+                                </constraints>
+                                <connections>
+                                    <outlet property="delegate" destination="Bnq-nH-J9N" id="00R-Xm-XdB"/>
+                                </connections>
+                            </scrollView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7rA-bZ-0e6">
+                                <rect key="frame" x="335" y="30" width="20" height="20"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="20" id="D7r-rF-UQC"/>
+                                    <constraint firstAttribute="width" constant="20" id="UYe-P4-z3z"/>
+                                </constraints>
+                                <state key="normal" image="cancel"/>
+                                <connections>
+                                    <action selector="deleteButton:" destination="Bnq-nH-J9N" eventType="touchUpInside" id="S3l-nV-MRp"/>
+                                </connections>
+                            </button>
+                            <pageControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" numberOfPages="3" translatesAutoresizingMaskIntoConstraints="NO" id="EJ4-BD-weD">
+                                <rect key="frame" x="168" y="440" width="39" height="37"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="37" id="f0c-MC-WNE"/>
+                                </constraints>
+                                <color key="pageIndicatorTintColor" red="0.51372549020000002" green="0.61960784310000006" blue="0.69803921570000005" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="currentPageIndicatorTintColor" red="0.98823529409999999" green="0.89411764709999997" blue="0.72156862749999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            </pageControl>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="trailingMargin" secondItem="7rA-bZ-0e6" secondAttribute="trailing" constant="4" id="97G-dG-KGC"/>
+                            <constraint firstItem="fD6-4R-HGp" firstAttribute="top" secondItem="gbH-y7-Q5I" secondAttribute="bottom" id="Du0-Lu-3Wr"/>
+                            <constraint firstItem="4Cl-ko-YIB" firstAttribute="top" secondItem="DZS-ME-Pbq" secondAttribute="bottom" constant="13" id="Njp-wu-SOc"/>
+                            <constraint firstItem="EJ4-BD-weD" firstAttribute="top" secondItem="4Cl-ko-YIB" secondAttribute="bottom" constant="1" id="OY0-MZ-VwT"/>
+                            <constraint firstItem="DZS-ME-Pbq" firstAttribute="leading" secondItem="voU-0q-TOm" secondAttribute="leading" constant="20" id="ZeM-Gp-yFj"/>
+                            <constraint firstItem="gbH-y7-Q5I" firstAttribute="top" secondItem="voU-0q-TOm" secondAttribute="top" id="bKx-Ga-Lul"/>
+                            <constraint firstItem="4Cl-ko-YIB" firstAttribute="centerX" secondItem="voU-0q-TOm" secondAttribute="centerX" id="cCd-Yz-wyl"/>
+                            <constraint firstItem="EJ4-BD-weD" firstAttribute="leading" secondItem="voU-0q-TOm" secondAttribute="leading" constant="168" id="eDG-Tb-o5V"/>
+                            <constraint firstItem="gbH-y7-Q5I" firstAttribute="leading" secondItem="voU-0q-TOm" secondAttribute="leading" id="gL6-Bb-hXb"/>
+                            <constraint firstItem="DZS-ME-Pbq" firstAttribute="leading" secondItem="voU-0q-TOm" secondAttribute="leadingMargin" constant="4" id="iBR-uj-aoi"/>
+                            <constraint firstItem="DZS-ME-Pbq" firstAttribute="top" secondItem="p5c-x4-EKE" secondAttribute="bottom" constant="9" id="rix-1p-aIw"/>
+                            <constraint firstAttribute="trailing" secondItem="gbH-y7-Q5I" secondAttribute="trailing" id="sYe-vK-cEt"/>
+                            <constraint firstItem="4Cl-ko-YIB" firstAttribute="top" secondItem="7rA-bZ-0e6" secondAttribute="bottom" constant="14" id="x3Y-vx-NdC"/>
+                            <constraint firstAttribute="trailing" secondItem="EJ4-BD-weD" secondAttribute="trailing" constant="168" id="xIB-DH-T1N"/>
+                            <constraint firstAttribute="trailing" secondItem="7rA-bZ-0e6" secondAttribute="trailing" constant="20" id="zFT-4V-i9H"/>
+                            <constraint firstItem="7rA-bZ-0e6" firstAttribute="top" secondItem="p5c-x4-EKE" secondAttribute="bottom" constant="10" id="zyS-Oo-9eo"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="cancelButton" destination="DZS-ME-Pbq" id="3zB-vJ-n01"/>
+                        <outlet property="deleteButton" destination="7rA-bZ-0e6" id="OUn-XE-4Rg"/>
+                        <outlet property="pageControl" destination="EJ4-BD-weD" id="ckg-G3-IBz"/>
+                        <outlet property="scrollView" destination="4Cl-ko-YIB" id="QGF-Su-Kug"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="qdV-ge-aDJ" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="4927" y="967"/>
+        </scene>
         <!--Navigation Controller-->
         <scene sceneID="fGx-hp-Ndz">
             <objects>
@@ -90,7 +178,9 @@
         </scene>
     </scenes>
     <resources>
+        <image name="arrow_bottom" width="20" height="20"/>
         <image name="background" width="187" height="333"/>
+        <image name="cancel" width="25" height="25"/>
         <image name="cards_click" width="26" height="26"/>
         <image name="cards_no" width="26" height="26"/>
     </resources>

@@ -9,6 +9,8 @@
 #import "TSPhotoView.h"
 #import "TSSwipeView.h"
 #import "TSCollCell.h"
+#import "TSPhotoZoomViewController.h"
+#import "TSCardsViewController.h"
 #import "TSTrickerPrefixHeader.pch"
 
 #import <SVProgressHUD.h>
@@ -19,10 +21,8 @@
 @property (strong, nonatomic) IBOutlet UIButton *cancelButton;
 @property (strong, nonatomic) UIImageView *zoomImage;
 @property (strong, nonatomic) NSMutableArray *convertPhotos;
-@property (assign, nonatomic) CGRect prevFrame;
 @property (assign, nonatomic) CGRect rectButton;
 @property (assign, nonatomic) CGSize cellSize;
-@property (assign, nonatomic) BOOL zoomPhotoState;
 
 @end
 
@@ -77,17 +77,6 @@ static NSString * const reuseIdntifier = @"cell";
         });
         
     });
-    
-    
-    //добавление кнопки cencel
-    
-    self.cancelButton = [[UIButton alloc]initWithFrame:self.rectButton];
-    [self.cancelButton setImage:[UIImage imageNamed:@"cancel"] forState:UIControlStateNormal];
-    [self.cancelButton addTarget:self action:@selector(cancelPhoto) forControlEvents:UIControlEventTouchUpInside];
-    [self.navigationView addSubview:self.cancelButton];
-    self.cancelButton.hidden = YES;
-    
-    self.zoomPhotoState = NO;
     
     if ([self.photos count] == 0 && self.photos == nil) {
         UILabel *label = [[UILabel alloc] init];
@@ -147,77 +136,29 @@ static NSString * const reuseIdntifier = @"cell";
 }
 
 
-//- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
-//{
-//    
-//    [collectionView selectItemAtIndexPath:indexPath animated:YES scrollPosition:UICollectionViewScrollPositionCenteredVertically];
-//    [self zoomToSelectedImage:indexPath];
-//
-//}
-
-
-//- (void)zoomToSelectedImage:(NSIndexPath *)indexPath
-//{
-//    
-//    UICollectionViewLayoutAttributes * theAttributes =
-//    [self.collectionView layoutAttributesForItemAtIndexPath:indexPath];
-//    
-//    CGRect cellFrameInSuperview =
-//    [self.collectionView convertRect:theAttributes.frame toView:[self.collectionView superview]];
-//    self.prevFrame = cellFrameInSuperview;
-//    
-//    self.zoomImage = [[UIImageView alloc] initWithImage:[self decodingImage:indexPath]];
-//    self.zoomImage.contentMode = UIViewContentModeScaleAspectFit;
-//    
-//    CGRect zoomFrameTo = CGRectMake(0, 0, self.frame.size.width, self.frame.size.height);
-//    UICollectionView *collectionView = (UICollectionView *)[self viewWithTag:66];
-//    
-//    UICollectionViewCell *cellToZoom = (UICollectionViewCell *)[collectionView cellForItemAtIndexPath:indexPath];
-//    CGRect zoomFrameFrom = cellToZoom.frame;
-//    [self addSubview:self.zoomImage];
-//    
-//    self.zoomImage.frame = zoomFrameFrom;
-//    self.zoomImage.alpha = 0.3;
-//    
-//    self.cancelButton.hidden = NO;
-//    self.collectionView.userInteractionEnabled = NO;
-//    
-//    [UIView animateWithDuration:0.3
-//                     animations:^{
-//        
-//        self.zoomImage.frame = zoomFrameTo;
-//        self.zoomImage.alpha = 1;
-//        
-//    } completion:nil];
-//    
-//}
-
-
-//раскодирование изображение
-
-
-//- (UIImage *)decodingImage:(NSIndexPath *)indexPath
-//{
-//    NSString *photo = [self.photos objectAtIndex:indexPath.item];
-//    NSData *data = [[NSData alloc] initWithBase64EncodedString:photo
-//                                                       options:NSDataBase64DecodingIgnoreUnknownCharacters];
-//    UIImage *convertImage = [UIImage imageWithData:data];
-//    return convertImage;
-//}
-
-
-- (void)cancelPhoto
+- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    [UIView animateWithDuration:0.3
-                     animations:^{
-                         self.zoomImage.hidden = YES;
-                         self.zoomImage = nil;
-                     }];
     
-    self.cancelButton.hidden = YES;
-    self.collectionView.userInteractionEnabled = YES;
+    UIStoryboard *stotyboard = [UIStoryboard storyboardWithName:@"CardsStoryboard" bundle:[NSBundle mainBundle]];
+    TSPhotoZoomViewController *controller =
+    [stotyboard instantiateViewControllerWithIdentifier:@"TSPhotoZoomViewController"];
+
+    UIViewController *currentTopVC = [self currentTopViewController];
+    controller.photos = self.convertPhotos;
+    controller.hiddenDeleteButton = YES;
+    controller.currentPage = indexPath.item;
+    
+    [currentTopVC presentViewController:controller animated:YES completion:nil];
+
 }
 
+- (UIViewController *)currentTopViewController {
+    UIViewController *topVC = [[[[UIApplication sharedApplication] delegate] window] rootViewController];
+    while (topVC.presentedViewController) {
+        topVC = topVC.presentedViewController;
+    }
+    return topVC;
+}
 
 
 #pragma mark - UICollectionViewDelegate

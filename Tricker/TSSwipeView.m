@@ -15,8 +15,6 @@
 #import "TSPhotoView.h"
 #import "TSTrickerPrefixHeader.pch"
 
-#import <SVProgressHUD.h>
-
 NSString *const TSSwipeViewInterlocutorNotification = @"TSSwipeViewInterlocutorNotification";
 NSInteger recognizer;
 
@@ -261,8 +259,6 @@ NSInteger recognizer;
 - (IBAction)chatActionButton:(id)sender
 {
     
-//    [self showProgressHud];
-    
     if (recognizer == 2) {
         
         [UIView animateWithDuration:0.5
@@ -403,23 +399,6 @@ NSInteger recognizer;
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
-
-//#pragma mark - ProgressHUD
-//
-//
-//- (void)showProgressHud
-//{
-//    [SVProgressHUD show];
-//    [SVProgressHUD setDefaultStyle:SVProgressHUDStyleCustom];
-//    [SVProgressHUD setBackgroundColor:YELLOW_COLOR];
-//    [SVProgressHUD setForegroundColor:DARK_GRAY_COLOR];
-//}
-//
-//
-//- (void)dissmisProgressHud
-//{
-//    [SVProgressHUD dismiss];
-//}
 
 
 @end

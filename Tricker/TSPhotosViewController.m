@@ -10,6 +10,8 @@
 #import "TSCollectionViewCell.h"
 #import "TSFireUser.h"
 #import "TSFireImage.h"
+#import "TSPhotoZoomViewController.h"
+#import "UIAlertController+TSAlertController.h"
 #import "TSTrickerPrefixHeader.pch"
 
 #import <SVProgressHUD.h>
@@ -31,12 +33,11 @@
 @property (strong, nonatomic) NSMutableArray *urlPhotos;
 @property (strong, nonatomic) NSMutableArray *selectedPhotos;
 @property (strong, nonatomic) NSMutableArray *addPhotos;
-@property (strong, nonatomic) UIImageView *chackMark;
 
 @property (assign, nonatomic) NSInteger regognizerMark;
 @property (assign, nonatomic) NSInteger progressHUD;
+@property (assign, nonatomic) NSInteger counterDeleteCap;
 @property (assign, nonatomic) BOOL regognizer;
-@property (assign, nonatomic) BOOL mark;
 
 @end
 
@@ -65,14 +66,10 @@ static NSString * const reuseIdntifierButton = @"cellButton";
     [leftItem setTarget:self];
     [leftItem setAction:@selector(cancelInteraction)];
     
-    UIImage *chackMarkImage = [UIImage imageNamed:@"check-mark"];
-    self.chackMark = [[UIImageView alloc] initWithImage:chackMarkImage];
-    self.chackMark.frame = CGRectMake(50, 50, 25, 25);
-    
     self.progressHUD = 0;
     self.regognizerMark = 0;
+    self.counterDeleteCap = 0;
     self.regognizer = NO;
-    self.mark = NO;
 }
 
 
@@ -216,18 +213,7 @@ static NSString * const reuseIdntifierButton = @"cellButton";
                                                        
                                                    }];
     
-    UIView *subview = alertController.view.subviews.firstObject;
-    UIView *alertContentView = subview.subviews.firstObject;
-    alertContentView.backgroundColor = YELLOW_COLOR;
-    alertContentView.layer.cornerRadius = 10;
-    alertController.view.tintColor = DARK_GRAY_COLOR;
-    
-    
-    NSMutableAttributedString *mutableAttrString = [[NSMutableAttributedString alloc] initWithString:@"Выберите фото"];
-    [mutableAttrString addAttribute:NSFontAttributeName
-                  value:[UIFont fontWithName:@"HelveticaNeue-Light" size:20.f]
-                  range:NSMakeRange(0, 13)];
-    [alertController setValue:mutableAttrString forKey:@"attributedTitle"];
+    [alertController customizationAlertView:@"Выберите фото" byLength:13 byFont:20.f];
     
     [alertController addAction:camera];
     [alertController addAction:galery];
@@ -306,8 +292,6 @@ static NSString * const reuseIdntifierButton = @"cellButton";
     TSCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:reuseIdntifier
                                                                            forIndexPath:indexPath];
     
-    NSLog(@"Count photos %ld", (long)[self.photos count]);
-    
     NSInteger myIndexPaht = indexPath.item;
     UIImage *photo = [self.photos objectAtIndex:myIndexPaht];
     
@@ -345,22 +329,21 @@ static NSString * const reuseIdntifierButton = @"cellButton";
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
     
-    TSCollectionViewCell *cell = (TSCollectionViewCell *)[collectionView cellForItemAtIndexPath:indexPath];
-    
-    NSArray *object = [cell subviews];
-    
-    UIImageView *photo = [object firstObject];
-    
-    if (self.mark == NO) {
+    if (self.counterDeleteCap == 0) {
         
-        [photo addSubview:self.chackMark];
-        self.mark = YES;
-        
-    } else {
-        
-        self.chackMark = nil;
-        self.mark = NO;
+        [self.photos removeObjectAtIndex:0];
+        ++self.counterDeleteCap;
     }
+    
+    UIStoryboard *stotyboard = [UIStoryboard storyboardWithName:@"CardsStoryboard" bundle:[NSBundle mainBundle]];
+    TSPhotoZoomViewController *controller =
+    [stotyboard instantiateViewControllerWithIdentifier:@"TSPhotoZoomViewController"];
+    
+    controller.photos = self.photos;
+    controller.hiddenDeleteButton = NO;
+    controller.currentPage = indexPath.item;
+    
+    [self presentViewController:controller animated:YES completion:nil];
     
 }
 

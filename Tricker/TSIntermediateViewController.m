@@ -38,7 +38,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    [[self navigationController] setNavigationBarHidden:YES animated:YES];
+    [[self navigationController] setNavigationBarHidden:YES animated:NO];
     
 }
 
@@ -46,6 +46,18 @@
 {
     [super viewWillAppear:animated];
     
+    [self downloadController];
+}
+
+
+-(void)viewDidDisappear:(BOOL)animated
+{
+    [super viewDidDisappear:animated];
+}
+
+
+- (void)downloadController
+{
     self.ref = [[FIRDatabase database] reference];
     
     [self.ref observeEventType:FIRDataEventTypeValue withBlock:^(FIRDataSnapshot * _Nonnull snapshot) {
@@ -54,15 +66,8 @@
         self.fireBase = [TSFireBase initWithSnapshot:snapshot];
         
         [self configureController];
-        NSLog(@"TSIntermediateViewController");
+        
     }];
-}
-
-
--(void)viewDidDisappear:(BOOL)animated
-{
-    [super viewDidDisappear:animated];
-    [self.ref removeAllObservers];
 }
 
 
@@ -102,8 +107,6 @@
             }
         }
     }
-    
-    NSLog(@"Gender and age count %ld", (long)[self.usersFoundOnGenderAndAge count]);
     
     [self prepareForSegue];
 }
