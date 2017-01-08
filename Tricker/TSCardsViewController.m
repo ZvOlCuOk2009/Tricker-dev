@@ -16,9 +16,8 @@
 #import "TSTabBarViewController.h"
 #import "UIAlertController+TSAlertController.h"
 #import "TSPhotoZoomViewController.h"
+#import "TSLikeSave.h"
 #import "TSTrickerPrefixHeader.pch"
-
-#import <SVProgressHUD.h>
 
 @interface TSCardsViewController () <ZLSwipeableViewDataSource, ZLSwipeableViewDelegate>
 
@@ -26,8 +25,10 @@
 @property (weak, nonatomic) TSSwipeView *swipeView;
 @property (strong, nonatomic) UIImage *convertImage;
 @property (strong, nonatomic) UIView *cap;
+@property (strong, nonatomic) NSDictionary *selectedUserData;
 
 @property (assign, nonatomic) NSInteger counterIndexPath;
+@property (assign, nonatomic) NSInteger indexPathRow;
 
 @end
 
@@ -35,7 +36,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-
+     
     [self configureController];
 }
 
@@ -71,8 +72,6 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-
-//     [self showProgressHud];
      
     if (self.cap) {
         self.cap.hidden = NO;
@@ -104,27 +103,26 @@
     NSIndexPath *indexPath = [NSIndexPath indexPathForRow:self.counterIndexPath inSection:0];
     
     NSInteger max = [self.selectedUsers count];
-    NSInteger indexPathRow = indexPath.row;
+    self.indexPathRow = indexPath.row;
     
     if (self.selectedUsers.count > 0) {
          
-         if (indexPathRow <= max - 1) {
+         if (self.indexPathRow <= max - 1) {
         
-            NSDictionary *selectedUser = [self.selectedUsers objectAtIndex:indexPathRow];
+            NSDictionary *selectedUser = [self.selectedUsers objectAtIndex:self.indexPathRow];
             
             self.swipeView = [TSSwipeView initProfileView];
             
-            NSDictionary *selectedUserData = [selectedUser objectForKey:@"userData"];
+            self.selectedUserData = [selectedUser objectForKey:@"userData"];
             NSDictionary *parametersUser = [selectedUser objectForKey:@"parameters"];
             NSMutableArray *photosUser = [selectedUser objectForKey:@"photos"];
-            NSString *photoURL = [selectedUserData objectForKey:@"photoURL"];
-            NSString *displayName = [selectedUserData objectForKey:@"displayName"];
-            NSString *age = [selectedUserData objectForKey:@"age"];
-            NSString *online = [selectedUserData objectForKey:@"online"];
-            NSString *uid = [selectedUserData objectForKey:@"userID"];
+            NSString *photoURL = [self.selectedUserData objectForKey:@"photoURL"];
+            NSString *displayName = [self.selectedUserData objectForKey:@"displayName"];
+            NSString *age = [self.selectedUserData objectForKey:@"age"];
+            NSString *online = [self.selectedUserData objectForKey:@"online"];
+            NSString *uid = [self.selectedUserData objectForKey:@"userID"];
             
-            
-            //установка индикации онлайн
+//            установка индикации онлайн
             
             if ([online isEqualToString:@"оффлайн"]) {
                 self.swipeView.onlineView.backgroundColor = [UIColor redColor];
@@ -133,17 +131,15 @@
             }
             
             //установка изображения и фона
-            
-            UIImage *avatar = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:photoURL]]];
-            
-            self.swipeView.backgroundImageView.image = avatar;
-            self.swipeView.avatarImageView.image = avatar;
-            
+              
+              self.swipeView.backgroundImageView.image = [self.userAvatars objectAtIndex:self.indexPathRow];
+              self.swipeView.avatarImageView.image = [self.userAvatars objectAtIndex:self.indexPathRow];;
+              
             if (!photoURL) {
                 photoURL = @"";
                 self.swipeView.avatarImageView.image = [UIImage imageNamed:@"placeholder"];
             }
-            
+
             
             NSString *firstString = [photosUser firstObject];
             if ([firstString isEqualToString:@""]) {
@@ -151,10 +147,11 @@
             }
             
             //установка параметров
-            
+
             self.swipeView.nameLabel.text = displayName;
             self.swipeView.ageLabel.text = age;
-            
+            self.swipeView.interlocutorAvatarUrl = photoURL;
+              
             NSInteger countPhotos = [photosUser count];
             
             if (countPhotos > 0) {
@@ -172,18 +169,16 @@
             self.swipeView.parameterUser = parametersUser;
             self.swipeView.photos = photosUser;
             self.swipeView.interlocutorUid = uid;
-            self.swipeView.interlocutorAvatar = avatar;
+            self.swipeView.interlocutorAvatar = [self.userAvatars objectAtIndex:self.indexPathRow];
             self.swipeView.interlocutorName = displayName;
-            
-            [self.swipeView.chatButton setImage:[UIImage imageNamed:@"chat"] forState:UIControlStateNormal];
-            
+              
         }
         
         self.counterIndexPath++;
         
         //алерт вызывается в случае когда пользователи закончились
         
-        if (indexPathRow == max + 1) {
+        if (self.indexPathRow == max + 1) {
           
              
              UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"По данным параметрам пользователей больше нету..."
@@ -194,8 +189,7 @@
                                                               style:UIAlertActionStyleDefault
                                                             handler:^(UIAlertAction * _Nonnull action) {
 
-                                                                 self.counterIndexPath = 0;
-                                                                 [self repeatSearchParameter];
+                                                                 [self callTabBarControllerByIndex:2];
 
                                                             }];
              
@@ -203,7 +197,7 @@
                                                               style:UIAlertActionStyleDefault
                                                             handler:^(UIAlertAction * _Nonnull action) {
 
-                                                                 [self changeSearchParameter];
+                                                                 [self callTabBarControllerByIndex:4];
                                                             }];
              
              UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"Отменить"
@@ -245,9 +239,12 @@
         
       }
      
-     [self dissmisProgressHud];
-
-     if (indexPathRow >= max) {
+     UITapGestureRecognizer *tapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self
+                                                                                            action:@selector(hendlePanGesture)];
+     tapGestureRecognizer.numberOfTapsRequired = 2;
+     [self.view addGestureRecognizer:tapGestureRecognizer];
+     
+     if (self.indexPathRow >= max) {
           return nil;
      } else {
           return self.swipeView;
@@ -256,36 +253,59 @@
 }
 
 
-- (void)repeatSearchParameter
+- (void)callTabBarControllerByIndex:(NSInteger)index
 {
-     [self.navigationController popToRootViewControllerAnimated:NO];
-     [self showProgressHud];
+     UIStoryboard *stotyboard = [UIStoryboard storyboardWithName:@"Main" bundle:[NSBundle mainBundle]];
+     TSTabBarViewController *controller =
+     [stotyboard instantiateViewControllerWithIdentifier:@"TSTabBarViewController"];
+     [controller setSelectedIndex:index];
+     [self presentViewController:controller animated:YES completion:nil];
 }
 
 
-- (void)changeSearchParameter
+#pragma mark - UITapGestureRecognizer
+
+
+- (void)hendlePanGesture
 {
-    self.tabBarController.selectedViewController = [self.tabBarController.viewControllers objectAtIndex:4];
+     
+     if ([self.view subviews] > 0) {
+          
+          UIImageView *heart = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"heart"]];
+          heart.frame = CGRectMake(-165, 0, 650, 650);
+          heart.alpha = 0;
+          [self.view addSubview:heart];
+          
+          [UIView animateWithDuration:0.4
+                                delay:0
+               usingSpringWithDamping:0.7
+                initialSpringVelocity:0.8
+                              options:UIViewAnimationOptionLayoutSubviews
+                           animations:^{
+                                heart.alpha = 1;
+                                heart.frame = CGRectMake(85, 150, 150, 130);
+                           } completion:nil];
+          
+          
+          dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.6 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+               [UIView animateWithDuration:0.15
+                                animations:^{
+                                     heart.alpha = 0;
+                                }];
+          });
+          
+          dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+               [heart removeFromSuperview];
+          });
+          
+          NSLog(@"user %ld", (long)self.indexPathRow);
+          
+          NSDictionary *likeUserData = [self.selectedUsers objectAtIndex:self.indexPathRow - 1];
+          
+          [[TSLikeSave sharedLikeSaveManager] saveLikeInTheDatabase:likeUserData];
+     }
+     
 }
-
-
-#pragma mark - ProgressHUD
-
-
-- (void)showProgressHud
-{
-     [SVProgressHUD show];
-     [SVProgressHUD setDefaultStyle:SVProgressHUDStyleCustom];
-     [SVProgressHUD setBackgroundColor:YELLOW_COLOR];
-     [SVProgressHUD setForegroundColor:DARK_GRAY_COLOR];
-}
-
-
-- (void)dissmisProgressHud
-{
-     [SVProgressHUD dismiss];
-}
-
 
 
 - (void)didReceiveMemoryWarning {

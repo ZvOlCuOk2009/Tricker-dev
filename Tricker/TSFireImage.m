@@ -31,7 +31,7 @@
 }
 
 
-+ (void)saveAvatarInTheDatabase:(NSData *)avatarDataByPath byPath:(NSString *)path
+- (void)saveAvatarInTheDatabase:(NSData *)avatarDataByPath byPath:(NSString *)path
                       dictParam:(NSMutableDictionary *)params
 {
     

@@ -9,7 +9,6 @@
 #import "TSSwipeView.h"
 #import "TSCardsViewController.h"
 #import "TSChatViewController.h"
-#import "TSChatsTableViewController.h"
 #import "TSTabBarViewController.h"
 #import "TSViewCell.h"
 #import "TSPhotoView.h"
@@ -142,6 +141,7 @@ NSInteger recognizer;
 
 - (void)setup {
    
+    self.layer.cornerRadius = 10;
     self.layer.shadowColor = [UIColor blackColor].CGColor;
     self.layer.shadowOpacity = 0.33;
     self.layer.shadowOffset = CGSizeMake(0, 1.5);
@@ -278,30 +278,29 @@ NSInteger recognizer;
         
     } else {
         
-        TSTabBarViewController *tabBarController = (TSTabBarViewController *)[[[[UIApplication sharedApplication] delegate] window] rootViewController];
-        tabBarController.selectedIndex = 3;
-        
         recognizer = 1;
-        
-        CGSize newSize = CGSizeMake(100, 100);
-        
-        UIGraphicsBeginImageContext(newSize);
-        [self.interlocutorAvatar drawInRect:CGRectMake(0, 0, newSize.width, newSize.height)];
-        UIImage *miniAvatar = UIGraphicsGetImageFromCurrentImageContext();
-        UIGraphicsEndImageContext();
-        
-        NSData *dataAvatar = UIImagePNGRepresentation(miniAvatar);
-        NSString *stringAvatar = [dataAvatar base64EncodedStringWithOptions:NSDataBase64EncodingEndLineWithLineFeed];
         
         NSUserDefaults *userDefault = [NSUserDefaults standardUserDefaults];
         
-        [userDefault setObject:stringAvatar forKey:@"intelocAvatar"];
         [userDefault setObject:self.interlocutorUid forKey:@"intelocID"];
-        [userDefault setObject:self.interlocutorName forKey:@"interlocName"];
         [userDefault synchronize];
-        
+
+        UIStoryboard *stotyboard = [UIStoryboard storyboardWithName:@"Main" bundle:[NSBundle mainBundle]];
+        TSTabBarViewController *controller =
+        [stotyboard instantiateViewControllerWithIdentifier:@"TSTabBarViewController"];
+        [controller setSelectedIndex:3];
+        UIViewController *currentTopVC = [self currentTopViewController];
+        [currentTopVC presentViewController:controller animated:YES completion:nil];
     }
     
+}
+
+- (UIViewController *)currentTopViewController {
+    UIViewController *topVC = [[[[UIApplication sharedApplication] delegate] window] rootViewController];
+    while (topVC.presentedViewController) {
+        topVC = topVC.presentedViewController;
+    }
+    return topVC;
 }
 
 

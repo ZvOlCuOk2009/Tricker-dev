@@ -807,32 +807,8 @@ NSString * const UpdateParametersNotification = @"UpdateParametersNotification";
         [self.characteristicsUser setObject:searchForGender forKey:@"key1"];
     }
     
-    
     [[[[[self.ref child:@"dataBase"] child:@"users"] child:self.fireUser.uid]
       child:@"parameters"] setValue:self.characteristicsUser];
-    
-//    NSString *ageRange = [self.fireUser.parameters objectForKey:@"key2"];
-//    NSArray *components = [ageRange componentsSeparatedByString:@" "];
-//    
-//    NSInteger currentMinAgeComponent = [[components firstObject] integerValue];
-//    NSInteger currentMaxAgeComponent = [[components lastObject] integerValue];
-//    
-//    if (self.updateCurrentMinAge == 0) {
-//        self.updateCurrentMinAge = currentMinAgeComponent;
-//    }
-//    
-//    if (self.updateCurrentMaxAge == 0) {
-//        self.updateCurrentMaxAge = currentMaxAgeComponent;
-//    }
-//    
-//    if (self.searchCurrentMinAge != self.updateCurrentMinAge || self.searchCurrentMaxAge != self.updateCurrentMaxAge) {
-//        
-//        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-//            
-//            
-//            
-//        });
-//    }
     
     //перезагрузка интерфейса в момент сохранения новых данных
     [self setDataUser];

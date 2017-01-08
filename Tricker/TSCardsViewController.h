@@ -11,5 +11,6 @@
 @interface TSCardsViewController : UIViewController
 
 @property (strong, nonatomic) NSMutableArray *selectedUsers;
+@property (strong, nonatomic) NSMutableArray *userAvatars;
 
 @end

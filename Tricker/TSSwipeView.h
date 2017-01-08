@@ -24,6 +24,7 @@ extern NSInteger recognizer;
 @property (weak, nonatomic) IBOutlet UIButton *photoButton;
 
 @property (strong, nonatomic) UIImage *interlocutorAvatar;
+@property (strong, nonatomic) NSString *interlocutorAvatarUrl;
 @property (strong, nonatomic) NSString *interlocutorUid;
 @property (strong, nonatomic) NSString *interlocutorName;
 @property (strong, nonatomic) NSDictionary *parameterUser;

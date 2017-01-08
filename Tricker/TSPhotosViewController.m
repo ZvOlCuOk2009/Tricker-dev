@@ -34,10 +34,8 @@
 @property (strong, nonatomic) NSMutableArray *selectedPhotos;
 @property (strong, nonatomic) NSMutableArray *addPhotos;
 
-@property (assign, nonatomic) NSInteger regognizerMark;
 @property (assign, nonatomic) NSInteger progressHUD;
-@property (assign, nonatomic) NSInteger counterDeleteCap;
-@property (assign, nonatomic) BOOL regognizer;
+@property (assign, nonatomic) BOOL recognizer;
 
 @end
 
@@ -67,16 +65,17 @@ static NSString * const reuseIdntifierButton = @"cellButton";
     [leftItem setAction:@selector(cancelInteraction)];
     
     self.progressHUD = 0;
-    self.regognizerMark = 0;
-    self.counterDeleteCap = 0;
-    self.regognizer = NO;
+    self.recognizer = NO;
 }
 
 
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    [self loadPhotos];
+    
+    if (self.recognizerController == NO) {
+        [self loadPhotos];
+    }
 }
 
 
@@ -155,7 +154,7 @@ static NSString * const reuseIdntifierButton = @"cellButton";
     [super willMoveToParentViewController:parent];
     
     if (!parent) {
-        if (self.regognizer == YES) {
+        if (self.recognizer == YES) {
             
             dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
                 
@@ -273,7 +272,7 @@ static NSString * const reuseIdntifierButton = @"cellButton";
     [self.photos addObjectsFromArray:self.addPhotos];
     [self.collectionView reloadData];
     
-    self.regognizer = YES;
+    self.recognizer = YES;
 }
 
 
@@ -329,10 +328,10 @@ static NSString * const reuseIdntifierButton = @"cellButton";
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
     
-    if (self.counterDeleteCap == 0) {
-        
+    UIImage *capImage = [self.photos firstObject];
+    
+    if (capImage.size.width == 40 && capImage.size.height == 40) {
         [self.photos removeObjectAtIndex:0];
-        ++self.counterDeleteCap;
     }
     
     UIStoryboard *stotyboard = [UIStoryboard storyboardWithName:@"CardsStoryboard" bundle:[NSBundle mainBundle]];
@@ -341,7 +340,9 @@ static NSString * const reuseIdntifierButton = @"cellButton";
     
     controller.photos = self.photos;
     controller.hiddenDeleteButton = NO;
-    controller.currentPage = indexPath.item;
+    controller.currentPage = indexPath.item - 1;
+    
+    self.recognizerController = YES;
     
     [self presentViewController:controller animated:YES completion:nil];
     

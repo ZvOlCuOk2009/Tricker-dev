@@ -10,4 +10,6 @@
 
 @interface TSPhotosViewController : UIViewController
 
+@property (assign, nonatomic) BOOL recognizerController;
+
 @end

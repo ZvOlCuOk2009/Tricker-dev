@@ -33,13 +33,13 @@
 @property (strong, nonatomic) JSQMessagesBubbleImage *outgoingBubbleImageView;
 @property (strong, nonatomic) JSQMessagesBubbleImage *incomingBubbleImageView;
 
+@property (strong, nonatomic) TSSwipeView *swipeView;
+
 @property (strong, nonatomic) UIImage *userAvatar;
 
 @property (strong, nonatomic) UIButton *interlocutorAvatarButtonNavBar;
 
 @property (strong, nonatomic) NSDictionary *parametersInterlocutor;
-@property (assign, nonatomic) NSInteger count;
-
 
 @end
 
@@ -48,7 +48,6 @@
 - (void)viewDidLoad {
     
     [super viewDidLoad];
-    self.count = 0;
     
     self.ref = [[FIRDatabase database] reference];
     
@@ -98,8 +97,6 @@
         
         self.fireUser = [TSFireUser initWithSnapshot:snapshot];
         [self configureCurrentChat];
-        NSLog(@"Call %ld", (long)self.count);
-        ++self.count;
         
         NSURL *urlPhoto = [NSURL URLWithString:self.fireUser.photoURL];
         UIImage *imagePhoto = [UIImage imageWithData:[NSData dataWithContentsOfURL:urlPhoto]];
@@ -151,6 +148,12 @@
         
         [self.interlocutorAvatarButtonNavBar setImage:self.interlocutorAvatar forState:UIControlStateNormal];
         
+        NSArray *componentName = [self.interlocName componentsSeparatedByString:@" "];
+        
+        if (componentName.count > 1) {
+            self.title = [componentName firstObject];
+        }
+        
     }];
     
 }
@@ -171,7 +174,13 @@
     [self.navigationController popToViewController:[self.navigationController.viewControllers firstObject]
                                           animated:YES];
     
-    [self.interlocutorAvatarButtonNavBar setImage:nil forState:UIControlStateNormal];
+    //удаление кнопки с навбара в момент возврата на контроллер чатов
+    
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        self.interlocutorAvatarButtonNavBar.alpha = 0;
+    });
+    
+    [self.interlocutorAvatarButtonNavBar removeFromSuperview];
     
     self.senderId = nil;
     self.interlocutorID = nil;
@@ -252,23 +261,28 @@
 
 - (void)interlocutorButtonNavBarActoin
 {
+    //если есть клавиатура на экране то ибираю её
     
-    TSSwipeView *swipeView = [TSSwipeView initDetailView];
-    swipeView.frame = CGRectMake(10, - 400, swipeView.frame.size.width, swipeView.frame.size.width);
-    swipeView.nameLabel.text = self.interlocName;
-    swipeView.ageLabel.text = self.fireInterlocutor.age;
+    if ([self.inputToolbar.contentView.textView isFirstResponder]) {
+        [self.inputToolbar.contentView.textView resignFirstResponder];
+    }
+    
+    self.swipeView = [TSSwipeView initDetailView];
+    self.swipeView.frame = CGRectMake(10, - 400, self.swipeView.frame.size.width, self.swipeView.frame.size.width);
+    self.swipeView.nameLabel.text = self.interlocName;
+    self.swipeView.ageLabel.text = self.fireInterlocutor.age;
     
     if ([self.fireInterlocutor.photos count] > 0) {
-        swipeView.countPhotoLabel.text = [NSString stringWithFormat:@"%ld",
+        self.swipeView.countPhotoLabel.text = [NSString stringWithFormat:@"%ld",
                                           (long)[self.fireInterlocutor.photos count] - 1];
     }
     
-    swipeView.avatarImageView.image = self.interlocutorAvatar;
-    swipeView.backgroundImageView.image = self.interlocutorAvatar;
-    swipeView.parameterUser = self.fireInterlocutor.parameters;
-    swipeView.photos = self.fireInterlocutor.photos;
+    self.swipeView.avatarImageView.image = self.interlocutorAvatar;
+    self.swipeView.backgroundImageView.image = self.interlocutorAvatar;
+    self.swipeView.parameterUser = self.fireInterlocutor.parameters;
+    self.swipeView.photos = self.fireInterlocutor.photos;
     
-    [self.view addSubview:swipeView];
+    [self.view addSubview:self.swipeView];
         
     [UIView animateWithDuration:0.35
                           delay:0
@@ -276,10 +290,50 @@
           initialSpringVelocity:1.2
                         options:0
                      animations:^{
-                         swipeView.frame = CGRectMake(10, 72, 300, 352);
+                         self.swipeView.frame = CGRectMake(10, 72, 300, 352);
                      } completion:nil];
     
+    UITapGestureRecognizer *tapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self
+                                                                                           action:@selector(hendlePanGesture)];
+    tapGestureRecognizer.numberOfTapsRequired = 2;
+    [self.swipeView addGestureRecognizer:tapGestureRecognizer];
+    
     recognizer = 2;
+    
+}
+
+#pragma mark - UITapGestureRecognizer
+
+
+- (void)hendlePanGesture
+{
+    
+    UIImageView *heart = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"heart"]];
+    heart.frame = CGRectMake(- 155, 0, 630, 600);
+    heart.alpha = 0;
+    [self.swipeView addSubview:heart];
+    
+    [UIView animateWithDuration:0.35
+                          delay:0
+         usingSpringWithDamping:0.7
+          initialSpringVelocity:0.8
+                        options:UIViewAnimationOptionLayoutSubviews
+                     animations:^{
+                         heart.alpha = 1;
+                         heart.frame = CGRectMake(75, 110, 150, 130);
+                     } completion:nil];
+    
+    
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.6 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        [UIView animateWithDuration:0.15
+                         animations:^{
+                             heart.alpha = 0;
+                         }];
+    });
+    
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        [heart removeFromSuperview];
+    });
     
 }
 

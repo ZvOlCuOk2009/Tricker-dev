@@ -46,7 +46,6 @@
 
     self.count = 0;
     self.ref = [[FIRDatabase database] reference];
-    
 }
 
 

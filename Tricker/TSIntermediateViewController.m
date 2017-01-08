@@ -31,6 +31,8 @@
 @property (strong, nonatomic) FIRDatabaseReference *ref;
 @property (strong, nonatomic) TSFireUser *fireUser;
 
+@property (strong, nonatomic) IBOutlet UIImageView *progressView;
+
 @end
 
 @implementation TSIntermediateViewController
@@ -47,6 +49,13 @@
     [super viewWillAppear:animated];
     
     [self downloadController];
+    
+    CABasicAnimation *animation = [CABasicAnimation animationWithKeyPath:@"transform.rotation.z"];
+    animation.fromValue = @0.0f;
+    animation.toValue = @(2 * M_PI);
+    animation.duration = 1.0f;
+    animation.repeatCount = HUGE_VALF;
+    [self.progressView.layer addAnimation:animation forKey:@"rotation"];
 }
 
 
@@ -192,6 +201,9 @@
 {
     
     NSMutableArray *selectedUsers = nil;
+    NSMutableArray *avatarsUsers = nil;
+    
+    avatarsUsers = [NSMutableArray array];
     
     if (self.genderSearch) {
         selectedUsers = [NSMutableArray arrayWithArray:self.usersFoundOnTheGender];
@@ -203,8 +215,17 @@
         selectedUsers = [NSMutableArray arrayWithArray:self.usersFoundOnGenderAndAge];
     }
     
+    for (NSDictionary *user in selectedUsers) {
+        
+        NSDictionary *userData = [user objectForKey:@"userData"];
+        NSString *photoURL = [userData objectForKey:@"photoURL"];
+        UIImage *avatar = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:photoURL]]];
+        [avatarsUsers addObject:avatar];
+    }
+    
     TSCardsViewController *controller = [self.storyboard instantiateViewControllerWithIdentifier:@"TSCardsViewController"];
     controller.selectedUsers = selectedUsers;
+    controller.userAvatars = avatarsUsers;
     
     [self.navigationController pushViewController:controller animated:NO];
     
