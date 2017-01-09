@@ -12,6 +12,7 @@
 #import "TSTabBarViewController.h"
 #import "TSViewCell.h"
 #import "TSPhotoView.h"
+#import "TSLikeAndReviewSave.h"
 #import "TSTrickerPrefixHeader.pch"
 
 NSString *const TSSwipeViewInterlocutorNotification = @"TSSwipeViewInterlocutorNotification";
@@ -253,6 +254,8 @@ NSInteger recognizer;
     [UIView commitAnimations];
 
     self.photoView.photos = self.photos;
+    
+    [self markReviewUser];
 }
 
 
@@ -293,7 +296,9 @@ NSInteger recognizer;
         [currentTopVC presentViewController:controller animated:YES completion:nil];
     }
     
+    [self markReviewUser];
 }
+
 
 - (UIViewController *)currentTopViewController {
     UIViewController *topVC = [[[[UIApplication sharedApplication] delegate] window] rootViewController];
@@ -328,6 +333,7 @@ NSInteger recognizer;
                      }];
     
     self.tapGesture.enabled = YES;
+    [self markReviewUser];
     
 }
 
@@ -354,6 +360,16 @@ NSInteger recognizer;
     self.tapGesture.enabled = NO;
     
 }
+
+#pragma mark - Save mark review user
+
+
+- (void)markReviewUser
+{
+    [[TSLikeAndReviewSave sharedLikeAndReviewSaveManager] saveReviewInTheDatabase:self.interlocutorData
+                                                                          reviews:self.interlocutorReviews];
+}
+
 
 
 #pragma mark - UITableViewDataSource

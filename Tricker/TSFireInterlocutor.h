@@ -22,6 +22,7 @@
 @property (strong, nonatomic) NSString *location;
 @property (strong, nonatomic) NSString *gender;
 @property (strong, nonatomic) NSString *online;
+@property (strong, nonatomic) NSMutableDictionary *userData;
 @property (strong, nonatomic) NSMutableDictionary *parameters;
 @property (strong, nonatomic) NSMutableArray *photos;
 

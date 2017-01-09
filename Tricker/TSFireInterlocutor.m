@@ -45,6 +45,7 @@
     interlocutor.location = (NSString *)location;
     interlocutor.gender = (NSString *)gender;
     interlocutor.online = (NSString *)online;
+    interlocutor.userData = (NSMutableDictionary *)fireInterlocutor;
     interlocutor.parameters = (NSMutableDictionary *)parameters;
     interlocutor.photos = (NSMutableArray *)photos;
     

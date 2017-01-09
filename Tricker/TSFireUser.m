@@ -24,13 +24,19 @@
         
         NSString *keyUserData = [NSString stringWithFormat:@"dataBase/users/%@/userData", fireUser.uid];
         NSString *keyToParameters = [NSString stringWithFormat:@"dataBase/users/%@", fireUser.uid];
-        NSString *keyToPhotos = [NSString stringWithFormat:@"dataBase/users/%@", fireUser.uid];
         NSString *keyToChats = [NSString stringWithFormat:@"dataBase/users/%@", fireUser.uid];
+        NSString *keyToPhotos = [NSString stringWithFormat:@"dataBase/users/%@", fireUser.uid];
+        NSString *keyToReviews = [NSString stringWithFormat:@"dataBase/users/%@", fireUser.uid];
+        NSString *keyToLikes = [NSString stringWithFormat:@"dataBase/users/%@", fireUser.uid];
+        
         
         FIRDataSnapshot *fireUser = [snapshot childSnapshotForPath:keyUserData];
         FIRDataSnapshot *fireUserParameters = [snapshot childSnapshotForPath:keyToParameters];
-        FIRDataSnapshot *fireUserPhotos = [snapshot childSnapshotForPath:keyToPhotos];
         FIRDataSnapshot *fireUserChats = [snapshot childSnapshotForPath:keyToChats];
+        FIRDataSnapshot *fireUserPhotos = [snapshot childSnapshotForPath:keyToPhotos];
+        FIRDataSnapshot *fireUserReviews = [snapshot childSnapshotForPath:keyToReviews];
+        FIRDataSnapshot *fireUserLikes = [snapshot childSnapshotForPath:keyToLikes];
+        
         
         FIRDataSnapshot *userIdent = fireUser.value[@"userID"]; 
         FIRDataSnapshot *userName = fireUser.value[@"displayName"];
@@ -41,8 +47,10 @@
         FIRDataSnapshot *gender = fireUser.value[@"gender"];
         FIRDataSnapshot *online = fireUser.value[@"online"];
         FIRDataSnapshot *parameters = fireUserParameters.value[@"parameters"];
-        FIRDataSnapshot *photos = fireUserPhotos.value[@"photos"];
         FIRDataSnapshot *chats = fireUserChats.value[@"chat"];
+        FIRDataSnapshot *photos = fireUserPhotos.value[@"photos"];
+        FIRDataSnapshot *reviews = fireUserReviews.value[@"reviews"];
+        FIRDataSnapshot *likes = fireUserLikes.value[@"likes"];
         
         
         user.uid = (NSString *)userIdent;
@@ -56,6 +64,8 @@
         user.parameters = (NSMutableDictionary *)parameters;
         user.chats = (NSDictionary *)chats;
         user.photos = (NSMutableArray *)photos;
+        user.reviews = (NSMutableArray *)reviews;
+        user.likes = (NSMutableArray *)likes;
         
     }
     

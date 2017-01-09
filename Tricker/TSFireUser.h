@@ -24,6 +24,8 @@
 @property (strong, nonatomic) NSMutableDictionary *parameters;
 @property (strong, nonatomic) NSDictionary *chats;
 @property (strong, nonatomic) NSMutableArray *photos;
+@property (strong, nonatomic) NSMutableArray *reviews;
+@property (strong, nonatomic) NSMutableArray *likes;
 
 + (TSFireUser *)initWithSnapshot:(FIRDataSnapshot *)snapshot;
 

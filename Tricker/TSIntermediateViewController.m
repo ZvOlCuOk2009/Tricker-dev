@@ -50,6 +50,8 @@
     
     [self downloadController];
     
+    //лайк анимация
+    
     CABasicAnimation *animation = [CABasicAnimation animationWithKeyPath:@"transform.rotation.z"];
     animation.fromValue = @0.0f;
     animation.toValue = @(2 * M_PI);
@@ -72,7 +74,7 @@
     [self.ref observeEventType:FIRDataEventTypeValue withBlock:^(FIRDataSnapshot * _Nonnull snapshot) {
         
         self.fireUser = [TSFireUser initWithSnapshot:snapshot];
-        self.fireBase = [TSFireBase initWithSnapshot:snapshot];
+        self.fireBase = [TSFireBase initWithSnapshot:snapshot]; 
         
         [self configureController];
         

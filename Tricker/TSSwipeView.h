@@ -28,7 +28,10 @@ extern NSInteger recognizer;
 @property (strong, nonatomic) NSString *interlocutorUid;
 @property (strong, nonatomic) NSString *interlocutorName;
 @property (strong, nonatomic) NSDictionary *parameterUser;
+@property (strong, nonatomic) NSMutableDictionary *interlocutorData;
+@property (strong, nonatomic) NSMutableArray *interlocutorReviews;
 @property (strong, nonatomic) NSMutableArray *photos;
+
 
 + (instancetype)initProfileView;
 + (instancetype)initDetailView;

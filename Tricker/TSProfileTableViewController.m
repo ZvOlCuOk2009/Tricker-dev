@@ -20,12 +20,10 @@
 
 @interface TSProfileTableViewController () <UINavigationControllerDelegate, UIImagePickerControllerDelegate>
 
-
 @property (strong, nonatomic) NSString *selectCity;
 @property (strong, nonatomic) NSUserDefaults *userDefaults;
 @property (strong, nonatomic) UIBarButtonItem *doneButton;
 @property (strong, nonatomic) TSFireUser *fireUser;
-
 
 @property (strong, nonatomic) FIRDatabaseReference *ref;
 @property (strong, nonatomic) FIRStorageReference *storageRef;
@@ -545,7 +543,7 @@
     }
 
     
-    if (indexPath.row == 8)
+    if (indexPath.row == 10)
     {
         return kHeightCellButtonSaveAndOut;
     }

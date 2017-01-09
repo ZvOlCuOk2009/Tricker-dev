@@ -30,12 +30,15 @@
 		FD1C4F6F1DCE86E800CF63E9 /* TSFacebookManager.m in Sources */ = {isa = PBXBuildFile; fileRef = FD1C4F6E1DCE86E800CF63E9 /* TSFacebookManager.m */; };
 		FD1C4F731DCE9F4400CF63E9 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = FD1C4F721DCE9F4400CF63E9 /* GoogleService-Info.plist */; };
 		FD1C4F761DCEA49700CF63E9 /* TSFireUser.m in Sources */ = {isa = PBXBuildFile; fileRef = FD1C4F751DCEA49700CF63E9 /* TSFireUser.m */; };
-		FD43F1BD1E22D725003F668F /* TSLikeSave.m in Sources */ = {isa = PBXBuildFile; fileRef = FD43F1BC1E22D724003F668F /* TSLikeSave.m */; };
+		FD43F1BD1E22D725003F668F /* TSLikeAndReviewSave.m in Sources */ = {isa = PBXBuildFile; fileRef = FD43F1BC1E22D724003F668F /* TSLikeAndReviewSave.m */; };
 		FD45BE051E1FE64D0047E856 /* TSPhotoZoomViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FD45BE041E1FE64D0047E856 /* TSPhotoZoomViewController.m */; };
 		FD45D0801DD7BE0F00EB2640 /* TSSearchBar.m in Sources */ = {isa = PBXBuildFile; fileRef = FD45D07F1DD7BE0E00EB2640 /* TSSearchBar.m */; };
 		FD45D0851DD7CF4200EB2640 /* TSTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = FD45D0841DD7CF4200EB2640 /* TSTableViewCell.m */; };
 		FD5CD4941DD3D6CF0056C1A6 /* TSSitysViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FD5CD4931DD3D6CF0056C1A6 /* TSSitysViewController.m */; };
 		FD5FFB231E05DA5900CB807F /* TSFireInterlocutor.m in Sources */ = {isa = PBXBuildFile; fileRef = FD5FFB221E05DA5900CB807F /* TSFireInterlocutor.m */; };
+		FD64A93B1E2419010019BB94 /* TSTableViewStatisticsCell.m in Sources */ = {isa = PBXBuildFile; fileRef = FD64A93A1E2419010019BB94 /* TSTableViewStatisticsCell.m */; };
+		FD64A93E1E241D1C0019BB94 /* TSLikesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FD64A93D1E241D1C0019BB94 /* TSLikesViewController.m */; };
+		FD64A9411E241D440019BB94 /* TSReviewsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FD64A9401E241D440019BB94 /* TSReviewsViewController.m */; };
 		FD68B4591DDA7C5A00EF19C3 /* ProfileStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FD68B4581DDA7C5A00EF19C3 /* ProfileStoryboard.storyboard */; };
 		FD68B45B1DDA7CC100EF19C3 /* MapStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FD68B45A1DDA7CC100EF19C3 /* MapStoryboard.storyboard */; };
 		FD68B45D1DDA7CEC00EF19C3 /* CardsStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FD68B45C1DDA7CEC00EF19C3 /* CardsStoryboard.storyboard */; };
@@ -124,8 +127,8 @@
 		FD1C4F721DCE9F4400CF63E9 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		FD1C4F741DCEA49700CF63E9 /* TSFireUser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSFireUser.h; sourceTree = "<group>"; };
 		FD1C4F751DCEA49700CF63E9 /* TSFireUser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSFireUser.m; sourceTree = "<group>"; };
-		FD43F1BB1E22D724003F668F /* TSLikeSave.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSLikeSave.h; sourceTree = "<group>"; };
-		FD43F1BC1E22D724003F668F /* TSLikeSave.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSLikeSave.m; sourceTree = "<group>"; };
+		FD43F1BB1E22D724003F668F /* TSLikeAndReviewSave.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSLikeAndReviewSave.h; sourceTree = "<group>"; };
+		FD43F1BC1E22D724003F668F /* TSLikeAndReviewSave.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSLikeAndReviewSave.m; sourceTree = "<group>"; };
 		FD45BE031E1FE64D0047E856 /* TSPhotoZoomViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSPhotoZoomViewController.h; sourceTree = "<group>"; };
 		FD45BE041E1FE64D0047E856 /* TSPhotoZoomViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSPhotoZoomViewController.m; sourceTree = "<group>"; };
 		FD45D07E1DD7BE0E00EB2640 /* TSSearchBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSSearchBar.h; sourceTree = "<group>"; };
@@ -136,6 +139,12 @@
 		FD5CD4931DD3D6CF0056C1A6 /* TSSitysViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSSitysViewController.m; sourceTree = "<group>"; };
 		FD5FFB211E05DA5900CB807F /* TSFireInterlocutor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSFireInterlocutor.h; sourceTree = "<group>"; };
 		FD5FFB221E05DA5900CB807F /* TSFireInterlocutor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSFireInterlocutor.m; sourceTree = "<group>"; };
+		FD64A9391E2419010019BB94 /* TSTableViewStatisticsCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSTableViewStatisticsCell.h; sourceTree = "<group>"; };
+		FD64A93A1E2419010019BB94 /* TSTableViewStatisticsCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSTableViewStatisticsCell.m; sourceTree = "<group>"; };
+		FD64A93C1E241D1C0019BB94 /* TSLikesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSLikesViewController.h; sourceTree = "<group>"; };
+		FD64A93D1E241D1C0019BB94 /* TSLikesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSLikesViewController.m; sourceTree = "<group>"; };
+		FD64A93F1E241D440019BB94 /* TSReviewsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSReviewsViewController.h; sourceTree = "<group>"; };
+		FD64A9401E241D440019BB94 /* TSReviewsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSReviewsViewController.m; sourceTree = "<group>"; };
 		FD68B4581DDA7C5A00EF19C3 /* ProfileStoryboard.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = ProfileStoryboard.storyboard; sourceTree = "<group>"; };
 		FD68B45A1DDA7CC100EF19C3 /* MapStoryboard.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = MapStoryboard.storyboard; sourceTree = "<group>"; };
 		FD68B45C1DDA7CEC00EF19C3 /* CardsStoryboard.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = CardsStoryboard.storyboard; sourceTree = "<group>"; };
@@ -242,12 +251,16 @@
 				FD1C4F651DCE280400CF63E9 /* TSTabBarViewController.m */,
 				FDFDFC961DD293E0007811EF /* TSProfileTableViewController.h */,
 				FDFDFC971DD293E0007811EF /* TSProfileTableViewController.m */,
-				FD5CD4931DD3D6CF0056C1A6 /* TSSitysViewController.m */,
 				FD5CD4921DD3D6CF0056C1A6 /* TSSitysViewController.h */,
+				FD5CD4931DD3D6CF0056C1A6 /* TSSitysViewController.m */,
 				FDF4BB1E1DF03F38003D3841 /* TSPhotosViewController.h */,
 				FDF4BB1F1DF03F38003D3841 /* TSPhotosViewController.m */,
 				FD45BE031E1FE64D0047E856 /* TSPhotoZoomViewController.h */,
 				FD45BE041E1FE64D0047E856 /* TSPhotoZoomViewController.m */,
+				FD64A93F1E241D440019BB94 /* TSReviewsViewController.h */,
+				FD64A9401E241D440019BB94 /* TSReviewsViewController.m */,
+				FD64A93C1E241D1C0019BB94 /* TSLikesViewController.h */,
+				FD64A93D1E241D1C0019BB94 /* TSLikesViewController.m */,
 				FD0C1CA41DE7930100D37B61 /* TSMapViewController.h */,
 				FD0C1CA51DE7930100D37B61 /* TSMapViewController.m */,
 				FDE9273A1DE8EC4600FF884F /* TSIntermediateViewController.h */,
@@ -368,10 +381,12 @@
 			children = (
 				FD45D0831DD7CF4200EB2640 /* TSTableViewCell.h */,
 				FD45D0841DD7CF4200EB2640 /* TSTableViewCell.m */,
-				FDF4BB221DF076B2003D3841 /* TSCollectionViewCell.h */,
-				FDF4BB231DF076B2003D3841 /* TSCollectionViewCell.m */,
+				FD64A9391E2419010019BB94 /* TSTableViewStatisticsCell.h */,
+				FD64A93A1E2419010019BB94 /* TSTableViewStatisticsCell.m */,
 				FDF901561DF89F6F0067DE87 /* TSChatTableViewCell.h */,
 				FDF901571DF89F6F0067DE87 /* TSChatTableViewCell.m */,
+				FDF4BB221DF076B2003D3841 /* TSCollectionViewCell.h */,
+				FDF4BB231DF076B2003D3841 /* TSCollectionViewCell.m */,
 			);
 			name = Cell;
 			sourceTree = "<group>";
@@ -387,8 +402,8 @@
 				FD5FFB221E05DA5900CB807F /* TSFireInterlocutor.m */,
 				FD08BFA61E0F5AA900F90FA2 /* TSFireImage.h */,
 				FD08BFA71E0F5AA900F90FA2 /* TSFireImage.m */,
-				FD43F1BB1E22D724003F668F /* TSLikeSave.h */,
-				FD43F1BC1E22D724003F668F /* TSLikeSave.m */,
+				FD43F1BB1E22D724003F668F /* TSLikeAndReviewSave.h */,
+				FD43F1BC1E22D724003F668F /* TSLikeAndReviewSave.m */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -709,7 +724,7 @@
 			files = (
 				FD002C651DFA162900D47428 /* TSChatsTableViewController.m in Sources */,
 				FDE9273C1DE8EC4600FF884F /* TSIntermediateViewController.m in Sources */,
-				FD43F1BD1E22D725003F668F /* TSLikeSave.m in Sources */,
+				FD43F1BD1E22D725003F668F /* TSLikeAndReviewSave.m in Sources */,
 				FD45D0801DD7BE0F00EB2640 /* TSSearchBar.m in Sources */,
 				FD1C4F661DCE280400CF63E9 /* TSTabBarViewController.m in Sources */,
 				FD0C1CA31DE78B9B00D37B61 /* TSSwipeView.m in Sources */,
@@ -720,6 +735,7 @@
 				FD1C4F761DCEA49700CF63E9 /* TSFireUser.m in Sources */,
 				FD1C4F361DCE252200CF63E9 /* AppDelegate.m in Sources */,
 				FD1C4F331DCE252200CF63E9 /* main.m in Sources */,
+				FD64A9411E241D440019BB94 /* TSReviewsViewController.m in Sources */,
 				FD45D0851DD7CF4200EB2640 /* TSTableViewCell.m in Sources */,
 				FDF9639C1DD14598000877B5 /* TSPhotoAndNameViewController.m in Sources */,
 				FDFDFC951DD26A28007811EF /* TSAutorizationViewController.m in Sources */,
@@ -727,6 +743,7 @@
 				FD0C1C9D1DE7810000D37B61 /* TSCardsViewController.m in Sources */,
 				FD5FFB231E05DA5900CB807F /* TSFireInterlocutor.m in Sources */,
 				FD0654431E1EE1FF0080046A /* UIAlertController+TSAlertController.m in Sources */,
+				FD64A93B1E2419010019BB94 /* TSTableViewStatisticsCell.m in Sources */,
 				FDF4BB241DF076B2003D3841 /* TSCollectionViewCell.m in Sources */,
 				FDE927391DE840EC00FF884F /* TSFireBase.m in Sources */,
 				FDF4BB1D1DF02DB1003D3841 /* TSPhotoView.m in Sources */,
@@ -734,6 +751,7 @@
 				FDFDFC981DD293E0007811EF /* TSProfileTableViewController.m in Sources */,
 				FD0E42831DF7051200399621 /* TSChatViewController.m in Sources */,
 				FD1C4F691DCE282100CF63E9 /* TSSocialNetworkLoginViewController.m in Sources */,
+				FD64A93E1E241D1C0019BB94 /* TSLikesViewController.m in Sources */,
 				FDF4BB201DF03F38003D3841 /* TSPhotosViewController.m in Sources */,
 				FDBDDDDF1DDB8745008EE73E /* TSSettingsTableViewController.m in Sources */,
 				FD08BFA81E0F5AA900F90FA2 /* TSFireImage.m in Sources */,

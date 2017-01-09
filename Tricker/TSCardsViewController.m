@@ -16,7 +16,7 @@
 #import "TSTabBarViewController.h"
 #import "UIAlertController+TSAlertController.h"
 #import "TSPhotoZoomViewController.h"
-#import "TSLikeSave.h"
+#import "TSLikeAndReviewSave.h"
 #import "TSTrickerPrefixHeader.pch"
 
 @interface TSCardsViewController () <ZLSwipeableViewDataSource, ZLSwipeableViewDelegate>
@@ -25,7 +25,8 @@
 @property (weak, nonatomic) TSSwipeView *swipeView;
 @property (strong, nonatomic) UIImage *convertImage;
 @property (strong, nonatomic) UIView *cap;
-@property (strong, nonatomic) NSDictionary *selectedUserData;
+@property (strong, nonatomic) NSMutableDictionary *selectedUserData;
+@property (strong, nonatomic) NSMutableArray *selectedReviews;
 
 @property (assign, nonatomic) NSInteger counterIndexPath;
 @property (assign, nonatomic) NSInteger indexPathRow;
@@ -121,8 +122,10 @@
             NSString *age = [self.selectedUserData objectForKey:@"age"];
             NSString *online = [self.selectedUserData objectForKey:@"online"];
             NSString *uid = [self.selectedUserData objectForKey:@"userID"];
+              
+            self.selectedReviews = [selectedUser objectForKey:@"reviews"];
             
-//            установка индикации онлайн
+            //установка индикации онлайн
             
             if ([online isEqualToString:@"оффлайн"]) {
                 self.swipeView.onlineView.backgroundColor = [UIColor redColor];
@@ -171,6 +174,11 @@
             self.swipeView.interlocutorUid = uid;
             self.swipeView.interlocutorAvatar = [self.userAvatars objectAtIndex:self.indexPathRow];
             self.swipeView.interlocutorName = displayName;
+              
+            //параметры просмотров и лайков
+              
+            self.swipeView.interlocutorData = self.selectedUserData;
+            self.swipeView.interlocutorReviews = self.selectedReviews;
               
         }
         
@@ -265,6 +273,7 @@
 
 #pragma mark - UITapGestureRecognizer
 
+//обработка лайков
 
 - (void)hendlePanGesture
 {
@@ -278,8 +287,8 @@
           
           [UIView animateWithDuration:0.4
                                 delay:0
-               usingSpringWithDamping:0.7
-                initialSpringVelocity:0.8
+               usingSpringWithDamping:1.2
+                initialSpringVelocity:1.3
                               options:UIViewAnimationOptionLayoutSubviews
                            animations:^{
                                 heart.alpha = 1;
@@ -298,11 +307,8 @@
                [heart removeFromSuperview];
           });
           
-          NSLog(@"user %ld", (long)self.indexPathRow);
-          
-          NSDictionary *likeUserData = [self.selectedUsers objectAtIndex:self.indexPathRow - 1];
-          
-          [[TSLikeSave sharedLikeSaveManager] saveLikeInTheDatabase:likeUserData];
+          NSMutableDictionary *likeUserData = [self.selectedUsers objectAtIndex:self.indexPathRow - 1];
+          [[TSLikeAndReviewSave sharedLikeAndReviewSaveManager] saveLikeInTheDatabase:likeUserData];
      }
      
 }
