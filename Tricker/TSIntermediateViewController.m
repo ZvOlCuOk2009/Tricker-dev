@@ -50,7 +50,7 @@
     
     [self downloadController];
     
-    //лайк анимация
+    //прогрессбар анимация
     
     CABasicAnimation *animation = [CABasicAnimation animationWithKeyPath:@"transform.rotation.z"];
     animation.fromValue = @0.0f;

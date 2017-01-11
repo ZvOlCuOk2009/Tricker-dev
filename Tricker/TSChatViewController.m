@@ -11,7 +11,9 @@
 #import "TSFireUser.h"
 #import "TSFireInterlocutor.h"
 #import "TSSwipeView.h"
+#import "TSLikeAndReviewSave.h"
 #import "TSTabBarViewController.h"
+#import "TSGetInterlocutorParameters.h"
 #import "TSTrickerPrefixHeader.pch"
 
 #import <SVProgressHUD.h>
@@ -84,13 +86,15 @@
     
     [self setMessageRef];
     
+    [self showProgressHud];
+    
 }
 
 
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    [self showProgressHud];
+    
     [self setupBubbles];
     
     [self.ref observeEventType:FIRDataEventTypeValue withBlock:^(FIRDataSnapshot * _Nonnull snapshot) {
@@ -119,6 +123,8 @@
         [self setDataInterlocutorToCard:self.interlocutorID];
         
     }
+    
+    recognizerControllersCardsAndChat = 2;
 }
 
 
@@ -281,6 +287,7 @@
     self.swipeView.backgroundImageView.image = self.interlocutorAvatar;
     self.swipeView.parameterUser = self.fireInterlocutor.parameters;
     self.swipeView.photos = self.fireInterlocutor.photos;
+    self.swipeView.interlocutorUid = self.interlocutorID;
     
     [self.view addSubview:self.swipeView];
         
@@ -298,7 +305,7 @@
     tapGestureRecognizer.numberOfTapsRequired = 2;
     [self.swipeView addGestureRecognizer:tapGestureRecognizer];
     
-    recognizer = 2;
+    recognizerTransitionOnChatController = 2;
     
 }
 
@@ -333,6 +340,12 @@
     
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
         [heart removeFromSuperview];
+    });
+    
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        
+        [[TSGetInterlocutorParameters sharedGetInterlocutor] getInterlocutorFromDatabase:self.interlocutorID
+                                                                              respondent:@"ChatViewController"];
     });
     
 }

@@ -55,6 +55,9 @@
 
 @property (strong, nonatomic) NSString *filePath;
 
+@property (strong, nonatomic) NSString *countReviews;
+@property (strong, nonatomic) NSString *countLikes;
+
 @property (assign, nonatomic) NSInteger progressHUD;
 @property (assign, nonatomic) NSInteger heightHeader;
 @property (assign, nonatomic) CGFloat fixSide;
@@ -140,7 +143,6 @@
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
-
 }
 
 
@@ -191,7 +193,6 @@
                     [self setAvatarAndBackground:avatar];
                     [self setParametrUser:self.fireUser];
                     [self dissmisProgressHud];
-                    
                 }
                 
             });
@@ -200,6 +201,7 @@
         
     }];
     
+    self.userDefaults = [NSUserDefaults standardUserDefaults];
     
     self.pointImage = [UIImage imageNamed:@"click"];
     self.circleImage = [UIImage imageNamed:@"no_click"];
@@ -263,7 +265,52 @@
         self.cityLabel.text = @"Место проживания";
     }
     
+    [self setPostionLabelReviewsAndLikes:fireUser];
+    
 }
+
+//установка лейблов просмотров и лайков
+
+
+- (void)setPostionLabelReviewsAndLikes:(TSFireUser *)fireUser
+{
+    
+    self.countReviews = [NSString stringWithFormat:@"%ld", (long)[fireUser.reviews count]];
+    self.countLikes = [NSString stringWithFormat:@"%ld", (long)[fireUser.likes count]];
+    
+    NSString *countReviewsSave = [self.userDefaults objectForKey:[NSString stringWithFormat:@"reviews/%@", fireUser.uid]];
+    NSString *countLikesSave = [self.userDefaults objectForKey:[NSString stringWithFormat:@"likes/%@", fireUser.uid]];
+    
+    if (countReviewsSave == nil) {
+        countReviewsSave = @"0";
+    }
+    
+    if (countLikesSave == nil) {
+        countLikesSave = @"0";
+    }
+    
+    NSString *differenceCountReviews = [NSString stringWithFormat:@"%ld",
+                                        (long)[self.countReviews integerValue] - (long)[countReviewsSave integerValue]];
+
+    NSString *differenceCountLikes = [NSString stringWithFormat:@"%ld",
+                                        (long)[self.countLikes integerValue] - (long)[countLikesSave integerValue]];
+    
+    if ([differenceCountReviews isEqualToString:@"0"]) {
+        self.reviewsLabel.hidden = YES;
+    } else {
+        self.reviewsLabel.hidden = NO;
+    }
+    
+    if ([differenceCountLikes isEqualToString:@"0"]) {
+        self.likesLabel.hidden = YES;
+    } else {
+        self.likesLabel.hidden = NO;
+    }
+    
+    self.reviewsLabel.text = differenceCountReviews;
+    self.likesLabel.text = differenceCountLikes;
+}
+
 
 
 #pragma mark - Actions
@@ -611,6 +658,16 @@
         }
         
         self.stateDatePicker = YES;
+    }
+    
+    if (indexPath.row == 8) {
+        [self.userDefaults setObject:self.countReviews forKey:[NSString stringWithFormat:@"reviews/%@",self.fireUser.uid]];
+        [self.userDefaults synchronize];
+    }
+    
+    if (indexPath.row == 9) {
+        [self.userDefaults setObject:self.countLikes forKey:[NSString stringWithFormat:@"likes/%@",self.fireUser.uid]];
+        [self.userDefaults synchronize];
     }
 }
 

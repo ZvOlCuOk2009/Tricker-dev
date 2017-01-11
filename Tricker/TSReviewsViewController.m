@@ -7,6 +7,7 @@
 //
 
 #import "TSReviewsViewController.h"
+#import "TSProfileTableViewController.h"
 #import "TSTableViewStatisticsCell.h"
 #import "TSFireUser.h"
 #import "TSFireBase.h"
@@ -59,11 +60,18 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
+    [self progressHubShow];
     
-    [SVProgressHUD show];
-    [SVProgressHUD setDefaultStyle:SVProgressHUDStyleCustom];
-    [SVProgressHUD setBackgroundColor:YELLOW_COLOR];
-    [SVProgressHUD setForegroundColor:DARK_GRAY_COLOR];
+}
+
+
+- (void)viewDidDisappear:(BOOL)animated
+{
+    [super viewDidDisappear:animated];
+    
+    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"ProfileStoryboard" bundle:[NSBundle mainBundle]];
+    TSProfileTableViewController *controller = [storyboard instantiateViewControllerWithIdentifier:@"TSProfileTableViewController"];
+    controller.reviewsLabel.hidden = YES;
 }
 
 
@@ -112,7 +120,9 @@
         
         if ([self.reviewsUsers count] > 0) {
             [self.tableView reloadData];
-            [SVProgressHUD dismiss];
+            [self progressHubDismiss];
+        } else {
+            [self progressHubDismiss];
         }
         
     }];
@@ -170,6 +180,23 @@
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
+
+#pragma mark - SVProgressHUD
+
+- (void)progressHubShow
+{
+    [SVProgressHUD show];
+    [SVProgressHUD setDefaultStyle:SVProgressHUDStyleCustom];
+    [SVProgressHUD setBackgroundColor:YELLOW_COLOR];
+    [SVProgressHUD setForegroundColor:DARK_GRAY_COLOR];
+}
+
+
+- (void)progressHubDismiss
+{
+    [SVProgressHUD dismiss];
+}
+
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

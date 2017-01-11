@@ -8,8 +8,8 @@
 
 #import <UIKit/UIKit.h>
 
-extern NSString *const TSSwipeViewInterlocutorNotification;
-extern NSInteger recognizer;
+extern NSInteger recognizerTransitionOnChatController;
+extern NSInteger recognizerControllersCardsAndChat;
 
 @interface TSSwipeView : UIView
 

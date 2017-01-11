@@ -13,10 +13,11 @@
 #import "TSViewCell.h"
 #import "TSPhotoView.h"
 #import "TSLikeAndReviewSave.h"
+#import "TSGetInterlocutorParameters.h"
 #import "TSTrickerPrefixHeader.pch"
 
-NSString *const TSSwipeViewInterlocutorNotification = @"TSSwipeViewInterlocutorNotification";
-NSInteger recognizer;
+NSInteger recognizerTransitionOnChatController;
+NSInteger recognizerControllersCardsAndChat;
 
 @interface TSSwipeView () <UITableViewDataSource, UITableViewDelegate, UIGestureRecognizerDelegate>
 
@@ -200,6 +201,13 @@ NSInteger recognizer;
             view = [nib instantiateWithOwner:self options:nil][0];
             view.frame = kTSSwipeView6PlusFrame
         }
+        
+    } else if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
+        
+        UINib *nib = [UINib nibWithNibName:@"TSSwipeView" bundle:nil];
+        view = [nib instantiateWithOwner:self options:nil][0];
+        view.frame = kTSSwipeViewFrame
+        
     }
     
     return view;
@@ -211,7 +219,6 @@ NSInteger recognizer;
 {
     
     TSSwipeView *view = nil;
-    
     
     if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone)
     {
@@ -232,12 +239,17 @@ NSInteger recognizer;
         } else if (IS_IPHONE_6_PLUS) {
             
         }
+        
+    } else if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
+        
+        UINib *nib = [UINib nibWithNibName:@"TSDetailView" bundle:nil];
+        view = [nib instantiateWithOwner:self options:nil][0];
+        view.frame = CGRectMake(10, 74, 300, 352);
     }
     
     return view;
     
 }
-
 
 
 - (IBAction)photoActionButton:(id)sender
@@ -255,14 +267,14 @@ NSInteger recognizer;
 
     self.photoView.photos = self.photos;
     
-    [self markReviewUser];
+    [self markReviewUserByRecognizer];
 }
 
 
 - (IBAction)chatActionButton:(id)sender
 {
     
-    if (recognizer == 2) {
+    if (recognizerTransitionOnChatController == 2) {
         
         [UIView animateWithDuration:0.5
                               delay:0
@@ -277,26 +289,26 @@ NSInteger recognizer;
             [self removeFromSuperview];
         });
         
-        recognizer = 0;
+        recognizerTransitionOnChatController = 0;
         
     } else {
         
-        recognizer = 1;
+        recognizerTransitionOnChatController = 1;
         
         NSUserDefaults *userDefault = [NSUserDefaults standardUserDefaults];
         
         [userDefault setObject:self.interlocutorUid forKey:@"intelocID"];
         [userDefault synchronize];
 
-        UIStoryboard *stotyboard = [UIStoryboard storyboardWithName:@"Main" bundle:[NSBundle mainBundle]];
+        UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:[NSBundle mainBundle]];
         TSTabBarViewController *controller =
-        [stotyboard instantiateViewControllerWithIdentifier:@"TSTabBarViewController"];
+        [storyboard instantiateViewControllerWithIdentifier:@"TSTabBarViewController"];
         [controller setSelectedIndex:3];
         UIViewController *currentTopVC = [self currentTopViewController];
         [currentTopVC presentViewController:controller animated:YES completion:nil];
+
     }
     
-    [self markReviewUser];
 }
 
 
@@ -333,8 +345,8 @@ NSInteger recognizer;
                      }];
     
     self.tapGesture.enabled = YES;
-    [self markReviewUser];
-    
+
+    [self markReviewUserByRecognizer];
 }
 
 
@@ -364,12 +376,28 @@ NSInteger recognizer;
 #pragma mark - Save mark review user
 
 
-- (void)markReviewUser
+- (void)markReviewUserByRecognizer
 {
-    [[TSLikeAndReviewSave sharedLikeAndReviewSaveManager] saveReviewInTheDatabase:self.interlocutorData
-                                                                          reviews:self.interlocutorReviews];
-}
 
+    if (recognizerControllersCardsAndChat == 1) {
+        
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+            
+            [[TSLikeAndReviewSave sharedLikeAndReviewSaveManager] saveReviewInTheDatabase:self.interlocutorData
+                                                                                  reviews:self.interlocutorReviews];
+        });
+        
+    } else if (recognizerControllersCardsAndChat == 2) {
+        
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+            
+            [[TSGetInterlocutorParameters sharedGetInterlocutor] getInterlocutorFromDatabase:self.interlocutorUid
+                                                                                  respondent:@"TSSwipeView"];
+        });
+        
+    }
+    
+}
 
 
 #pragma mark - UITableViewDataSource

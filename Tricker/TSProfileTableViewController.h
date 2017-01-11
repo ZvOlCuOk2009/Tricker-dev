@@ -17,10 +17,8 @@
 
 @interface TSProfileTableViewController : UITableViewController
 
-//@property (strong, nonatomic) NSString *selectCity;
-//@property (strong, nonatomic) NSUserDefaults *userDefaults;
-//@property (strong, nonatomic) UIBarButtonItem *doneButton;
-//@property (strong, nonatomic) TSFireUser *fireUser;
+@property (weak, nonatomic) IBOutlet UILabel *reviewsLabel;
+@property (weak, nonatomic) IBOutlet UILabel *likesLabel;
 
 - (void)doneAction:(id)sender;
 - (void)showProgressHud;

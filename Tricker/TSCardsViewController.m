@@ -83,7 +83,8 @@
         NSArray *buttons = @[@"", @"", self.cap];
         [self.tabBarController setToolbarItems:buttons];
     }
-    
+     
+    recognizerControllersCardsAndChat = 1;
 }
 
 
@@ -245,7 +246,7 @@
           [alertController addAction:okAction];
           [self presentViewController:alertController animated:YES completion:nil];
         
-      }
+     }
      
      UITapGestureRecognizer *tapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self
                                                                                             action:@selector(hendlePanGesture)];
@@ -308,7 +309,12 @@
           });
           
           NSMutableDictionary *likeUserData = [self.selectedUsers objectAtIndex:self.indexPathRow - 1];
-          [[TSLikeAndReviewSave sharedLikeAndReviewSaveManager] saveLikeInTheDatabase:likeUserData];
+          
+          dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+               
+               [[TSLikeAndReviewSave sharedLikeAndReviewSaveManager] saveLikeInTheDatabase:likeUserData];
+          });
+          
      }
      
 }

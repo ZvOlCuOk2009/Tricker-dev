@@ -42,6 +42,46 @@
     return likeSave;
 }
 
+- (void)saveReviewInTheDatabase:(NSMutableDictionary *)reviewsUserData reviews:(NSMutableArray *)reviews
+{
+
+    NSString *reviewUserUid = [reviewsUserData objectForKey:@"userID"];
+    
+    if (!reviewUserUid) {
+        reviewUserUid = [[reviewsUserData objectForKey:@"userData"] objectForKey:@"userID"];
+    }
+    
+    NSMutableArray *updateReviews = [NSMutableArray array];
+    
+    if (reviews == nil) {
+        reviews = [NSMutableArray array];
+        [reviews addObject:self.userUid];
+    } else {
+        
+        BOOL recognizer = NO;
+        
+        for (NSString *review in reviews) {
+            if ([review isEqualToString:self.userUid]) {
+                recognizer = YES;
+                break;
+            } else {
+                recognizer = NO;
+            }
+        }
+        
+        if (recognizer == NO) {
+            [updateReviews addObject:self.userUid];
+        }
+        
+    }
+    
+    if ([updateReviews count] > 0) {
+        [reviews addObjectsFromArray:updateReviews];
+    }
+    
+    [self saveParametrsReviewAndLikesToDatabase:reviewUserUid byKeyField:@"reviews" parametr:reviews];
+}
+
 
 - (void)saveLikeInTheDatabase:(NSMutableDictionary *)likeUser
 {
@@ -49,50 +89,46 @@
     NSMutableDictionary *likeUserData = [likeUser objectForKey:@"userData"];
     NSString *likeUserUid = [likeUserData objectForKey:@"userID"];
     NSMutableArray *likes = [likeUser objectForKey:@"likes"];
+    NSMutableArray *updateLikes = [NSMutableArray array];
     
     if (likes == nil) {
         likes = [NSMutableArray array];
         [likes addObject:self.userUid];
     } else {
         
-        for (NSString *likeUid in likes) {
-            if (![likeUid isEqualToString:self.userUid]) {
-                [likes addObject:self.userUid];
-            }
-        }
-    }
-    
-    [[[[[self.ref child:@"dataBase"] child:@"users"] child:likeUserUid] child:@"likes"] setValue:likes];
-    [self.ref  removeAllObservers];
-}
-
-
-- (void)saveReviewInTheDatabase:(NSMutableDictionary *)reviewsUserData reviews:(NSMutableArray *)reviews
-{
-
-    NSString *reviewUserUid = [reviewsUserData objectForKey:@"userID"];
-    
-    if (reviews == nil) {
-        reviews = [NSMutableArray array];
-        [reviews addObject:self.userUid];
-    } else {
+        BOOL recognizer = NO;
         
-        for (NSString *review in reviews) {
-            if (![review isEqualToString:self.userUid]) {
-                [reviews addObject:self.userUid];
+        for (NSString *likeUid in likes) {
+            if ([likeUid isEqualToString:self.userUid]) {
+                recognizer = YES;
+                break;
+            } else {
+                recognizer = NO;
             }
+        }
+        
+        if (recognizer == NO) {
+            [updateLikes addObject:self.userUid];
         }
     }
     
-    [[[[[self.ref child:@"dataBase"] child:@"users"] child:reviewUserUid] child:@"reviews"] setValue:reviews];
-    [self.ref  removeAllObservers];
+    if ([updateLikes count] > 0) {
+        [likes addObjectsFromArray:updateLikes];
+    }
+    
+    if (likes) {
+        [self saveParametrsReviewAndLikesToDatabase:likeUserUid byKeyField:@"likes" parametr:likes];
+    }
+    
 }
 
 
-//- (void)saveParametrsReviewAndLikesToDatabase:(NSString *)key parametr:(NSMutableArray *)parameter
-//{
-//    [[[[[self.ref child:@"dataBase"] child:@"users"] child:reviewUserUid] child:@"rewiews"] setValue:reviews];
-//}
+- (void)saveParametrsReviewAndLikesToDatabase:(NSString *)keyUid byKeyField:(NSString *)keyField
+                                     parametr:(NSMutableArray *)parameter
+{
+    [[[[[self.ref child:@"dataBase"] child:@"users"] child:keyUid] child:keyField] setValue:parameter];
+    [self.ref  removeAllObservers];
+}
 
 
 @end

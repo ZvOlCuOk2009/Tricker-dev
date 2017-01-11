@@ -58,9 +58,9 @@
     
     //проверка откуда вызван контроллер из чат тейблвью контроллера или свайп вью
     
-    if (recognizer == 1) {
+    if (recognizerTransitionOnChatController == 1) {
         [self transitionToChatViewController];
-        recognizer = 0;
+        recognizerTransitionOnChatController = 0;
     } else {
         
         [self.ref observeEventType:FIRDataEventTypeValue withBlock:^(FIRDataSnapshot * _Nonnull snapshot) {
