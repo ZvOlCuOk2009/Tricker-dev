@@ -61,20 +61,18 @@
     if (recognizerTransitionOnChatController == 1) {
         [self transitionToChatViewController];
         recognizerTransitionOnChatController = 0;
-    } else {
-        
-        [self.ref observeEventType:FIRDataEventTypeValue withBlock:^(FIRDataSnapshot * _Nonnull snapshot) {
-            
-            self.fireUser = [TSFireUser initWithSnapshot:snapshot];
-            self.fireBase = [TSFireBase initWithSnapshot:snapshot];
-            
-            [self configureController];
-            NSLog(@"Call chats %ld", (long)self.count);
-            ++self.count;
-            
-        }];
     }
     
+    [self.ref observeEventType:FIRDataEventTypeValue withBlock:^(FIRDataSnapshot * _Nonnull snapshot) {
+        
+        self.fireUser = [TSFireUser initWithSnapshot:snapshot];
+        self.fireBase = [TSFireBase initWithSnapshot:snapshot];
+        
+        [self configureController];
+        NSLog(@"Call chats %ld", (long)self.count);
+        ++self.count;
+        
+    }];
 }
 
 
@@ -116,6 +114,10 @@
                 
                 NSDictionary *lastDict = [chat objectForKey:lastKey];
                 NSString *lastPost = [lastDict objectForKey:@"text"];
+                
+                if (!lastPost) {
+                    lastPost = @"";
+                }
                 
                 [self.lastPosts addObject:lastPost];
                 

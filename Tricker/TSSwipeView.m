@@ -207,7 +207,6 @@ NSInteger recognizerControllersCardsAndChat;
         UINib *nib = [UINib nibWithNibName:@"TSSwipeView" bundle:nil];
         view = [nib instantiateWithOwner:self options:nil][0];
         view.frame = kTSSwipeViewFrame
-        
     }
     
     return view;
@@ -271,6 +270,34 @@ NSInteger recognizerControllersCardsAndChat;
 }
 
 
+//разворот карточки на 180 градусов
+
+- (IBAction)parametersActionButton:(id)sender
+{
+    
+    self.tableView.dataSource = self;
+    self.tableView.delegate = self;
+    
+    CGContextRef context = UIGraphicsGetCurrentContext();
+    [UIView beginAnimations:nil context:context];
+    [UIView setAnimationTransition: UIViewAnimationTransitionFlipFromRight forView:self cache:YES];
+    [UIView setAnimationCurve:UIViewAnimationCurveEaseInOut];
+    [UIView setAnimationDuration:0.5];
+    [UIView commitAnimations];
+    
+    [self.tableView reloadData];
+    
+    [UIView animateWithDuration:1.0
+                     animations:^{
+                         self.backgroundTableView.alpha = 1;
+                         self.tableView.alpha = 1;
+                     }];
+    
+    self.tapGesture.enabled = YES;
+    
+    [self markReviewUserByRecognizer];
+}
+
 - (IBAction)chatActionButton:(id)sender
 {
     
@@ -321,35 +348,6 @@ NSInteger recognizerControllersCardsAndChat;
 }
 
 
-//разворот карточки на 180 градусов
-
-- (IBAction)parametersActionButton:(id)sender
-{
-    
-    self.tableView.dataSource = self;
-    self.tableView.delegate = self;
-    
-    CGContextRef context = UIGraphicsGetCurrentContext();
-    [UIView beginAnimations:nil context:context];
-    [UIView setAnimationTransition: UIViewAnimationTransitionFlipFromRight forView:self cache:YES];
-    [UIView setAnimationCurve:UIViewAnimationCurveEaseInOut];
-    [UIView setAnimationDuration:0.5];
-    [UIView commitAnimations];
-    
-    [self.tableView reloadData];
-    
-    [UIView animateWithDuration:1.0
-                     animations:^{
-                         self.backgroundTableView.alpha = 1;
-                         self.tableView.alpha = 1;
-                     }];
-    
-    self.tapGesture.enabled = YES;
-
-    [self markReviewUserByRecognizer];
-}
-
-
 //возвращение карточки в исходное положение
 
 
@@ -387,7 +385,7 @@ NSInteger recognizerControllersCardsAndChat;
                                                                                   reviews:self.interlocutorReviews];
         });
         
-    } else if (recognizerControllersCardsAndChat == 2) {
+    } else if (recognizerControllersCardsAndChat == 2 || recognizerControllersCardsAndChat == 0) {
         
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
             

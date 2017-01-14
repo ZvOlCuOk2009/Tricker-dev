@@ -122,7 +122,7 @@ NSString * const UpdateParametersNotification = @"UpdateParametersNotification";
 - (void)viewDidDisappear:(BOOL)animated
 {
     [super viewDidDisappear:animated];
-//    [self.ref removeAllObservers];
+    [self.ref removeAllObservers];
 }
 
 

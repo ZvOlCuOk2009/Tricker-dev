@@ -76,6 +76,24 @@ static NSString * const reuseIdntifierButton = @"cellButton";
     if (self.recognizerController == NO) {
         [self loadPhotos];
     }
+    
+    NSMutableArray *tempArray = nil;
+    
+    for (UIImage *firstImage in self.photos) {
+        if (!(firstImage.size.width == 40) && !(firstImage.size.height == 40)) {
+            UIImage *capImage = [UIImage imageNamed:@"photo-camera1"];
+            tempArray = [NSMutableArray array];
+            [tempArray insertObject:capImage atIndex:0];
+        } else {
+            break;
+        }
+    }
+    
+    if (tempArray) {
+        [self.photos insertObject:[tempArray firstObject] atIndex:0];
+    }
+    
+    [self.collectionView reloadData];
 }
 
 
@@ -158,16 +176,13 @@ static NSString * const reuseIdntifierButton = @"cellButton";
             
             dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
                 
-                dispatch_sync(dispatch_get_main_queue(), ^{
-            
-                    for (NSDictionary *selectPhoto in self.selectedPhotos) {
-                        NSData *currentData = [selectPhoto objectForKey:@"currentData"];
-                        NSString *currentPath = [selectPhoto objectForKey:@"currentPath"];
-                        
-                        [TSFireImage savePhotos:currentData byPath:currentPath photos:self.urlPhotos];
-                        self.progressHUD = 1;
-                    }
-                });
+                for (NSDictionary *selectPhoto in self.selectedPhotos) {
+                    NSData *currentData = [selectPhoto objectForKey:@"currentData"];
+                    NSString *currentPath = [selectPhoto objectForKey:@"currentPath"];
+                    
+                    [TSFireImage savePhotos:currentData byPath:currentPath photos:self.urlPhotos];
+                    self.progressHUD = 1;
+                }
             });
         }
     }
@@ -341,6 +356,8 @@ static NSString * const reuseIdntifierButton = @"cellButton";
     controller.photos = self.photos;
     controller.hiddenDeleteButton = NO;
     controller.currentPage = indexPath.item - 1;
+    controller.fireUser = self.fireUser;
+    controller.addPhotos = self.addPhotos;
     
     self.recognizerController = YES;
     

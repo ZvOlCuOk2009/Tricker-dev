@@ -31,15 +31,13 @@
 @property (strong, nonatomic) GIDGoogleUser *googleUser;
 @property (strong, nonatomic) UIStoryboard *storyBoard;
 
-@property (assign, nonatomic) NSInteger counter;
-
 @end
 
 @implementation AppDelegate
 
-
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
 
+    
     
     NSString *token = [[NSUserDefaults standardUserDefaults] objectForKey:@"token"];
     self.storyBoard = [UIStoryboard storyboardWithName:@"Main" bundle:[NSBundle mainBundle]];
@@ -70,9 +68,10 @@
     [GIDSignIn sharedInstance].clientID = [FIRApp defaultApp].options.clientID;
     [GIDSignIn sharedInstance].delegate = self;
     
-    self.ref = [[FIRDatabase database] reference];
-        
+//    self.ref = [[FIRDatabase database] reference];
+    
     return YES;
+    
 }
 
 
@@ -99,16 +98,6 @@
 - (void)applicationDidBecomeActive:(UIApplication *)application
 {
     [FBSDKAppEvents activateApp];
-    
-    self.counter = 0;
-    
-    [self.ref observeEventType:FIRDataEventTypeValue withBlock:^(FIRDataSnapshot * _Nonnull snapshot) {
-        
-        self.fireUser = [TSFireUser initWithSnapshot:snapshot];
-        
-//        [self updateOnlineParameter:@"онлайн"];
-    }];
-    
 }
 
 
@@ -131,8 +120,8 @@
                                           
                                           if (accessToken) {
                                               
-                                              NSString *imagePath = [NSString stringWithFormat:@"%@/%lld.jpg",
-                                                                     [FIRAuth auth].currentUser.uid, (long long)([NSDate date].timeIntervalSince1970 * 1000.0)];
+                                              NSString *imagePath = [NSString stringWithFormat:@"%@/avatar",
+                                                                     [FIRAuth auth].currentUser.uid];
                                               
                                               NSString *userID = user.uid;
                                               NSString *name = user.displayName;
@@ -227,55 +216,15 @@
 - (void)applicationDidEnterBackground:(UIApplication *)application {
     // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
     // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
-    self.counter = 0;
-//    [self updateOnlineParameter:@"оффлайн"];
 }
 
 
 - (void)applicationWillEnterForeground:(UIApplication *)application {
     // Called as part of the transition from the background to the active state; here you can undo many of the changes made on entering the background.
-    self.counter = 0;
-//    [self updateOnlineParameter:@"онлайн"];
 }
 
 
 - (void)applicationWillTerminate:(UIApplication *)application {
-    
-    self.counter = 0;
-//    [self updateOnlineParameter:@"оффлайн"];
-}
-
-
-//обновление онлайн индикации
-
-
-- (void)updateOnlineParameter:(NSString *)onlinePosition
-{
-    
-    if (self.counter == 0) {
-        
-        FIRUser *user = [FIRAuth auth].currentUser;
-        
-        NSString *userID = self.fireUser.uid;
-        NSString *name = self.fireUser.displayName;
-        NSString *dateOfBirth = self.fireUser.dateOfBirth;
-        NSString *location = self.fireUser.location;
-        NSString *gender = self.fireUser.gender;
-        NSString *age = self.fireUser.age;
-        NSString *online = onlinePosition;
-        
-        NSDictionary *userData = @{@"userID":userID,
-                                   @"displayName":name,
-                                   @"dateOfBirth":dateOfBirth,
-                                   @"location":location,
-                                   @"gender":gender,
-                                   @"age":age,
-                                   @"online":online};
-        
-        [[[[[self.ref child:@"dataBase"] child:@"users"] child:user.uid] child:@"userData"] setValue:userData];
-        
-        self.counter = 1;
-    }
     
 }
 

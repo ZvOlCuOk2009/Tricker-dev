@@ -23,9 +23,8 @@
                     </view>
                     <blurEffect style="light"/>
                 </visualEffectView>
-                <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="zuR-9B-NK0">
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="zuR-9B-NK0">
                     <rect key="frame" x="0.0" y="0.0" width="300" height="38"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <subviews>
                         <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gR9-SV-Pb4">
                             <rect key="frame" x="0.0" y="0.0" width="38" height="38"/>
@@ -44,10 +43,12 @@
                         </label>
                     </subviews>
                     <color key="backgroundColor" red="0.98823529409999999" green="0.89411764709999997" blue="0.72156862749999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="38" id="RwW-le-XlA"/>
+                    </constraints>
                 </view>
-                <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="UQc-EK-TRq">
+                <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="UQc-EK-TRq">
                     <rect key="frame" x="0.0" y="38" width="300" height="358"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                     <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="1" minimumInteritemSpacing="1" id="uCj-sZ-AIy">
                         <size key="itemSize" width="74" height="74"/>
@@ -62,9 +63,18 @@
                 </collectionView>
             </subviews>
             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+            <constraints>
+                <constraint firstAttribute="trailing" secondItem="UQc-EK-TRq" secondAttribute="trailing" id="2ap-1M-pcI"/>
+                <constraint firstAttribute="bottom" secondItem="UQc-EK-TRq" secondAttribute="bottom" id="Q4b-kd-JnO"/>
+                <constraint firstItem="UQc-EK-TRq" firstAttribute="leading" secondItem="UdW-kh-jB2" secondAttribute="leading" id="anW-10-uGr"/>
+                <constraint firstItem="UQc-EK-TRq" firstAttribute="top" secondItem="zuR-9B-NK0" secondAttribute="bottom" id="cN2-v5-4X4"/>
+                <constraint firstItem="zuR-9B-NK0" firstAttribute="leading" secondItem="UdW-kh-jB2" secondAttribute="leading" id="l8Y-LN-6gT"/>
+                <constraint firstAttribute="trailing" secondItem="zuR-9B-NK0" secondAttribute="trailing" id="pOG-Ek-gLe"/>
+                <constraint firstItem="zuR-9B-NK0" firstAttribute="top" secondItem="UdW-kh-jB2" secondAttribute="top" id="rzz-pH-I0t"/>
+            </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <connections>
-                <outlet property="collectionView" destination="UQc-EK-TRq" id="edm-uP-g5a"/>
+                <outlet property="collectionView" destination="UQc-EK-TRq" id="N9s-dk-BPx"/>
                 <outlet property="navigationView" destination="zuR-9B-NK0" id="gDs-37-fmU"/>
             </connections>
             <point key="canvasLocation" x="429" y="143"/>

@@ -7,10 +7,13 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "TSFireUser.h"
 
 @interface TSPhotoZoomViewController : UIViewController
 
-@property (strong, nonatomic) NSArray *photos;
+@property (strong, nonatomic) TSFireUser *fireUser;
+@property (strong, nonatomic) NSMutableArray *photos;
+@property (strong, nonatomic) NSMutableArray *addPhotos;
 @property (assign, nonatomic) NSInteger currentPage;
 @property (assign, nonatomic) BOOL hiddenDeleteButton;
 

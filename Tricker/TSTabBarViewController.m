@@ -9,6 +9,8 @@
 #import "TSTabBarViewController.h"
 #import "TSTrickerPrefixHeader.pch"
 
+@import FirebaseDatabase;
+
 @interface TSTabBarViewController ()
 
 @end
@@ -20,6 +22,18 @@
     
     [self.viewControllers enumerateObjectsUsingBlock:^(UIViewController *vc, NSUInteger idx, BOOL *stop) {
         vc.title = nil;
+    }];
+    
+    FIRDatabaseReference *connectedRef = [[FIRDatabase database] referenceWithPath:@".info/connected"];
+    [connectedRef observeEventType:FIRDataEventTypeValue withBlock:^(FIRDataSnapshot * _Nonnull snapshot) {
+        
+        if([snapshot.value boolValue]) {
+            NSLog(@"CONNECTED");
+//            self.firebaseConnected = YES;
+        } else {
+            NSLog(@"NOT CONNECTED");
+//            self.firebaseConnected = NO;
+        }
     }];
 }
 

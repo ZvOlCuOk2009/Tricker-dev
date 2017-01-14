@@ -34,7 +34,7 @@ static NSString * const reuseIdntifier = @"cell";
 - (void)drawRect:(CGRect)rect {
     
     
-    if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone)
+    if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone)
     {
         if (IS_IPHONE_4) {
             
@@ -52,6 +52,10 @@ static NSString * const reuseIdntifier = @"cell";
             self.cellSize = kTSCollCellSize_6_Plus;
             self.rectButton = kTSPhotoViewButtonCancelRect_6_Plus;
         }
+    } else if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
+        
+        self.cellSize = kTSCollCellSize;
+        self.rectButton = kTSPhotoViewButtonCancelRect;
     }
     
     self.convertPhotos = [NSMutableArray array];
@@ -78,7 +82,7 @@ static NSString * const reuseIdntifier = @"cell";
         
     });
     
-    if ([self.photos count] == 0 && self.photos == nil) {
+    if ([self.photos count] == 0 || self.photos == nil) {
         UILabel *label = [[UILabel alloc] init];
         label.frame = CGRectMake((self.frame.size.width / 2) - 60, (self.frame.size.height / 2) - 11, 120, 22);
         label.text = @"Альбом пуст";

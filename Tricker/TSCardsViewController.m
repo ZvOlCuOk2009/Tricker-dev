@@ -23,6 +23,7 @@
 
 @property (strong, nonatomic) ZLSwipeableView *swipeableView;
 @property (weak, nonatomic) TSSwipeView *swipeView;
+
 @property (strong, nonatomic) UIImage *convertImage;
 @property (strong, nonatomic) UIView *cap;
 @property (strong, nonatomic) NSMutableDictionary *selectedUserData;
@@ -136,12 +137,16 @@
             
             //установка изображения и фона
               
-              self.swipeView.backgroundImageView.image = [self.userAvatars objectAtIndex:self.indexPathRow];
-              self.swipeView.avatarImageView.image = [self.userAvatars objectAtIndex:self.indexPathRow];;
-              
-            if (!photoURL) {
+            if (photoURL) {
+                 
+                self.swipeView.backgroundImageView.image = [self.userAvatars objectAtIndex:self.indexPathRow];
+                self.swipeView.avatarImageView.image = [self.userAvatars objectAtIndex:self.indexPathRow];
+                 
+            } else {
+                 
                 photoURL = @"";
                 self.swipeView.avatarImageView.image = [UIImage imageNamed:@"placeholder"];
+                self.swipeView.backgroundImageView.image = [UIImage imageNamed:@"placeholder"];
             }
 
             
@@ -168,6 +173,8 @@
                 countPhoto = @"";
             }
             
+            //передача параметров
+              
             self.swipeView.countPhotoLabel.text = countPhoto;
             
             self.swipeView.parameterUser = parametersUser;

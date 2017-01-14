@@ -136,7 +136,7 @@
     
     UIImage *logoImage = [UIImage imageNamed:@"logo"];
     self.logo = [[UIImageView alloc] initWithImage:logoImage];
-    self.logo.frame = CGRectMake(85, 9, 150, 30);
+    self.logo.frame = CGRectMake((self.view.frame.size.width / 2) - (self.logo.frame.size.width / 2), 9, 150, 30);
     [self.navigationController.navigationBar addSubview:self.logo];
 }
 
@@ -769,7 +769,7 @@
 
     }
     
-    self.logo.frame = CGRectMake(85, - (changeHeight / 4), self.logo.frame.size.width, self.logo.frame.size.height);
+    self.logo.frame = CGRectMake((self.view.frame.size.width / 2) - (self.logo.frame.size.width / 2), - (changeHeight / 4), self.logo.frame.size.width, self.logo.frame.size.height);
     self.logo.alpha = 4 / changeHeight;
     
 }

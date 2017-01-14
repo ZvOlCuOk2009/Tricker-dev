@@ -84,21 +84,6 @@
 }
 
 
-#pragma mark - Actions
-
-
-- (IBAction)registrtionActionButton:(id)sender
-{
-    
-}
-
-
-- (IBAction)autorizationActionButton:(id)sender
-{
-    
-}
-
-
 #pragma mark - Facebook autorization
 
 
@@ -277,26 +262,20 @@
                 photoURL = minURL;
             }
             
+            
             NSLog(@"Json result photo: %@", response.json);
         } errorBlock:^(NSError *error) {
             NSLog(@"VK error photo: %@", error);
         }];
         
-        
 //        [[[[[self.ref child:@"dataBase"] child:@"users"] child:user.uid] child:@"userData"] setValue:userData];
 
 //        [self openTabBarcontroller];
         
-        
         NSLog(@"result %lu", (unsigned long)result);
     } else if (result.error) {
-
         NSLog(@"result %lu", (unsigned long)result);
     }
-   
-    
-    
-        
 }
 
 

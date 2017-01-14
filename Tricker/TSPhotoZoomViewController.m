@@ -7,6 +7,12 @@
 //
 
 #import "TSPhotoZoomViewController.h"
+#import "UIAlertController+TSAlertController.h"
+
+@import Firebase;
+@import FirebaseAuth;
+@import FirebaseStorage;
+//@import FirebaseDatabase;
 
 @interface TSPhotoZoomViewController ()
 
@@ -56,6 +62,7 @@
     
 }
 
+#pragma mark - page controll
 
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
 {
@@ -63,6 +70,7 @@
     self.pageControl.currentPage = self.scrollView.contentOffset.x / pageWidth;
 }
 
+#pragma mark - Actions
 
 - (IBAction)cancelButton:(id)sender
 {
@@ -72,7 +80,54 @@
 
 - (IBAction)deleteButton:(id)sender
 {
+    
+    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"Удалить фото?"
+                                                                             message:nil
+                                                                      preferredStyle:UIAlertControllerStyleAlert];
+    
+    UIAlertAction *alertActiionYes = [UIAlertAction actionWithTitle:@"Да"
+                                                           style:UIAlertActionStyleCancel
+                                                         handler:^(UIAlertAction * _Nonnull action) {
+                                                             
+                                                             [self deletePhoto];
+                                                             
+                                                         }];
+    
+    UIAlertAction *alertActiionNo = [UIAlertAction actionWithTitle:@"Нет"
+                                                              style:UIAlertActionStyleDefault
+                                                            handler:^(UIAlertAction * _Nonnull action) {
+                                                                
+                                                            }];
+    
+    [alertController customizationAlertView:@"Удалить фото?" byLength:13 byFont:20.f];
+    
+    [alertController addAction:alertActiionYes];
+    [alertController addAction:alertActiionNo];
+    [self presentViewController:alertController animated:YES completion:nil];
+    
+}
 
+- (void)deletePhoto
+{
+    
+    NSInteger page = self.pageControl.currentPage;
+    
+    if ([self.addPhotos count] == 0) {
+        
+        [self.photos removeObjectAtIndex:page];
+        [self setupScroll];
+        
+        FIRDatabaseReference *ref = [[FIRDatabase database]reference];
+        NSMutableArray *updatePhotos = self.fireUser.photos;
+        [updatePhotos removeObjectAtIndex:page + 1];
+        [[[[[ref child:@"dataBase"] child:@"users"] child:self.fireUser.uid] child:@"photos"] setValue:updatePhotos];
+        
+    } else {
+        
+        [self.photos removeObjectAtIndex:page];
+        [self setupScroll];
+    }
+    
 }
 
 
@@ -81,14 +136,5 @@
     // Dispose of any resources that can be recreated.
 }
 
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 @end

@@ -9,6 +9,8 @@
 #import "TSReviewsViewController.h"
 #import "TSProfileTableViewController.h"
 #import "TSTableViewStatisticsCell.h"
+#import "TSGetInterlocutorParameters.h"
+#import "TSSwipeView.h"
 #import "TSFireUser.h"
 #import "TSFireBase.h"
 #import "TSTrickerPrefixHeader.pch"
@@ -22,10 +24,14 @@
 @property (strong, nonatomic) IBOutlet UITableView *tableView;
 @property (strong, nonatomic) FIRDatabaseReference *ref;
 @property (strong, nonatomic) TSFireUser *fireUser;
+@property (strong, nonatomic) TSSwipeView *swipeView;
 @property (strong, nonatomic) NSDictionary *fireBase;
+@property (strong, nonatomic) NSString *interlocutorID;
 @property (strong, nonatomic) NSArray *reviewsUsersUid;
 @property (strong, nonatomic) NSMutableArray *reviewsUsers;
 @property (strong, nonatomic) NSMutableArray *reviewsUsersAvatar;
+@property (strong, nonatomic) NSMutableArray *reviewsUsersParams;
+@property (strong, nonatomic) NSMutableArray *reviewsPhotos;
 
 @end
 
@@ -52,16 +58,21 @@
     self.reviewsUsersUid = [NSArray array];
     self.reviewsUsers = [NSMutableArray array];
     self.reviewsUsersAvatar = [NSMutableArray array];
+    self.reviewsUsersParams = [NSMutableArray array];
+    self.reviewsPhotos = [NSMutableArray array];
     
-    [self configureController];
+    
 }
 
 
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    [self progressHubShow];
     
+    if ([self.reviewsUsers count] == 0) {
+        [self configureController];
+        [self progressHubShow];
+    }
 }
 
 
@@ -111,11 +122,23 @@
             NSString *ageUserInterest = [[userDataReviews objectForKey:@"userData"] objectForKey:@"age"];
             NSString *photoUserInterest = [[userDataReviews objectForKey:@"userData"] objectForKey:@"photoURL"];
             
+            NSArray *paramsReviews = [userDataReviews objectForKey:@"parameters"];
+            NSArray *photosReviews = [userDataReviews objectForKey:@"photos"];
+            
             NSDictionary *userDataReviewParam = @{@"nameUserInterest":nameUserInterest,
                                                   @"ageUserInterest":ageUserInterest};
             
             [self.reviewsUsers addObject:userDataReviewParam];
             [self.reviewsUsersAvatar addObject:[self convertAvatarByUrl:photoUserInterest]];
+            [self.reviewsUsersParams addObject:paramsReviews];
+            
+            if (photosReviews) {
+                [self.reviewsPhotos addObject:photosReviews];
+            } else {
+                NSArray *emptyArray = @[];
+                [self.reviewsPhotos addObject:emptyArray];
+            }
+            
         }
         
         if ([self.reviewsUsers count] > 0) {
@@ -179,7 +202,89 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    
+    NSString *nameReviewUser = [[self.reviewsUsers objectAtIndex:indexPath.row] objectForKey:@"nameUserInterest"];
+    NSString *ageReviewUser = [[self.reviewsUsers objectAtIndex:indexPath.row] objectForKey:@"ageUserInterest"];
+    
+    self.swipeView = [TSSwipeView initDetailView];
+    self.swipeView.frame = CGRectMake(10, - 400, self.swipeView.frame.size.width, self.swipeView.frame.size.width);
+    self.swipeView.nameLabel.text = nameReviewUser;
+    self.swipeView.ageLabel.text = ageReviewUser;
+    
+    self.swipeView.avatarImageView.image = [self.reviewsUsersAvatar objectAtIndex:indexPath.row];
+    self.swipeView.backgroundImageView.image = [self.reviewsUsersAvatar objectAtIndex:indexPath.row];
+    self.swipeView.parameterUser = [self.reviewsUsersParams objectAtIndex:indexPath.row];
+    
+    NSMutableArray *photos = [self.reviewsPhotos objectAtIndex:indexPath.row];
+    
+    self.swipeView.photos = photos;
+    
+    if ([photos count] > 0) {
+        self.swipeView.countPhotoLabel.text = [NSString stringWithFormat:@"%ld",
+                                               (long)[photos count] - 1];
+    }
+    
+    [self.view addSubview:self.swipeView];
+    
+    [UIView animateWithDuration:0.35
+                          delay:0
+         usingSpringWithDamping:0.6
+          initialSpringVelocity:1.2
+                        options:0
+                     animations:^{
+                         self.swipeView.frame = CGRectMake(10, 72, 300, 352);
+                     } completion:nil];
+    
+    //передача ID пользователя на два разных контроллера в зависимости от потребности
+    
+    self.interlocutorID = [self.reviewsUsersUid objectAtIndex:indexPath.row];
+    self.swipeView.interlocutorUid = [self.reviewsUsersUid objectAtIndex:indexPath.row];
+    
+    UITapGestureRecognizer *tapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self
+                                                                                           action:@selector(hendlePanGesture)];
+    tapGestureRecognizer.numberOfTapsRequired = 2;
+    [self.swipeView addGestureRecognizer:tapGestureRecognizer];
+ 
+    recognizerTransitionOnChatController = 2;
+
 }
+
+- (void)hendlePanGesture
+{
+    UIImageView *heart = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"heart"]];
+    heart.frame = CGRectMake(- 155, 0, 630, 600);
+    heart.alpha = 0;
+    [self.swipeView addSubview:heart];
+    
+    [UIView animateWithDuration:0.35
+                          delay:0
+         usingSpringWithDamping:0.7
+          initialSpringVelocity:0.8
+                        options:UIViewAnimationOptionLayoutSubviews
+                     animations:^{
+                         heart.alpha = 1;
+                         heart.frame = CGRectMake(75, 110, 150, 130);
+                     } completion:nil];
+    
+    
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.6 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        [UIView animateWithDuration:0.15
+                         animations:^{
+                             heart.alpha = 0;
+                         }];
+    });
+    
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        [heart removeFromSuperview];
+    });
+    
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        
+        [[TSGetInterlocutorParameters sharedGetInterlocutor] getInterlocutorFromDatabase:self.interlocutorID
+                                                                              respondent:@"ChatViewController"];
+    });
+}
+
 
 #pragma mark - SVProgressHUD
 
