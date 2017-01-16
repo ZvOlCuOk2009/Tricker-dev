@@ -126,7 +126,7 @@
             self.fixOffset = kAvatarOffset_6_S;
             self.fixCornerRadius = kAvatarCornerRadius_6_S;
         }
-    }
+    } 
     
     self.avatarImageView.clipsToBounds = YES;
     

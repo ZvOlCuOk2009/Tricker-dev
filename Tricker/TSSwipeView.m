@@ -100,7 +100,7 @@ NSInteger recognizerControllersCardsAndChat;
         
     }
 
-    //добавление тайтлов и параметров в массивы по пордковым номера
+    //добавление тайтлов и параметров в массивы по порядковым номерам
     
     NSInteger counterDSArray = 0;
     NSInteger counterParamArray = 0;
@@ -128,9 +128,11 @@ NSInteger recognizerControllersCardsAndChat;
             
         } else if (IS_IPHONE_5) {
             
+            self.photosView = kTSPhotoView5;
             
         } else if (IS_IPHONE_6) {
             
+            self.photosView = kTSPhotoView6;
             
         } else if (IS_IPHONE_6_PLUS) {
             
@@ -150,7 +152,7 @@ NSInteger recognizerControllersCardsAndChat;
     self.layer.shadowRadius = 7.0;
     self.layer.shouldRasterize = YES;
     self.layer.rasterizationScale = [UIScreen mainScreen].scale;
-    
+    self.layer.masksToBounds = YES;
 }
 
 
@@ -183,36 +185,34 @@ NSInteger recognizerControllersCardsAndChat;
     {
         if (IS_IPHONE_4) {
             
-            UINib *nib = [UINib nibWithNibName:@"TSSwipeView" bundle:nil];
-            view = [nib instantiateWithOwner:self options:nil][0];
-            view.frame = kTSSwipeViewFrame
+            view = [self initProfileViewNibBySizeDevice:view nameNib:@"TSSwipeView"
+                                               frameNib:kTSSwipeViewFrame];
             
         } else if (IS_IPHONE_5) {
             
-
+            view = [self initProfileViewNibBySizeDevice:view nameNib:@"TSSwipeView5"
+                                               frameNib:kTSSwipeView5Frame];
             
         } else if (IS_IPHONE_6) {
-
             
+            view = [self initProfileViewNibBySizeDevice:view nameNib:@"TSSwipeView6"
+                                               frameNib:kTSSwipeView6Frame];
             
         } else if (IS_IPHONE_6_PLUS) {
             
-            UINib *nib = [UINib nibWithNibName:@"TSSwipeView6plus" bundle:nil];
-            view = [nib instantiateWithOwner:self options:nil][0];
-            view.frame = kTSSwipeView6PlusFrame
+            view = [self initProfileViewNibBySizeDevice:view nameNib:@"TSSwipeView6plus"
+                                               frameNib:kTSSwipeView6PlusFrame];
         }
         
     } else if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
         
-        UINib *nib = [UINib nibWithNibName:@"TSSwipeView" bundle:nil];
-        view = [nib instantiateWithOwner:self options:nil][0];
-        view.frame = kTSSwipeViewFrame
+        view = [self initProfileViewNibBySizeDevice:view nameNib:@"TSSwipeViewIpad"
+                                           frameNib:kTSSwipeViewIpadFrame];
     }
     
     return view;
     
 }
-
 
 + (instancetype)initDetailView
 {
@@ -223,32 +223,62 @@ NSInteger recognizerControllersCardsAndChat;
     {
         if (IS_IPHONE_4) {
             
-            UINib *nib = [UINib nibWithNibName:@"TSDetailView" bundle:nil];
-            view = [nib instantiateWithOwner:self options:nil][0];
-            view.frame = CGRectMake(10, 74, 300, 352);
+            view = [self initDetailViewNibBySizeDevice:view nameNib:@"TSDetailView"
+                                              frameNib:kTSSwipeDetailViewFrame];
             
         } else if (IS_IPHONE_5) {
             
-            
+            view = [self initDetailViewNibBySizeDevice:view nameNib:@"TSDetailView5"
+                                              frameNib:kTSSwipeDetailView5Frame];
             
         } else if (IS_IPHONE_6) {
             
-            
+            view = [self initDetailViewNibBySizeDevice:view nameNib:@"TSDetailView6"
+                                              frameNib:kTSSwipeDetailView6Frame];
             
         } else if (IS_IPHONE_6_PLUS) {
             
+            view = [self initDetailViewNibBySizeDevice:view nameNib:@"TSDetailView6plus"
+                                              frameNib:kTSSwipeDetailView6PlusFrame];
+
         }
         
     } else if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
         
-        UINib *nib = [UINib nibWithNibName:@"TSDetailView" bundle:nil];
-        view = [nib instantiateWithOwner:self options:nil][0];
-        view.frame = CGRectMake(10, 74, 300, 352);
+        view = [self initDetailViewNibBySizeDevice:view nameNib:@"TSDetailView"
+                                          frameNib:kTSSwipeDetailViewFrame];
+
     }
     
     return view;
     
 }
+
+
+#pragma mark - init nib
+
+
++ (TSSwipeView *)initProfileViewNibBySizeDevice:(TSSwipeView *)view nameNib:(NSString *)name frameNib:(CGRect)frame
+{
+    UINib *nib = [UINib nibWithNibName:name bundle:nil];
+    view = [nib instantiateWithOwner:self options:nil][0];
+    view.frame = frame;
+    
+    return view;
+}
+
+
++ (TSSwipeView *)initDetailViewNibBySizeDevice:(TSSwipeView *)view nameNib:(NSString *)name frameNib:(CGRect)frame
+{
+    UINib *nib = [UINib nibWithNibName:name bundle:nil];
+    view = [nib instantiateWithOwner:self options:nil][0];
+    view.frame = frame;
+    
+    return view;
+}
+
+
+#pragma mark - Actions
 
 
 - (IBAction)photoActionButton:(id)sender
@@ -261,11 +291,10 @@ NSInteger recognizerControllersCardsAndChat;
                                    self.photoView.frame.size.width, self.photoView.frame.size.height)];
     [UIView beginAnimations:@"animateView" context:nil];
     [UIView setAnimationDuration:0.3];
-    [self.photoView setFrame:CGRectMake(0.0f, 0.0f, self.photoView.frame.size.width, self.photoView.frame.size.height)];
+    [self.photoView setFrame:CGRectMake(0.0f, 0.0f,self.photoView.frame.size.width,self.photoView.frame.size.height)];
     [UIView commitAnimations];
 
     self.photoView.photos = self.photos;
-    
     [self markReviewUserByRecognizer];
 }
 
@@ -309,7 +338,7 @@ NSInteger recognizerControllersCardsAndChat;
               initialSpringVelocity:0.6
                             options:0
                          animations:^{
-                             self.frame = CGRectMake(10, 480, self.frame.size.width, self.frame.size.height);
+                             self.frame = CGRectMake(10, 600, self.frame.size.width, self.frame.size.height);
                          } completion:nil];
         
         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{

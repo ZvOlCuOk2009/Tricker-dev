@@ -21,7 +21,6 @@
 @property (strong, nonatomic) IBOutlet UIButton *cancelButton;
 @property (strong, nonatomic) UIImageView *zoomImage;
 @property (strong, nonatomic) NSMutableArray *convertPhotos;
-@property (assign, nonatomic) CGRect rectButton;
 @property (assign, nonatomic) CGSize cellSize;
 
 @end
@@ -39,23 +38,22 @@ static NSString * const reuseIdntifier = @"cell";
         if (IS_IPHONE_4) {
             
             self.cellSize = kTSCollCellSize;
-            self.rectButton = kTSPhotoViewButtonCancelRect;
             
         } else if (IS_IPHONE_5) {
             
+            self.cellSize = kTSCollCellSize;
             
         } else if (IS_IPHONE_6) {
             
+            self.cellSize = kTSCollCellSize;
             
         } else if (IS_IPHONE_6_PLUS) {
             
             self.cellSize = kTSCollCellSize_6_Plus;
-            self.rectButton = kTSPhotoViewButtonCancelRect_6_Plus;
         }
     } else if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
         
         self.cellSize = kTSCollCellSize;
-        self.rectButton = kTSPhotoViewButtonCancelRect;
     }
     
     self.convertPhotos = [NSMutableArray array];
@@ -99,7 +97,6 @@ static NSString * const reuseIdntifier = @"cell";
     [super awakeFromNib];
     
     [self.collectionView registerNib:[UINib nibWithNibName:@"TSCollCell" bundle:nil] forCellWithReuseIdentifier:reuseIdntifier];
-    
 }
 
 

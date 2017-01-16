@@ -143,7 +143,7 @@
                                             </imageView>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tR9-gQ-zQ9">
                                                 <rect key="frame" x="22" y="606" width="330" height="39"/>
-                                                <color key="backgroundColor" red="0.51372549019607838" green="0.61960784313725492" blue="0.69803921568627447" alpha="1" colorSpace="calibratedRGB"/>
+                                                <color key="backgroundColor" red="0.74509803921568629" green="0.81568627450980391" blue="0.85490196078431369" alpha="1" colorSpace="calibratedRGB"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="39" id="ped-7f-NZf"/>
                                                 </constraints>
@@ -390,7 +390,7 @@
                                                 </connections>
                                             </button>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="29c-if-uJV">
-                                                <rect key="frame" x="235" y="482" width="42" height="42"/>
+                                                <rect key="frame" x="239" y="482" width="42" height="42"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="42" id="9QZ-a8-I3I"/>
                                                     <constraint firstAttribute="width" constant="42" id="SNg-82-Cqf"/>
@@ -416,7 +416,6 @@
                                                     </userDefinedRuntimeAttribute>
                                                 </userDefinedRuntimeAttributes>
                                                 <connections>
-                                                    <action selector="autorizationActionButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="gDJ-pE-hoz"/>
                                                     <segue destination="MWZ-P4-PVV" kind="presentation" id="xuc-Kp-M9M"/>
                                                 </connections>
                                             </button>
@@ -447,7 +446,6 @@
                                                     </userDefinedRuntimeAttribute>
                                                 </userDefinedRuntimeAttributes>
                                                 <connections>
-                                                    <action selector="registrtionActionButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="gFq-F0-YZD"/>
                                                     <segue destination="njS-gW-L85" kind="show" id="wDh-g0-NAe"/>
                                                 </connections>
                                             </button>
@@ -470,7 +468,7 @@
                                             <constraint firstItem="NEK-78-Ss6" firstAttribute="centerX" secondItem="hN5-E3-ebR" secondAttribute="centerX" id="ohd-vh-S9Q"/>
                                             <constraint firstItem="hN5-E3-ebR" firstAttribute="leading" secondItem="YW1-II-q5y" secondAttribute="leading" id="sRA-Zd-0a4"/>
                                             <constraint firstItem="qXQ-rV-eg2" firstAttribute="width" secondItem="1LN-Sn-Py1" secondAttribute="width" id="sk6-HL-kEl"/>
-                                            <constraint firstItem="29c-if-uJV" firstAttribute="leading" secondItem="qXQ-rV-eg2" secondAttribute="trailing" constant="26" id="t2q-4R-jSv"/>
+                                            <constraint firstItem="29c-if-uJV" firstAttribute="leading" secondItem="qXQ-rV-eg2" secondAttribute="trailing" constant="30" id="t2q-4R-jSv"/>
                                             <constraint firstAttribute="bottom" secondItem="hN5-E3-ebR" secondAttribute="bottom" id="u1V-PI-dJH"/>
                                             <constraint firstItem="sRI-Dz-Rfh" firstAttribute="leading" secondItem="YW1-II-q5y" secondAttribute="leading" constant="23" id="wFP-Gd-X6E"/>
                                             <constraint firstItem="sRI-Dz-Rfh" firstAttribute="centerX" secondItem="qXQ-rV-eg2" secondAttribute="centerX" id="wGd-bI-iZ8"/>

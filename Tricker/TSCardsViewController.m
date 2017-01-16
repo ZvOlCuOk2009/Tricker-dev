@@ -31,6 +31,8 @@
 
 @property (assign, nonatomic) NSInteger counterIndexPath;
 @property (assign, nonatomic) NSInteger indexPathRow;
+@property (assign, nonatomic) CGRect heartInitFrame;
+@property (assign, nonatomic) CGRect heartFinalFrame;
 
 @end
 
@@ -45,7 +47,31 @@
 
 - (void)configureController
 {
-    
+     
+     if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone)
+     {
+          if (IS_IPHONE_4) {
+               self.heartInitFrame = kTSInitialHeartCardContrRect;
+               self.heartFinalFrame = kTSFinalHeartCardContrRect;
+          } else if (IS_IPHONE_5) {
+               self.heartInitFrame = kTSInitialHeartCardContrRect;
+               self.heartFinalFrame = kTSFinalHeartCardContrRect;
+          } else if (IS_IPHONE_6) {
+               self.heartInitFrame = kTSInitialHeartCardContrRect;
+               self.heartFinalFrame = kTSFinalHeartCardContrRect;
+          } else if (IS_IPHONE_6_PLUS) {
+               self.heartInitFrame = kTSInitialHeartCardContrRect6plus;
+               self.heartFinalFrame = kTSFinalHeartCardContrRect6plus;
+          }
+          
+     } else if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
+          
+          if (IS_IPAD_2) {
+               self.heartInitFrame = kTSInitialHeartCardContrRect;
+               self.heartFinalFrame = kTSFinalHeartCardContrRect;
+          }
+     }
+     
     CGRect frame = CGRectMake(0, - 20, self.view.bounds.size.width, self.view.bounds.size.height);
     
     self.swipeableView = [[ZLSwipeableView alloc] initWithFrame:self.view.frame];
@@ -289,7 +315,7 @@
      if ([self.view subviews] > 0) {
           
           UIImageView *heart = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"heart"]];
-          heart.frame = CGRectMake(-165, 0, 650, 650);
+          heart.frame = self.heartInitFrame;
           heart.alpha = 0;
           [self.view addSubview:heart];
           
@@ -300,7 +326,7 @@
                               options:UIViewAnimationOptionLayoutSubviews
                            animations:^{
                                 heart.alpha = 1;
-                                heart.frame = CGRectMake(85, 150, 150, 130);
+                                heart.frame = self.heartFinalFrame;
                            } completion:nil];
           
           

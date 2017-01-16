@@ -33,6 +33,10 @@
 @property (strong, nonatomic) NSMutableArray *reviewsUsersParams;
 @property (strong, nonatomic) NSMutableArray *reviewsPhotos;
 
+@property (assign, nonatomic) CGRect frameBySizeDevice;
+@property (assign, nonatomic) CGRect heartInitFrame;
+@property (assign, nonatomic) CGRect heartFinalFrame;
+
 @end
 
 @implementation TSReviewsViewController
@@ -60,7 +64,6 @@
     self.reviewsUsersAvatar = [NSMutableArray array];
     self.reviewsUsersParams = [NSMutableArray array];
     self.reviewsPhotos = [NSMutableArray array];
-    
     
 }
 
@@ -95,6 +98,36 @@
 
 - (void)configureController
 {
+    
+    if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone)
+    {
+        if (IS_IPHONE_4) {
+            self.frameBySizeDevice = kTSSwipeDetailViewFrame;
+            self.heartInitFrame = kTSInitialHeartRect;
+            self.heartFinalFrame = kTSFinalHeartRect;
+        } else if (IS_IPHONE_5) {
+            self.frameBySizeDevice = kTSSwipeDetailView5Frame;
+            self.heartInitFrame = kTSInitialHeartRect;
+            self.heartFinalFrame = kTSFinalHeartRect;
+        } else if (IS_IPHONE_6) {
+            self.frameBySizeDevice = kTSSwipeDetailView6Frame;
+            self.heartInitFrame = kTSInitialHeartRect;
+            self.heartFinalFrame = kTSFinalHeartRect;
+        } else if (IS_IPHONE_6_PLUS) {
+            self.frameBySizeDevice = kTSSwipeDetailView6PlusFrame;
+            self.heartInitFrame = kTSInitialHeartRect6plus;
+            self.heartFinalFrame = kTSFinalHeartRect6plus;
+        }
+        
+    } else if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
+        
+        if (IS_IPAD_2) {
+            self.frameBySizeDevice = kTSSwipeDetailViewFrame;
+            self.heartInitFrame = kTSInitialHeartRect;
+            self.heartFinalFrame = kTSFinalHeartRect;
+        }
+    }
+    
     
     [self.ref observeEventType:FIRDataEventTypeValue withBlock:^(FIRDataSnapshot * _Nonnull snapshot) {
         
@@ -207,7 +240,7 @@
     NSString *ageReviewUser = [[self.reviewsUsers objectAtIndex:indexPath.row] objectForKey:@"ageUserInterest"];
     
     self.swipeView = [TSSwipeView initDetailView];
-    self.swipeView.frame = CGRectMake(10, - 400, self.swipeView.frame.size.width, self.swipeView.frame.size.width);
+    self.swipeView.frame = CGRectMake(10, - 600, self.swipeView.frame.size.width, self.swipeView.frame.size.width);
     self.swipeView.nameLabel.text = nameReviewUser;
     self.swipeView.ageLabel.text = ageReviewUser;
     
@@ -232,7 +265,7 @@
           initialSpringVelocity:1.2
                         options:0
                      animations:^{
-                         self.swipeView.frame = CGRectMake(10, 72, 300, 352);
+                         self.swipeView.frame = self.frameBySizeDevice;
                      } completion:nil];
     
     //передача ID пользователя на два разных контроллера в зависимости от потребности
@@ -252,7 +285,7 @@
 - (void)hendlePanGesture
 {
     UIImageView *heart = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"heart"]];
-    heart.frame = CGRectMake(- 155, 0, 630, 600);
+    heart.frame = self.heartInitFrame;
     heart.alpha = 0;
     [self.swipeView addSubview:heart];
     
@@ -263,7 +296,7 @@
                         options:UIViewAnimationOptionLayoutSubviews
                      animations:^{
                          heart.alpha = 1;
-                         heart.frame = CGRectMake(75, 110, 150, 130);
+                         heart.frame = self.heartFinalFrame;
                      } completion:nil];
     
     

@@ -21,6 +21,8 @@
 #define APP_ID_VK @"5713737"
 #define API_KEY_GOOGLE_MAPS @"AIzaSyDESTdvfGMZCHyFjOEutdp4IcFepgMN3JA"
 
+//frame main avatar
+
 #define kHeightNavBar 64.0
 #define kAvatarSide_4_5 220.0
 #define kAvatarSide_6 258.0
@@ -37,19 +39,55 @@
 #define kHeightCell 44.0
 #define kHeightCellButtonSaveAndOut 65.0
 
-#define kTSSwipeViewFrame CGRectMake(10, 30, 300, 396);
-#define kTSSwipeView6PlusFrame CGRectMake(15, 81, 384, 627);
+//swipeView init
 
 #define kTSPhotoView @"TSPhotoView"
-#define kTSPhotoView6Plus @"TSPhotoView6Plus"
-#define kTSPhotoView6Plus @"TSPhotoView6Plus"
+#define kTSPhotoView5 @"TSPhotoView5"
+#define kTSPhotoView6 @"TSPhotoView6"
 #define kTSPhotoView_6_Plus @"TSPhotoView6Plus"
 
+//swipeView frame
+
+#define kTSSwipeViewFrame CGRectMake(10, 74, 300, 396)
+#define kTSSwipeView5Frame CGRectMake(10, 74, 300, 484)
+#define kTSSwipeView6Frame CGRectMake(15, 74, 345, 558)
+#define kTSSwipeView6PlusFrame CGRectMake(15, 81, 384, 627)
+#define kTSSwipeViewIpadFrame CGRectMake(20, 74, 728, 900)
+
+//swipeDetailView frame
+
+#define kTSSwipeDetailViewFrame CGRectMake(10, 74, 300, 352)
+#define kTSSwipeDetailView5Frame CGRectMake(10, 74, 300, 440)
+#define kTSSwipeDetailView6Frame CGRectMake(15, 74, 345, 519)
+#define kTSSwipeDetailView6PlusFrame CGRectMake(15, 74, 384, 583)
+
+//collectionView album cell
+
 #define kTSCollCellSize CGSizeMake(74, 74);
+#define kTSCollCellSize6 CGSizeMake(85, 85);
 #define kTSCollCellSize_6_Plus CGSizeMake(95, 95);
 
-#define kTSPhotoViewButtonCancelRect CGRectMake(265, 9, 20, 20)
-#define kTSPhotoViewButtonCancelRect_6_Plus CGRectMake(345, 9, 30, 30)
+//collectionView photo controller cell
+
+#define kTSCollViewPhotoCell CGSizeMake(79, 79)
+#define kTSCollViewPhotoCell6 CGSizeMake(92, 92)
+#define kTSCollViewPhotoCell6plus CGSizeMake(102, 102)
+
+//frame like heart
+
+#define kTSInitialHeartRect CGRectMake(- 155, 0, 630, 600)
+#define kTSFinalHeartRect CGRectMake(75, 110, 150, 130)
+
+#define kTSInitialHeartCardContrRect CGRectMake(-165, 0, 650, 650)
+#define kTSFinalHeartCardContrRect CGRectMake(85, 150, 150, 130)
+
+#define kTSInitialHeartRect6plus CGRectMake(- 168, 0, 750, 750)
+#define kTSFinalHeartRect6plus CGRectMake(115, 130, 180, 150)
+
+#define kTSInitialHeartCardContrRect6plus CGRectMake(-168, 0, 750, 750)
+#define kTSFinalHeartCardContrRect6plus CGRectMake(120, 170, 180, 150)
+
+//color
 
 #define RGB(r,g,b) [UIColor colorWithRed:r/255.0 green:g/255.0 blue: b/255.0 alpha:1.0]
 #define YELLOW_COLOR RGB(252, 228, 184)

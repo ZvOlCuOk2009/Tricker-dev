@@ -34,6 +34,7 @@
 @property (strong, nonatomic) NSMutableArray *selectedPhotos;
 @property (strong, nonatomic) NSMutableArray *addPhotos;
 
+@property (assign, nonatomic) CGSize collViewCellSize;
 @property (assign, nonatomic) NSInteger progressHUD;
 @property (assign, nonatomic) BOOL recognizer;
 
@@ -55,6 +56,26 @@ static NSString * const reuseIdntifierButton = @"cellButton";
     self.photos = [NSMutableArray array];
     self.addPhotos = [NSMutableArray array];
     self.selectedPhotos = [NSMutableArray array];
+    
+    if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone)
+    {
+        if (IS_IPHONE_4) {
+            self.collViewCellSize = kTSCollViewPhotoCell;
+        } else if (IS_IPHONE_5) {
+            self.collViewCellSize = kTSCollViewPhotoCell;
+        } else if (IS_IPHONE_6) {
+            self.collViewCellSize = kTSCollViewPhotoCell6;
+        } else if (IS_IPHONE_6_PLUS) {
+            self.collViewCellSize = kTSCollViewPhotoCell6plus;
+        }
+        
+    } else if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
+        
+        if (IS_IPAD_2) {
+            self.collViewCellSize = kTSCollViewPhotoCell;
+        }
+    }
+    
 
     UIBarButtonItem *leftItem = [[UIBarButtonItem alloc] init];
     [leftItem setImage:[UIImage imageNamed:@"back"]];
@@ -80,10 +101,12 @@ static NSString * const reuseIdntifierButton = @"cellButton";
     NSMutableArray *tempArray = nil;
     
     for (UIImage *firstImage in self.photos) {
-        if (!(firstImage.size.width == 40) && !(firstImage.size.height == 40)) {
-            UIImage *capImage = [UIImage imageNamed:@"photo-camera1"];
-            tempArray = [NSMutableArray array];
-            [tempArray insertObject:capImage atIndex:0];
+        if ([firstImage isKindOfClass:[UIImage class]]) {
+            if (!(firstImage.size.width == 40) && !(firstImage.size.height == 40)) {
+                UIImage *capImage = [UIImage imageNamed:@"photo-camera1"];
+                tempArray = [NSMutableArray array];
+                [tempArray insertObject:capImage atIndex:0];
+            }
         } else {
             break;
         }
@@ -150,13 +173,9 @@ static NSString * const reuseIdntifierButton = @"cellButton";
                     [self.collectionView reloadData];
                     [self dissmisProgressHud];
                 });
-                
             });
-            
         }
-        
     }];
-    
 }
 
 
@@ -287,6 +306,8 @@ static NSString * const reuseIdntifierButton = @"cellButton";
     [self.photos addObjectsFromArray:self.addPhotos];
     [self.collectionView reloadData];
     
+    //установка определителя для распознавания добавлены ли новые фото для сохранения в базу
+    
     self.recognizer = YES;
 }
 
@@ -336,7 +357,7 @@ static NSString * const reuseIdntifierButton = @"cellButton";
                   layout:(UICollectionViewLayout *)collectionViewLayout
   sizeForItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    return CGSizeMake(79, 79);
+    return self.collViewCellSize;
 }
 
 

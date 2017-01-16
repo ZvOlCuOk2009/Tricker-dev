@@ -45,6 +45,17 @@
 		FD68B45D1DDA7CEC00EF19C3 /* CardsStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FD68B45C1DDA7CEC00EF19C3 /* CardsStoryboard.storyboard */; };
 		FD68B45F1DDA7CFC00EF19C3 /* ChatStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FD68B45E1DDA7CFC00EF19C3 /* ChatStoryboard.storyboard */; };
 		FD68B4611DDA7D0C00EF19C3 /* SettingStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FD68B4601DDA7D0C00EF19C3 /* SettingStoryboard.storyboard */; };
+		FD821FEE1E2BB3A300D886E2 /* TSSwipeView5.xib in Resources */ = {isa = PBXBuildFile; fileRef = FD821FED1E2BB3A300D886E2 /* TSSwipeView5.xib */; };
+		FD821FF01E2BB7E100D886E2 /* TSPhotoView5.xib in Resources */ = {isa = PBXBuildFile; fileRef = FD821FEF1E2BB7E100D886E2 /* TSPhotoView5.xib */; };
+		FD821FF21E2BB96600D886E2 /* TSDetailView5.xib in Resources */ = {isa = PBXBuildFile; fileRef = FD821FF11E2BB96600D886E2 /* TSDetailView5.xib */; };
+		FD821FF41E2BBCB600D886E2 /* TSPhotoDetailView5.xib in Resources */ = {isa = PBXBuildFile; fileRef = FD821FF31E2BBCB600D886E2 /* TSPhotoDetailView5.xib */; };
+		FD821FF61E2BCCC000D886E2 /* TSDetailView6plus.xib in Resources */ = {isa = PBXBuildFile; fileRef = FD821FF51E2BCCC000D886E2 /* TSDetailView6plus.xib */; };
+		FD821FF81E2C01A000D886E2 /* TSPhotoDetailView6plus.xib in Resources */ = {isa = PBXBuildFile; fileRef = FD821FF71E2C01A000D886E2 /* TSPhotoDetailView6plus.xib */; };
+		FD821FFA1E2C19A100D886E2 /* TSSwipeView6.xib in Resources */ = {isa = PBXBuildFile; fileRef = FD821FF91E2C19A000D886E2 /* TSSwipeView6.xib */; };
+		FD821FFC1E2C1A2300D886E2 /* TSPhotoView6.xib in Resources */ = {isa = PBXBuildFile; fileRef = FD821FFB1E2C1A2300D886E2 /* TSPhotoView6.xib */; };
+		FD821FFE1E2C1A4800D886E2 /* TSDetailView6.xib in Resources */ = {isa = PBXBuildFile; fileRef = FD821FFD1E2C1A4800D886E2 /* TSDetailView6.xib */; };
+		FD8220001E2C1A6700D886E2 /* TSPhotoDetailView6.xib in Resources */ = {isa = PBXBuildFile; fileRef = FD821FFF1E2C1A6700D886E2 /* TSPhotoDetailView6.xib */; };
+		FD8220031E2C410000D886E2 /* TSSwipeViewIpad.xib in Resources */ = {isa = PBXBuildFile; fileRef = FD8220021E2C410000D886E2 /* TSSwipeViewIpad.xib */; };
 		FDBDDDDF1DDB8745008EE73E /* TSSettingsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FDBDDDDE1DDB8745008EE73E /* TSSettingsTableViewController.m */; };
 		FDE927391DE840EC00FF884F /* TSFireBase.m in Sources */ = {isa = PBXBuildFile; fileRef = FDE927381DE840EC00FF884F /* TSFireBase.m */; };
 		FDE9273C1DE8EC4600FF884F /* TSIntermediateViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FDE9273B1DE8EC4600FF884F /* TSIntermediateViewController.m */; };
@@ -153,6 +164,17 @@
 		FD68B45C1DDA7CEC00EF19C3 /* CardsStoryboard.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = CardsStoryboard.storyboard; sourceTree = "<group>"; };
 		FD68B45E1DDA7CFC00EF19C3 /* ChatStoryboard.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = ChatStoryboard.storyboard; sourceTree = "<group>"; };
 		FD68B4601DDA7D0C00EF19C3 /* SettingStoryboard.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = SettingStoryboard.storyboard; sourceTree = "<group>"; };
+		FD821FED1E2BB3A300D886E2 /* TSSwipeView5.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TSSwipeView5.xib; sourceTree = "<group>"; };
+		FD821FEF1E2BB7E100D886E2 /* TSPhotoView5.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TSPhotoView5.xib; sourceTree = "<group>"; };
+		FD821FF11E2BB96600D886E2 /* TSDetailView5.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TSDetailView5.xib; sourceTree = "<group>"; };
+		FD821FF31E2BBCB600D886E2 /* TSPhotoDetailView5.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TSPhotoDetailView5.xib; sourceTree = "<group>"; };
+		FD821FF51E2BCCC000D886E2 /* TSDetailView6plus.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TSDetailView6plus.xib; sourceTree = "<group>"; };
+		FD821FF71E2C01A000D886E2 /* TSPhotoDetailView6plus.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TSPhotoDetailView6plus.xib; sourceTree = "<group>"; };
+		FD821FF91E2C19A000D886E2 /* TSSwipeView6.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TSSwipeView6.xib; sourceTree = "<group>"; };
+		FD821FFB1E2C1A2300D886E2 /* TSPhotoView6.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TSPhotoView6.xib; sourceTree = "<group>"; };
+		FD821FFD1E2C1A4800D886E2 /* TSDetailView6.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TSDetailView6.xib; sourceTree = "<group>"; };
+		FD821FFF1E2C1A6700D886E2 /* TSPhotoDetailView6.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TSPhotoDetailView6.xib; sourceTree = "<group>"; };
+		FD8220021E2C410000D886E2 /* TSSwipeViewIpad.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TSSwipeViewIpad.xib; sourceTree = "<group>"; };
 		FDBDDDDD1DDB8745008EE73E /* TSSettingsTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSSettingsTableViewController.h; sourceTree = "<group>"; };
 		FDBDDDDE1DDB8745008EE73E /* TSSettingsTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSSettingsTableViewController.m; sourceTree = "<group>"; };
 		FDE927371DE840EC00FF884F /* TSFireBase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSFireBase.h; sourceTree = "<group>"; };
@@ -394,6 +416,47 @@
 			name = Cell;
 			sourceTree = "<group>";
 		};
+		FD821FEA1E2B9D1700D886E2 /* Iphone5 */ = {
+			isa = PBXGroup;
+			children = (
+				FD821FED1E2BB3A300D886E2 /* TSSwipeView5.xib */,
+				FD821FEF1E2BB7E100D886E2 /* TSPhotoView5.xib */,
+				FD821FF11E2BB96600D886E2 /* TSDetailView5.xib */,
+				FD821FF31E2BBCB600D886E2 /* TSPhotoDetailView5.xib */,
+			);
+			name = Iphone5;
+			sourceTree = "<group>";
+		};
+		FD821FEB1E2B9D3A00D886E2 /* Iphone6 */ = {
+			isa = PBXGroup;
+			children = (
+				FD821FF91E2C19A000D886E2 /* TSSwipeView6.xib */,
+				FD821FFB1E2C1A2300D886E2 /* TSPhotoView6.xib */,
+				FD821FFD1E2C1A4800D886E2 /* TSDetailView6.xib */,
+				FD821FFF1E2C1A6700D886E2 /* TSPhotoDetailView6.xib */,
+			);
+			name = Iphone6;
+			sourceTree = "<group>";
+		};
+		FD821FEC1E2B9D5800D886E2 /* Iphone6s */ = {
+			isa = PBXGroup;
+			children = (
+				FD06541B1DFCA24200AE45EF /* TSSwipeView6plus.xib */,
+				FD06541D1DFCBDD200AE45EF /* TSPhotoView6Plus.xib */,
+				FD821FF51E2BCCC000D886E2 /* TSDetailView6plus.xib */,
+				FD821FF71E2C01A000D886E2 /* TSPhotoDetailView6plus.xib */,
+			);
+			name = Iphone6s;
+			sourceTree = "<group>";
+		};
+		FD8220011E2C40B800D886E2 /* Ipad */ = {
+			isa = PBXGroup;
+			children = (
+				FD8220021E2C410000D886E2 /* TSSwipeViewIpad.xib */,
+			);
+			name = Ipad;
+			sourceTree = "<group>";
+		};
 		FDE927361DE840B900FF884F /* Models */ = {
 			isa = PBXGroup;
 			children = (
@@ -455,9 +518,11 @@
 			isa = PBXGroup;
 			children = (
 				FDFED0D71E1ADD2F00AB6805 /* Iphone4 */,
-				FD06541B1DFCA24200AE45EF /* TSSwipeView6plus.xib */,
+				FD821FEA1E2B9D1700D886E2 /* Iphone5 */,
+				FD821FEB1E2B9D3A00D886E2 /* Iphone6 */,
+				FD821FEC1E2B9D5800D886E2 /* Iphone6s */,
+				FD8220011E2C40B800D886E2 /* Ipad */,
 				FDF4BB111DF019D4003D3841 /* TSViewCell.xib */,
-				FD06541D1DFCBDD200AE45EF /* TSPhotoView6Plus.xib */,
 				FDEBE3E71DF1C4AB0073A0FF /* TSCollCell.xib */,
 			);
 			name = Xib;
@@ -638,22 +703,33 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FD8220001E2C1A6700D886E2 /* TSPhotoDetailView6.xib in Resources */,
 				FDEBE3E81DF1C4AB0073A0FF /* TSCollCell.xib in Resources */,
+				FD821FFA1E2C19A100D886E2 /* TSSwipeView6.xib in Resources */,
 				FD68B4611DDA7D0C00EF19C3 /* SettingStoryboard.storyboard in Resources */,
 				FD68B45B1DDA7CC100EF19C3 /* MapStoryboard.storyboard in Resources */,
 				FDF4BB1A1DF02C3E003D3841 /* TSPhotoView.xib in Resources */,
+				FD821FEE1E2BB3A300D886E2 /* TSSwipeView5.xib in Resources */,
 				FD68B45F1DDA7CFC00EF19C3 /* ChatStoryboard.storyboard in Resources */,
 				FD1C4F411DCE252200CF63E9 /* LaunchScreen.storyboard in Resources */,
 				FDED429F1E06BC8A005E0948 /* TSDetailView.xib in Resources */,
+				FD821FF21E2BB96600D886E2 /* TSDetailView5.xib in Resources */,
 				FD06541C1DFCA24200AE45EF /* TSSwipeView6plus.xib in Resources */,
+				FD821FF41E2BBCB600D886E2 /* TSPhotoDetailView5.xib in Resources */,
 				FD68B45D1DDA7CEC00EF19C3 /* CardsStoryboard.storyboard in Resources */,
 				FD1C4F3E1DCE252200CF63E9 /* Assets.xcassets in Resources */,
 				FD1C4F731DCE9F4400CF63E9 /* GoogleService-Info.plist in Resources */,
 				FD06541E1DFCBDD200AE45EF /* TSPhotoView6Plus.xib in Resources */,
 				FDFED0D61E1ADD0E00AB6805 /* TSPhotoDetailView.xib in Resources */,
 				FD1C4F3C1DCE252200CF63E9 /* Main.storyboard in Resources */,
+				FD821FF61E2BCCC000D886E2 /* TSDetailView6plus.xib in Resources */,
 				FDF4BB121DF019D4003D3841 /* TSViewCell.xib in Resources */,
+				FD821FFC1E2C1A2300D886E2 /* TSPhotoView6.xib in Resources */,
 				FD0C1CA01DE783B500D37B61 /* TSSwipeView.xib in Resources */,
+				FD821FF01E2BB7E100D886E2 /* TSPhotoView5.xib in Resources */,
+				FD8220031E2C410000D886E2 /* TSSwipeViewIpad.xib in Resources */,
+				FD821FFE1E2C1A4800D886E2 /* TSDetailView6.xib in Resources */,
+				FD821FF81E2C01A000D886E2 /* TSPhotoDetailView6plus.xib in Resources */,
 				FD68B4591DDA7C5A00EF19C3 /* ProfileStoryboard.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

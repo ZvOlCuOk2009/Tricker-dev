@@ -12,7 +12,6 @@
 @import Firebase;
 @import FirebaseAuth;
 @import FirebaseStorage;
-//@import FirebaseDatabase;
 
 @interface TSPhotoZoomViewController ()
 

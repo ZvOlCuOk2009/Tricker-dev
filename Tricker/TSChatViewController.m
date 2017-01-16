@@ -43,11 +43,14 @@
 @property (strong, nonatomic) TSSwipeView *swipeView;
 
 @property (strong, nonatomic) UIImage *userAvatar;
-
 @property (strong, nonatomic) UIButton *interlocutorAvatarButtonNavBar;
 
 @property (strong, nonatomic) NSDictionary *parametersInterlocutor;
 @property (strong, nonatomic) NSString *imageURLNotSetKey;
+
+@property (assign, nonatomic) CGRect frameBySizeDevice;
+@property (assign, nonatomic) CGRect heartInitFrame;
+@property (assign, nonatomic) CGRect heartFinalFrame;
 
 @end
 
@@ -82,7 +85,6 @@
     self.collectionView.collectionViewLayout.outgoingAvatarViewSize = rectAvatar;
     self.collectionView.collectionViewLayout.incomingAvatarViewSize = rectAvatar;
     
-    
     UIBarButtonItem *backItem = [[UIBarButtonItem alloc] init];
     [backItem setImage:[UIImage imageNamed:@"back"]];
     [backItem setTintColor:DARK_GRAY_COLOR];
@@ -92,7 +94,6 @@
     [backItem setAction:@selector(cancelInteraction)];
     
     [self setMessageRef];
-    
     [self showProgressHud];
     
 }
@@ -148,7 +149,6 @@
 
 - (void)setDataInterlocutorToCard:(NSString *)identifier
 {
-    
     [self.ref observeEventType:FIRDataEventTypeValue withBlock:^(FIRDataSnapshot * _Nonnull snapshot) {
         
         self.fireInterlocutor = [TSFireInterlocutor initWithSnapshot:snapshot
@@ -166,9 +166,7 @@
         if (componentName.count > 1) {
             self.title = [componentName firstObject];
         }
-        
     }];
-    
 }
 
 
@@ -177,41 +175,62 @@
 
 - (void)viewDidDisappear:(BOOL)animated
 {
-    
     [super viewDidDisappear:animated];
     
     if ([self.messages count] > 0) {
         [self.messages removeAllObjects];
     }
     
-//    [self.navigationController popToViewController:[self.navigationController.viewControllers firstObject]
-//                                          animated:YES];
-    
     //удаление кнопки с навбара в момент возврата на контроллер чатов
     
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        self.interlocutorAvatarButtonNavBar.alpha = 0;
-    });
-    
     [self.interlocutorAvatarButtonNavBar removeFromSuperview];
-    
-//    self.senderId = nil;
-//    self.interlocutorID = nil;
 }
 
 
 - (void)configureCurrentChat
 {
-
+    
+    if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone)
+    {
+        if (IS_IPHONE_4) {
+            self.frameBySizeDevice = kTSSwipeDetailViewFrame;
+            self.heartInitFrame = kTSInitialHeartRect;
+            self.heartFinalFrame = kTSFinalHeartRect;
+        } else if (IS_IPHONE_5) {
+            self.frameBySizeDevice = kTSSwipeDetailView5Frame;
+            self.heartInitFrame = kTSInitialHeartRect;
+            self.heartFinalFrame = kTSFinalHeartRect;
+        } else if (IS_IPHONE_6) {
+            self.frameBySizeDevice = kTSSwipeDetailView6Frame;
+            self.heartInitFrame = kTSInitialHeartCardContrRect;
+            self.heartFinalFrame = kTSFinalHeartCardContrRect;
+        } else if (IS_IPHONE_6_PLUS) {
+            self.frameBySizeDevice = kTSSwipeDetailView6PlusFrame;
+            self.heartInitFrame = kTSInitialHeartRect6plus;
+            self.heartFinalFrame = kTSFinalHeartRect6plus;
+        }
+        
+    } else if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
+        
+        if (IS_IPAD_2) {
+            self.frameBySizeDevice = kTSSwipeDetailViewFrame;
+            self.heartInitFrame = kTSInitialHeartCardContrRect;
+            self.heartFinalFrame = kTSFinalHeartCardContrRect;
+        }
+    }
+    
+    NSArray *namesComponent = [self.interlocName componentsSeparatedByString:@" "];
+    
+    if ([namesComponent count] > 1) {
+        self.title = [namesComponent firstObject];
+    } else {
+        self.title = self.interlocName;
+    }
+    
+    
     [self.inputToolbar.contentView.rightBarButtonItem setTitleColor:DARK_GRAY_COLOR forState:UIControlStateNormal];
     [self.inputToolbar.contentView.rightBarButtonItem setTitle:@"Отпр" forState:UIControlStateNormal];
     self.inputToolbar.contentView.textView.placeHolder = @"Новое сообщение";
-    
-    
-    [self.navigationController.navigationBar setTitleTextAttributes:
-     @{NSForegroundColorAttributeName:DARK_GRAY_COLOR,
-       NSFontAttributeName:[UIFont fontWithName:@"HelveticaNeue-Light" size:18.f]}];
-    
     
     self.interlocutorAvatarButtonNavBar = [[UIButton alloc] initWithFrame:CGRectMake(60, 4, 35, 35)];
     self.interlocutorAvatarButtonNavBar.layer.cornerRadius = self.interlocutorAvatarButtonNavBar.frame.size.width / 2;
@@ -220,8 +239,6 @@
                                             action:@selector(interlocutorButtonNavBarActoin)
                                   forControlEvents:UIControlEventTouchUpInside];
     [self.navigationController.navigationBar addSubview:self.interlocutorAvatarButtonNavBar];
-
-    
 }
 
 
@@ -243,25 +260,13 @@
     
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         
-        NSArray *namesComponent = [self.interlocName componentsSeparatedByString:@" "];
-        
-        if ([namesComponent count] > 1) {
-            self.title = [namesComponent firstObject];
-        } else {
-            self.title = self.interlocName;
+        if (self.interlocutorID) {
+            
+            self.messageRefUser = [[[[[self.ref child:@"dataBase"] child:@"users"] child:self.user.uid] child:@"chat"] child:self.interlocutorID];
+            self.messageRefInterlocutor = [[[[[self.ref child:@"dataBase"] child:@"users"] child:self.interlocutorID] child:@"chat"] child:self.user.uid];
+            
+            [self dissmisProgressHud];
         }
-        
-        dispatch_async(dispatch_get_main_queue(), ^{
-            
-            if (self.interlocutorID) {
-                
-                self.messageRefUser = [[[[[self.ref child:@"dataBase"] child:@"users"] child:self.user.uid] child:@"chat"] child:self.interlocutorID];
-                self.messageRefInterlocutor = [[[[[self.ref child:@"dataBase"] child:@"users"] child:self.interlocutorID] child:@"chat"] child:self.user.uid];
-                
-                [self dissmisProgressHud];
-            }
-            
-        });
         
     });
     
@@ -274,7 +279,7 @@
 
 - (void)interlocutorButtonNavBarActoin
 {
-    //если есть клавиатура на экране то ибираю её
+    //если есть клавиатура на экране то убираю её
     
     if ([self.inputToolbar.contentView.textView isFirstResponder]) {
         [self.inputToolbar.contentView.textView resignFirstResponder];
@@ -304,7 +309,8 @@
           initialSpringVelocity:1.2
                         options:0
                      animations:^{
-                         self.swipeView.frame = CGRectMake(10, 72, 300, 352);
+
+                         self.swipeView.frame = self.frameBySizeDevice;
                      } completion:nil];
     
     UITapGestureRecognizer *tapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self
@@ -323,7 +329,7 @@
 {
     
     UIImageView *heart = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"heart"]];
-    heart.frame = CGRectMake(- 155, 0, 630, 600);
+    heart.frame = self.heartInitFrame;
     heart.alpha = 0;
     [self.swipeView addSubview:heart];
     
@@ -334,7 +340,7 @@
                         options:UIViewAnimationOptionLayoutSubviews
                      animations:^{
                          heart.alpha = 1;
-                         heart.frame = CGRectMake(75, 110, 150, 130);
+                         heart.frame = self.heartFinalFrame;
                      } completion:nil];
     
     
@@ -577,7 +583,6 @@
     UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"Выберите фото"
                                                                              message:nil
                                                                       preferredStyle:UIAlertControllerStyleActionSheet];
-    
     UIAlertAction *camera = [UIAlertAction actionWithTitle:@"Камера"
                                                      style:UIAlertActionStyleDefault
                                                    handler:^(UIAlertAction * _Nonnull action) {
@@ -663,8 +668,9 @@
                                           NSLog(@"error %@", error.description);
                                       }
                                   }];
+                              } else {
+                                  NSLog(@"Error uploading: %@", error);
                               }
-                              NSLog(@"Error uploading: %@", error);
                               
                           }];
     /*
@@ -723,7 +729,7 @@
      */
 }
 
-///******************
+
 
 - (void)addPhotoMessage:(NSString *)withId key:(NSString *)key mediaItem:(JSQPhotoMediaItem *)mediaItem
 {
@@ -780,16 +786,6 @@
 {
     [SVProgressHUD dismiss];
 }
-
-//
-//- (void)dealloc
-//{
-//    FIRDatabaseHandle refHendle = *(self.updatedMessageRefHandle);
-//    
-//    if (refHendle) {
-//        [self.messageRefUser removeObserverWithHandle:refHendle];
-//    }
-//}
 
 
 - (void)didReceiveMemoryWarning {
