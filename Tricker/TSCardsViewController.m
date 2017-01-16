@@ -17,6 +17,8 @@
 #import "UIAlertController+TSAlertController.h"
 #import "TSPhotoZoomViewController.h"
 #import "TSLikeAndReviewSave.h"
+#import "TSReachability.h"
+#import "TSAlertController.h"
 #import "TSTrickerPrefixHeader.pch"
 
 @interface TSCardsViewController () <ZLSwipeableViewDataSource, ZLSwipeableViewDelegate>
@@ -101,17 +103,29 @@
 {
     [super viewWillAppear:animated];
      
-    if (self.cap) {
-        self.cap.hidden = NO;
-    } else {
-        
-        self.cap = [[UIView alloc] initWithFrame:CGRectMake((self.view.frame.size.width / 5) * 2, self.view.frame.size.height - 44, self.view.frame.size.width / 5, 44)];
-        self.cap.backgroundColor = [UIColor redColor];
-        NSArray *buttons = @[@"", @"", self.cap];
-        [self.tabBarController setToolbarItems:buttons];
-    }
+     if ([[TSReachability sharedReachability] verificationInternetConnection]) {
+          
+          if (self.cap) {
+               self.cap.hidden = NO;
+          } else {
+               
+               self.cap = [[UIView alloc] initWithFrame:CGRectMake((self.view.frame.size.width / 5) * 2, self.view.frame.size.height - 44, self.view.frame.size.width / 5, 44)];
+               self.cap.backgroundColor = [UIColor redColor];
+               NSArray *buttons = @[@"", @"", self.cap];
+               [self.tabBarController setToolbarItems:buttons];
+          }
+          
+          recognizerControllersCardsAndChat = 1;
+          
+     } else {
+          
+          TSAlertController *alertController =
+          [TSAlertController noInternetConnection:@"Проверьте интернет соединение..."];
+          
+          [self presentViewController:alertController animated:YES completion:nil];
+          
+     }
      
-    recognizerControllersCardsAndChat = 1;
 }
 
 

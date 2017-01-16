@@ -27,15 +27,23 @@
 #define kAvatarSide_4_5 220.0
 #define kAvatarSide_6 258.0
 #define kAvatarSide_6_S 284.0
+#define kAvatarSideIpad 350.0
+
 #define kAvatarCornerRadius_4_5 110.0
 #define kAvatarCornerRadius_6 129.0
 #define kAvatarCornerRadius_6_S 142.0
+#define kAvatarCornerRadiusIpad 175.0
+
 #define kAvatarOffset_4_5 50.0
 #define kAvatarOffset_6 58.0
 #define kAvatarOffset_6_S 65.0
+#define kAvatarOffsetIpad 90.0
+
 #define kHeightHeader_4_5 321.0
 #define kHeightHeader_6 376.0
 #define kHeightHeader_6_S 415.0
+#define kHeightHeaderIpad 530.0
+
 #define kHeightCell 44.0
 #define kHeightCellButtonSaveAndOut 65.0
 
@@ -45,6 +53,7 @@
 #define kTSPhotoView5 @"TSPhotoView5"
 #define kTSPhotoView6 @"TSPhotoView6"
 #define kTSPhotoView_6_Plus @"TSPhotoView6Plus"
+#define kTSPhotoViewIpad @"TSPhotoViewIpad"
 
 //swipeView frame
 
@@ -60,12 +69,15 @@
 #define kTSSwipeDetailView5Frame CGRectMake(10, 74, 300, 440)
 #define kTSSwipeDetailView6Frame CGRectMake(15, 74, 345, 519)
 #define kTSSwipeDetailView6PlusFrame CGRectMake(15, 74, 384, 583)
+#define kTSSwipeDetailViewIpadFrame CGRectMake(15, 74, 728, 880)
 
 //collectionView album cell
 
 #define kTSCollCellSize CGSizeMake(74, 74);
 #define kTSCollCellSize6 CGSizeMake(85, 85);
 #define kTSCollCellSize_6_Plus CGSizeMake(95, 95);
+#define kTSCollCellSizeIpad CGSizeMake(103, 103);
+#define kTSCollCellPhotosSizeIpad CGSizeMake(108, 108);
 
 //collectionView photo controller cell
 

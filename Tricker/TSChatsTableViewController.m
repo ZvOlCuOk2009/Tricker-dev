@@ -13,6 +13,8 @@
 #import "TSFireUser.h"
 #import "TSFireBase.h"
 #import "TSSwipeView.h"
+#import "TSReachability.h"
+#import "TSAlertController.h"
 #import "TSTrickerPrefixHeader.pch"
 
 #import <SVProgressHUD.h>
@@ -35,7 +37,6 @@
 
 @property (strong, nonatomic) NSMutableArray *interlocutorName;
 @property (strong, nonatomic) NSMutableArray *interlocAvatar;
-@property (assign, nonatomic) NSInteger count;
 
 @end
 
@@ -44,7 +45,6 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
 
-    self.count = 0;
     self.ref = [[FIRDatabase database] reference];
 }
 
@@ -56,23 +56,33 @@
 {
     [super viewWillAppear:animated];
     
-    //проверка откуда вызван контроллер из чат тейблвью контроллера или свайп вью
-    
-    if (recognizerTransitionOnChatController == 1) {
-        [self transitionToChatViewController];
-        recognizerTransitionOnChatController = 0;
+    if ([[TSReachability sharedReachability] verificationInternetConnection]) {
+        
+        //проверка откуда вызван контроллер из чат тейблвью контроллера или свайп вью
+        
+        if (recognizerTransitionOnChatController == 1) {
+            [self transitionToChatViewController];
+            recognizerTransitionOnChatController = 0;
+        }
+        
+        [self.ref observeEventType:FIRDataEventTypeValue withBlock:^(FIRDataSnapshot * _Nonnull snapshot) {
+            
+            self.fireUser = [TSFireUser initWithSnapshot:snapshot];
+            self.fireBase = [TSFireBase initWithSnapshot:snapshot];
+            
+            [self configureController];
+            
+        }];
+        
+    } else {
+        
+        TSAlertController *alertController =
+        [TSAlertController noInternetConnection:@"Проверьте интернет соединение..."];
+        
+        [self presentViewController:alertController animated:YES completion:nil];
+        
     }
     
-    [self.ref observeEventType:FIRDataEventTypeValue withBlock:^(FIRDataSnapshot * _Nonnull snapshot) {
-        
-        self.fireUser = [TSFireUser initWithSnapshot:snapshot];
-        self.fireBase = [TSFireBase initWithSnapshot:snapshot];
-        
-        [self configureController];
-        NSLog(@"Call chats %ld", (long)self.count);
-        ++self.count;
-        
-    }];
 }
 
 

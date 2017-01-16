@@ -15,6 +15,8 @@
 #import "TSTabBarViewController.h"
 #import "TSGetInterlocutorParameters.h"
 #import "UIAlertController+TSAlertController.h"
+#import "TSReachability.h"
+#import "TSAlertController.h"
 #import "TSTrickerPrefixHeader.pch"
 
 #import <SVProgressHUD.h>
@@ -103,36 +105,47 @@
 {
     [super viewWillAppear:animated];
     
-    [self setupBubbles];
-    
-    [self.ref observeEventType:FIRDataEventTypeValue withBlock:^(FIRDataSnapshot * _Nonnull snapshot) {
+    if ([[TSReachability sharedReachability] verificationInternetConnection]) {
         
-        self.fireUser = [TSFireUser initWithSnapshot:snapshot];
-        [self configureCurrentChat];
+        [self setupBubbles];
         
-        NSURL *urlPhoto = [NSURL URLWithString:self.fireUser.photoURL];
-        UIImage *imagePhoto = [UIImage imageWithData:[NSData dataWithContentsOfURL:urlPhoto]];
+        [self.ref observeEventType:FIRDataEventTypeValue withBlock:^(FIRDataSnapshot * _Nonnull snapshot) {
+            
+            self.fireUser = [TSFireUser initWithSnapshot:snapshot];
+            [self configureCurrentChat];
+            
+            NSURL *urlPhoto = [NSURL URLWithString:self.fireUser.photoURL];
+            UIImage *imagePhoto = [UIImage imageWithData:[NSData dataWithContentsOfURL:urlPhoto]];
+            
+            self.userAvatar = imagePhoto;
+            
+        }];
         
-        self.userAvatar = imagePhoto;
+        //проверяю есть ли ID собеседника если отсутствует, достаю из предварительно сохранившегося в NSUserDefaults
+        //вызывается метод заполнения данными
         
-    }];
-    
-    //проверяю есть ли ID собеседника если отсутствует, достаю из предварительно сохранившегося в NSUserDefaults
-    //вызывается метод заполнения данными
-    
-    if (self.interlocutorID) {
+        if (self.interlocutorID) {
+            
+            [self setDataInterlocutorToCard:self.interlocutorID];
+            
+        } else {
+            
+            NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+            self.interlocutorID = [userDefaults objectForKey:@"intelocID"];
+            [self setDataInterlocutorToCard:self.interlocutorID];
+        }
         
-        [self setDataInterlocutorToCard:self.interlocutorID];
+        recognizerControllersCardsAndChat = 2;
         
     } else {
         
-        NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
-        self.interlocutorID = [userDefaults objectForKey:@"intelocID"];
-        [self setDataInterlocutorToCard:self.interlocutorID];
+        TSAlertController *alertController =
+        [TSAlertController noInternetConnection:@"Проверьте интернет соединение..."];
+        
+        [self presentViewController:alertController animated:YES completion:nil];
         
     }
     
-    recognizerControllersCardsAndChat = 2;
 }
 
 
@@ -213,7 +226,7 @@
     } else if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
         
         if (IS_IPAD_2) {
-            self.frameBySizeDevice = kTSSwipeDetailViewFrame;
+            self.frameBySizeDevice = kTSSwipeDetailViewIpadFrame;
             self.heartInitFrame = kTSInitialHeartCardContrRect;
             self.heartFinalFrame = kTSFinalHeartCardContrRect;
         }

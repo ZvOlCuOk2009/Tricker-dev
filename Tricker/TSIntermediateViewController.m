@@ -10,6 +10,8 @@
 #import "TSCardsViewController.h"
 #import "TSFireUser.h"
 #import "TSFireBase.h"
+#import "TSReachability.h"
+#import "TSAlertController.h"
 #import "TSTrickerPrefixHeader.pch"
 
 @import Firebase;
@@ -48,16 +50,28 @@
 {
     [super viewWillAppear:animated];
     
-    [self downloadController];
+    if ([[TSReachability sharedReachability] verificationInternetConnection]) {
+        
+        [self downloadController];
+        
+        //прогрессбар анимация
+        
+        CABasicAnimation *animation = [CABasicAnimation animationWithKeyPath:@"transform.rotation.z"];
+        animation.fromValue = @0.0f;
+        animation.toValue = @(2 * M_PI);
+        animation.duration = 1.0f;
+        animation.repeatCount = HUGE_VALF;
+        [self.progressView.layer addAnimation:animation forKey:@"rotation"];
+        
+    } else {
+        
+        TSAlertController *alertController =
+        [TSAlertController noInternetConnection:@"Проверьте интернет соединение..."];
+        
+        [self presentViewController:alertController animated:YES completion:nil];
+        
+    }
     
-    //прогрессбар анимация
-    
-    CABasicAnimation *animation = [CABasicAnimation animationWithKeyPath:@"transform.rotation.z"];
-    animation.fromValue = @0.0f;
-    animation.toValue = @(2 * M_PI);
-    animation.duration = 1.0f;
-    animation.repeatCount = HUGE_VALF;
-    [self.progressView.layer addAnimation:animation forKey:@"rotation"];
 }
 
 

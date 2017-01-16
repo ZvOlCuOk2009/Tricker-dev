@@ -11,12 +11,16 @@
 #import "TSRegistrationViewController.h"
 #import "TSFacebookManager.h"
 #import "TSFireImage.h"
+#import "TSReachability.h"
+#import "TSAlertController.h"
 #import "TSTrickerPrefixHeader.pch"
 
 #import <FBSDKCoreKit/FBSDKCoreKit.h>
 #import <FBSDKLoginKit/FBSDKLoginKit.h>
 #import <VKSdk.h>
 #import <GoogleSignIn/GoogleSignIn.h>
+
+#import <JWT.h>
 
 @import Firebase;
 @import FirebaseAuth;
@@ -89,7 +93,9 @@
 
 - (IBAction)facebookButtonTouchUpInside:(id)sender
 {
-    [self.loginButton sendActionsForControlEvents:UIControlEventTouchUpInside];
+    if ([self verificationInternetConnecting]) {
+        [self.loginButton sendActionsForControlEvents:UIControlEventTouchUpInside];
+    }
 }
 
 
@@ -98,9 +104,6 @@
 {
     
     NSString *tokenFB = [[FBSDKAccessToken currentAccessToken] tokenString];
-    
-    NSLog(@"tokenFB %@", tokenFB);
-    
     
     if (tokenFB) {
         
@@ -231,6 +234,31 @@
             
             /// тут должен быть кастомный токен
             
+//            NSString *firstSecret = @"first";
+//            NSArray *manySecrets = @[@"second", @"third", @"forty two"];
+//            // translate to data
+//            NSArray *manySecretsData = @[];
+//            for (NSString *secret in manySecrets) {
+//                NSData *secretData = [JWTBase64Coder dataWithBase64UrlEncodedString:secret];
+//                if (secret) {
+//                    manySecretsData = [manySecretsData arrayByAddingObject:secretData];
+//                }
+//            }
+//            
+//            NSString *algorithmName = JWTAlgorithmNameHS384;
+//            
+//            id <JWTAlgorithmDataHolderProtocol> firstHolder = [JWTAlgorithmHSFamilyDataHolder new].algorithmName(algorithmName).secret(firstSecret);
+//            
+//            JWTAlgorithmDataHolderChain *chain = [JWTAlgorithmDataHolderChain chainWithHolder:firstHolder];
+//            
+//            NSLog(@"chain has: %@", chain.debugDescription);
+//            
+//            JWTAlgorithmDataHolderChain *expandedChain = [chain chainByPopulatingAlgorithm:firstHolder.currentAlgorithm withManySecretData:manySecretsData];
+//            
+//            NSLog(@"expanded chain has: %@", expandedChain.debugDescription);
+            
+            
+            
             [[FIRAuth auth] signInWithCustomToken:customToken
                                        completion:^(FIRUser *_Nullable user,
                                                     NSError *_Nullable error) {
@@ -314,7 +342,10 @@
 
 - (void)signIn:(GIDSignIn *)signIn presentViewController:(UIViewController *)viewController
 {
-    [self presentViewController:viewController animated:YES completion:nil];
+    
+    if ([self verificationInternetConnecting]) {
+        [self presentViewController:viewController animated:YES completion:nil];
+    }
 }
 
 
@@ -327,6 +358,32 @@
 - (void)signIn:(GIDSignIn *)signIn didSignInForUser:(GIDGoogleUser *)user withError:(NSError *)error
 {
     
+}
+
+
+#pragma mark - Reachability
+
+
+- (BOOL)verificationInternetConnecting
+{
+    BOOL verification;
+    
+    if ([[TSReachability sharedReachability] verificationInternetConnection]) {
+        
+        verification = YES;
+        
+    } else {
+        
+        verification = NO;
+        
+        TSAlertController *alertController =
+        [TSAlertController noInternetConnection:@"Проверьте интернет соединение..."];
+        
+        [self presentViewController:alertController animated:YES completion:nil];
+        
+    }
+
+    return verification;
 }
 
 

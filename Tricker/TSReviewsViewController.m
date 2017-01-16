@@ -13,6 +13,8 @@
 #import "TSSwipeView.h"
 #import "TSFireUser.h"
 #import "TSFireBase.h"
+#import "TSReachability.h"
+#import "TSAlertController.h"
 #import "TSTrickerPrefixHeader.pch"
 
 #import <SVProgressHUD.h>
@@ -72,10 +74,22 @@
 {
     [super viewWillAppear:animated];
     
-    if ([self.reviewsUsers count] == 0) {
-        [self configureController];
-        [self progressHubShow];
+    if ([[TSReachability sharedReachability] verificationInternetConnection]) {
+        
+        if ([self.reviewsUsers count] == 0) {
+            [self configureController];
+            [self progressHubShow];
+        }
+
+    } else {
+        
+        TSAlertController *alertController =
+        [TSAlertController noInternetConnection:@"Проверьте интернет соединение..."];
+        
+        [self presentViewController:alertController animated:YES completion:nil];
+        
     }
+    
 }
 
 
@@ -122,7 +136,7 @@
     } else if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
         
         if (IS_IPAD_2) {
-            self.frameBySizeDevice = kTSSwipeDetailViewFrame;
+            self.frameBySizeDevice = kTSSwipeDetailViewIpadFrame;
             self.heartInitFrame = kTSInitialHeartRect;
             self.heartFinalFrame = kTSFinalHeartRect;
         }
@@ -171,7 +185,6 @@
                 NSArray *emptyArray = @[];
                 [self.reviewsPhotos addObject:emptyArray];
             }
-            
         }
         
         if ([self.reviewsUsers count] > 0) {

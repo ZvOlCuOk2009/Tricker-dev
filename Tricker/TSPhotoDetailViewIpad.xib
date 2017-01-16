@@ -11,63 +11,62 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
         <view contentMode="scaleToFill" id="iN0-l3-epB" customClass="TSPhotoView">
-            <rect key="frame" x="0.0" y="0.0" width="345" height="558"/>
+            <rect key="frame" x="0.0" y="0.0" width="728" height="880"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="KmF-1d-YeL">
-                    <rect key="frame" x="0.0" y="0.0" width="345" height="44"/>
+                <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ife-oi-aQM">
+                    <rect key="frame" x="0.0" y="0.0" width="728" height="48"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <subviews>
-                        <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vQ6-Fs-d67">
-                            <rect key="frame" x="0.0" y="0.0" width="44" height="44"/>
+                        <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="W7c-Iv-oxc">
+                            <rect key="frame" x="9" y="9" width="30" height="30"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            <state key="normal" image="arrow_bottom"/>
+                            <state key="normal" backgroundImage="arrow_bottom"/>
                             <connections>
-                                <action selector="cancelPhotoViewAction:" destination="iN0-l3-epB" eventType="touchUpInside" id="emW-Bs-41O"/>
+                                <action selector="cancelPhotoViewAction:" destination="iN0-l3-epB" eventType="touchUpInside" id="vUn-ua-g0d"/>
                             </connections>
                         </button>
-                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Фотоальбом" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TDM-ju-aDg">
-                            <rect key="frame" x="114" y="12" width="117" height="21"/>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Фотоальбом" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Wbf-hj-xnX">
+                            <rect key="frame" x="293" y="14" width="143" height="21"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            <fontDescription key="fontDescription" type="system" weight="light" pointSize="20"/>
+                            <fontDescription key="fontDescription" type="system" weight="light" pointSize="22"/>
                             <color key="textColor" red="0.51372549020000002" green="0.61960784310000006" blue="0.69803921570000005" alpha="1" colorSpace="calibratedRGB"/>
                             <nil key="highlightedColor"/>
                         </label>
                     </subviews>
                     <color key="backgroundColor" red="0.98823529409999999" green="0.89411764709999997" blue="0.72156862749999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                 </view>
-                <visualEffectView opaque="NO" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="8kP-0d-dY2">
-                    <rect key="frame" x="0.0" y="44" width="345" height="514"/>
+                <visualEffectView opaque="NO" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Ex2-Pf-pwT">
+                    <rect key="frame" x="0.0" y="48" width="728" height="832"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                    <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" ambiguous="YES" id="uY3-4r-RLI">
-                        <rect key="frame" x="0.0" y="0.0" width="345" height="514"/>
+                    <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" ambiguous="YES" id="LEA-hl-y9a">
+                        <rect key="frame" x="0.0" y="0.0" width="728" height="832"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                     </view>
                     <blurEffect style="light"/>
                 </visualEffectView>
-                <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="e3w-gB-iGR">
-                    <rect key="frame" x="0.0" y="44" width="345" height="514"/>
+                <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="BY1-bt-RAd">
+                    <rect key="frame" x="0.0" y="48" width="728" height="832"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                    <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="1" minimumInteritemSpacing="1" id="SsM-Co-FqF">
-                        <size key="itemSize" width="85" height="85"/>
+                    <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="1" minimumInteritemSpacing="1" id="K5Q-PZ-FAx">
+                        <size key="itemSize" width="103" height="103"/>
                         <size key="headerReferenceSize" width="0.0" height="0.0"/>
                         <size key="footerReferenceSize" width="0.0" height="0.0"/>
                         <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                     </collectionViewFlowLayout>
                     <connections>
-                        <outlet property="dataSource" destination="iN0-l3-epB" id="QFr-UV-LRx"/>
-                        <outlet property="delegate" destination="iN0-l3-epB" id="lF5-QL-cmi"/>
+                        <outlet property="dataSource" destination="iN0-l3-epB" id="C7C-MX-Xw9"/>
+                        <outlet property="delegate" destination="iN0-l3-epB" id="qlY-v8-rSx"/>
                     </connections>
                 </collectionView>
             </subviews>
             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <connections>
-                <outlet property="collectionView" destination="e3w-gB-iGR" id="7xh-GF-wP3"/>
-                <outlet property="navigationView" destination="KmF-1d-YeL" id="vgy-5t-e1h"/>
+                <outlet property="collectionView" destination="BY1-bt-RAd" id="WFc-Yq-UPT"/>
+                <outlet property="navigationView" destination="ife-oi-aQM" id="EJK-9v-P25"/>
             </connections>
-            <point key="canvasLocation" x="49.5" y="56"/>
         </view>
     </objects>
     <resources>

@@ -18,7 +18,6 @@
 @interface TSPhotoView () <UICollectionViewDataSource, UICollectionViewDelegate, UIGestureRecognizerDelegate>
 
 @property (strong, nonatomic) IBOutlet UICollectionView *collectionView;
-@property (strong, nonatomic) IBOutlet UIButton *cancelButton;
 @property (strong, nonatomic) UIImageView *zoomImage;
 @property (strong, nonatomic) NSMutableArray *convertPhotos;
 @property (assign, nonatomic) CGSize cellSize;
@@ -45,7 +44,7 @@ static NSString * const reuseIdntifier = @"cell";
             
         } else if (IS_IPHONE_6) {
             
-            self.cellSize = kTSCollCellSize;
+            self.cellSize = kTSCollCellSize6;
             
         } else if (IS_IPHONE_6_PLUS) {
             
@@ -53,7 +52,7 @@ static NSString * const reuseIdntifier = @"cell";
         }
     } else if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
         
-        self.cellSize = kTSCollCellSize;
+        self.cellSize = kTSCollCellSizeIpad;
     }
     
     self.convertPhotos = [NSMutableArray array];

@@ -8,6 +8,8 @@
 
 #import "TSAutorizationViewController.h"
 #import "TSTabBarViewController.h"
+#import "TSReachability.h"
+#import "TSAlertController.h"
 #import "TSTrickerPrefixHeader.pch"
 
 @import FirebaseAuth;
@@ -55,9 +57,22 @@
 
 - (IBAction)signIngActionButton:(id)sender
 {
-    if (![self.emailTextField.text isEqualToString:@""] && ![self.passwordTextField.text isEqualToString:@""]) {
-        [self signInWithEmailAndPassword];
+    
+    if ([[TSReachability sharedReachability] verificationInternetConnection]) {
+        
+        if (![self.emailTextField.text isEqualToString:@""] && ![self.passwordTextField.text isEqualToString:@""]) {
+            [self signInWithEmailAndPassword];
+        }
+        
+    } else {
+        
+        TSAlertController *alertController =
+        [TSAlertController noInternetConnection:@"Проверьте интернет соединение..."];
+        
+        [self presentViewController:alertController animated:YES completion:nil];
+        
     }
+    
 }
 
 

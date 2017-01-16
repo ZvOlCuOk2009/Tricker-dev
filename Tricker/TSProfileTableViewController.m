@@ -14,6 +14,8 @@
 #import "TSFireImage.h"
 #import "TSTabBarViewController.h"
 #import "UIAlertController+TSAlertController.h"
+#import "TSReachability.h"
+#import "TSAlertController.h"
 #import "TSTrickerPrefixHeader.pch"
 
 #import <SVProgressHUD.h>
@@ -118,13 +120,13 @@
     } else if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
         
         if (IS_IPAD_2) {
-            self.heightHeader = kHeightHeader_6_S;
-            self.valueWidthAvatarConstraint.constant = kAvatarSide_6_S;
-            self.valueHieghtAvatarConstraint.constant = kAvatarSide_6_S;
-            self.avatarImageView.layer.cornerRadius = kAvatarSide_6_S / 2;
-            self.fixSide = kAvatarSide_6_S;
-            self.fixOffset = kAvatarOffset_6_S;
-            self.fixCornerRadius = kAvatarCornerRadius_6_S;
+            self.heightHeader = kHeightHeaderIpad;
+            self.valueWidthAvatarConstraint.constant = kAvatarSideIpad;
+            self.valueHieghtAvatarConstraint.constant = kAvatarSideIpad;
+            self.avatarImageView.layer.cornerRadius = kAvatarSideIpad / 2;
+            self.fixSide = kAvatarSideIpad;
+            self.fixOffset = kAvatarOffsetIpad;
+            self.fixCornerRadius = kAvatarCornerRadiusIpad;
         }
     } 
     
@@ -149,10 +151,20 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     
-    [self configureController];
-    
-    if (self.selectCity) {
-        self.cityLabel.text = self.selectCity;
+    if ([[TSReachability sharedReachability] verificationInternetConnection]) {
+        
+        [self configureController];
+        
+        if (self.selectCity) {
+            self.cityLabel.text = self.selectCity;
+        }
+    } else {
+        
+        TSAlertController *alertController =
+        [TSAlertController noInternetConnection:@"Проверьте интернет соединение..."];
+        
+        [self presentViewController:alertController animated:YES completion:nil];
+        
     }
     
 }
@@ -245,7 +257,6 @@
         [self.womanButton setImage:self.pointImage forState:UIControlStateNormal];
     }
 
-    
     if (fireUser.dateOfBirth) {
         self.dateBirdthDayLabel.text = fireUser.dateOfBirth;
 
@@ -354,33 +365,35 @@
 - (IBAction)changeAvatarActionButton:(id)sender
 {
     
-    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"Выберите фото"
-                                                                             message:nil
-                                                                      preferredStyle:UIAlertControllerStyleActionSheet];
+    TSAlertController *alertController = [TSAlertController changeAvatarActionButton:@"Выберите фото"];
     
-    UIAlertAction *camera = [UIAlertAction actionWithTitle:@"Камера"
-                                                     style:UIAlertActionStyleDefault
-                                                   handler:^(UIAlertAction * _Nonnull action) {
-                                                       [self makePhoto];
-                                                   }];
-    
-    UIAlertAction *galery = [UIAlertAction actionWithTitle:@"Галерея"
-                                                     style:UIAlertActionStyleDefault
-                                                   handler:^(UIAlertAction * _Nonnull action) {
-                                                       [self selectPhoto];
-                                                   }];
-    
-    UIAlertAction *cancel = [UIAlertAction actionWithTitle:@"Отменить"
-                                                     style:UIAlertActionStyleDefault
-                                                   handler:^(UIAlertAction * _Nonnull action) {
-                                                       
-                                                   }];
-    
-    [alertController customizationAlertView:@"Выберите фото" byLength:13 byFont:20.f];
-    
-    [alertController addAction:camera];
-    [alertController addAction:galery];
-    [alertController addAction:cancel];
+//    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"Выберите фото"
+//                                                                             message:nil
+//                                                                      preferredStyle:UIAlertControllerStyleActionSheet];
+//    
+//    UIAlertAction *camera = [UIAlertAction actionWithTitle:@"Камера"
+//                                                     style:UIAlertActionStyleDefault
+//                                                   handler:^(UIAlertAction * _Nonnull action) {
+//                                                       [self makePhoto];
+//                                                   }];
+//    
+//    UIAlertAction *galery = [UIAlertAction actionWithTitle:@"Галерея"
+//                                                     style:UIAlertActionStyleDefault
+//                                                   handler:^(UIAlertAction * _Nonnull action) {
+//                                                       [self selectPhoto];
+//                                                   }];
+//    
+//    UIAlertAction *cancel = [UIAlertAction actionWithTitle:@"Отменить"
+//                                                     style:UIAlertActionStyleDefault
+//                                                   handler:^(UIAlertAction * _Nonnull action) {
+//                                                       
+//                                                   }];
+//    
+//    [alertController customizationAlertView:@"Выберите фото" byLength:13 byFont:20.f];
+//    
+//    [alertController addAction:camera];
+//    [alertController addAction:galery];
+//    [alertController addAction:cancel];
     
     [self presentViewController:alertController animated:YES completion:nil];
         
@@ -396,7 +409,6 @@
     picker.sourceType = UIImagePickerControllerSourceTypeCamera;
     
     [self presentViewController:picker animated:YES completion:NULL];
-    
 }
 
 
@@ -409,7 +421,6 @@
     picker.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
     
     [self presentViewController:picker animated:YES completion:NULL];
-    
 }
 
 
@@ -589,7 +600,6 @@
         return self.heightHeader;
     }
 
-    
     if (indexPath.row == 10)
     {
         return kHeightCellButtonSaveAndOut;
@@ -766,7 +776,6 @@
     if (changeHeight < 0) {
         
         changeHeight = 1;
-
     }
     
     self.logo.frame = CGRectMake((self.view.frame.size.width / 2) - (self.logo.frame.size.width / 2), - (changeHeight / 4), self.logo.frame.size.width, self.logo.frame.size.height);

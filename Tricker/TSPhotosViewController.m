@@ -12,6 +12,8 @@
 #import "TSFireImage.h"
 #import "TSPhotoZoomViewController.h"
 #import "UIAlertController+TSAlertController.h"
+#import "TSReachability.h"
+#import "TSAlertController.h"
 #import "TSTrickerPrefixHeader.pch"
 
 #import <SVProgressHUD.h>
@@ -72,7 +74,7 @@ static NSString * const reuseIdntifierButton = @"cellButton";
     } else if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
         
         if (IS_IPAD_2) {
-            self.collViewCellSize = kTSCollViewPhotoCell;
+            self.collViewCellSize = kTSCollCellPhotosSizeIpad;
         }
     }
     
@@ -94,29 +96,41 @@ static NSString * const reuseIdntifierButton = @"cellButton";
 {
     [super viewWillAppear:animated];
     
-    if (self.recognizerController == NO) {
-        [self loadPhotos];
-    }
-    
-    NSMutableArray *tempArray = nil;
-    
-    for (UIImage *firstImage in self.photos) {
-        if ([firstImage isKindOfClass:[UIImage class]]) {
-            if (!(firstImage.size.width == 40) && !(firstImage.size.height == 40)) {
-                UIImage *capImage = [UIImage imageNamed:@"photo-camera1"];
-                tempArray = [NSMutableArray array];
-                [tempArray insertObject:capImage atIndex:0];
-            }
-        } else {
-            break;
+    if ([[TSReachability sharedReachability] verificationInternetConnection]) {
+        
+        if (self.recognizerController == NO) {
+            [self loadPhotos];
         }
+        
+        NSMutableArray *tempArray = nil;
+        
+        for (UIImage *firstImage in self.photos) {
+            if ([firstImage isKindOfClass:[UIImage class]]) {
+                if (!(firstImage.size.width == 40) && !(firstImage.size.height == 40)) {
+                    UIImage *capImage = [UIImage imageNamed:@"photo-camera1"];
+                    tempArray = [NSMutableArray array];
+                    [tempArray insertObject:capImage atIndex:0];
+                }
+            } else {
+                break;
+            }
+        }
+        
+        if (tempArray) {
+            [self.photos insertObject:[tempArray firstObject] atIndex:0];
+        }
+        
+        [self.collectionView reloadData];
+        
+    } else {
+        
+        TSAlertController *alertController =
+        [TSAlertController noInternetConnection:@"Проверьте интернет соединение..."];
+        
+        [self presentViewController:alertController animated:YES completion:nil];
+        
     }
     
-    if (tempArray) {
-        [self.photos insertObject:[tempArray firstObject] atIndex:0];
-    }
-    
-    [self.collectionView reloadData];
 }
 
 

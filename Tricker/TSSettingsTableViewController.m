@@ -13,6 +13,8 @@
 #import "TSFacebookManager.h"
 #import "TSFireUser.h"
 #import "TSFireImage.h"
+#import "TSReachability.h"
+#import "TSAlertController.h"
 #import "TSTrickerPrefixHeader.pch"
 
 #import <SVProgressHUD.h>
@@ -114,8 +116,19 @@ NSString * const UpdateParametersNotification = @"UpdateParametersNotification";
 {
     [super viewWillAppear:animated];
     
-    [self configureController];
-    [self setDataUser];
+    if ([[TSReachability sharedReachability] verificationInternetConnection]) {
+        
+        [self configureController];
+        [self setDataUser];
+        
+    } else {
+        
+        TSAlertController *alertController =
+        [TSAlertController noInternetConnection:@"Проверьте интернет соединение..."];
+        
+        [self presentViewController:alertController animated:YES completion:nil];
+    }
+    
 }
 
 

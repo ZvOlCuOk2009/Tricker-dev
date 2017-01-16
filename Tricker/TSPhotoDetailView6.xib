@@ -23,7 +23,7 @@
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <state key="normal" image="arrow_bottom"/>
                             <connections>
-                                <action selector="cancelPhotoViewAction:" destination="iN0-l3-epB" eventType="touchUpInside" id="tww-6F-uC4"/>
+                                <action selector="cancelPhotoViewAction:" destination="iN0-l3-epB" eventType="touchUpInside" id="B9H-Ii-v64"/>
                             </connections>
                         </button>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Фотоальбом" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="224-9u-xEV">
@@ -61,7 +61,7 @@
                     </connections>
                 </collectionView>
             </subviews>
-            <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <connections>
                 <outlet property="collectionView" destination="SQs-QN-nUJ" id="0Jh-mR-SDE"/>

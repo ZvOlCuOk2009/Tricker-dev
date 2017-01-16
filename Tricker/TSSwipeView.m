@@ -138,6 +138,9 @@ NSInteger recognizerControllersCardsAndChat;
             
             self.photosView = kTSPhotoView_6_Plus;
         }
+    } else if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
+        
+        self.photosView = kTSPhotoViewIpad;
     }
     
 }
@@ -240,14 +243,12 @@ NSInteger recognizerControllersCardsAndChat;
             
             view = [self initDetailViewNibBySizeDevice:view nameNib:@"TSDetailView6plus"
                                               frameNib:kTSSwipeDetailView6PlusFrame];
-
         }
         
     } else if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
         
-        view = [self initDetailViewNibBySizeDevice:view nameNib:@"TSDetailView"
-                                          frameNib:kTSSwipeDetailViewFrame];
-
+        view = [self initDetailViewNibBySizeDevice:view nameNib:@"TSDetailViewIpad"
+                                          frameNib:kTSSwipeDetailViewIpadFrame];
     }
     
     return view;
@@ -338,7 +339,7 @@ NSInteger recognizerControllersCardsAndChat;
               initialSpringVelocity:0.6
                             options:0
                          animations:^{
-                             self.frame = CGRectMake(10, 600, self.frame.size.width, self.frame.size.height);
+                             self.frame = CGRectMake(10, 1000, self.frame.size.width, self.frame.size.height);
                          } completion:nil];
         
         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
