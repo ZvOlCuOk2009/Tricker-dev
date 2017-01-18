@@ -9,6 +9,7 @@
 @import Photos;
 
 #import "TSProfileTableViewController.h"
+#import "AppDelegate.h"
 #import "TSSocialNetworkLoginViewController.h"
 #import "TSFacebookManager.h"
 #import "TSFireImage.h"
@@ -62,6 +63,7 @@
 
 @property (assign, nonatomic) NSInteger progressHUD;
 @property (assign, nonatomic) NSInteger heightHeader;
+@property (assign, nonatomic) NSInteger setUserOnlinePosition;
 @property (assign, nonatomic) CGFloat fixSide;
 @property (assign, nonatomic) CGFloat fixOffset;
 @property (assign, nonatomic) CGFloat fixCornerRadius;
@@ -132,6 +134,11 @@
     
     self.avatarImageView.clipsToBounds = YES;
     
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(userStatusNotification:)
+                                                 name:AppDelegateStatusUserNotificatoin
+                                               object:nil];
+    
     [self.tableView setSeparatorColor:DARK_GRAY_COLOR];
     
     self.progressHUD = 0;
@@ -140,6 +147,8 @@
     self.logo = [[UIImageView alloc] initWithImage:logoImage];
     self.logo.frame = CGRectMake((self.view.frame.size.width / 2) - (self.logo.frame.size.width / 2), 9, 150, 30);
     [self.navigationController.navigationBar addSubview:self.logo];
+    
+    self.setUserOnlinePosition = 1;
 }
 
 
@@ -173,7 +182,6 @@
 - (void)viewDidDisappear:(BOOL)animated
 {
     [super viewDidDisappear:animated];
-    [self.ref removeAllObservers];
 }
 
 
@@ -194,6 +202,11 @@
     [self.ref observeEventType:FIRDataEventTypeValue withBlock:^(FIRDataSnapshot * _Nonnull snapshot) {
         
         self.fireUser = [TSFireUser initWithSnapshot:snapshot];
+        
+        if (self.setUserOnlinePosition == 1) {
+            [self updateDataUser:@"online"];
+            ++self.setUserOnlinePosition;
+        }
         
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
             
@@ -259,7 +272,6 @@
 
     if (fireUser.dateOfBirth) {
         self.dateBirdthDayLabel.text = fireUser.dateOfBirth;
-
     }
     
     if (fireUser.age) {
@@ -365,60 +377,77 @@
 - (IBAction)changeAvatarActionButton:(id)sender
 {
     
-    TSAlertController *alertController = [TSAlertController changeAvatarActionButton:@"Выберите фото"];
+    TSAlertController *alertController = [TSAlertController sharedAlertController:@"Выберите фото"];
     
-//    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"Выберите фото"
-//                                                                             message:nil
-//                                                                      preferredStyle:UIAlertControllerStyleActionSheet];
-//    
-//    UIAlertAction *camera = [UIAlertAction actionWithTitle:@"Камера"
-//                                                     style:UIAlertActionStyleDefault
-//                                                   handler:^(UIAlertAction * _Nonnull action) {
-//                                                       [self makePhoto];
-//                                                   }];
-//    
-//    UIAlertAction *galery = [UIAlertAction actionWithTitle:@"Галерея"
-//                                                     style:UIAlertActionStyleDefault
-//                                                   handler:^(UIAlertAction * _Nonnull action) {
-//                                                       [self selectPhoto];
-//                                                   }];
-//    
-//    UIAlertAction *cancel = [UIAlertAction actionWithTitle:@"Отменить"
-//                                                     style:UIAlertActionStyleDefault
-//                                                   handler:^(UIAlertAction * _Nonnull action) {
-//                                                       
-//                                                   }];
-//    
-//    [alertController customizationAlertView:@"Выберите фото" byLength:13 byFont:20.f];
-//    
-//    [alertController addAction:camera];
-//    [alertController addAction:galery];
-//    [alertController addAction:cancel];
+    UIAlertAction *camera = [UIAlertAction actionWithTitle:@"Камера"
+                                                     style:UIAlertActionStyleDefault
+                                                   handler:^(UIAlertAction * _Nonnull action) {
+                                                       [self addImage:UIImagePickerControllerSourceTypeCamera];
+                                                   }];
+    
+    UIAlertAction *galery = [UIAlertAction actionWithTitle:@"Галерея"
+                                                     style:UIAlertActionStyleDefault
+                                                   handler:^(UIAlertAction * _Nonnull action) {
+                                                       [self addImage:UIImagePickerControllerSourceTypePhotoLibrary];
+                                                   }];
+    
+    UIAlertAction *cancel = [UIAlertAction actionWithTitle:@"Отменить"
+                                                     style:UIAlertActionStyleDefault
+                                                   handler:^(UIAlertAction * _Nonnull action) {
+                                                       
+                                                   }];
+    
+    [alertController customizationAlertView:@"Выберите фото" byLength:13 byFont:20.f];
+    
+    [alertController addAction:camera];
+    [alertController addAction:galery];
+    [alertController addAction:cancel];
     
     [self presentViewController:alertController animated:YES completion:nil];
         
 }
 
 
-- (void)makePhoto {
+- (void)logOutPressedCell
+{
     
-    UIImagePickerController *picker = [[UIImagePickerController alloc] init];
-    picker.navigationBar.barStyle = UIBarStyleBlack;
-    picker.delegate = self;
-    picker.allowsEditing = YES;
-    picker.sourceType = UIImagePickerControllerSourceTypeCamera;
+    TSAlertController *alertController = [TSAlertController sharedAlertController:@"Выберите"];
     
-    [self presentViewController:picker animated:YES completion:NULL];
+    UIAlertAction *exit = [UIAlertAction actionWithTitle:@"Выйти"
+                                                     style:UIAlertActionStyleDefault
+                                                   handler:^(UIAlertAction * _Nonnull action) {
+                                                       [self logOut];
+                                                   }];
+    
+    UIAlertAction *deleteAcuont = [UIAlertAction actionWithTitle:@"Удалить аккаунт"
+                                                     style:UIAlertActionStyleDefault
+                                                   handler:^(UIAlertAction * _Nonnull action) {
+
+                                                   }];
+    
+    UIAlertAction *cancel = [UIAlertAction actionWithTitle:@"Отменить"
+                                                     style:UIAlertActionStyleDefault
+                                                   handler:^(UIAlertAction * _Nonnull action) {
+                                                       
+                                                   }];
+    
+    [alertController customizationAlertView:@"Выберите" byLength:8 byFont:20.f];
+    
+    [alertController addAction:exit];
+    [alertController addAction:deleteAcuont];
+    [alertController addAction:cancel];
+    
+    [self presentViewController:alertController animated:YES completion:nil];
 }
 
 
-- (void)selectPhoto {
-    
+- (void)addImage:(enum UIImagePickerControllerSourceType)sourceType
+{
     UIImagePickerController *picker = [[UIImagePickerController alloc] init];
     picker.navigationBar.barStyle = UIBarStyleBlack;
     picker.delegate = self;
     picker.allowsEditing = YES;
-    picker.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
+    picker.sourceType = sourceType;
     
     [self presentViewController:picker animated:YES completion:NULL];
 }
@@ -458,6 +487,32 @@
 }
 
 
+- (void)logOut
+{
+    
+    NSError *error;
+    [[FIRAuth auth] signOut:&error];
+    
+    [[TSFacebookManager sharedManager] logOutUser];
+    [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"token"];
+    
+    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:[NSBundle mainBundle]];
+    TSSocialNetworkLoginViewController *controller = [storyboard instantiateViewControllerWithIdentifier:@"TSSocialNetworkLoginViewController"];
+    
+    [self presentViewController:controller animated:YES completion:nil];
+
+}
+
+
+#pragma mark - notification
+
+
+- (void)userStatusNotification:(NSNotification *)notification
+{
+    [self updateDataUser:[notification object]];
+}
+
+
 //сохранение основных данных
 
 
@@ -467,7 +522,7 @@
 }
 
 
-- (void)updateDataUser:(NSString *)photo
+- (void)updateDataUser:(NSString *)userStatus
 {
     
     NSString *userID = nil;
@@ -504,8 +559,8 @@
         dateOfBirth = self.fireUser.dateOfBirth;
     }
     
-    if ([self computationAge]) {
-        age = [self computationAge];
+    if ([self computationAge:dateOfBirth]) {
+        age = [self computationAge:dateOfBirth];
     } else {
         dateOfBirth = self.fireUser.age;
     }
@@ -536,6 +591,12 @@
         online = @"";
     }
     
+
+    if ([userStatus isEqualToString:@"offline"]) {
+        online = @"оффлайн";
+    } else if ([userStatus isEqualToString:@"online"]) {
+        online = @"онлайн";
+    }
     
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
     
@@ -566,7 +627,7 @@
 //вычисление возраста
 
 
-- (NSString *)computationAge
+- (NSString *)computationAge:(NSString *)selectData
 {
     
     NSDate *currentData = [NSDate date];
@@ -574,7 +635,7 @@
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
     [dateFormatter setDateFormat:@"dd-MM-yyyy"];
     
-    NSDate *convertDateOfBirth = [dateFormatter dateFromString:self.selectData];
+    NSDate *convertDateOfBirth = [dateFormatter dateFromString:selectData];
     
     NSCalendar *calendar = [NSCalendar currentCalendar];
     
@@ -670,15 +731,20 @@
         self.stateDatePicker = YES;
     }
     
-    if (indexPath.row == 8) {
+    if (indexPath.row == 7) {
         [self.userDefaults setObject:self.countReviews forKey:[NSString stringWithFormat:@"reviews/%@",self.fireUser.uid]];
         [self.userDefaults synchronize];
     }
     
-    if (indexPath.row == 9) {
+    if (indexPath.row == 8) {
         [self.userDefaults setObject:self.countLikes forKey:[NSString stringWithFormat:@"likes/%@",self.fireUser.uid]];
         [self.userDefaults synchronize];
     }
+    
+    if (indexPath.row == 9) {
+        [self logOutPressedCell];
+    }
+    
 }
 
 

@@ -24,6 +24,7 @@
 @property (weak, nonatomic) IBOutlet UITextField *nameTextField;
 @property (weak, nonatomic) IBOutlet UIButton *cameraButton;
 @property (weak, nonatomic) IBOutlet UIImage *image;
+@property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
 
 @property (strong, nonatomic) FIRDatabaseReference *ref;
 @property (strong, nonatomic) FIRStorageReference *storageRef;
@@ -37,6 +38,10 @@
     
     self.ref = [[FIRDatabase database] reference];
     self.storageRef = [[FIRStorage storage] reference];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardDidShow:) name:UIKeyboardDidShowNotification object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardDidHide:) name:UIKeyboardDidHideNotification object:nil];
     
     [self configureController];
 }
@@ -253,6 +258,37 @@
         [self presentViewController:alertController animated:YES completion:nil];
         
     }
+    
+}
+
+
+#pragma mark - Keyboard notification
+
+
+- (void)keyboardDidShow:(NSNotification *)notification
+{
+    NSDictionary *info = [notification userInfo];
+    CGSize kbSize = [[info objectForKey:UIKeyboardFrameBeginUserInfoKey] CGRectValue].size;
+    UIEdgeInsets contentInsets = UIEdgeInsetsMake(0.0, 0.0, kbSize.height, 0.0);
+    self.scrollView.contentInset = contentInsets;
+    self.scrollView.scrollIndicatorInsets = contentInsets;
+    
+    CGRect aRect = self.view.frame;
+    aRect.size.height -= kbSize.height;
+    if (!CGRectContainsPoint(aRect, self.view.frame.origin) ) {
+        CGPoint scrollPoint = CGPointMake(0.0, self.view.frame.origin.y - kbSize.height);
+        [self.scrollView setContentOffset:scrollPoint animated:YES];
+    }
+    
+}
+
+
+- (void)keyboardDidHide:(NSNotification *)notification
+{
+    
+    UIEdgeInsets contentInsets = UIEdgeInsetsZero;
+    self.scrollView.contentInset = contentInsets;
+    self.scrollView.scrollIndicatorInsets = contentInsets;
     
 }
 

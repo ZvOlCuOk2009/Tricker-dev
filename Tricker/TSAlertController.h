@@ -11,7 +11,6 @@
 @interface TSAlertController : UIAlertController
 
 + (TSAlertController *)noInternetConnection:(NSString *)text;
-+ (TSAlertController *)changeAvatarActionButton:(NSString *)text;
-
++ (TSAlertController *)sharedAlertController:(NSString *)text;
 
 @end

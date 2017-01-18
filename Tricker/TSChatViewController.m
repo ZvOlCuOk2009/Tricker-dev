@@ -14,6 +14,7 @@
 #import "TSLikeAndReviewSave.h"
 #import "TSTabBarViewController.h"
 #import "TSGetInterlocutorParameters.h"
+#import "TSPhotoZoomViewController.h"
 #import "UIAlertController+TSAlertController.h"
 #import "TSReachability.h"
 #import "TSAlertController.h"
@@ -95,7 +96,6 @@
     [backItem setTarget:self];
     [backItem setAction:@selector(cancelInteraction)];
     
-    [self setMessageRef];
     [self showProgressHud];
     
 }
@@ -146,6 +146,9 @@
         
     }
     
+    [self setMessageRef];
+    
+    clearArrayMessageChat = 0;
 }
 
 
@@ -190,13 +193,14 @@
 {
     [super viewDidDisappear:animated];
     
-    if ([self.messages count] > 0) {
+    if ([self.messages count] > 0 && clearArrayMessageChat == 0) {
         [self.messages removeAllObjects];
     }
     
     //удаление кнопки с навбара в момент возврата на контроллер чатов
     
     [self.interlocutorAvatarButtonNavBar removeFromSuperview];
+   
 }
 
 
@@ -270,7 +274,6 @@
 
 - (void)setMessageRef
 {
-    
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         
         if (self.interlocutorID) {
@@ -280,9 +283,7 @@
             
             [self dissmisProgressHud];
         }
-        
     });
-    
 }
 
 

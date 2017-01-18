@@ -7,12 +7,7 @@
 //
 
 #import "TSMapViewController.h"
-#import "TSSocialNetworkLoginViewController.h"
-#import "TSFacebookManager.h"
 
-@import Firebase;
-@import FirebaseAuth;
-@import FirebaseDatabase;
 
 @interface TSMapViewController ()
 
@@ -33,22 +28,6 @@
 
 - (IBAction)logOutAtionButton:(id)sender
 {
-    
-    NSError *error;
-    [[FIRAuth auth] signOut:&error];
-    
-    if (!error) {
-    
-        NSLog(@"Log out");
-    }
-    
-    [[TSFacebookManager sharedManager] logOutUser];
-    [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"token"];
-    
-    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:[NSBundle mainBundle]];
-    TSSocialNetworkLoginViewController *controller = [storyboard instantiateViewControllerWithIdentifier:@"TSSocialNetworkLoginViewController"];
-    
-    [self presentViewController:controller animated:YES completion:nil];
     
 }
 

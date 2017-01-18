@@ -48,10 +48,7 @@
     
     self.ref = [[FIRDatabase database] reference];
     
-    self.title = @"Вашу анкету просматривали";
-    
-//    [self.navigationController.navigationBar setTitleTextAttributes:@{NSForegroundColorAttributeName:[UIColor redColor],
-//       NSFontAttributeName:[UIFont fontWithName:@"mplus-1c-regular" size:16]}];
+    self.title = @"Вашу анкету смотрели";
     
     UIBarButtonItem *backItem = [[UIBarButtonItem alloc] init];
     [backItem setImage:[UIImage imageNamed:@"back"]];

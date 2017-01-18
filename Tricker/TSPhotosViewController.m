@@ -110,10 +110,13 @@ static NSString * const reuseIdntifierButton = @"cellButton";
                     UIImage *capImage = [UIImage imageNamed:@"photo-camera1"];
                     tempArray = [NSMutableArray array];
                     [tempArray insertObject:capImage atIndex:0];
+                } else {
+                    break;
                 }
-            } else {
-                break;
             }
+//            else {
+//                
+//            }
         }
         
         if (tempArray) {
@@ -162,7 +165,7 @@ static NSString * const reuseIdntifierButton = @"cellButton";
                     [self.photos addObject:cap];
                 }
                 
-                if (self.fireUser.photos) {
+                if (self.fireUser.photos && [self.photos count] == 0) {
                     
                     for (int i = 0; i < [self.fireUser.photos count]; i++) {
                         

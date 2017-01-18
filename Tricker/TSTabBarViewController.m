@@ -24,18 +24,8 @@
         vc.title = nil;
     }];    
     
-    FIRDatabaseReference *connectedRef = [[FIRDatabase database] referenceWithPath:@".info/connected"];
-    [connectedRef observeEventType:FIRDataEventTypeValue withBlock:^(FIRDataSnapshot * _Nonnull snapshot) {
-        
-        if([snapshot.value boolValue]) {
-            NSLog(@"CONNECTED");
-//            self.firebaseConnected = YES;
-        } else {
-            NSLog(@"NOT CONNECTED");
-//            self.firebaseConnected = NO;
-        }
-    }];
 }
+
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

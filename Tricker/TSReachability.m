@@ -28,10 +28,8 @@
     BOOL connected;
     
     if ([[Reachability reachabilityForInternetConnection] currentReachabilityStatus] == NotReachable) {
-        NSLog(@"UNAVAILABLE");
         connected = NO;
     } else {
-        NSLog(@"AVAILABLE");
         connected = YES;
     }
     return connected;

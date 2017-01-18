@@ -13,9 +13,4 @@
 @property (strong, nonatomic) NSString *email;
 @property (strong, nonatomic) NSString *password;
 
-//@property (strong, nonatomic) IBOutlet UIImagePickerController *picker;
-//
-//- (void)makePhoto;
-//- (void)selectPhoto;
-
 @end

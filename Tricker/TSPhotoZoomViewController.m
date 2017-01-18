@@ -9,6 +9,8 @@
 #import "TSPhotoZoomViewController.h"
 #import "UIAlertController+TSAlertController.h"
 
+NSInteger clearArrayMessageChat;
+
 @import Firebase;
 @import FirebaseAuth;
 @import FirebaseStorage;
@@ -31,15 +33,15 @@
     self.pageControl.numberOfPages = [self.photos count];
     self.pageControl.currentPage = self.currentPage;
     self.scrollView.pagingEnabled = YES;
-    
-    [self.scrollView setContentOffset:CGPointMake(self.scrollView.frame.size.width * self.currentPage, 0.0) animated:YES];
 
+    clearArrayMessageChat = 1;
 }
 
 
 - (void)viewDidLayoutSubviews {
     [super viewDidLayoutSubviews];
     [self setupScroll];
+    [self.scrollView setContentOffset:CGPointMake(self.scrollView.frame.size.width * self.currentPage, 0.0) animated:NO];
 }
 
 
@@ -114,7 +116,6 @@
     if ([self.addPhotos count] == 0) {
         
         [self.photos removeObjectAtIndex:page];
-        [self setupScroll];
         
         FIRDatabaseReference *ref = [[FIRDatabase database]reference];
         NSMutableArray *updatePhotos = self.fireUser.photos;
@@ -124,8 +125,9 @@
     } else {
         
         [self.photos removeObjectAtIndex:page];
-        [self setupScroll];
     }
+    
+    [self setupScroll];
     
 }
 

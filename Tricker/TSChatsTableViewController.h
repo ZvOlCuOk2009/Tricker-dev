@@ -10,6 +10,4 @@
 
 @interface TSChatsTableViewController : UIViewController
 
-
-
 @end

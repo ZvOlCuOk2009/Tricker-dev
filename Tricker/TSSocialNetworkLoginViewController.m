@@ -209,6 +209,7 @@
 
 #pragma mark - VK autorization
 
+/*
 
 - (IBAction)vkButtonTouchUpInside:(id)sender
 {
@@ -324,6 +325,7 @@
     
 }
 
+ */
 
 #pragma mark - Autorization Google
 

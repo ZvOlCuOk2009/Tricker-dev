@@ -13,7 +13,7 @@
 #import "TSTrickerPrefixHeader.pch"
 
 #import <CoreLocation/CoreLocation.h>
-//#import <GoogleMaps/GoogleMaps.h>
+#import <GoogleMaps/GoogleMaps.h>
 
 
 @interface TSSitysViewController () <UISearchBarDelegate>

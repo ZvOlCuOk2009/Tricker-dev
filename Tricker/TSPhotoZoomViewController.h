@@ -9,6 +9,8 @@
 #import <UIKit/UIKit.h>
 #import "TSFireUser.h"
 
+extern NSInteger clearArrayMessageChat;
+
 @interface TSPhotoZoomViewController : UIViewController
 
 @property (strong, nonatomic) TSFireUser *fireUser;

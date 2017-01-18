@@ -65,7 +65,7 @@
 
 //swipeDetailView frame
 
-#define kTSSwipeDetailViewFrame CGRectMake(10, 74, 300, 352)
+#define kTSSwipeDetailViewFrame CGRectMake(10, 71, 300, 352)
 #define kTSSwipeDetailView5Frame CGRectMake(10, 74, 300, 440)
 #define kTSSwipeDetailView6Frame CGRectMake(15, 74, 345, 519)
 #define kTSSwipeDetailView6PlusFrame CGRectMake(15, 74, 384, 583)

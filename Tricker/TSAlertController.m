@@ -40,35 +40,13 @@
 }
 
 
-+ (TSAlertController *)changeAvatarActionButton:(NSString *)text
++ (TSAlertController *)sharedAlertController:(NSString *)text
 {
-    TSAlertController *alertController = [TSAlertController alertControllerWithTitle:@"Выберите фото"
+    TSAlertController *alertController = [TSAlertController alertControllerWithTitle:text
                                                                              message:nil
-                                                                      preferredStyle:UIAlertControllerStyleActionSheet];
+                                                                      preferredStyle:UIAlertControllerStyleAlert];
     
-    UIAlertAction *camera = [UIAlertAction actionWithTitle:@"Камера"
-                                                     style:UIAlertActionStyleDefault
-                                                   handler:^(UIAlertAction * _Nonnull action) {
-                                                       
-                                                   }];
-    
-    UIAlertAction *galery = [UIAlertAction actionWithTitle:@"Галерея"
-                                                     style:UIAlertActionStyleDefault
-                                                   handler:^(UIAlertAction * _Nonnull action) {
-                                                       
-                                                   }];
-    
-    UIAlertAction *cancel = [UIAlertAction actionWithTitle:@"Отменить"
-                                                     style:UIAlertActionStyleDefault
-                                                   handler:^(UIAlertAction * _Nonnull action) {
-                                                       
-                                                   }];
-    
-    [alertController customizationAlertView:@"Выберите фото" byLength:13 byFont:20.f];
-    
-    [alertController addAction:camera];
-    [alertController addAction:galery];
-    [alertController addAction:cancel];
+    [alertController customizationAlertView:text byLength:[text length] byFont:20.f];
     
     return alertController;
 
