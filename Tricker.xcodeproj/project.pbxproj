@@ -64,6 +64,7 @@
 		FD8220001E2C1A6700D886E2 /* TSPhotoDetailView6.xib in Resources */ = {isa = PBXBuildFile; fileRef = FD821FFF1E2C1A6700D886E2 /* TSPhotoDetailView6.xib */; };
 		FD8220031E2C410000D886E2 /* TSSwipeViewIpad.xib in Resources */ = {isa = PBXBuildFile; fileRef = FD8220021E2C410000D886E2 /* TSSwipeViewIpad.xib */; };
 		FDBDDDDF1DDB8745008EE73E /* TSSettingsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FDBDDDDE1DDB8745008EE73E /* TSSettingsTableViewController.m */; };
+		FDD4E1D51E32C66500D10093 /* TSIntroductionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FDD4E1D41E32C66500D10093 /* TSIntroductionViewController.m */; };
 		FDE927391DE840EC00FF884F /* TSFireBase.m in Sources */ = {isa = PBXBuildFile; fileRef = FDE927381DE840EC00FF884F /* TSFireBase.m */; };
 		FDE9273C1DE8EC4600FF884F /* TSIntermediateViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FDE9273B1DE8EC4600FF884F /* TSIntermediateViewController.m */; };
 		FDEBE3E81DF1C4AB0073A0FF /* TSCollCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = FDEBE3E71DF1C4AB0073A0FF /* TSCollCell.xib */; };
@@ -194,6 +195,8 @@
 		FD8220021E2C410000D886E2 /* TSSwipeViewIpad.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TSSwipeViewIpad.xib; sourceTree = "<group>"; };
 		FDBDDDDD1DDB8745008EE73E /* TSSettingsTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSSettingsTableViewController.h; sourceTree = "<group>"; };
 		FDBDDDDE1DDB8745008EE73E /* TSSettingsTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSSettingsTableViewController.m; sourceTree = "<group>"; };
+		FDD4E1D31E32C66500D10093 /* TSIntroductionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSIntroductionViewController.h; sourceTree = "<group>"; };
+		FDD4E1D41E32C66500D10093 /* TSIntroductionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSIntroductionViewController.m; sourceTree = "<group>"; };
 		FDE927371DE840EC00FF884F /* TSFireBase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSFireBase.h; sourceTree = "<group>"; };
 		FDE927381DE840EC00FF884F /* TSFireBase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSFireBase.m; sourceTree = "<group>"; };
 		FDE9273A1DE8EC4600FF884F /* TSIntermediateViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSIntermediateViewController.h; sourceTree = "<group>"; };
@@ -293,6 +296,8 @@
 			children = (
 				FD1C4F641DCE280400CF63E9 /* TSTabBarViewController.h */,
 				FD1C4F651DCE280400CF63E9 /* TSTabBarViewController.m */,
+				FDD4E1D31E32C66500D10093 /* TSIntroductionViewController.h */,
+				FDD4E1D41E32C66500D10093 /* TSIntroductionViewController.m */,
 				FDFDFC961DD293E0007811EF /* TSProfileTableViewController.h */,
 				FDFDFC971DD293E0007811EF /* TSProfileTableViewController.m */,
 				FD5CD4921DD3D6CF0056C1A6 /* TSSitysViewController.h */,
@@ -669,7 +674,7 @@
 				TargetAttributes = {
 					FD1C4F2D1DCE252200CF63E9 = {
 						CreatedOnToolsVersion = 8.0;
-						DevelopmentTeam = 5D7GRV784H;
+						DevelopmentTeam = 2ZQMG97HLH;
 						ProvisioningStyle = Automatic;
 						SystemCapabilities = {
 							com.apple.Keychain = {
@@ -875,6 +880,7 @@
 				FD5FFB231E05DA5900CB807F /* TSFireInterlocutor.m in Sources */,
 				FD0654431E1EE1FF0080046A /* UIAlertController+TSAlertController.m in Sources */,
 				FD64A93B1E2419010019BB94 /* TSTableViewStatisticsCell.m in Sources */,
+				FDD4E1D51E32C66500D10093 /* TSIntroductionViewController.m in Sources */,
 				FDF4BB241DF076B2003D3841 /* TSCollectionViewCell.m in Sources */,
 				FDE927391DE840EC00FF884F /* TSFireBase.m in Sources */,
 				FDF4BB1D1DF02DB1003D3841 /* TSPhotoView.m in Sources */,
@@ -1043,7 +1049,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = Tricker/Tricker.entitlements;
-				DEVELOPMENT_TEAM = 5D7GRV784H;
+				DEVELOPMENT_TEAM = 2ZQMG97HLH;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Tricker/GoogleMaps/Frameworks",
@@ -1063,7 +1069,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = Tricker/Tricker.entitlements;
-				DEVELOPMENT_TEAM = 5D7GRV784H;
+				DEVELOPMENT_TEAM = 2ZQMG97HLH;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Tricker/GoogleMaps/Frameworks",

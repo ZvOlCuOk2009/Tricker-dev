@@ -21,7 +21,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="background" translatesAutoresizingMaskIntoConstraints="NO" id="OfC-Yh-obl">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="background_launch_screen" translatesAutoresizingMaskIntoConstraints="NO" id="OfC-Yh-obl">
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                             </imageView>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="logo_launch_screen" translatesAutoresizingMaskIntoConstraints="NO" id="hiz-Ng-blm">
@@ -49,7 +49,7 @@
         </scene>
     </scenes>
     <resources>
-        <image name="background" width="187" height="333"/>
+        <image name="background_launch_screen" width="187" height="333"/>
         <image name="logo_launch_screen" width="403" height="142"/>
     </resources>
 </document>

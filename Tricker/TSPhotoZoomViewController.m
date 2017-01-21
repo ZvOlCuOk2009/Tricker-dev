@@ -37,6 +37,7 @@ NSInteger clearArrayMessageChat;
     clearArrayMessageChat = 1;
 }
 
+#pragma mark - UIScrollView
 
 - (void)viewDidLayoutSubviews {
     [super viewDidLayoutSubviews];
@@ -60,7 +61,6 @@ NSInteger clearArrayMessageChat;
         [imageView setImage:[self.photos objectAtIndex:i]];
         [self.scrollView addSubview:imageView];
     }
-    
 }
 
 #pragma mark - page controll

@@ -15,6 +15,7 @@
 #import "TSFireImage.h"
 #import "TSReachability.h"
 #import "TSAlertController.h"
+#import "UIAlertController+TSAlertController.h"
 #import "TSTrickerPrefixHeader.pch"
 
 #import <SVProgressHUD.h>
@@ -351,6 +352,44 @@ NSString * const UpdateParametersNotification = @"UpdateParametersNotification";
         [self.characteristicsUser removeObjectForKey:@"key1"];
     }
 
+}
+
+- (IBAction)logOutPressedbutton:(id)sender
+{
+    [self logOutUser];
+}
+
+- (void)logOutUser
+{
+    
+    TSAlertController *alertController = [TSAlertController sharedAlertController:@"Выберите"];
+    
+    UIAlertAction *exit = [UIAlertAction actionWithTitle:@"Выйти"
+                                                   style:UIAlertActionStyleDefault
+                                                 handler:^(UIAlertAction * _Nonnull action) {
+                                                     [self logOut];
+                                                 }];
+    
+    UIAlertAction *deleteAcuont = [UIAlertAction actionWithTitle:@"Удалить аккаунт"
+                                                           style:UIAlertActionStyleDefault
+                                                         handler:^(UIAlertAction * _Nonnull action) {
+                                                             [self deleteUser];
+                                                             [self callTabBarController];
+                                                         }];
+    
+    UIAlertAction *cancel = [UIAlertAction actionWithTitle:@"Отменить"
+                                                     style:UIAlertActionStyleDefault
+                                                   handler:^(UIAlertAction * _Nonnull action) {
+                                                       
+                                                   }]; 
+    
+    [alertController customizationAlertView:@"Выберите" byLength:8 byFont:20.f];
+    
+    [alertController addAction:exit];
+    [alertController addAction:deleteAcuont];
+    [alertController addAction:cancel];
+    
+    [self presentViewController:alertController animated:YES completion:nil];
 }
 
 
@@ -828,6 +867,37 @@ NSString * const UpdateParametersNotification = @"UpdateParametersNotification";
     
 }
 
+- (void)logOut
+{
+    NSError *error;
+    [[FIRAuth auth] signOut:&error];
+    
+    [[TSFacebookManager sharedManager] logOutUser];
+    [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"token"];
+    
+    [self callTabBarController];
+}
+
+- (void)deleteUser
+{
+    FIRUser *user = [FIRAuth auth].currentUser;
+    
+    [user deleteWithCompletion:^(NSError *_Nullable error) {
+        if (error) {
+            
+        } else {
+            // Account deleted.
+        }
+    }];
+}
+
+- (void)callTabBarController
+{
+    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:[NSBundle mainBundle]];
+    TSSocialNetworkLoginViewController *controller = [storyboard instantiateViewControllerWithIdentifier:@"TSSocialNetworkLoginViewController"];
+    
+    [self presentViewController:controller animated:YES completion:nil];
+}
 
 #pragma mark - ProgressHUD
 

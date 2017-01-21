@@ -8,6 +8,7 @@
 
 #import "TSTabBarViewController.h"
 #import "TSTrickerPrefixHeader.pch"
+#import "TSIntroductionViewController.h"
 
 @import FirebaseDatabase;
 
@@ -24,6 +25,10 @@
         vc.title = nil;
     }];    
     
+    
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(10.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        [self callIntroductionViewController];
+    });
 }
 
 
@@ -32,6 +37,17 @@
 
 }
 
-
+- (void)callIntroductionViewController
+{
+    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"ProfileStoryboard"
+                                                         bundle:[NSBundle mainBundle]];
+    TSIntroductionViewController *controller =
+    [storyboard instantiateViewControllerWithIdentifier:@"TSIntroductionViewController"];
+    controller.providesPresentationContextTransitionStyle = YES;
+    controller.definesPresentationContext = YES;
+    [controller setModalPresentationStyle:UIModalPresentationOverCurrentContext];
+    [self presentViewController:controller animated:YES completion:nil];
+    self.tabBarController.tabBar.hidden = YES;
+}
 
 @end

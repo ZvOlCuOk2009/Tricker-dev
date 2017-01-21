@@ -44,8 +44,7 @@ NSString * AppDelegateStatusUserNotificatoin = @"AppDelegateStatusUserNotificato
     
     if (token) {
         
-        TSTabBarViewController *tabBarController = [self.storyBoard instantiateViewControllerWithIdentifier:@"TSTabBarViewController"];
-        self.window.rootViewController = tabBarController;
+        [self openTabBarController];
         
     } else {
         
@@ -67,11 +66,32 @@ NSString * AppDelegateStatusUserNotificatoin = @"AppDelegateStatusUserNotificato
     
     [GIDSignIn sharedInstance].clientID = [FIRApp defaultApp].options.clientID;
     [GIDSignIn sharedInstance].delegate = self;
-        
+    
+    //в случае креша, в базу отправляются данные offline об пользователе
+    
+    NSSetUncaughtExceptionHandler(&HandleException);
+    
+    struct sigaction signalAction;
+    memset(&signalAction, 0, sizeof(signalAction));
+    signalAction.sa_handler = &HandleSignal;
+    
+    sigaction(SIGABRT, &signalAction, NULL);
+    sigaction(SIGILL, &signalAction, NULL);
+    sigaction(SIGBUS, &signalAction, NULL);
+    
     return YES;
     
 }
 
+void HandleException(NSException *exception) {
+    NSLog(@"App crashing with exception: %@", [exception callStackSymbols]);
+    [[NSNotificationCenter defaultCenter] postNotificationName:AppDelegateStatusUserNotificatoin object:@"offline"];
+}
+
+void HandleSignal(int signal) {
+    NSLog(@"We received a signal: %d", signal);
+    [[NSNotificationCenter defaultCenter] postNotificationName:AppDelegateStatusUserNotificatoin object:@"offline"];
+}
 
 - (BOOL)application:(UIApplication *)application openURL:(NSURL *)url
   sourceApplication:(NSString *)sourceApplication annotation:(id)annotation
@@ -105,103 +125,111 @@ NSString * AppDelegateStatusUserNotificatoin = @"AppDelegateStatusUserNotificato
     if (error == nil) {
         
         self.googleUser = user;
+        NSString *token = [[NSUserDefaults standardUserDefaults] objectForKey:@"token"];
         
-        GIDAuthentication *authentication = user.authentication;
-        FIRAuthCredential *credential = [FIRGoogleAuthProvider credentialWithIDToken:authentication.idToken
-                                                                         accessToken:authentication.accessToken];
-        [[FIRAuth auth] signInWithCredential:credential
-                                  completion:^(FIRUser *user, NSError *error) {
-                                      
-                                      if (!error) {
+        if (!token) {
+            
+            GIDAuthentication *authentication = user.authentication;
+            FIRAuthCredential *credential = [FIRGoogleAuthProvider credentialWithIDToken:authentication.idToken
+                                                                             accessToken:authentication.accessToken];
+            [[FIRAuth auth] signInWithCredential:credential
+                                      completion:^(FIRUser *user, NSError *error) {
                                           
-                                          NSString *accessToken = authentication.accessToken;
-                                          
-                                          if (accessToken) {
+                                          if (!error) {
                                               
-                                              NSString *imagePath = [NSString stringWithFormat:@"%@/avatar",
-                                                                     [FIRAuth auth].currentUser.uid];
+                                              NSString *accessToken = authentication.accessToken;
                                               
-                                              NSString *userID = user.uid;
-                                              NSString *name = user.displayName;
-                                              NSString *dateOfBirth = @"";
-                                              NSString *location = @"";
-                                              NSString *gender = @"";
-                                              NSString *age = @"";
-                                              NSString *online = @"";
-                                              
-                                              NSString *stringPhoto = nil;
-                                              
-                                              if (self.googleUser.profile.hasImage) {
-                                                  stringPhoto = [[self.googleUser.profile imageURLWithDimension:600] absoluteString];
+                                              if (accessToken) {
+                                                  
+                                                  NSString *imagePath = [NSString stringWithFormat:@"%@/avatar",
+                                                                         [FIRAuth auth].currentUser.uid];
+                                                  
+                                                  NSString *userID = user.uid;
+                                                  NSString *name = user.displayName;
+                                                  NSString *dateOfBirth = @"";
+                                                  NSString *location = @"";
+                                                  NSString *gender = @"";
+                                                  NSString *age = @"";
+                                                  NSString *online = @"";
+                                                  
+                                                  NSString *stringPhoto = nil;
+                                                  
+                                                  if (self.googleUser.profile.hasImage) {
+                                                      stringPhoto = [[self.googleUser.profile imageURLWithDimension:600] absoluteString];
+                                                  }
+                                                  
+                                                  NSMutableDictionary *userData = [NSMutableDictionary dictionary];
+                                                  
+                                                  [userData setObject:userID forKey:@"userID"];
+                                                  [userData setObject:name forKey:@"displayName"];
+                                                  [userData setObject:dateOfBirth forKey:@"dateOfBirth"];
+                                                  [userData setObject:location forKey:@"location"];
+                                                  [userData setObject:gender forKey:@"gender"];
+                                                  [userData setObject:age forKey:@"age"];
+                                                  [userData setObject:online forKey:@"online"];
+                                                  
+                                                  
+                                                  NSData *avatarData = [NSData dataWithContentsOfURL:[NSURL URLWithString:stringPhoto]];
+                                                  
+                                                  [TSFireImage saveAvatarInTheDatabase:avatarData byPath:imagePath
+                                                                             dictParam:userData];
+                                                  
+                                                  FIRUser *fireUser = [FIRAuth auth].currentUser;
+                                                  FIRDatabaseReference *ref = [[FIRDatabase database] reference];
+                                                  FIRStorageReference *storageRef = [[FIRStorage storage] reference];
+                                                  FIRStorageReference *imagesRef = [storageRef child:imagePath];
+                                                  FIRStorageMetadata *metadata = [FIRStorageMetadata new];
+                                                  metadata.contentType = @"image/jpeg";
+                                                  
+                                                  [[storageRef child:imagePath] putData:avatarData metadata:metadata
+                                                                             completion:^(FIRStorageMetadata * _Nullable metadata, NSError * _Nullable error) {
+                                                                                 
+                                                                                 if (error) {
+                                                                                     NSLog(@"Error uploading: %@", error);
+                                                                                 }
+                                                                                 
+                                                                                 [imagesRef downloadURLWithCompletion:^(NSURL * _Nullable URL, NSError * _Nullable error) {
+                                                                                     
+                                                                                     NSString *photoURL = [NSString stringWithFormat:@"%@", URL];
+                                                                                     
+                                                                                     [userData setObject:photoURL forKey:@"photoURL"];
+                                                                                     
+                                                                                     [[[[[ref child:@"dataBase"] child:@"users"] child:fireUser.uid] child:@"userData"] setValue:userData];
+                                                                                     
+                                                                                     [self openTabBarController];
+                                                                                     
+                                                                                 }];
+                                                                                 
+                                                                             }];
+                                                  
+                                                  NSString *token = user.uid;
+                                                  
+                                                  [[NSUserDefaults standardUserDefaults] setObject:token forKey:@"token"];
+                                                  [[NSUserDefaults standardUserDefaults] synchronize];
+                                                  
                                               }
                                               
-                                              NSMutableDictionary *userData = [NSMutableDictionary dictionary];
+                                          } else {
                                               
-                                              [userData setObject:userID forKey:@"userID"];
-                                              [userData setObject:name forKey:@"displayName"];
-                                              [userData setObject:dateOfBirth forKey:@"dateOfBirth"];
-                                              [userData setObject:location forKey:@"location"];
-                                              [userData setObject:gender forKey:@"gender"];
-                                              [userData setObject:age forKey:@"age"];
-                                              [userData setObject:online forKey:@"online"];
-                                              
-                                              
-                                              NSData *avatarData = [NSData dataWithContentsOfURL:[NSURL URLWithString:stringPhoto]];
-                                              
-                                              [TSFireImage saveAvatarInTheDatabase:avatarData byPath:imagePath
-                                                                         dictParam:userData];
-                                              
-                                              FIRUser *fireUser = [FIRAuth auth].currentUser;
-                                              FIRDatabaseReference *ref = [[FIRDatabase database] reference];
-                                              FIRStorageReference *storageRef = [[FIRStorage storage] reference];
-                                              FIRStorageReference *imagesRef = [storageRef child:imagePath];
-                                              FIRStorageMetadata *metadata = [FIRStorageMetadata new];
-                                              metadata.contentType = @"image/jpeg";
-                                              
-                                              [[storageRef child:imagePath] putData:avatarData metadata:metadata
-                                                                    completion:^(FIRStorageMetadata * _Nullable metadata, NSError * _Nullable error) {
-                                                                        
-                                                                        if (error) {
-                                                                            NSLog(@"Error uploading: %@", error);
-                                                                        }
-                                                                        
-                                                                        [imagesRef downloadURLWithCompletion:^(NSURL * _Nullable URL, NSError * _Nullable error) {
-                                                                            
-                                                                            NSString *photoURL = [NSString stringWithFormat:@"%@", URL];
-                                                                            
-                                                                            [userData setObject:photoURL forKey:@"photoURL"];
-                                                                            
-                                                                            [[[[[ref child:@"dataBase"] child:@"users"] child:fireUser.uid] child:@"userData"] setValue:userData];
-                                                                            
-                                                                            TSTabBarViewController *controller = [self.storyBoard instantiateViewControllerWithIdentifier:@"TSTabBarViewController"];
-                                                                            self.window.rootViewController = controller;
-                                                                            
-                                                                        }];
-                                                                        
-                                                                    }];
-                                              
-                                              NSString *token = user.uid;
-                                              
-                                              [[NSUserDefaults standardUserDefaults] setObject:token forKey:@"token"];
-                                              [[NSUserDefaults standardUserDefaults] synchronize];
-                                              
+                                              NSLog(@"Error %@", error.localizedDescription);
                                           }
                                           
-                                      } else {
-                                          
-                                          NSLog(@"Error %@", error.localizedDescription);
-                                      }
-                                      
-                                      
-                                  }];
-        
-    } else {
+                                      }];
+            
+        } else {
+            
+            [self openTabBarController];
+        }
         
         NSLog(@"%@", error.localizedDescription);
     }
-    
 }
 
+- (void)openTabBarController
+{
+    TSTabBarViewController *controller = [self.storyBoard instantiateViewControllerWithIdentifier:@"TSTabBarViewController"];
+    self.window.rootViewController = controller;
+}
 
 
 - (void)applicationWillResignActive:(UIApplication *)application {

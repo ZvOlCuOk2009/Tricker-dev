@@ -114,9 +114,6 @@ static NSString * const reuseIdntifierButton = @"cellButton";
                     break;
                 }
             }
-//            else {
-//                
-//            }
         }
         
         if (tempArray) {
@@ -131,9 +128,7 @@ static NSString * const reuseIdntifierButton = @"cellButton";
         [TSAlertController noInternetConnection:@"Проверьте интернет соединение..."];
         
         [self presentViewController:alertController animated:YES completion:nil];
-        
     }
-    
 }
 
 

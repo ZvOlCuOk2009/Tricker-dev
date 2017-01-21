@@ -117,7 +117,7 @@
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="64"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="DZS-ME-Pbq">
-                                        <rect key="frame" x="17" y="26" width="28" height="28"/>
+                                        <rect key="frame" x="17" y="24" width="28" height="28"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="28" id="JS1-yF-sTd"/>
                                             <constraint firstAttribute="width" constant="28" id="WKX-fB-6kD"/>
@@ -144,7 +144,7 @@
                                     <constraint firstItem="DZS-ME-Pbq" firstAttribute="leading" secondItem="z5Z-9e-AAv" secondAttribute="leading" constant="17" id="D2K-iW-nDp"/>
                                     <constraint firstItem="7rA-bZ-0e6" firstAttribute="top" secondItem="z5Z-9e-AAv" secondAttribute="top" constant="26" id="O1J-bZ-ng3"/>
                                     <constraint firstAttribute="trailing" secondItem="7rA-bZ-0e6" secondAttribute="trailing" constant="19" id="aWN-B6-mJJ"/>
-                                    <constraint firstItem="DZS-ME-Pbq" firstAttribute="top" secondItem="z5Z-9e-AAv" secondAttribute="top" constant="26" id="n47-UK-AKr"/>
+                                    <constraint firstItem="DZS-ME-Pbq" firstAttribute="top" secondItem="z5Z-9e-AAv" secondAttribute="top" constant="24" id="n47-UK-AKr"/>
                                 </constraints>
                             </view>
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4Cl-ko-YIB">

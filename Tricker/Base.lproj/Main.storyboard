@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11542" systemVersion="15G31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11762" systemVersion="15G1217" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11524"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11757"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -464,9 +464,17 @@
                                                     <constraint firstAttribute="height" constant="39" id="dva-VU-1GW"/>
                                                 </constraints>
                                             </imageView>
+                                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="logo_launch_screen" translatesAutoresizingMaskIntoConstraints="NO" id="JUJ-u8-Loi">
+                                                <rect key="frame" x="49" y="163" width="278" height="98"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="98" id="Ix1-wv-QhO"/>
+                                                    <constraint firstAttribute="width" constant="278" id="eze-7A-MB2"/>
+                                                </constraints>
+                                            </imageView>
                                         </subviews>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <constraints>
+                                            <constraint firstItem="JUJ-u8-Loi" firstAttribute="centerX" secondItem="YW1-II-q5y" secondAttribute="centerX" id="5Ug-kI-Qzm"/>
                                             <constraint firstAttribute="trailing" secondItem="qXQ-rV-eg2" secondAttribute="trailing" constant="21" id="5ef-iO-Ad9"/>
                                             <constraint firstItem="sRI-Dz-Rfh" firstAttribute="top" secondItem="WVG-Hm-eYj" secondAttribute="bottom" constant="22" id="BJ3-Xx-Rmg"/>
                                             <constraint firstItem="3nY-Za-EfL" firstAttribute="centerX" secondItem="YW1-II-q5y" secondAttribute="centerX" id="BU2-0h-uVk"/>
@@ -484,6 +492,7 @@
                                             <constraint firstAttribute="trailing" secondItem="NEK-78-Ss6" secondAttribute="trailing" constant="22" id="h61-TD-eee"/>
                                             <constraint firstItem="29c-if-uJV" firstAttribute="leading" secondItem="YW1-II-q5y" secondAttribute="leading" constant="23" id="hdA-EG-BnB"/>
                                             <constraint firstItem="hN5-E3-ebR" firstAttribute="top" secondItem="YW1-II-q5y" secondAttribute="top" id="oUa-wj-h30"/>
+                                            <constraint firstItem="JUJ-u8-Loi" firstAttribute="centerY" secondItem="YW1-II-q5y" secondAttribute="centerY" constant="-121.5" id="pQw-RT-jzq"/>
                                             <constraint firstItem="hN5-E3-ebR" firstAttribute="leading" secondItem="YW1-II-q5y" secondAttribute="leading" id="sRA-Zd-0a4"/>
                                             <constraint firstAttribute="bottom" secondItem="hN5-E3-ebR" secondAttribute="bottom" id="u1V-PI-dJH"/>
                                             <constraint firstItem="NEK-78-Ss6" firstAttribute="top" secondItem="sRI-Dz-Rfh" secondAttribute="bottom" constant="22" id="yaj-wR-Wem"/>
@@ -623,6 +632,7 @@
         <image name="chat_no" width="26" height="26"/>
         <image name="facebook_logo" width="388" height="111"/>
         <image name="google_logo" width="929" height="323"/>
+        <image name="logo_launch_screen" width="403" height="142"/>
         <image name="photo-camera" width="75" height="75"/>
         <image name="tabbar" width="187" height="24"/>
         <image name="user_click" width="26" height="26"/>

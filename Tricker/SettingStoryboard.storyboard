@@ -17,7 +17,7 @@
                         <inset key="imageInsets" minX="0.0" minY="5" maxX="0.0" maxY="-5"/>
                     </tabBarItem>
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="pJ8-Zt-EHu">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="pJ8-Zt-EHu">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="barTintColor" red="0.98823529409999999" green="0.87450980389999999" blue="0.6588235294" alpha="1" colorSpace="calibratedRGB"/>
@@ -1182,7 +1182,14 @@
                             <outlet property="delegate" destination="4Oa-v7-Fuz" id="iX6-Gz-qVe"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Настройки" id="FaW-Ua-MpC"/>
+                    <navigationItem key="navigationItem" title="Настройки" id="FaW-Ua-MpC">
+                        <barButtonItem key="rightBarButtonItem" image="more" id="4mL-yu-br7">
+                            <color key="tintColor" red="0.51372549020000002" green="0.61960784310000006" blue="0.69803921570000005" alpha="1" colorSpace="calibratedRGB"/>
+                            <connections>
+                                <action selector="logOutPressedbutton:" destination="4Oa-v7-Fuz" id="8eQ-v8-aFY"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
                         <outlet property="ageLabel" destination="pWN-rK-Ydk" id="w3d-6d-bnW"/>
                         <outlet property="alcoholeLabel" destination="rQa-wo-RuC" id="g4Y-hq-LDr"/>
@@ -1223,6 +1230,7 @@
         <image name="eye" width="16" height="16"/>
         <image name="hair" width="16" height="16"/>
         <image name="house" width="16" height="16"/>
+        <image name="more" width="25" height="25"/>
         <image name="relations" width="16" height="16"/>
         <image name="ruler" width="16" height="16"/>
         <image name="scale" width="16" height="16"/>

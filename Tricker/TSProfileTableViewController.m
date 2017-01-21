@@ -17,6 +17,7 @@
 #import "UIAlertController+TSAlertController.h"
 #import "TSReachability.h"
 #import "TSAlertController.h"
+#import "TSIntroductionViewController.h"
 #import "TSTrickerPrefixHeader.pch"
 
 #import <SVProgressHUD.h>
@@ -149,6 +150,10 @@
     [self.navigationController.navigationBar addSubview:self.logo];
     
     self.setUserOnlinePosition = 1;
+    
+//    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(10.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+//        [self callIntroductionViewController];
+//    });
 }
 
 
@@ -182,6 +187,18 @@
 - (void)viewDidDisappear:(BOOL)animated
 {
     [super viewDidDisappear:animated];
+}
+
+
+- (void)callIntroductionViewController
+{
+    TSIntroductionViewController *controller =
+    [self.storyboard instantiateViewControllerWithIdentifier:@"TSIntroductionViewController"];
+    controller.providesPresentationContextTransitionStyle = YES;
+    controller.definesPresentationContext = YES;
+    [controller setModalPresentationStyle:UIModalPresentationOverCurrentContext];
+    [self presentViewController:controller animated:YES completion:nil];
+    self.tabBarController.tabBar.hidden = YES;
 }
 
 
@@ -408,39 +425,6 @@
 }
 
 
-- (void)logOutPressedCell
-{
-    
-    TSAlertController *alertController = [TSAlertController sharedAlertController:@"Выберите"];
-    
-    UIAlertAction *exit = [UIAlertAction actionWithTitle:@"Выйти"
-                                                     style:UIAlertActionStyleDefault
-                                                   handler:^(UIAlertAction * _Nonnull action) {
-                                                       [self logOut];
-                                                   }];
-    
-    UIAlertAction *deleteAcuont = [UIAlertAction actionWithTitle:@"Удалить аккаунт"
-                                                     style:UIAlertActionStyleDefault
-                                                   handler:^(UIAlertAction * _Nonnull action) {
-
-                                                   }];
-    
-    UIAlertAction *cancel = [UIAlertAction actionWithTitle:@"Отменить"
-                                                     style:UIAlertActionStyleDefault
-                                                   handler:^(UIAlertAction * _Nonnull action) {
-                                                       
-                                                   }];
-    
-    [alertController customizationAlertView:@"Выберите" byLength:8 byFont:20.f];
-    
-    [alertController addAction:exit];
-    [alertController addAction:deleteAcuont];
-    [alertController addAction:cancel];
-    
-    [self presentViewController:alertController animated:YES completion:nil];
-}
-
-
 - (void)addImage:(enum UIImagePickerControllerSourceType)sourceType
 {
     UIImagePickerController *picker = [[UIImagePickerController alloc] init];
@@ -483,23 +467,6 @@
         });
         
     });
-
-}
-
-
-- (void)logOut
-{
-    
-    NSError *error;
-    [[FIRAuth auth] signOut:&error];
-    
-    [[TSFacebookManager sharedManager] logOutUser];
-    [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"token"];
-    
-    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:[NSBundle mainBundle]];
-    TSSocialNetworkLoginViewController *controller = [storyboard instantiateViewControllerWithIdentifier:@"TSSocialNetworkLoginViewController"];
-    
-    [self presentViewController:controller animated:YES completion:nil];
 
 }
 
@@ -661,21 +628,21 @@
         return self.heightHeader;
     }
 
-    if (indexPath.row == 10)
+    if (indexPath.row == 9)
     {
         return kHeightCellButtonSaveAndOut;
     }
     
-    if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
-    {
-        if (IS_IPAD_2) {
-            
-            if (indexPath.row == 0)
-            {
-                return 300;
-            }
-        }
-    }
+//    if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
+//    {
+//        if (IS_IPAD_2) {
+//            
+//            if (indexPath.row == 0)
+//            {
+//                return 300;
+//            }
+//        }
+//    }
     
     return kHeightCell;
 }
@@ -739,10 +706,6 @@
     if (indexPath.row == 8) {
         [self.userDefaults setObject:self.countLikes forKey:[NSString stringWithFormat:@"likes/%@",self.fireUser.uid]];
         [self.userDefaults synchronize];
-    }
-    
-    if (indexPath.row == 9) {
-        [self logOutPressedCell];
     }
     
 }

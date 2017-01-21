@@ -245,7 +245,7 @@
                                                               style:UIAlertActionStyleDefault
                                                             handler:^(UIAlertAction * _Nonnull action) {
 
-                                                                 [self callTabBarControllerByIndex:2];
+                                                                 [self callTabBarControllerByIndex:1];
 
                                                             }];
              
@@ -253,7 +253,7 @@
                                                               style:UIAlertActionStyleDefault
                                                             handler:^(UIAlertAction * _Nonnull action) {
 
-                                                                 [self callTabBarControllerByIndex:4];
+                                                                 [self callTabBarControllerByIndex:3];
                                                             }];
              
              UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"Отменить"
