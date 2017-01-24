@@ -104,11 +104,13 @@ NSString * const UpdateParametersNotification = @"UpdateParametersNotification";
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    NSLog(@"TSSettingsTableViewController");
+    
+    self.ref = [[FIRDatabase database] reference];
+    
     UIImageView *imageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"background"]];
     self.tableView.backgroundView = imageView;
-    
     [self.tableView setSeparatorColor:DARK_GRAY_COLOR];
-    
     self.progressHUD = 0;
 }
 
@@ -145,25 +147,20 @@ NSString * const UpdateParametersNotification = @"UpdateParametersNotification";
 
 - (void)configureController
 {
-    
     self.doneButton = [[UIBarButtonItem alloc] initWithTitle:@"Готово" style:UIBarButtonItemStylePlain
                                                       target:self action:@selector(doneAction:)];
-    
     self.statePickerView = NO;
     
     //создание массивов с источниками данных для UIPickerView
-    
     self.dataSourseAge = [NSMutableArray array];
     self.dataSourseGrowth = [NSMutableArray array];
     self.dataSourseWeight = [NSMutableArray array];
-    
     self.characteristicsUser = [NSMutableDictionary dictionary];
     
     for (int i = 18; i < 71; i++) {
         NSString *row = [NSString stringWithFormat:@"%d", i];
         [self.dataSourseAge addObject:row];
     }
-    
     
     for (int i = 140; i < 221; i++) {
         NSString *row = [NSString stringWithFormat:@"%d", i];
@@ -191,26 +188,19 @@ NSString * const UpdateParametersNotification = @"UpdateParametersNotification";
     self.navigationController.navigationBar.tintColor = DARK_GRAY_COLOR;
     
     //создание массива лейблов
-    
     self.labels = @[self.minAgeUnknownPeopleLabel, self.maxAgeUnknownPeopleLabel, self.growthLabel, self.weightLabel, self.targetLabel, self.figureLabel, self.eyesLabel, self.hairLabel, self.relationsLabel, self.childsLabel, self.earningsLabel, self.educationLabel, self.housingLabel, self.automobileLabel, self.smokingLabel, self.alcoholeLabel];
         
     self.checked = [UIImage imageNamed:@"checked"];
     self.checkbox = [UIImage imageNamed:@"check-box-empty"];
-    
 }
-
 
 - (void)setDataUser
 {
-    
     //получение модели пользователя из базы
-    
     if (self.progressHUD == 0) {
         [self showProgressHud];
         ++self.progressHUD;
     }
-    
-    self.ref = [[FIRDatabase database] reference];
     
     [self.ref observeEventType:FIRDataEventTypeValue withBlock:^(FIRDataSnapshot * _Nonnull snapshot) {
         
@@ -223,7 +213,6 @@ NSString * const UpdateParametersNotification = @"UpdateParametersNotification";
             dispatch_async(dispatch_get_main_queue(), ^{
                 
                 if (self.fireUser) {
-                    
                     [self setParametrUser:self.fireUser];
                     self.avatarImageView.image = avatar;
                     [self dissmisProgressHud];
@@ -231,13 +220,9 @@ NSString * const UpdateParametersNotification = @"UpdateParametersNotification";
                 
                 self.avatarImageView.layer.cornerRadius = 40;
                 self.avatarImageView.clipsToBounds = YES;
-                
             });
-            
         });
-        
     }];
-    
 }
 
 
@@ -250,7 +235,6 @@ NSString * const UpdateParametersNotification = @"UpdateParametersNotification";
     
     //установка возраста
     if (fireUser.age) {
-        
         self.ageLabel.text = fireUser.age;
     }
     
@@ -258,8 +242,6 @@ NSString * const UpdateParametersNotification = @"UpdateParametersNotification";
     
     //установка параметров из базы если уже есть данные
     if (fireUser.parameters) {
-        
-
         self.allKeysParameters = [fireUser.parameters allKeys];
         
         for (NSString *key in self.allKeysParameters) {
@@ -276,7 +258,6 @@ NSString * const UpdateParametersNotification = @"UpdateParametersNotification";
             NSString *shortKey = [key substringFromIndex:3];
             
             if ([shortKey isEqualToString:@"1"]) {
-
                 NSString *searchGender = [fireUser.parameters objectForKey:key];
                 NSArray *components = [searchGender componentsSeparatedByString:@" "];
                 
@@ -285,9 +266,7 @@ NSString * const UpdateParametersNotification = @"UpdateParametersNotification";
                     self.stateButtonGirl = YES;
                     [self.manButton setImage:self.checked forState:UIControlStateNormal];
                     [self.womanButton setImage:self.checked forState:UIControlStateNormal];
-                    
                 } else {
-                    
                     if ([[components objectAtIndex:0] isEqualToString:@"man"]) {
                         self.stateButtonBoy = YES;
                         [self.manButton setImage:self.checked forState:UIControlStateNormal];
@@ -305,7 +284,6 @@ NSString * const UpdateParametersNotification = @"UpdateParametersNotification";
                 NSString *ageRange = [fireUser.parameters objectForKey:key];
                 NSArray *components = [ageRange componentsSeparatedByString:@" "];
                 if ([components count] > 1) {
-                    
                     self.searchCurrentMinAge = [[components objectAtIndex:0] integerValue];
                     self.searchCurrentMaxAge = [[components objectAtIndex:1] integerValue];
                     
@@ -323,7 +301,6 @@ NSString * const UpdateParametersNotification = @"UpdateParametersNotification";
 
 - (IBAction)actionBoyButton:(id)sender
 {
-    
     [self updateCharacteristicUser];
     
     if (self.stateButtonBoy == NO) {
@@ -334,13 +311,11 @@ NSString * const UpdateParametersNotification = @"UpdateParametersNotification";
         self.stateButtonBoy = NO;
         [self.characteristicsUser removeObjectForKey:@"key1"];
     }
-    
 }
 
 
 - (IBAction)actionGirlButton:(id)sender
 {
-    
     [self updateCharacteristicUser];
     
     if (self.stateButtonGirl == NO) {
@@ -351,39 +326,33 @@ NSString * const UpdateParametersNotification = @"UpdateParametersNotification";
         self.stateButtonGirl = NO;
         [self.characteristicsUser removeObjectForKey:@"key1"];
     }
-
 }
 
 - (IBAction)logOutPressedbutton:(id)sender
 {
-    [self logOutUser];
-}
-
-- (void)logOutUser
-{
-    
     TSAlertController *alertController = [TSAlertController sharedAlertController:@"Выберите"];
     
     UIAlertAction *exit = [UIAlertAction actionWithTitle:@"Выйти"
                                                    style:UIAlertActionStyleDefault
                                                  handler:^(UIAlertAction * _Nonnull action) {
-                                                     [self logOut];
+                                                     [self logOutUser];
                                                  }];
     
     UIAlertAction *deleteAcuont = [UIAlertAction actionWithTitle:@"Удалить аккаунт"
                                                            style:UIAlertActionStyleDefault
                                                          handler:^(UIAlertAction * _Nonnull action) {
-                                                             [self deleteUser];
-                                                             [self callTabBarController];
+//                                                             [self deleteUser];
+//                                                             [self callTabBarController];
+                                                             [self deleteUserOfDataBase];
                                                          }];
     
     UIAlertAction *cancel = [UIAlertAction actionWithTitle:@"Отменить"
                                                      style:UIAlertActionStyleDefault
                                                    handler:^(UIAlertAction * _Nonnull action) {
                                                        
-                                                   }]; 
+                                                   }];
     
-    [alertController customizationAlertView:@"Выберите" byLength:8 byFont:20.f];
+    [alertController customizationAlertView:@"Выберите" byFont:20.f];
     
     [alertController addAction:exit];
     [alertController addAction:deleteAcuont];
@@ -392,6 +361,54 @@ NSString * const UpdateParametersNotification = @"UpdateParametersNotification";
     [self presentViewController:alertController animated:YES completion:nil];
 }
 
+- (void)logOutUser
+{
+    TSAlertController *alertController = [TSAlertController sharedAlertController:@"Подтвердите выход!"];
+    
+    UIAlertAction *exit = [UIAlertAction actionWithTitle:@"Да"
+                                                   style:UIAlertActionStyleDefault
+                                                 handler:^(UIAlertAction * _Nonnull action) {
+                                                     [self logOut];
+                                                 }];
+    
+    UIAlertAction *cancel = [UIAlertAction actionWithTitle:@"Нет"
+                                                     style:UIAlertActionStyleDefault
+                                                   handler:^(UIAlertAction * _Nonnull action) {
+                                                       
+                                                   }];
+    
+    [alertController customizationAlertView:@"Подтвердите выход!" byFont:20.f];
+    
+    [alertController addAction:exit];
+    [alertController addAction:cancel];
+    
+    [self presentViewController:alertController animated:YES completion:nil];
+}
+
+- (void)deleteUserOfDataBase
+{
+    TSAlertController *alertController = [TSAlertController sharedAlertController:@"Вы действительно хотите удалить аккаунт и покинуть ""Tricker""?"];
+    
+    UIAlertAction *delete = [UIAlertAction actionWithTitle:@"Да"
+                                                   style:UIAlertActionStyleDefault
+                                                 handler:^(UIAlertAction * _Nonnull action) {
+                                                     [self deleteUser];
+                                                 }];
+    
+    UIAlertAction *cancel = [UIAlertAction actionWithTitle:@"Нет"
+                                                     style:UIAlertActionStyleDefault
+                                                   handler:^(UIAlertAction * _Nonnull action) {
+                                                       
+                                                   }];
+    
+    [alertController customizationAlertView:@"Вы действительно хотите удалить аккаунт и покинуть ""Tricker""?"
+                                     byFont:16.f];
+    
+    [alertController addAction:delete];
+    [alertController addAction:cancel];
+    
+    [self presentViewController:alertController animated:YES completion:nil];
+}
 
 - (void)updateCharacteristicUser
 {
@@ -406,24 +423,19 @@ NSString * const UpdateParametersNotification = @"UpdateParametersNotification";
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    
-    if (indexPath.row == 0)
-    {
+    if (indexPath.row == 0) {
         return 100;
     }
     
-    if (indexPath.row == 20)
-    {
+    if (indexPath.row == 20) {
         return kHeightCellButtonSaveAndOut;
     }
-    
     return kHeightCell;
 }
 
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
     if (indexPath.row == 3 && self.statePickerView == NO)
@@ -488,14 +500,12 @@ NSString * const UpdateParametersNotification = @"UpdateParametersNotification";
         self.tagSelectCell = 16;
         [self createdUipickerView:15];
     }
-    
 }
 
 
 - (void)createdUipickerView:(NSInteger)tag
 {
     //создание UIPickerView
-    
     self.pickerView = [[UIPickerView alloc] init];
     [self.pickerView setValue:DARK_GRAY_COLOR forKey:@"textColor"];
     self.pickerView.backgroundColor = LIGHT_YELLOW_COLOR;
@@ -509,7 +519,6 @@ NSString * const UpdateParametersNotification = @"UpdateParametersNotification";
         self.view.window.backgroundColor = [UIColor whiteColor];
         
         //изменение фрейма экрана и всплыте UIPickerView
-        
         CGRect screenRect = [[UIScreen mainScreen] bounds];
         CGSize pickerSize = [self.pickerView sizeThatFits:CGSizeZero];
         CGRect startRect = CGRectMake(0.0,
@@ -523,16 +532,12 @@ NSString * const UpdateParametersNotification = @"UpdateParametersNotification";
         
         [UIView beginAnimations:nil context:NULL];
         [UIView setAnimationDuration:0.3];
-        
         [UIView setAnimationDelegate:self];
-        
         self.pickerView.frame = pickerRect;
-        
         CGRect newFrame = self.tableView.frame;
         newFrame.size.height -= self.pickerView.frame.size.height;
         self.tableView.frame = newFrame;
         [UIView commitAnimations];
-        
         [self.navigationItem setRightBarButtonItem:self.doneButton animated:YES];
     }
     
@@ -542,7 +547,6 @@ NSString * const UpdateParametersNotification = @"UpdateParametersNotification";
 
 - (void)doneAction:(UIBarButtonItem *)doneButton
 {
-    
     //скрытие UIPickerView
     
     CGRect screenRect = [[UIScreen mainScreen] bounds];
@@ -878,15 +882,13 @@ NSString * const UpdateParametersNotification = @"UpdateParametersNotification";
     [self callTabBarController];
 }
 
-- (void)deleteUser
-{
+- (void)deleteUser {
     FIRUser *user = [FIRAuth auth].currentUser;
-    
     [user deleteWithCompletion:^(NSError *_Nullable error) {
         if (error) {
-            
+            NSLog(@"Error %@", error.localizedDescription);
         } else {
-            // Account deleted.
+            NSLog(@"Delete user");
         }
     }];
 }

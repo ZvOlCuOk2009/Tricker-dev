@@ -27,7 +27,7 @@
 @import FirebaseStorage;
 @import FirebaseDatabase;
 
-@interface TSSocialNetworkLoginViewController () <FBSDKLoginButtonDelegate, VKSdkDelegate, VKSdkUIDelegate, GIDSignInUIDelegate>
+@interface TSSocialNetworkLoginViewController () <FBSDKLoginButtonDelegate, VKSdkDelegate, VKSdkUIDelegate, GIDSignInUIDelegate, TSFireImageDalegate>
 
 @property (strong, nonatomic) IBOutlet FBSDKLoginButton *loginButton;
 @property (weak, nonatomic) IBOutlet GIDSignInButton *signInButton;
@@ -46,7 +46,7 @@
 
     self.ref = [[FIRDatabase database] reference];
     self.storageRef = [[FIRStorage storage] reference];
-        
+    
     [self configureController];
 }
 
@@ -133,7 +133,6 @@
                                     }
                                 }];
         
-        
     }
     
     FIRAuthCredential *credential = [FIRFacebookAuthProvider
@@ -180,8 +179,9 @@
         
         NSData *avatarData = [NSData dataWithContentsOfURL:[NSURL URLWithString:stringPhoto]];
         
-        [TSFireImage saveAvatarInTheDatabase:avatarData byPath:imagePath dictParam:userData];
-        [self openTabBarcontroller];
+        TSFireImage *fireImage = [[TSFireImage alloc] init];
+        fireImage.delegate = self;
+        [fireImage saveAvatarInTheDatabase:avatarData byPath:imagePath dictParam:userData];
         
     }];
     
@@ -388,5 +388,9 @@
     return verification;
 }
 
+-(void)dealloc
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
 
 @end

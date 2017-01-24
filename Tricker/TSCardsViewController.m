@@ -46,7 +46,6 @@
     [self configureController];
 }
 
-
 - (void)configureController
 {
      
@@ -89,15 +88,12 @@
     [self.swipeableView discardAllViews];
     [self.swipeableView loadViewsIfNeeded];
     
-    
     if (self.selectedUsers.count <= 2) {
         self.counterIndexPath = 0;
     } else {
         self.counterIndexPath = 2;
     }
-    
 }
-
 
 - (void)viewWillAppear:(BOOL)animated
 {
@@ -108,7 +104,6 @@
           if (self.cap) {
                self.cap.hidden = NO;
           } else {
-               
                self.cap = [[UIView alloc] initWithFrame:CGRectMake((self.view.frame.size.width / 5) * 2, self.view.frame.size.height - 44, self.view.frame.size.width / 5, 44)];
                self.cap.backgroundColor = [UIColor redColor];
                NSArray *buttons = @[@"", @"", self.cap];
@@ -116,16 +111,11 @@
           }
           
           recognizerControllersCardsAndChat = 1;
-          
      } else {
-          
           TSAlertController *alertController =
           [TSAlertController noInternetConnection:@"Проверьте интернет соединение..."];
-          
           [self presentViewController:alertController animated:YES completion:nil];
-          
      }
-     
 }
 
 
@@ -262,8 +252,7 @@
                                                                  
                                                             }];
              
-             [alertController customizationAlertView:@"По данным параметрам пользователей больше нету"
-                                            byLength:46 byFont:16.f];
+             [alertController customizationAlertView:@"По данным параметрам пользователей больше нету" byFont:16.f];
              
              [alertController addAction:repearAction];
              [alertController addAction:changeAction];
@@ -287,8 +276,7 @@
                                                               
                                                            }];
          
-          [alertController customizationAlertView:@"По данным параметрам пользователей не найдено..."
-                                         byLength:48 byFont:16.f];
+          [alertController customizationAlertView:@"По данным параметрам пользователей не найдено..." byFont:16.f];
          
           [alertController addAction:okAction];
           [self presentViewController:alertController animated:YES completion:nil];

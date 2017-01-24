@@ -65,6 +65,7 @@
 		FD8220031E2C410000D886E2 /* TSSwipeViewIpad.xib in Resources */ = {isa = PBXBuildFile; fileRef = FD8220021E2C410000D886E2 /* TSSwipeViewIpad.xib */; };
 		FDBDDDDF1DDB8745008EE73E /* TSSettingsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FDBDDDDE1DDB8745008EE73E /* TSSettingsTableViewController.m */; };
 		FDD4E1D51E32C66500D10093 /* TSIntroductionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FDD4E1D41E32C66500D10093 /* TSIntroductionViewController.m */; };
+		FDD72E921E38139200773F65 /* LaunchScreenIpad.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FDD72E911E38139100773F65 /* LaunchScreenIpad.storyboard */; };
 		FDE927391DE840EC00FF884F /* TSFireBase.m in Sources */ = {isa = PBXBuildFile; fileRef = FDE927381DE840EC00FF884F /* TSFireBase.m */; };
 		FDE9273C1DE8EC4600FF884F /* TSIntermediateViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FDE9273B1DE8EC4600FF884F /* TSIntermediateViewController.m */; };
 		FDEBE3E81DF1C4AB0073A0FF /* TSCollCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = FDEBE3E71DF1C4AB0073A0FF /* TSCollCell.xib */; };
@@ -197,6 +198,7 @@
 		FDBDDDDE1DDB8745008EE73E /* TSSettingsTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSSettingsTableViewController.m; sourceTree = "<group>"; };
 		FDD4E1D31E32C66500D10093 /* TSIntroductionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSIntroductionViewController.h; sourceTree = "<group>"; };
 		FDD4E1D41E32C66500D10093 /* TSIntroductionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSIntroductionViewController.m; sourceTree = "<group>"; };
+		FDD72E911E38139100773F65 /* LaunchScreenIpad.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = LaunchScreenIpad.storyboard; sourceTree = "<group>"; };
 		FDE927371DE840EC00FF884F /* TSFireBase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSFireBase.h; sourceTree = "<group>"; };
 		FDE927381DE840EC00FF884F /* TSFireBase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSFireBase.m; sourceTree = "<group>"; };
 		FDE9273A1DE8EC4600FF884F /* TSIntermediateViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSIntermediateViewController.h; sourceTree = "<group>"; };
@@ -544,6 +546,7 @@
 				FD68B45E1DDA7CFC00EF19C3 /* ChatStoryboard.storyboard */,
 				FD68B4601DDA7D0C00EF19C3 /* SettingStoryboard.storyboard */,
 				FD1C4F3F1DCE252200CF63E9 /* LaunchScreen.storyboard */,
+				FDD72E911E38139100773F65 /* LaunchScreenIpad.storyboard */,
 			);
 			name = Storyboards;
 			sourceTree = "<group>";
@@ -763,6 +766,7 @@
 				FD1C4F411DCE252200CF63E9 /* LaunchScreen.storyboard in Resources */,
 				FDED429F1E06BC8A005E0948 /* TSDetailView.xib in Resources */,
 				FD821FF21E2BB96600D886E2 /* TSDetailView5.xib in Resources */,
+				FDD72E921E38139200773F65 /* LaunchScreenIpad.storyboard in Resources */,
 				FD06541C1DFCA24200AE45EF /* TSSwipeView6plus.xib in Resources */,
 				FD821FF41E2BBCB600D886E2 /* TSPhotoDetailView5.xib in Resources */,
 				FD68B45D1DDA7CEC00EF19C3 /* CardsStoryboard.storyboard in Resources */,

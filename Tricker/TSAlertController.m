@@ -32,7 +32,7 @@
                                                        
                                                    }];
     
-    [alertController customizationAlertView:text byLength:[text length] byFont:20.f];
+    [alertController customizationAlertView:text byFont:20.f];
     
     [alertController addAction:cancel];
     
@@ -46,7 +46,7 @@
                                                                              message:nil
                                                                       preferredStyle:UIAlertControllerStyleAlert];
     
-    [alertController customizationAlertView:text byLength:[text length] byFont:20.f];
+    [alertController customizationAlertView:text byFont:20.f];
     
     return alertController;
 

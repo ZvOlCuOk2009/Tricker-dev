@@ -27,7 +27,7 @@
 @property (strong, nonatomic) TSSwipeView *swipeView;
 @property (strong, nonatomic) NSDictionary *fireBase;
 @property (strong, nonatomic) NSString *interlocutorID;
-@property (strong, nonatomic) NSArray *likesUsersUid;
+@property (strong, nonatomic) NSMutableArray *likesUsersUid;
 @property (strong, nonatomic) NSMutableArray *likesUsers;
 @property (strong, nonatomic) NSMutableArray *likesUsersAvatar;
 @property (strong, nonatomic) NSMutableArray *likesUsersParams;
@@ -56,7 +56,7 @@
     [backItem setTarget:self];
     [backItem setAction:@selector(cancelInteraction)];
     
-    self.likesUsersUid = [NSArray array];
+    self.likesUsersUid = [NSMutableArray array];
     self.likesUsers = [NSMutableArray array];
     self.likesUsersAvatar = [NSMutableArray array];
     self.likesUsersParams = [NSMutableArray array];
@@ -73,18 +73,13 @@
         
         if ([self.likesUsers count] == 0) {
             [self configureController];
-            [self progressHubShow];
         }
-        
     } else {
         
         TSAlertController *alertController =
         [TSAlertController noInternetConnection:@"Проверьте интернет соединение..."];
-        
         [self presentViewController:alertController animated:YES completion:nil];
-        
     }
-    
 }
 
 
@@ -104,10 +99,8 @@
                                           animated:YES];
 }
 
-
 - (void)configureController
 {
-    
     if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone)
     {
         if (IS_IPHONE_4) {
@@ -148,27 +141,24 @@
     }];
 }
 
-
 - (void)fillingDataSource
 {
-    
+    [self progressHubShow];
+
     [self.ref observeEventType:FIRDataEventTypeValue withBlock:^(FIRDataSnapshot * _Nonnull snapshot) {
         
         self.fireBase = [TSFireBase initWithSnapshot:snapshot];
         
         for (NSString *reviewsUserUid in self.likesUsersUid) {
-            
             NSDictionary *userDataReviews = [self.fireBase objectForKey:reviewsUserUid];
             NSString *nameUserInterest = [[userDataReviews objectForKey:@"userData"] objectForKey:@"displayName"];
             NSString *ageUserInterest = [[userDataReviews objectForKey:@"userData"] objectForKey:@"age"];
             NSString *photoUserInterest = [[userDataReviews objectForKey:@"userData"] objectForKey:@"photoURL"];
-            
             NSArray *paramsLikes = [userDataReviews objectForKey:@"parameters"];
             NSArray *photosLikes = [userDataReviews objectForKey:@"photos"];
             
             NSDictionary *userDataLikeParam = @{@"nameUserInterest":nameUserInterest,
                                                   @"ageUserInterest":ageUserInterest};
-            
             [self.likesUsers addObject:userDataLikeParam];
             [self.likesUsersAvatar addObject:[self convertAvatarByUrl:photoUserInterest]];
             [self.likesUsersParams addObject:paramsLikes];
@@ -184,17 +174,11 @@
         if ([self.likesUsers count] > 0) {
             [self.tableView reloadData];
             [self progressHubDismiss];
-        } else {
-            [self progressHubDismiss];
         }
-        
     }];
-    
 }
 
-
 #pragma mark - UITableViewDataSource
-
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
@@ -206,16 +190,12 @@
     static NSString *identifier = @"cell";
     
     TSTableViewStatisticsCell *cell = [tableView dequeueReusableCellWithIdentifier:identifier];
-    
     if (!cell) {
         cell = [[TSTableViewStatisticsCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:identifier];
     }
-    
     [self configureCell:cell atIndexPath:indexPath];
-    
     return cell;
 }
-
 
 - (void)configureCell:(TSTableViewStatisticsCell *)cell atIndexPath:(NSIndexPath *)indexPath
 {
@@ -230,9 +210,7 @@
     return avatar;
 }
 
-
 #pragma mark - UITableViewDelegate
-
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -286,8 +264,26 @@
     [self.swipeView addGestureRecognizer:tapGestureRecognizer];
     
     recognizerTransitionOnChatController = 2;
-    
 }
+
+- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
+    return YES;
+}
+
+- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
+    if (editingStyle == UITableViewCellEditingStyleDelete) {
+        [self.likesUsersUid removeObjectAtIndex:indexPath.row];
+        [self.likesUsers removeObjectAtIndex:indexPath.row];
+        [self.likesUsersAvatar removeObjectAtIndex:indexPath.row];
+        [tableView reloadData];
+        
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+            [[[[[self.ref child:@"dataBase"] child:@"users"] child:self.fireUser.uid]
+              child:@"likes"] setValue:self.likesUsersUid];
+        });
+    }
+}
+
 
 - (void)hendlePanGesture
 {
@@ -306,7 +302,6 @@
                          heart.frame = self.heartFinalFrame;
                      } completion:nil];
     
-    
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.6 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
         [UIView animateWithDuration:0.15
                          animations:^{
@@ -319,7 +314,6 @@
     });
     
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        
         [[TSGetInterlocutorParameters sharedGetInterlocutor] getInterlocutorFromDatabase:self.interlocutorID
                                                                               respondent:@"ChatViewController"];
     });

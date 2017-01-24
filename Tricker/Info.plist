@@ -4,6 +4,8 @@
 <dict>
 	<key>FirebaseAppDelegateProxyEnabled</key>
 	<false/>
+	<key>UILaunchImageFile~ipad</key>
+	<string>LaunchScreenIpad</string>
 	<key>UILaunchImageFile~iphone</key>
 	<string>LaunchScreen</string>
 	<key>NSPhotoLibraryUsageDescription</key>

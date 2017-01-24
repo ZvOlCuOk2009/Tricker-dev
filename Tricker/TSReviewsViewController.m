@@ -29,7 +29,7 @@
 @property (strong, nonatomic) TSSwipeView *swipeView;
 @property (strong, nonatomic) NSDictionary *fireBase;
 @property (strong, nonatomic) NSString *interlocutorID;
-@property (strong, nonatomic) NSArray *reviewsUsersUid;
+@property (strong, nonatomic) NSMutableArray *reviewsUsersUid;
 @property (strong, nonatomic) NSMutableArray *reviewsUsers;
 @property (strong, nonatomic) NSMutableArray *reviewsUsersAvatar;
 @property (strong, nonatomic) NSMutableArray *reviewsUsersParams;
@@ -58,7 +58,7 @@
     [backItem setTarget:self];
     [backItem setAction:@selector(cancelInteraction)];
     
-    self.reviewsUsersUid = [NSArray array];
+    self.reviewsUsersUid = [NSMutableArray array];
     self.reviewsUsers = [NSMutableArray array];
     self.reviewsUsersAvatar = [NSMutableArray array];
     self.reviewsUsersParams = [NSMutableArray array];
@@ -75,7 +75,6 @@
         
         if ([self.reviewsUsers count] == 0) {
             [self configureController];
-            [self progressHubShow];
         }
 
     } else {
@@ -85,7 +84,6 @@
         
         [self presentViewController:alertController animated:YES completion:nil];
     }
-    
 }
 
 
@@ -153,6 +151,7 @@
 
 - (void)fillingDataSource
 {
+    [self progressHubShow];
     
     [self.ref observeEventType:FIRDataEventTypeValue withBlock:^(FIRDataSnapshot * _Nonnull snapshot) {
 
@@ -186,12 +185,8 @@
         if ([self.reviewsUsers count] > 0) {
             [self.tableView reloadData];
             [self progressHubDismiss];
-        } else {
-            [self progressHubDismiss];
         }
-        
     }];
-    
 }
 
 
@@ -235,11 +230,6 @@
 
 #pragma mark - UITableViewDelegate
 
-
-- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    return 64;
-}
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -289,6 +279,31 @@
  
     recognizerTransitionOnChatController = 2;
 
+}
+
+
+- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
+    return YES;
+}
+
+
+- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
+    if (editingStyle == UITableViewCellEditingStyleDelete) {
+        [self.reviewsUsersUid removeObjectAtIndex:indexPath.row];
+        [self.reviewsUsers removeObjectAtIndex:indexPath.row];
+        [self.reviewsUsersAvatar removeObjectAtIndex:indexPath.row];
+        [tableView reloadData];
+        
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+            [[[[[self.ref child:@"dataBase"] child:@"users"] child:self.fireUser.uid]
+              child:@"reviews"] setValue:self.reviewsUsersUid];
+        });
+    }
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return 64;
 }
 
 - (void)hendlePanGesture

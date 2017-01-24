@@ -11,7 +11,7 @@
 
 @implementation UIAlertController (TSAlertController)
 
-- (UIAlertController *)customizationAlertView:(NSString *)title byLength:(NSInteger)length byFont:(CGFloat)size
+- (UIAlertController *)customizationAlertView:(NSString *)title byFont:(CGFloat)size
 {
     UIView *subview = self.view.subviews.firstObject;
     UIView *alertContentView = subview.subviews.firstObject;
@@ -23,7 +23,7 @@
     NSMutableAttributedString *mutableAttrString = [[NSMutableAttributedString alloc] initWithString:title];
     [mutableAttrString addAttribute:NSFontAttributeName
                               value:[UIFont fontWithName:@"HelveticaNeue-Light" size:size]
-                              range:NSMakeRange(0, length)];
+                              range:NSMakeRange(0, [title length])];
     [self setValue:mutableAttrString forKey:@"attributedTitle"];
     
     return self;

@@ -47,14 +47,16 @@
     UIImage *image_introduction_2 = [UIImage imageNamed:@"image_introduction_2"];
     UIImage *image_introduction_3 = [UIImage imageNamed:@"image_introduction_3"];
     UIImage *image_introduction_4 = [UIImage imageNamed:@"image_introduction_4"];
+    UIImage *image_introduction_5 = [UIImage imageNamed:@"image_introduction_5"];
     
     NSString *textOnePage = @"Укажите свой пол и дату рождения, что бы другие пользователи могли увидеть Вас,";
     NSString *textTwoPage = @"прокрутите вниз и сохраните внесенные изменения...";
     NSString *textThreePage = @"...а также на экране настроек, укажите пол и возраст пользователя которого ищите,";
     NSString *textForePage = @"и не забудьте сохранить добавленные даные...";
+    NSString *textFivePage = @"Всех найденных пользователей Вы сможете посмотреть простым смахиванием";
     
-    self.images = @[image_introduction_1, image_introduction_2, image_introduction_3, image_introduction_4];
-    self.texts = @[textOnePage, textTwoPage, textThreePage, textForePage];
+    self.images = @[image_introduction_1, image_introduction_2, image_introduction_3, image_introduction_4, image_introduction_5];
+    self.texts = @[textOnePage, textTwoPage, textThreePage, textForePage, textFivePage];
     
     UIButton *cancelButton = [[UIButton alloc] init];
     cancelButton.frame = CGRectMake(self.view.frame.size.width - 50, 25, 25, 25);
@@ -156,7 +158,7 @@
     NSInteger currentPage = self.scrollView.contentOffset.x / self.scrollView.frame.size.width;
     CGFloat weight = self.scrollView.frame.size.width;
     NSInteger nextPage;
-    if (currentPage < 3) {
+    if (currentPage < [self.texts count]) {
         nextPage = (weight * currentPage) + weight;
     } else {
         nextPage = currentPage * weight;

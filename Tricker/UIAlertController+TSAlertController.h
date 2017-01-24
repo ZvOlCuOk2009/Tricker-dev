@@ -10,6 +10,6 @@
 
 @interface UIAlertController (TSAlertController)
 
-- (UIAlertController *)customizationAlertView:(NSString *)title byLength:(NSInteger)length byFont:(CGFloat)size;
+- (UIAlertController *)customizationAlertView:(NSString *)title byFont:(CGFloat)size;
 
 @end

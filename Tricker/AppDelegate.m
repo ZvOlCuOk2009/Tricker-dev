@@ -171,8 +171,9 @@ void HandleSignal(int signal) {
                                                   
                                                   NSData *avatarData = [NSData dataWithContentsOfURL:[NSURL URLWithString:stringPhoto]];
                                                   
-                                                  [TSFireImage saveAvatarInTheDatabase:avatarData byPath:imagePath
-                                                                             dictParam:userData];
+                                                  TSFireImage *saveFireImage = [[TSFireImage alloc] init];
+                                                  
+                                                  [saveFireImage saveAvatarInTheDatabase:avatarData byPath:imagePath dictParam:userData];
                                                   
                                                   FIRUser *fireUser = [FIRAuth auth].currentUser;
                                                   FIRDatabaseReference *ref = [[FIRDatabase database] reference];
@@ -199,7 +200,6 @@ void HandleSignal(int signal) {
                                                                                      [self openTabBarController];
                                                                                      
                                                                                  }];
-                                                                                 
                                                                              }];
                                                   
                                                   NSString *token = user.uid;

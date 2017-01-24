@@ -9,11 +9,20 @@
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 
+@protocol TSFireImageDalegate <NSObject>
+
+@required;
+
+- (void)openTabBarcontroller;
+
+@end
+
 @interface TSFireImage : NSObject
 
-+ (TSFireImage *) sharedManager;
-+ (void)saveAvatarInTheDatabase:(NSData *)avatarDataByPath byPath:(NSString *)path
+@property (weak, nonatomic) id <TSFireImageDalegate> delegate;
+
+- (void)saveAvatarInTheDatabase:(NSData *)avatarDataByPath byPath:(NSString *)path
                       dictParam:(NSMutableDictionary *)params;
-+ (void)savePhotos:(NSData *)imageDataByPath byPath:(NSString *)path photos:(NSMutableArray *)photos;
+- (void)savePhotos:(NSData *)imageDataByPath byPath:(NSString *)path photos:(NSMutableArray *)photos;
 
 @end

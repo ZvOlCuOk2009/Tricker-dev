@@ -100,7 +100,7 @@ NSInteger clearArrayMessageChat;
                                                                 
                                                             }];
     
-    [alertController customizationAlertView:@"Удалить фото?" byLength:13 byFont:20.f];
+    [alertController customizationAlertView:@"Удалить фото?" byFont:20.f];
     
     [alertController addAction:alertActiionYes];
     [alertController addAction:alertActiionNo];

@@ -7,12 +7,16 @@
 //
 
 #import "TSTabBarViewController.h"
-#import "TSTrickerPrefixHeader.pch"
 #import "TSIntroductionViewController.h"
+#import "TSFireUser.h"
+#import "TSTrickerPrefixHeader.pch"
 
 @import FirebaseDatabase;
 
 @interface TSTabBarViewController ()
+
+@property (strong, nonatomic) FIRDatabaseReference *refCountMessage;
+@property (strong, nonatomic) TSFireUser *fireUser;
 
 @end
 
@@ -20,21 +24,35 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+
+    self.refCountMessage = [[FIRDatabase database] reference];
     
     [self.viewControllers enumerateObjectsUsingBlock:^(UIViewController *vc, NSUInteger idx, BOOL *stop) {
         vc.title = nil;
     }];    
     
+    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+    NSString *firstInput = [userDefaults objectForKey:@"firstInput"];
+    if (!firstInput) {
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(10.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            [self callIntroductionViewController];
+            NSString *firstInput = @"firstInput";
+            [userDefaults setObject:firstInput forKey:@"firstInput"];
+            [userDefaults synchronize];
+        });
+    }
     
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(10.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        [self callIntroductionViewController];
-    });
+    [self.refCountMessage observeEventType:FIRDataEventTypeValue withBlock:^(FIRDataSnapshot * _Nonnull snapshot) {
+        
+        self.fireUser = [TSFireUser initWithSnapshot:snapshot];
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+            [self setObserverForIncomingMessages:self.fireUser];
+        });
+    }];
 }
-
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
-
 }
 
 - (void)callIntroductionViewController
@@ -48,6 +66,30 @@
     [controller setModalPresentationStyle:UIModalPresentationOverCurrentContext];
     [self presentViewController:controller animated:YES completion:nil];
     self.tabBarController.tabBar.hidden = YES;
+}
+
+- (void)setObserverForIncomingMessages:(TSFireUser *)fireUser
+{
+    NSDictionary *chats = fireUser.chats;
+    NSArray *allKeys = [chats allKeys];
+    NSInteger currentCountMessage = 0;
+    for (int i = 0; i < [chats count]; i++) {
+        NSString *key = [allKeys objectAtIndex:i];
+        NSArray *chat = [chats objectForKey:key];
+        currentCountMessage = currentCountMessage + [chat count];
+    }
+    
+    NSInteger saveCountMessage = [[NSUserDefaults standardUserDefaults] integerForKey:@"countMessage"];
+    
+    NSInteger differenceMessage = currentCountMessage - saveCountMessage;
+    
+    [[NSUserDefaults standardUserDefaults] setInteger:differenceMessage forKey:@"countMessage"];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+    
+    UITabBarItem *itemsChat = [self.tabBar.items objectAtIndex:2];
+    itemsChat.badgeValue = [NSString stringWithFormat:@"%ld", (long)differenceMessage];
+    
+    NSLog(@"currentCountMessage %ld", (long)differenceMessage);
 }
 
 @end

@@ -64,10 +64,8 @@ NSInteger recognizerControllersCardsAndChat;
     self.tapGesture.delegate = self;
     self.tapGesture.enabled = NO;
     [self addGestureRecognizer:self.tapGesture];
-    
     self.tableView.allowsSelection = NO;
     [self.tableView setShowsVerticalScrollIndicator:NO];
-    
     self.allKeys = [self.parameterUser allKeys];
     
     //наполнение массивов заголовками и данными
@@ -76,7 +74,6 @@ NSInteger recognizerControllersCardsAndChat;
     [tempArrayGetParameters addObject:@""];
     
     for (int i = 0; i < [self.parameterUser count]; i++) {
-        
         NSString *key = [self.allKeys objectAtIndex:i];
         NSString *shortKey = [key substringFromIndex:3];
         NSInteger index = [shortKey integerValue];
@@ -92,16 +89,13 @@ NSInteger recognizerControllersCardsAndChat;
         }
         
         //добавление тайтлов и параметров в промежуточные массивы
-        
         NSString *title = [self.dataSource objectAtIndex:index - 1];
         
         [tempArrayDataSource insertObject:title atIndex:index];
         [tempArrayGetParameters insertObject:parameter atIndex:index];
-        
     }
 
     //добавление тайтлов и параметров в массивы по порядковым номерам
-    
     NSInteger counterDSArray = 0;
     NSInteger counterParamArray = 0;
     
@@ -123,26 +117,17 @@ NSInteger recognizerControllersCardsAndChat;
     if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone)
     {
         if (IS_IPHONE_4) {
-            
             self.photosView = kTSPhotoView;
-            
         } else if (IS_IPHONE_5) {
-            
             self.photosView = kTSPhotoView5;
-            
         } else if (IS_IPHONE_6) {
-            
             self.photosView = kTSPhotoView6;
-            
         } else if (IS_IPHONE_6_PLUS) {
-            
             self.photosView = kTSPhotoView_6_Plus;
         }
     } else if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
-        
         self.photosView = kTSPhotoViewIpad;
     }
-    
 }
 
 
@@ -180,79 +165,56 @@ NSInteger recognizerControllersCardsAndChat;
 
 + (instancetype)initProfileView
 {
-    
     TSSwipeView *view = nil;
-    
     
     if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone)
     {
         if (IS_IPHONE_4) {
-            
             view = [self initProfileViewNibBySizeDevice:view nameNib:@"TSSwipeView"
                                                frameNib:kTSSwipeViewFrame];
-            
         } else if (IS_IPHONE_5) {
-            
             view = [self initProfileViewNibBySizeDevice:view nameNib:@"TSSwipeView5"
                                                frameNib:kTSSwipeView5Frame];
-            
         } else if (IS_IPHONE_6) {
-            
             view = [self initProfileViewNibBySizeDevice:view nameNib:@"TSSwipeView6"
                                                frameNib:kTSSwipeView6Frame];
-            
         } else if (IS_IPHONE_6_PLUS) {
-            
             view = [self initProfileViewNibBySizeDevice:view nameNib:@"TSSwipeView6plus"
                                                frameNib:kTSSwipeView6PlusFrame];
         }
         
     } else if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
-        
         view = [self initProfileViewNibBySizeDevice:view nameNib:@"TSSwipeViewIpad"
                                            frameNib:kTSSwipeViewIpadFrame];
     }
-    
     return view;
-    
 }
 
 + (instancetype)initDetailView
 {
-    
     TSSwipeView *view = nil;
     
     if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone)
     {
         if (IS_IPHONE_4) {
-            
             view = [self initDetailViewNibBySizeDevice:view nameNib:@"TSDetailView"
                                               frameNib:kTSSwipeDetailViewFrame];
-            
         } else if (IS_IPHONE_5) {
-            
             view = [self initDetailViewNibBySizeDevice:view nameNib:@"TSDetailView5"
                                               frameNib:kTSSwipeDetailView5Frame];
-            
         } else if (IS_IPHONE_6) {
-            
             view = [self initDetailViewNibBySizeDevice:view nameNib:@"TSDetailView6"
                                               frameNib:kTSSwipeDetailView6Frame];
-            
         } else if (IS_IPHONE_6_PLUS) {
-            
             view = [self initDetailViewNibBySizeDevice:view nameNib:@"TSDetailView6plus"
                                               frameNib:kTSSwipeDetailView6PlusFrame];
         }
-        
     } else if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
-        
         view = [self initDetailViewNibBySizeDevice:view nameNib:@"TSDetailViewIpad"
                                           frameNib:kTSSwipeDetailViewIpadFrame];
     }
     
     return view;
-    
 }
 
 
@@ -304,7 +266,6 @@ NSInteger recognizerControllersCardsAndChat;
 
 - (IBAction)parametersActionButton:(id)sender
 {
-    
     self.tableView.dataSource = self;
     self.tableView.delegate = self;
     
@@ -330,7 +291,6 @@ NSInteger recognizerControllersCardsAndChat;
 
 - (IBAction)chatActionButton:(id)sender
 {
-    
     if (recognizerTransitionOnChatController == 2) {
         
         [UIView animateWithDuration:0.5
@@ -347,13 +307,10 @@ NSInteger recognizerControllersCardsAndChat;
         });
         
         recognizerTransitionOnChatController = 0;
-        
     } else {
-        
         recognizerTransitionOnChatController = 1;
         
         NSUserDefaults *userDefault = [NSUserDefaults standardUserDefaults];
-        
         [userDefault setObject:self.interlocutorUid forKey:@"intelocID"];
         [userDefault synchronize];
 
@@ -363,9 +320,7 @@ NSInteger recognizerControllersCardsAndChat;
         [controller setSelectedIndex:2];
         UIViewController *currentTopVC = [self currentTopViewController];
         [currentTopVC presentViewController:controller animated:YES completion:nil];
-
     }
-    
 }
 
 
@@ -383,22 +338,18 @@ NSInteger recognizerControllersCardsAndChat;
 
 - (void)handleSingleTap:(UITapGestureRecognizer *)recognizer
 {
-    
     CGContextRef context = UIGraphicsGetCurrentContext();
     [UIView beginAnimations:nil context:context];
     [UIView setAnimationTransition: UIViewAnimationTransitionFlipFromLeft forView:self cache:YES];
     [UIView setAnimationCurve:UIViewAnimationCurveEaseInOut];
     [UIView setAnimationDuration:0.5];
     [UIView commitAnimations];
-    
     [UIView animateWithDuration:1.0
                      animations:^{
                          self.backgroundTableView.alpha = 0;
                          self.tableView.alpha = 0;
                      }];
-
     self.tapGesture.enabled = NO;
-    
 }
 
 #pragma mark - Save mark review user
@@ -406,25 +357,17 @@ NSInteger recognizerControllersCardsAndChat;
 
 - (void)markReviewUserByRecognizer
 {
-
     if (recognizerControllersCardsAndChat == 1) {
-        
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-            
             [[TSLikeAndReviewSave sharedLikeAndReviewSaveManager] saveReviewInTheDatabase:self.interlocutorData
                                                                                   reviews:self.interlocutorReviews];
         });
-        
     } else if (recognizerControllersCardsAndChat == 2 || recognizerControllersCardsAndChat == 0) {
-        
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-            
             [[TSGetInterlocutorParameters sharedGetInterlocutor] getInterlocutorFromDatabase:self.interlocutorUid
                                                                                   respondent:@"TSSwipeView"];
         });
-        
     }
-    
 }
 
 
@@ -439,7 +382,6 @@ NSInteger recognizerControllersCardsAndChat;
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    
     static NSString *identifier = @"cell";
     
     TSViewCell *cell = [tableView dequeueReusableCellWithIdentifier:identifier];

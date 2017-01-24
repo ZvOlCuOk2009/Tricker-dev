@@ -7,13 +7,15 @@
 //
 
 #import "TSFireImage.h"
-#import "AppDelegate.h"
+#import "TSSocialNetworkLoginViewController.h"
+
+NSString * TSFireImageOpenTabBarNotification = @"TSFireImageOpenTabBarNotification";
 
 @import Firebase;
 @import FirebaseAuth;
 @import FirebaseStorage;
 
-@interface TSFireImage ()
+@interface TSFireImage () 
 
 @end
 
@@ -31,7 +33,7 @@
 }
 
 
-+ (void)saveAvatarInTheDatabase:(NSData *)avatarDataByPath byPath:(NSString *)path
+- (void)saveAvatarInTheDatabase:(NSData *)avatarDataByPath byPath:(NSString *)path
                       dictParam:(NSMutableDictionary *)params
 {
     
@@ -57,6 +59,7 @@
                                        
                                        [[[[[ref child:@"dataBase"] child:@"users"] child:fireUser.uid] child:@"userData"] setValue:params];
                                        
+                                       [self.delegate openTabBarcontroller];
                                    }];
                                    
                                }];
@@ -65,7 +68,7 @@
 }
 
 
-+ (void)savePhotos:(NSData *)imageDataByPath byPath:(NSString *)path photos:(NSMutableArray *)photos
+- (void)savePhotos:(NSData *)imageDataByPath byPath:(NSString *)path photos:(NSMutableArray *)photos
 {
     FIRUser *fireUser = [FIRAuth auth].currentUser;
     FIRDatabaseReference *ref = [[FIRDatabase database] reference];
@@ -92,6 +95,5 @@
                               
                           }];
 }
-
 
 @end

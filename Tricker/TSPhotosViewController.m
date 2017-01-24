@@ -120,6 +120,13 @@ static NSString * const reuseIdntifierButton = @"cellButton";
             [self.photos insertObject:[tempArray firstObject] atIndex:0];
         }
         
+        for (id obj in self.photos) {
+            if ([obj isKindOfClass:[NSString class]]) {
+                [self.photos removeObject:obj];
+                break;
+            }
+        }
+        
         [self.collectionView reloadData];
         
     } else {
@@ -211,7 +218,8 @@ static NSString * const reuseIdntifierButton = @"cellButton";
                     NSData *currentData = [selectPhoto objectForKey:@"currentData"];
                     NSString *currentPath = [selectPhoto objectForKey:@"currentPath"];
                     
-                    [TSFireImage savePhotos:currentData byPath:currentPath photos:self.urlPhotos];
+                    TSFireImage *fireImage = [[TSFireImage alloc] init];
+                    [fireImage savePhotos:currentData byPath:currentPath photos:self.urlPhotos];
                     self.progressHUD = 1;
                 }
             });
@@ -258,7 +266,7 @@ static NSString * const reuseIdntifierButton = @"cellButton";
                                                        
                                                    }];
     
-    [alertController customizationAlertView:@"Выберите фото" byLength:13 byFont:20.f];
+    [alertController customizationAlertView:@"Выберите фото" byFont:20.f];
     
     [alertController addAction:camera];
     [alertController addAction:galery];

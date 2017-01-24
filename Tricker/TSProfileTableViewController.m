@@ -79,6 +79,8 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    NSLog(@"TSProfileTableViewController");
+    
     UIImageView *imageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"background"]];
     self.tableView.backgroundView = imageView;
     
@@ -119,9 +121,7 @@
             self.fixOffset = kAvatarOffset_6_S;
             self.fixCornerRadius = kAvatarCornerRadius_6_S;
         }
-        
     } else if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
-        
         if (IS_IPAD_2) {
             self.heightHeader = kHeightHeaderIpad;
             self.valueWidthAvatarConstraint.constant = kAvatarSideIpad;
@@ -150,45 +150,27 @@
     [self.navigationController.navigationBar addSubview:self.logo];
     
     self.setUserOnlinePosition = 1;
-    
-//    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(10.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-//        [self callIntroductionViewController];
-//    });
 }
-
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
 }
 
-
 - (void)viewWillAppear:(BOOL)animated
 {
-    
     if ([[TSReachability sharedReachability] verificationInternetConnection]) {
-        
         [self configureController];
-        
-        if (self.selectCity) {
-            self.cityLabel.text = self.selectCity;
-        }
     } else {
-        
         TSAlertController *alertController =
         [TSAlertController noInternetConnection:@"Проверьте интернет соединение..."];
-        
         [self presentViewController:alertController animated:YES completion:nil];
-        
     }
-    
 }
-
 
 - (void)viewDidDisappear:(BOOL)animated
 {
     [super viewDidDisappear:animated];
 }
-
 
 - (void)callIntroductionViewController
 {
@@ -201,13 +183,10 @@
     self.tabBarController.tabBar.hidden = YES;
 }
 
-
 #pragma mark - configure the Controller
-
 
 - (void)configureController
 {
-    
     if (self.progressHUD == 0) {
         [self showProgressHud];
         ++self.progressHUD;
@@ -226,56 +205,42 @@
         }
         
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-            
             UIImage *avatar = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:self.fireUser.photoURL]]];
             
             dispatch_async(dispatch_get_main_queue(), ^{
-                
                 if (self.fireUser) {
                     [self setAvatarAndBackground:avatar];
                     [self setParametrUser:self.fireUser];
-                    [self dissmisProgressHud];
                 }
-                
             });
-            
         });
-        
     }];
     
     self.userDefaults = [NSUserDefaults standardUserDefaults];
-    
     self.pointImage = [UIImage imageNamed:@"click"];
     self.circleImage = [UIImage imageNamed:@"no_click"];
-
-    
     self.dateFormatter = [[NSDateFormatter alloc] init];
     [self.dateFormatter setDateFormat:@"dd.MM.yyyy"];
     
     self.doneButton = [[UIBarButtonItem alloc] initWithTitle:@"Готово" style:UIBarButtonItemStylePlain
                                                       target:self action:@selector(doneAction:)];
-    
     [self.doneButton setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:
                                         [UIFont fontWithName:@"System-light" size:20.0], NSFontAttributeName,
                                         [UIColor blackColor], NSForegroundColorAttributeName,
                                         nil] forState:UIControlStateNormal];
     
     self.navigationController.navigationBar.tintColor = DARK_GRAY_COLOR;
-    
     self.stateDatePicker = NO;
-    
 }
 
-
 //установка аватара и данных в лейблы
-
 
 - (void)setAvatarAndBackground:(UIImage *)avatar
 {
     self.avatarImageView.image = avatar;
     self.backgroundImageView.image = avatar;
+    [self dissmisProgressHud];
 }
-
 
 - (void)setParametrUser:(TSFireUser *)fireUser
 {
@@ -299,22 +264,19 @@
         self.textFieldName.placeholder = fireUser.displayName;
     }
     
-    if (fireUser.location && ![fireUser.location isEqualToString:@""]) {
-        self.cityLabel.text = fireUser.location;
-    } else {
-        self.cityLabel.text = @"Место проживания";
-    }
+//    if (fireUser.location && ![fireUser.location isEqualToString:@""]) {
+//        self.cityLabel.text = fireUser.location;
+//    } else {
+//        self.cityLabel.text = @"Место проживания";
+//    }
     
     [self setPostionLabelReviewsAndLikes:fireUser];
-    
 }
 
 //установка лейблов просмотров и лайков
 
-
 - (void)setPostionLabelReviewsAndLikes:(TSFireUser *)fireUser
 {
-    
     self.countReviews = [NSString stringWithFormat:@"%ld", (long)[fireUser.reviews count]];
     self.countLikes = [NSString stringWithFormat:@"%ld", (long)[fireUser.likes count]];
     
@@ -335,13 +297,13 @@
     NSString *differenceCountLikes = [NSString stringWithFormat:@"%ld",
                                         (long)[self.countLikes integerValue] - (long)[countLikesSave integerValue]];
     
-    if ([differenceCountReviews isEqualToString:@"0"]) {
+    if ([differenceCountReviews integerValue] <= 0) {
         self.reviewsLabel.hidden = YES;
     } else {
         self.reviewsLabel.hidden = NO;
     }
     
-    if ([differenceCountLikes isEqualToString:@"0"]) {
+    if ([differenceCountLikes integerValue] <= 0) {
         self.likesLabel.hidden = YES;
     } else {
         self.likesLabel.hidden = NO;
@@ -351,14 +313,10 @@
     self.likesLabel.text = differenceCountLikes;
 }
 
-
-
 #pragma mark - Actions
-
 
 - (IBAction)actionUserBoyButton:(UIButton *)sender
 {
-    
     self.positionButtonGender = @"woman";
     
     if ([self.positionButtonGender isEqualToString:@"man"]) {
@@ -370,13 +328,10 @@
         [self.womanButton setImage:self.circleImage forState:UIControlStateNormal];
         self.positionButtonGender = @"man";
     }
-    
 }
-
 
 - (IBAction)actionUserGirlButton:(UIButton *)sender
 {
-   
     self.positionButtonGender = @"man";
     
     if ([self.positionButtonGender isEqualToString:@"woman"]) {
@@ -388,12 +343,10 @@
         [self.manButton setImage:self.circleImage forState:UIControlStateNormal];
         self.positionButtonGender = @"woman";
     }
-    
 }
 
 - (IBAction)changeAvatarActionButton:(id)sender
 {
-    
     TSAlertController *alertController = [TSAlertController sharedAlertController:@"Выберите фото"];
     
     UIAlertAction *camera = [UIAlertAction actionWithTitle:@"Камера"
@@ -414,16 +367,12 @@
                                                        
                                                    }];
     
-    [alertController customizationAlertView:@"Выберите фото" byLength:13 byFont:20.f];
-    
+    [alertController customizationAlertView:@"Выберите фото" byFont:20.f];
     [alertController addAction:camera];
     [alertController addAction:galery];
     [alertController addAction:cancel];
-    
     [self presentViewController:alertController animated:YES completion:nil];
-        
 }
-
 
 - (void)addImage:(enum UIImagePickerControllerSourceType)sourceType
 {
@@ -436,21 +385,15 @@
     [self presentViewController:picker animated:YES completion:NULL];
 }
 
-
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
 {
-    
     [picker dismissViewControllerAnimated:YES completion:NULL];
-    
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
     
         UIImage *image = info[UIImagePickerControllerEditedImage];
         NSData *imageData = UIImageJPEGRepresentation(image, 0.8);
-        
         NSString *imagePath = [NSString stringWithFormat:@"%@/avatar", [FIRAuth auth].currentUser.uid];
-        
         NSMutableDictionary *userData = [NSMutableDictionary dictionary];
-        
         [userData setObject:self.fireUser.uid forKey:@"userID"];
         [userData setObject:self.fireUser.displayName forKey:@"displayName"];
         [userData setObject:self.fireUser.dateOfBirth forKey:@"dateOfBirth"];
@@ -461,37 +404,28 @@
         [userData setObject:self.fireUser.online forKey:@"online"];
         
         dispatch_async(dispatch_get_main_queue(), ^{
-    
-            [TSFireImage saveAvatarInTheDatabase:imageData byPath:imagePath dictParam:userData];
-            
+            TSFireImage *fireImage = [[TSFireImage alloc] init];
+            [fireImage saveAvatarInTheDatabase:imageData byPath:imagePath dictParam:userData];
         });
-        
     });
-
 }
 
-
 #pragma mark - notification
-
 
 - (void)userStatusNotification:(NSNotification *)notification
 {
     [self updateDataUser:[notification object]];
 }
 
-
 //сохранение основных данных
-
 
 - (IBAction)saveUserAtionButton:(id)sender
 {
     [self updateDataUser:nil];
 }
 
-
 - (void)updateDataUser:(NSString *)userStatus
 {
-    
     NSString *userID = nil;
     NSString *name = nil;
     NSString *online = nil;
@@ -500,7 +434,6 @@
     NSString *dateOfBirth = nil;
     NSString *age = nil;
     NSString *location = nil;
-    
     
     userID = self.fireUser.uid;
     name = self.fireUser.displayName;
@@ -558,7 +491,6 @@
         online = @"";
     }
     
-
     if ([userStatus isEqualToString:@"offline"]) {
         online = @"оффлайн";
     } else if ([userStatus isEqualToString:@"online"]) {
@@ -585,44 +517,30 @@
             
             self.textFieldName.text = @"";
         });
-        
     });
-
 }
-
 
 //вычисление возраста
 
-
 - (NSString *)computationAge:(NSString *)selectData
 {
-    
     NSDate *currentData = [NSDate date];
-    
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
     [dateFormatter setDateFormat:@"dd-MM-yyyy"];
-    
     NSDate *convertDateOfBirth = [dateFormatter dateFromString:selectData];
-    
     NSCalendar *calendar = [NSCalendar currentCalendar];
-    
     NSUInteger unitFlags = NSCalendarUnitYear | NSCalendarUnitMonth | NSCalendarUnitDay | NSCalendarUnitHour | NSCalendarUnitMinute | NSCalendarUnitSecond;
     NSDateComponents *components = [calendar components:unitFlags fromDate:convertDateOfBirth
                                                  toDate:currentData options:0];
     NSInteger age;
     age = [components year];
-    
     return [NSString stringWithFormat:@"%ld", (long)age];
-    
 }
-
 
 #pragma mark - UITableViewDelegate
 
-
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    
     if (indexPath.row == 0)
     {
         return self.heightHeader;
@@ -647,12 +565,9 @@
     return kHeightCell;
 }
 
-
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    
     if (indexPath.row == 5 && self.stateDatePicker == NO)
     {
         NSLocale *locale = [[NSLocale alloc] initWithLocaleIdentifier:@"ru_UA"];
@@ -678,23 +593,16 @@
             
             CGRect pickerRect = CGRectMake(0.0, screenRect.origin.y + screenRect.size.height - pickerSize.height - 49,
                                            self.view.frame.size.width, self.datePicker.frame.size.height);
-
             [UIView beginAnimations:nil context:NULL];
             [UIView setAnimationDuration:0.3];
-            
             [UIView setAnimationDelegate:self];
-            
             self.datePicker.frame = pickerRect;
-            
             CGRect newFrame = self.tableView.frame;
             newFrame.size.height -= self.datePicker.frame.size.height;
             self.tableView.frame = newFrame;
             [UIView commitAnimations];
-          
             [self.navigationItem setRightBarButtonItem:self.doneButton animated:YES];
-            
         }
-        
         self.stateDatePicker = YES;
     }
     
@@ -707,9 +615,7 @@
         [self.userDefaults setObject:self.countLikes forKey:[NSString stringWithFormat:@"likes/%@",self.fireUser.uid]];
         [self.userDefaults synchronize];
     }
-    
 }
-
 
 - (void)dateChanged:(UIDatePicker *)sender
 {
@@ -718,79 +624,58 @@
     NSLog(@"Data %@", self.selectData);
 }
 
-
 //получение даты рождения
-
 
 - (void)doneAction:(id)sender
 {
-    
     CGRect screenRect = [[UIScreen mainScreen] bounds];
     CGRect endFrame = self.datePicker.frame;
     endFrame.origin.y = screenRect.origin.y + screenRect.size.height;
-    
     [UIView beginAnimations:nil context:NULL];
     [UIView setAnimationDuration:0.3];
-    
     [UIView setAnimationDelegate:self];
     [UIView setAnimationDidStopSelector:@selector(slideDownDidStop)];
-    
     self.datePicker.frame = endFrame;
     [UIView commitAnimations];
-    
     CGRect newFrame = self.tableView.frame;
     newFrame.size.height += self.datePicker.frame.size.height;
     self.tableView.frame = newFrame;
-   
     NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
     [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
-
     [self.navigationItem setRightBarButtonItems:nil animated:YES];
-    
     self.stateDatePicker = NO;
 }
-
 
 - (void)slideDownDidStop
 {
     [self.datePicker removeFromSuperview];
 }
 
-
 #pragma mark - UITextFieldDelegate
 
-
 - (BOOL)textFieldShouldReturn:(UITextField *)textField {
-    
     [textField resignFirstResponder];
     return YES;
 }
 
-
 #pragma mark - change avatar frame when scrolling
-
 
 //кадрирование аватара
 
-
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
-
     CGRect scrollBounds = scrollView.bounds;
     scrollView.bounds = scrollBounds;
-    
     CGFloat changeHeight = scrollBounds.origin.y + kHeightNavBar;
     CGFloat changeSide = self.fixSide - changeHeight;
     CGFloat changeDiameter = changeSide / 2;
     CGFloat correctionValue = (self.fixSide / 2) - changeDiameter;
-    
     CGFloat offsetSizeWidth = self.fixOffset + correctionValue;
     CGFloat offsetSizeHeight = self.fixOffset + ((correctionValue * 2) - (changeHeight / 3));
     CGRect changeFrame = CGRectMake(offsetSizeWidth, offsetSizeHeight, changeSide, changeSide);
     
     self.avatarImageView.layer.cornerRadius = self.fixCornerRadius;
     self.avatarImageView.clipsToBounds = YES;
-    
     self.avatarImageView.frame = changeFrame;
     self.avatarImageView.layer.cornerRadius = changeDiameter;
     self.avatarImageView.hidden = NO;
@@ -803,18 +688,14 @@
     }
     
     if (changeHeight < 0) {
-        
         changeHeight = 1;
     }
     
     self.logo.frame = CGRectMake((self.view.frame.size.width / 2) - (self.logo.frame.size.width / 2), - (changeHeight / 4), self.logo.frame.size.width, self.logo.frame.size.height);
     self.logo.alpha = 4 / changeHeight;
-    
 }
 
-
 #pragma mark - ProgressHUD
-
 
 - (void)showProgressHud
 {
@@ -824,11 +705,9 @@
     [SVProgressHUD setForegroundColor:DARK_GRAY_COLOR];
 }
 
-
 - (void)dissmisProgressHud
 {
     [SVProgressHUD dismiss];
 }
-
 
 @end
