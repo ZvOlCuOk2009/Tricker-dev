@@ -49,13 +49,45 @@
     UIImage *image_introduction_4 = [UIImage imageNamed:@"image_introduction_4"];
     UIImage *image_introduction_5 = [UIImage imageNamed:@"image_introduction_5"];
     
+    UIImage *image_introduction_iphone4_1 = [UIImage imageNamed:@"image_introduction_iphone4_1"];
+    UIImage *image_introduction_iphone4_2 = [UIImage imageNamed:@"image_introduction_iphone4_2"];
+    UIImage *image_introduction_iphone4_3 = [UIImage imageNamed:@"image_introduction_iphone4_3"];
+    UIImage *image_introduction_iphone4_4 = [UIImage imageNamed:@"image_introduction_iphone4_4"];
+    UIImage *image_introduction_iphone4_5 = [UIImage imageNamed:@"image_introduction_iphone4_5"];
+    
+    UIImage *image_introduction_ipad_1 = [UIImage imageNamed:@"image_introduction_ipad_1"];
+    UIImage *image_introduction_ipad_2 = [UIImage imageNamed:@"image_introduction_ipad_2"];
+    UIImage *image_introduction_ipad_3 = [UIImage imageNamed:@"image_introduction_ipad_3"];
+    UIImage *image_introduction_ipad_4 = [UIImage imageNamed:@"image_introduction_ipad_4"];
+    UIImage *image_introduction_ipad_5 = [UIImage imageNamed:@"image_introduction_ipad_5"];
+    
     NSString *textOnePage = @"Укажите свой пол и дату рождения, что бы другие пользователи могли увидеть Вас,";
     NSString *textTwoPage = @"прокрутите вниз и сохраните внесенные изменения...";
     NSString *textThreePage = @"...а также на экране настроек, укажите пол и возраст пользователя которого ищите,";
     NSString *textForePage = @"и не забудьте сохранить добавленные даные...";
     NSString *textFivePage = @"Всех найденных пользователей Вы сможете посмотреть простым смахиванием";
     
-    self.images = @[image_introduction_1, image_introduction_2, image_introduction_3, image_introduction_4, image_introduction_5];
+    if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone)
+    {
+        if (IS_IPHONE_4) {
+            self.images = @[image_introduction_iphone4_1, image_introduction_iphone4_2, image_introduction_iphone4_3, image_introduction_iphone4_4, image_introduction_iphone4_5];
+        } else if (IS_IPHONE_5) {
+            self.images = @[image_introduction_1, image_introduction_2, image_introduction_3, image_introduction_4, image_introduction_5];
+        } else if (IS_IPHONE_6) {
+            self.images = @[image_introduction_1, image_introduction_2, image_introduction_3, image_introduction_4, image_introduction_5];
+        } else if (IS_IPHONE_6_PLUS) {
+            self.images = @[image_introduction_1, image_introduction_2, image_introduction_3, image_introduction_4, image_introduction_5];
+        }
+    } else if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
+        if (IS_IPAD_2) {
+            self.images = @[image_introduction_ipad_1, image_introduction_ipad_2, image_introduction_ipad_3, image_introduction_ipad_4, image_introduction_ipad_5];
+        } else if (IS_IPAD_AIR) {
+            self.images = @[image_introduction_ipad_1, image_introduction_ipad_2, image_introduction_ipad_3, image_introduction_ipad_4, image_introduction_ipad_5];
+        } else if (IS_IPAD_PRO) {
+            self.images = @[image_introduction_ipad_1, image_introduction_ipad_2, image_introduction_ipad_3, image_introduction_ipad_4, image_introduction_ipad_5];
+        }
+    }
+    
     self.texts = @[textOnePage, textTwoPage, textThreePage, textForePage, textFivePage];
     
     UIButton *cancelButton = [[UIButton alloc] init];
