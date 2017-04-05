@@ -16,6 +16,7 @@
 @property (strong, nonatomic) NSArray *texts;
 @property (strong, nonatomic) UILabel *textLabel;
 @property (assign, nonatomic) NSInteger page;
+@property (assign, nonatomic) NSInteger offsetHorizontalImageView;
 
 @end
 
@@ -28,18 +29,22 @@
     {
         if (IS_IPHONE_4) {
             self.scrollView.frame = CGRectMake(0, 0, 320, 480);
+            self.offsetHorizontalImageView = 35;
         } else if (IS_IPHONE_5) {
             self.scrollView.frame = CGRectMake(0, 0, 320, 568);
+            self.offsetHorizontalImageView = 30;
         } else if (IS_IPHONE_6) {
             self.scrollView.frame = CGRectMake(0, 0, 375, 667);
+            self.offsetHorizontalImageView = 30;
         } else if (IS_IPHONE_6_PLUS) {
             self.scrollView.frame = CGRectMake(0, 0, 414, 736);
+            self.offsetHorizontalImageView = 30;
         }
         
     } else if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
-        
         if (IS_IPAD_2) {
             self.scrollView.frame = CGRectMake(0, 0, 768, 1024);
+            self.offsetHorizontalImageView = 30;
         }
     }
     
@@ -61,11 +66,13 @@
     UIImage *image_introduction_ipad_4 = [UIImage imageNamed:@"image_introduction_ipad_4"];
     UIImage *image_introduction_ipad_5 = [UIImage imageNamed:@"image_introduction_ipad_5"];
     
-    NSString *textOnePage = @"Укажите свой пол и дату рождения, что бы другие пользователи могли увидеть Вас,";
-    NSString *textTwoPage = @"прокрутите вниз и сохраните внесенные изменения...";
+    NSString *textOnePage = @"Укажите свой пол и дату рождения, что бы другие пользователи могли увидеть Вас...";
+    NSString *textTwoPage = @"...прокрутите вниз и сохраните внесенные изменения...";
     NSString *textThreePage = @"...а также на экране настроек, укажите пол и возраст пользователя которого ищите,";
     NSString *textForePage = @"и не забудьте сохранить добавленные даные...";
     NSString *textFivePage = @"Всех найденных пользователей Вы сможете посмотреть простым смахиванием";
+    NSString *textSixPage = @"Так же двойным ксанием, Вы можете ставить лайки понравимшимся пользователям. О чем их уведомит приложение";
+    
     
     if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone)
     {
@@ -85,6 +92,7 @@
             self.images = @[image_introduction_ipad_1, image_introduction_ipad_2, image_introduction_ipad_3, image_introduction_ipad_4, image_introduction_ipad_5];
         } else if (IS_IPAD_PRO) {
             self.images = @[image_introduction_ipad_1, image_introduction_ipad_2, image_introduction_ipad_3, image_introduction_ipad_4, image_introduction_ipad_5];
+            
         }
     }
     
@@ -149,7 +157,7 @@
         view.contentMode = UIViewContentModeScaleAspectFill;
         view.clipsToBounds = YES;
         
-        UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(30, 53, view.frame.size.width - 60, view.frame.size.height - 106)];
+        UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(self.offsetHorizontalImageView, 53, view.frame.size.width - (self.offsetHorizontalImageView * 2), view.frame.size.height - 106)];
         [imageView setImage:[self.images objectAtIndex:i]];
         imageView.layer.cornerRadius = 10;
         imageView.layer.masksToBounds = YES;

@@ -43,7 +43,6 @@
     [super viewDidLoad];
     
     [[self navigationController] setNavigationBarHidden:YES animated:NO];
-    
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -51,35 +50,26 @@
     [super viewWillAppear:animated];
     
     if ([[TSReachability sharedReachability] verificationInternetConnection]) {
-        
         [self downloadController];
         
         //прогрессбар анимация
-        
         CABasicAnimation *animation = [CABasicAnimation animationWithKeyPath:@"transform.rotation.z"];
         animation.fromValue = @0.0f;
         animation.toValue = @(2 * M_PI);
         animation.duration = 1.0f;
         animation.repeatCount = HUGE_VALF;
         [self.progressView.layer addAnimation:animation forKey:@"rotation"];
-        
     } else {
-        
         TSAlertController *alertController =
         [TSAlertController noInternetConnection:@"Проверьте интернет соединение..."];
-        
         [self presentViewController:alertController animated:YES completion:nil];
-        
     }
-    
 }
-
 
 -(void)viewDidDisappear:(BOOL)animated
 {
     [super viewDidDisappear:animated];
 }
-
 
 - (void)downloadController
 {
@@ -95,13 +85,10 @@
     }];
 }
 
-
 #pragma mark - configure the controller
-
 
 - (void)configureController
 {
-    
     self.genderSearch = [self.fireUser.parameters objectForKey:@"key1"];
     self.ageSearch = [self.fireUser.parameters objectForKey:@"key2"];
     
@@ -136,12 +123,9 @@
     [self prepareForSegue];
 }
 
-
 - (void)userSelectionOfGender:(NSArray *)allKeysTaBase
 {
-    
     NSString *genderSearch = [self.fireUser.parameters objectForKey:@"key1"];
-    
     NSArray *componentGender = [genderSearch componentsSeparatedByString:@" "];
     
     if ([componentGender count] > 1) {
@@ -159,7 +143,6 @@
                 [self.usersFoundOnTheGender addObject:anyUser];
             }
         }
-        
     } else {
         
         for (NSString *key in allKeysTaBase) {
@@ -174,10 +157,8 @@
     }
 }
 
-
 - (void)userSelectionOfAge:(NSArray *)allKeysTaBase
 {
-    
     NSString *ageSearch = [self.fireUser.parameters objectForKey:@"key2"];
     
     for (NSString *key in allKeysTaBase) {
@@ -191,10 +172,8 @@
     }
 }
 
-
 - (BOOL)computationSearchAge:(NSString *)specifiedRange receivedAge:(NSString *)receivedAge
 {
-    
     NSArray *rangeDigit = [specifiedRange componentsSeparatedByString:@" "];
     NSInteger specRangeOne = [[rangeDigit objectAtIndex:0] intValue];
     NSInteger specRangeTwo = [[rangeDigit objectAtIndex:1] intValue];
@@ -209,13 +188,10 @@
     }
     
     return totalValue;
-    
 }
-
 
 - (void)prepareForSegue
 {
-    
     NSMutableArray *selectedUsers = nil;
     NSMutableArray *avatarsUsers = nil;
     
@@ -244,9 +220,7 @@
     controller.userAvatars = avatarsUsers;
     
     [self.navigationController pushViewController:controller animated:NO];
-    
 }
-
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

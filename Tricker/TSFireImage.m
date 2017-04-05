@@ -21,7 +21,6 @@ NSString * TSFireImageOpenTabBarNotification = @"TSFireImageOpenTabBarNotificati
 
 @implementation TSFireImage
 
-
 + (TSFireImage *)sharedManager {
     
     static TSFireImage * manager = nil;
@@ -32,11 +31,9 @@ NSString * TSFireImageOpenTabBarNotification = @"TSFireImageOpenTabBarNotificati
     return manager;
 }
 
-
 - (void)saveAvatarInTheDatabase:(NSData *)avatarDataByPath byPath:(NSString *)path
                       dictParam:(NSMutableDictionary *)params
 {
-    
     FIRUser *fireUser = [FIRAuth auth].currentUser;
     FIRDatabaseReference *ref = [[FIRDatabase database] reference];
     FIRStorageReference *storageRef = [[FIRStorage storage] reference];
@@ -46,27 +43,18 @@ NSString * TSFireImageOpenTabBarNotification = @"TSFireImageOpenTabBarNotificati
     
     [[storageRef child:path] putData:avatarDataByPath metadata:metadata
                           completion:^(FIRStorageMetadata * _Nullable metadata, NSError * _Nullable error) {
-                                   
                                    if (error) {
                                        NSLog(@"Error uploading: %@", error);
                                    }
-                                   
                                    [imagesRef downloadURLWithCompletion:^(NSURL * _Nullable URL, NSError * _Nullable error) {
-                                       
                                        NSString *photoURL = [NSString stringWithFormat:@"%@", URL];
-                                       
                                        [params setObject:photoURL forKey:@"photoURL"];
-                                       
                                        [[[[[ref child:@"dataBase"] child:@"users"] child:fireUser.uid] child:@"userData"] setValue:params];
-                                       
                                        [self.delegate openTabBarcontroller];
                                    }];
-                                   
                                }];
     
-    
 }
-
 
 - (void)savePhotos:(NSData *)imageDataByPath byPath:(NSString *)path photos:(NSMutableArray *)photos
 {
@@ -83,7 +71,6 @@ NSString * TSFireImageOpenTabBarNotification = @"TSFireImageOpenTabBarNotificati
                               if (error) {
                                   NSLog(@"Error uploading: %@", error);
                               }
-                              
                               [imagesRef downloadURLWithCompletion:^(NSURL * _Nullable URL, NSError * _Nullable error) {
                                   
                                   NSString *photoURL = [NSString stringWithFormat:@"%@", URL];

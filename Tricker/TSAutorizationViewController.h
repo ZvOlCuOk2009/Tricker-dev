@@ -9,6 +9,6 @@
 #import <UIKit/UIKit.h>
 #import "TSRegistrationViewController.h"
 
-@interface TSAutorizationViewController : TSRegistrationViewController
+@interface TSAutorizationViewController : UIViewController
 
 @end

@@ -1,5 +1,4 @@
 PODS:
-  - Base64 (1.1.2)
   - Bolts (1.8.4):
     - Bolts/AppLinks (= 1.8.4)
     - Bolts/Tasks (= 1.8.4)
@@ -54,11 +53,6 @@ PODS:
     - GoogleSymbolUtilities (~> 1.1)
   - GoogleInterchangeUtilities (1.2.2):
     - GoogleSymbolUtilities (~> 1.1)
-  - GoogleMaps (2.1.1):
-    - GoogleMaps/Maps (= 2.1.1)
-  - GoogleMaps/Base (2.1.1)
-  - GoogleMaps/Maps (2.1.1):
-    - GoogleMaps/Base
   - GoogleSignIn (4.0.1):
     - GoogleAppUtilities (~> 1.1)
     - GoogleToolboxForMac/NSDictionary+URLArguments (~> 2.1)
@@ -85,10 +79,7 @@ PODS:
   - JSQMessagesViewController (7.3.4):
     - JSQSystemSoundPlayer (~> 2.0.1)
   - JSQSystemSoundPlayer (2.0.1)
-  - JWT (2.2.0):
-    - Base64 (~> 1.1.2)
   - SVProgressHUD (2.1.2)
-  - VK-ios-sdk (1.4.6)
   - ZLSwipeableView (0.0.8)
 
 DEPENDENCIES:
@@ -100,15 +91,11 @@ DEPENDENCIES:
   - Firebase/Database
   - Firebase/Storage
   - Google/SignIn
-  - GoogleMaps
   - JSQMessagesViewController
-  - JWT
   - SVProgressHUD
-  - VK-ios-sdk
   - ZLSwipeableView
 
 SPEC CHECKSUMS:
-  Base64: cecfb41a004124895a7bcee567a89bae5a89d49b
   Bolts: 8a7995239dbe724f9cba2248b766d48b7ebdd322
   FBSDKCoreKit: 15fef8804a4629f98c6f4e55e81a76c9d725d85e
   FBSDKLoginKit: 6773073e970b2b15fb12e451ce7f11da0532b880
@@ -123,7 +110,6 @@ SPEC CHECKSUMS:
   Google: 813c467362eabc11385f5a5cc9ad0cb651a58f4e
   GoogleAppUtilities: a8a552aa74f6597f805e45b5a3962766c3134973
   GoogleInterchangeUtilities: d5bc4d88d5b661ab72f9d70c58d02ca8c27ad1f7
-  GoogleMaps: a5b5bbe47734e2443bde781a6aa64e69fdb6d785
   GoogleSignIn: a8694c0a8e6d1b0ec77c58014de5bfd4ba2fa766
   GoogleSymbolUtilities: 631ee17048aa5e9ab133470d768ea997a5ef9b96
   GoogleToolboxForMac: 2b2596cbb7186865e98cadf2b1e262d851c2b168
@@ -131,11 +117,9 @@ SPEC CHECKSUMS:
   GTMSessionFetcher: a1f8ed39e4fe21c68957daed472c7afbcdf29166
   JSQMessagesViewController: 39fed975e3c9f8eba7292071e29eeb541d105e66
   JSQSystemSoundPlayer: c5850e77a4363ffd374cd851154b9af93264ed8d
-  JWT: cf73c0ab0dac762df3de8a3f1164352089d97780
   SVProgressHUD: c404a55d78acbeb7ebb78b76d3faf986475a6994
-  VK-ios-sdk: 7fd48bc5aaa6b96c3197c1987eb6593f2ea67331
   ZLSwipeableView: df385760ff4838935cdbcb62878ac5acd7355949
 
-PODFILE CHECKSUM: 43b7d75c7ae88c3edec18787ef38d67b996d8c08
+PODFILE CHECKSUM: da9c7740ebeebebb03396531b63f2e1b43c76e79
 
 COCOAPODS: 1.1.1

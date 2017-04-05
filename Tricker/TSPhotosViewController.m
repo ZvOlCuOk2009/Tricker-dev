@@ -77,7 +77,6 @@ static NSString * const reuseIdntifierButton = @"cellButton";
             self.collViewCellSize = kTSCollCellPhotosSizeIpad;
         }
     }
-    
 
     UIBarButtonItem *leftItem = [[UIBarButtonItem alloc] init];
     [leftItem setImage:[UIImage imageNamed:@"back"]];
@@ -383,7 +382,6 @@ static NSString * const reuseIdntifierButton = @"cellButton";
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    
     UIImage *capImage = [self.photos firstObject];
     
     if (capImage.size.width == 40 && capImage.size.height == 40) {
@@ -403,7 +401,6 @@ static NSString * const reuseIdntifierButton = @"cellButton";
     self.recognizerController = YES;
     
     [self presentViewController:controller animated:YES completion:nil];
-    
 }
 
 

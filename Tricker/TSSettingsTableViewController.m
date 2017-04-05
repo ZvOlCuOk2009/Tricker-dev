@@ -62,6 +62,7 @@ NSString * const UpdateParametersNotification = @"UpdateParametersNotification";
 @property (strong, nonatomic) TSFireUser *fireUser;
 
 @property (strong, nonatomic) UIBarButtonItem *doneButton;
+@property (strong, nonatomic) UITapGestureRecognizer *tapGestureRecognizer;
 
 @property (strong, nonatomic) NSMutableArray *dataSourseAge;
 @property (strong, nonatomic) NSMutableArray *dataSourseGrowth;
@@ -114,41 +115,31 @@ NSString * const UpdateParametersNotification = @"UpdateParametersNotification";
     self.progressHUD = 0;
 }
 
-
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
     
     if ([[TSReachability sharedReachability] verificationInternetConnection]) {
-        
         [self configureController];
         [self setDataUser];
-        
     } else {
-        
         TSAlertController *alertController =
         [TSAlertController noInternetConnection:@"Проверьте интернет соединение..."];
-        
         [self presentViewController:alertController animated:YES completion:nil];
     }
-    
 }
-
 
 - (void)viewDidDisappear:(BOOL)animated
 {
     [super viewDidDisappear:animated];
-    [self.ref removeAllObservers];
 }
 
-
 #pragma mark - configure the controller
-
 
 - (void)configureController
 {
     self.doneButton = [[UIBarButtonItem alloc] initWithTitle:@"Готово" style:UIBarButtonItemStylePlain
-                                                      target:self action:@selector(doneAction:)];
+                                                      target:self action:@selector(doneAction)];
     self.statePickerView = NO;
     
     //создание массивов с источниками данных для UIPickerView
@@ -205,26 +196,20 @@ NSString * const UpdateParametersNotification = @"UpdateParametersNotification";
     [self.ref observeEventType:FIRDataEventTypeValue withBlock:^(FIRDataSnapshot * _Nonnull snapshot) {
         
         self.fireUser = [TSFireUser initWithSnapshot:snapshot];
-        
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-            
             UIImage *avatar = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:self.fireUser.photoURL]]];
-            
             dispatch_async(dispatch_get_main_queue(), ^{
-                
                 if (self.fireUser) {
                     [self setParametrUser:self.fireUser];
                     self.avatarImageView.image = avatar;
                     [self dissmisProgressHud];
                 }
-                
                 self.avatarImageView.layer.cornerRadius = 40;
                 self.avatarImageView.clipsToBounds = YES;
             });
         });
     }];
 }
-
 
 - (void)setParametrUser:(TSFireUser *)fireUser
 {
@@ -256,7 +241,6 @@ NSString * const UpdateParametersNotification = @"UpdateParametersNotification";
             //установка изображения кнопок если выбранна позиция
             
             NSString *shortKey = [key substringFromIndex:3];
-            
             if ([shortKey isEqualToString:@"1"]) {
                 NSString *searchGender = [fireUser.parameters objectForKey:key];
                 NSArray *components = [searchGender componentsSeparatedByString:@" "];
@@ -295,9 +279,7 @@ NSString * const UpdateParametersNotification = @"UpdateParametersNotification";
     }
 }
 
-
 #pragma mark - Action
-
 
 - (IBAction)actionBoyButton:(id)sender
 {
@@ -329,36 +311,37 @@ NSString * const UpdateParametersNotification = @"UpdateParametersNotification";
 }
 
 - (IBAction)logOutPressedbutton:(id)sender
-{
-    TSAlertController *alertController = [TSAlertController sharedAlertController:@"Выберите"];
-    
-    UIAlertAction *exit = [UIAlertAction actionWithTitle:@"Выйти"
-                                                   style:UIAlertActionStyleDefault
-                                                 handler:^(UIAlertAction * _Nonnull action) {
-                                                     [self logOutUser];
-                                                 }];
-    
-    UIAlertAction *deleteAcuont = [UIAlertAction actionWithTitle:@"Удалить аккаунт"
-                                                           style:UIAlertActionStyleDefault
-                                                         handler:^(UIAlertAction * _Nonnull action) {
-//                                                             [self deleteUser];
-//                                                             [self callTabBarController];
-                                                             [self deleteUserOfDataBase];
-                                                         }];
-    
-    UIAlertAction *cancel = [UIAlertAction actionWithTitle:@"Отменить"
-                                                     style:UIAlertActionStyleDefault
-                                                   handler:^(UIAlertAction * _Nonnull action) {
-                                                       
-                                                   }];
-    
-    [alertController customizationAlertView:@"Выберите" byFont:20.f];
-    
-    [alertController addAction:exit];
-    [alertController addAction:deleteAcuont];
-    [alertController addAction:cancel];
-    
-    [self presentViewController:alertController animated:YES completion:nil];
+{    ///***********************
+    //алерт выхода вызывается лишь в случае если не отображен на экране pickerView
+    if (![self.pickerView isDescendantOfView:self.view]) {
+        TSAlertController *alertController = [TSAlertController sharedAlertController:@"Выберите"];
+        
+        UIAlertAction *exit = [UIAlertAction actionWithTitle:@"Выйти"
+                                                       style:UIAlertActionStyleDefault
+                                                     handler:^(UIAlertAction * _Nonnull action) {
+                                                         [self logOutUser];
+                                                     }];
+        
+        UIAlertAction *deleteAcuont = [UIAlertAction actionWithTitle:@"Удалить аккаунт"
+                                                               style:UIAlertActionStyleDefault
+                                                             handler:^(UIAlertAction * _Nonnull action) {
+                                                                 [self deleteUserOfDataBase];
+                                                             }];
+        
+        UIAlertAction *cancel = [UIAlertAction actionWithTitle:@"Отменить"
+                                                         style:UIAlertActionStyleDefault
+                                                       handler:^(UIAlertAction * _Nonnull action) {
+                                                           
+                                                       }];
+        
+        [alertController customizationAlertView:@"Выберите" byFont:20.f];
+        
+        [alertController addAction:exit];
+        [alertController addAction:deleteAcuont];
+        [alertController addAction:cancel];
+        
+        [self presentViewController:alertController animated:YES completion:nil];
+    }
 }
 
 - (void)logOutUser
@@ -397,9 +380,7 @@ NSString * const UpdateParametersNotification = @"UpdateParametersNotification";
     
     UIAlertAction *cancel = [UIAlertAction actionWithTitle:@"Нет"
                                                      style:UIAlertActionStyleDefault
-                                                   handler:^(UIAlertAction * _Nonnull action) {
-                                                       
-                                                   }];
+                                                   handler:nil];
     
     [alertController customizationAlertView:@"Вы действительно хотите удалить аккаунт и покинуть ""Tricker""?"
                                      byFont:16.f];
@@ -417,9 +398,7 @@ NSString * const UpdateParametersNotification = @"UpdateParametersNotification";
     }
 }
 
-
 #pragma mark - UITableViewDelegate
-
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -432,7 +411,6 @@ NSString * const UpdateParametersNotification = @"UpdateParametersNotification";
     }
     return kHeightCell;
 }
-
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -502,7 +480,6 @@ NSString * const UpdateParametersNotification = @"UpdateParametersNotification";
     }
 }
 
-
 - (void)createdUipickerView:(NSInteger)tag
 {
     //создание UIPickerView
@@ -524,7 +501,6 @@ NSString * const UpdateParametersNotification = @"UpdateParametersNotification";
         CGRect startRect = CGRectMake(0.0,
                                       screenRect.origin.y + screenRect.size.height,
                                       pickerSize.width, pickerSize.height);
-        
         self.pickerView.frame = startRect;
         
         CGRect pickerRect = CGRectMake(0.0, screenRect.origin.y + screenRect.size.height - pickerSize.height - 49,
@@ -540,37 +516,34 @@ NSString * const UpdateParametersNotification = @"UpdateParametersNotification";
         [UIView commitAnimations];
         [self.navigationItem setRightBarButtonItem:self.doneButton animated:YES];
     }
-    
+    //добавление тача для скрытия pickerView
+    self.tapGestureRecognizer =
+    [[UITapGestureRecognizer alloc] initWithTarget:self
+                                            action:@selector(doneAction)];
+    [self.view addGestureRecognizer:self.tapGestureRecognizer];
     self.statePickerView = YES;
 }
 
+//получение даты рождения
 
-- (void)doneAction:(UIBarButtonItem *)doneButton
+- (void)doneAction
 {
     //скрытие UIPickerView
-    
     CGRect screenRect = [[UIScreen mainScreen] bounds];
     CGRect endFrame = self.pickerView.frame;
     endFrame.origin.y = screenRect.origin.y + screenRect.size.height;
-    
     [UIView beginAnimations:nil context:NULL];
     [UIView setAnimationDuration:0.3];
-    
     [UIView setAnimationDelegate:self];
     [UIView setAnimationDidStopSelector:@selector(slideDownDidStop)];
-    
     self.pickerView.frame = endFrame;
     [UIView commitAnimations];
-    
     CGRect newFrame = self.tableView.frame;
     newFrame.size.height += self.pickerView.frame.size.height;
     self.tableView.frame = newFrame;
-    
     NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
     [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
-    
     [self.navigationItem setRightBarButtonItems:nil animated:YES];
-
     self.statePickerView = NO;
     
     if (self.fireUser.parameters) {
@@ -578,19 +551,13 @@ NSString * const UpdateParametersNotification = @"UpdateParametersNotification";
     } else {
         self.characteristicsUser = [NSMutableDictionary dictionary];
     }
-    
     //добавление параметров в словарь для последующего сохранения в базу
     //определение количества компонентов в UIPickerView
-    
     if (self.selectedRowInComponent == 1) {
-        
         self.selectPosition = [self pickerView:self.pickerView
                                    titleForRow:[self.pickerView selectedRowInComponent:0] forComponent:0];
-        
         for (UILabel *label in self.labels) {
-            
             if (label.tag == self.tagSelectCell && ![self.selectPosition isEqualToString:@"Отменить"]) {
-                
                 if (self.tagSelectCell == 4) {
                     [self setTextLabelTag:label selectPosition:self.selectPosition];
                 } else if (self.tagSelectCell == 5) {
@@ -600,32 +567,22 @@ NSString * const UpdateParametersNotification = @"UpdateParametersNotification";
                 }
             }
         }
-        
     } else if (self.selectedRowInComponent == 2) {
-        
-        
         NSString *minAge = [self pickerView:self.pickerView
                                          titleForRow:[self.pickerView selectedRowInComponent:0] forComponent:0];
         NSString *maxAge = [self pickerView:self.pickerView
                                           titleForRow:[self.pickerView selectedRowInComponent:1] forComponent:0];
-        
         NSString *selectAge = [NSString stringWithFormat:@"%@ %@", minAge, maxAge];
-        
         self.updateCurrentMinAge = [minAge integerValue];
         self.updateCurrentMaxAge = [maxAge integerValue];
-        
         self.minAgeUnknownPeopleLabel.text = minAge;
         self.maxAgeUnknownPeopleLabel.text = maxAge;
-        
         NSString *key = @"key2";
-        
         [self.characteristicsUser setObject:selectAge forKey:key];
-
     }
 
     //обновление словаря с данными
     if (self.fireUser.parameters) {
-        
         NSString *key = [NSString stringWithFormat:@"key%ld", (long)self.tagSelectCell];
         
         if (![self.selectPosition isEqualToString:@"Отменить"]) {
@@ -638,12 +595,11 @@ NSString * const UpdateParametersNotification = @"UpdateParametersNotification";
                 [self updateDictionaryValue:self.selectPosition byKey:key];
             }
         } else {
-            
             [self.characteristicsUser removeObjectForKey:key];
         }
     }
+    [self.view removeGestureRecognizer:self.tapGestureRecognizer];
 }
-
 
 - (void)slideDownDidStop
 {
@@ -651,15 +607,11 @@ NSString * const UpdateParametersNotification = @"UpdateParametersNotification";
     [self.pickerView removeFromSuperview];
 }
 
-
 //метод для добавления префиксов см и кг
-
 
 - (void)setTextLabelTag:(UILabel *)label selectPosition:(NSString *)string
 {
-    
     NSString *valueText = nil;
-    
     if (label.tag == 4) {
         valueText = [NSString stringWithFormat:@"%@ см", string];
     } else if (label.tag == 5) {
@@ -667,22 +619,16 @@ NSString * const UpdateParametersNotification = @"UpdateParametersNotification";
     } else {
         valueText = string;
     }
-    
     label.text = valueText;
     NSString *key = [NSString stringWithFormat:@"key%ld", (long)self.tagSelectCell];
     [self.characteristicsUser setObject:valueText forKey:key];
-    
 }
-
 
 //методы обновления словаря данных
 
-
 - (void)updateDictionaryValue:(NSString *)string byKey:(NSString *)key
 {
- 
     NSString *text = nil;
-    
     if (self.tagSelectCell == 4) {
         text = [NSString stringWithFormat:@"%@ см", string];
     } else if (self.tagSelectCell == 5) {
@@ -690,20 +636,15 @@ NSString * const UpdateParametersNotification = @"UpdateParametersNotification";
     } else {
         text = string;
     }
-    
-    NSMutableDictionary *updateCharacteristicsUser = (NSMutableDictionary *)self.fireUser.parameters;
+    NSMutableDictionary *updateCharacteristicsUser = self.fireUser.parameters;
     [updateCharacteristicsUser setValue:text forKey:key];
     self.characteristicsUser = [NSMutableDictionary dictionaryWithDictionary:updateCharacteristicsUser];
-    
 }
-
 
 #pragma mark - UIPickerViewDataSource
 
-
 - (NSInteger)pickerView:(UIPickerView *)thePickerView numberOfRowsInComponent:(NSInteger)component
 {
-    
     switch (thePickerView.tag) {
         case 1:
             return self.dataSourseAge.count;
@@ -754,13 +695,10 @@ NSString * const UpdateParametersNotification = @"UpdateParametersNotification";
             return 0;
             break;
     }
-    
 }
-
 
 - (NSString *)pickerView:(UIPickerView *)thePickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component
 {
-    
     switch (thePickerView.tag) {
         case 1:
             return [self.dataSourseAge objectAtIndex:row];
@@ -811,74 +749,55 @@ NSString * const UpdateParametersNotification = @"UpdateParametersNotification";
             return 0;
             break;
     }
-    
 }
 
-
 #pragma mark - UIPickerViewDelegate
-
 
 - (NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView
 {
     return self.selectedRowInComponent;
 }
 
-
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
-
 }
 
-
 #pragma mark - update parameters
-
 
 - (IBAction)logOutAtionButton:(id)sender
 {
     //добавление параметра поиска пола
-    
     self.progressHUD = 0;
-    
     NSMutableString *searchForGender = nil;
-    
     [self updateCharacteristicUser];
-    
     if (self.stateButtonBoy == YES) {
         searchForGender = [NSMutableString stringWithString:@"man"];
         [self.characteristicsUser setObject:searchForGender forKey:@"key1"];
     }
-    
     if (self.stateButtonGirl == YES) {
         if (!searchForGender) {
             searchForGender = [NSMutableString stringWithString:@"woman"];
         } else {
             [searchForGender appendString:@" woman"];
         }
-        
         [self.characteristicsUser setObject:searchForGender forKey:@"key1"];
     }
-    
     if (self.stateButtonBoy == YES && self.stateButtonGirl == YES) {
         searchForGender = [NSMutableString stringWithString:@"man woman"];
         [self.characteristicsUser setObject:searchForGender forKey:@"key1"];
     }
-    
     [[[[[self.ref child:@"dataBase"] child:@"users"] child:self.fireUser.uid]
       child:@"parameters"] setValue:self.characteristicsUser];
-    
     //перезагрузка интерфейса в момент сохранения новых данных
     [self setDataUser];
-    
 }
 
 - (void)logOut
 {
     NSError *error;
     [[FIRAuth auth] signOut:&error];
-    
     [[TSFacebookManager sharedManager] logOutUser];
     [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"token"];
-    
     [self callTabBarController];
 }
 
@@ -891,18 +810,17 @@ NSString * const UpdateParametersNotification = @"UpdateParametersNotification";
             NSLog(@"Delete user");
         }
     }];
+    
 }
 
 - (void)callTabBarController
 {
     UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:[NSBundle mainBundle]];
     TSSocialNetworkLoginViewController *controller = [storyboard instantiateViewControllerWithIdentifier:@"TSSocialNetworkLoginViewController"];
-    
     [self presentViewController:controller animated:YES completion:nil];
 }
 
 #pragma mark - ProgressHUD
-
 
 - (void)showProgressHud
 {
@@ -912,11 +830,9 @@ NSString * const UpdateParametersNotification = @"UpdateParametersNotification";
     [SVProgressHUD setForegroundColor:DARK_GRAY_COLOR];
 }
 
-
 - (void)dissmisProgressHud
 {
     [SVProgressHUD dismiss];
 }
-
 
 @end

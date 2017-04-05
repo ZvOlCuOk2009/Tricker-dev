@@ -81,54 +81,39 @@ NSInteger clearArrayMessageChat;
 
 - (IBAction)deleteButton:(id)sender
 {
-    
     UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"Удалить фото?"
                                                                              message:nil
                                                                       preferredStyle:UIAlertControllerStyleAlert];
-    
     UIAlertAction *alertActiionYes = [UIAlertAction actionWithTitle:@"Да"
                                                            style:UIAlertActionStyleCancel
                                                          handler:^(UIAlertAction * _Nonnull action) {
-                                                             
                                                              [self deletePhoto];
-                                                             
                                                          }];
     
     UIAlertAction *alertActiionNo = [UIAlertAction actionWithTitle:@"Нет"
                                                               style:UIAlertActionStyleDefault
-                                                            handler:^(UIAlertAction * _Nonnull action) {
-                                                                
-                                                            }];
+                                                            handler:nil];
     
     [alertController customizationAlertView:@"Удалить фото?" byFont:20.f];
     
     [alertController addAction:alertActiionYes];
     [alertController addAction:alertActiionNo];
     [self presentViewController:alertController animated:YES completion:nil];
-    
 }
 
 - (void)deletePhoto
 {
-    
     NSInteger page = self.pageControl.currentPage;
-    
     if ([self.addPhotos count] == 0) {
-        
         [self.photos removeObjectAtIndex:page];
-        
         FIRDatabaseReference *ref = [[FIRDatabase database]reference];
         NSMutableArray *updatePhotos = self.fireUser.photos;
         [updatePhotos removeObjectAtIndex:page + 1];
         [[[[[ref child:@"dataBase"] child:@"users"] child:self.fireUser.uid] child:@"photos"] setValue:updatePhotos];
-        
     } else {
-        
         [self.photos removeObjectAtIndex:page];
     }
-    
     [self setupScroll];
-    
 }
 
 

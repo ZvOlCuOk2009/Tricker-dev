@@ -31,7 +31,7 @@
 @property (strong, nonatomic) FIRUser *user;
 @property (strong, nonatomic) TSFireUser *fireUser;
 @property (strong, nonatomic) TSFireInterlocutor *fireInterlocutor;
-@property (strong, nonatomic) FIRDatabaseReference *refchat;
+@property (strong, nonatomic) FIRDatabaseReference *refChat;
 @property (strong, nonatomic) FIRDatabaseReference *messageRefUser;
 @property (strong, nonatomic) FIRDatabaseReference *messageRefInterlocutor;
 @property (strong, nonatomic) FIRDatabaseQuery *usersTypingQuery;
@@ -54,6 +54,7 @@
 @property (assign, nonatomic) CGRect frameBySizeDevice;
 @property (assign, nonatomic) CGRect heartInitFrame;
 @property (assign, nonatomic) CGRect heartFinalFrame;
+@property (assign, nonatomic) CGFloat fontSizeBubble;
 
 @end
 
@@ -62,8 +63,8 @@
 - (void)viewDidLoad {
     
     [super viewDidLoad];
-    
-    self.refchat = [[FIRDatabase database] reference];
+    NSLog(@"TSChatViewController");
+    self.refChat = [[FIRDatabase database] reference];
     self.storageRef = [[FIRStorage storage] reference];
     self.user = [FIRAuth auth].currentUser;
     
@@ -73,7 +74,7 @@
     
     self.senderId = self.user.uid;
     self.senderDisplayName = self.user.displayName;
-    self.usersTypingQuery = [self.refchat queryOrderedByKey];
+    self.usersTypingQuery = [self.refChat queryOrderedByKey];
     
     if ([self.senderId isEqual:nil]) {
         self.senderId = @"";
@@ -83,8 +84,7 @@
         self.senderDisplayName = @"";
     }
     
-    CGSize rectAvatar = CGSizeMake(35, 35);
-    
+    CGSize rectAvatar = kRectAvatar;
     self.collectionView.collectionViewLayout.outgoingAvatarViewSize = rectAvatar;
     self.collectionView.collectionViewLayout.incomingAvatarViewSize = rectAvatar;
     
@@ -92,12 +92,15 @@
     [backItem setImage:[UIImage imageNamed:@"back"]];
     [backItem setTintColor:DARK_GRAY_COLOR];
     self.navigationItem.leftBarButtonItem = backItem;
-    
     [backItem setTarget:self];
     [backItem setAction:@selector(cancelInteraction)];
-    
     [self showProgressHud];
     
+    if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone) {
+        self.fontSizeBubble = kFontBubbleChatIphone;
+    } else if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
+        self.fontSizeBubble = kFontBubbleChatIpad;
+    }
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -106,7 +109,7 @@
     
     if ([[TSReachability sharedReachability] verificationInternetConnection]) {
         [self setupBubbles];
-        [self.refchat observeEventType:FIRDataEventTypeValue withBlock:^(FIRDataSnapshot * _Nonnull snapshot) {
+        [self.refChat observeEventType:FIRDataEventTypeValue withBlock:^(FIRDataSnapshot * _Nonnull snapshot) {
             
             self.fireUser = [TSFireUser initWithSnapshot:snapshot];
             [self configureCurrentChat];
@@ -132,12 +135,9 @@
         [TSAlertController noInternetConnection:@"Проверьте интернет соединение..."];
         [self presentViewController:alertController animated:YES completion:nil];
     }
-    
     [self setMessageRef];
-    
     clearArrayMessageChat = 0;
 }
-
 
 - (void)viewDidAppear:(BOOL)animated
 {
@@ -149,41 +149,33 @@
 
 - (void)setDataInterlocutorToCard:(NSString *)identifier
 {
-    [self.refchat observeEventType:FIRDataEventTypeValue withBlock:^(FIRDataSnapshot * _Nonnull snapshot) {
-        
+    [self.refChat observeEventType:FIRDataEventTypeValue withBlock:^(FIRDataSnapshot * _Nonnull snapshot) {
         self.fireInterlocutor = [TSFireInterlocutor initWithSnapshot:snapshot
                                                         byIdentifier:identifier];
         self.interlocutorAvatar =
         [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:self.fireInterlocutor.photoURL]]];
         self.interlocName = self.fireInterlocutor.displayName;
         self.parametersInterlocutor = self.fireInterlocutor.parameters;
-        
         [self.interlocutorAvatarButtonNavBar setImage:self.interlocutorAvatar forState:UIControlStateNormal];
         
         NSArray *componentName = [self.interlocName componentsSeparatedByString:@" "];
-        
         if (componentName.count > 1) {
             self.title = [componentName firstObject];
         }
     }];
 }
 
-
 //очистка чата от сообщений в момент скрытия контроллера с экрана
-
 
 - (void)viewDidDisappear:(BOOL)animated
 {
     [super viewDidDisappear:animated];
-    
     if ([self.messages count] > 0 && clearArrayMessageChat == 0) {
         [self.messages removeAllObjects];
     }
-    
     //удаление кнопки с навбара в момент возврата на контроллер чатов
     [self.interlocutorAvatarButtonNavBar removeFromSuperview];
 }
-
 
 - (void)configureCurrentChat
 {
@@ -206,9 +198,7 @@
             self.heartInitFrame = kTSInitialHeartRect6plus;
             self.heartFinalFrame = kTSFinalHeartRect6plus;
         }
-        
     } else if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
-        
         if (IS_IPAD_2) {
             self.frameBySizeDevice = kTSSwipeDetailViewIpadFrame;
             self.heartInitFrame = kTSInitialHeartCardContrRect;
@@ -217,7 +207,6 @@
     }
     
     NSArray *namesComponent = [self.interlocName componentsSeparatedByString:@" "];
-    
     if ([namesComponent count] > 1) {
         self.title = [namesComponent firstObject];
     } else {
@@ -227,8 +216,7 @@
     [self.inputToolbar.contentView.rightBarButtonItem setTitleColor:DARK_GRAY_COLOR forState:UIControlStateNormal];
     [self.inputToolbar.contentView.rightBarButtonItem setTitle:@"Отпр" forState:UIControlStateNormal];
     self.inputToolbar.contentView.textView.placeHolder = @"Новое сообщение";
-    
-    self.interlocutorAvatarButtonNavBar = [[UIButton alloc] initWithFrame:CGRectMake(60, 4, 35, 35)];
+    self.interlocutorAvatarButtonNavBar = [[UIButton alloc] initWithFrame:kFrameInterlocutorAvatarNavBar];
     self.interlocutorAvatarButtonNavBar.layer.cornerRadius = self.interlocutorAvatarButtonNavBar.frame.size.width / 2;
     self.interlocutorAvatarButtonNavBar.layer.masksToBounds = YES;
     [self.interlocutorAvatarButtonNavBar addTarget:self
@@ -237,9 +225,7 @@
     [self.navigationController.navigationBar addSubview:self.interlocutorAvatarButtonNavBar];
 }
 
-
 //селектор кнопки назад
-
 
 - (void)cancelInteraction
 {
@@ -252,18 +238,25 @@
 
 - (void)setMessageRef
 {
+//    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+//        
+//        if (self.interlocutorID) {
+//            self.messageRefUser = [[[[[self.refchat child:@"dataBase"] child:@"users"] child:self.user.uid] child:@"chat"] child:self.interlocutorID];
+//            self.messageRefInterlocutor = [[[[[self.refchat child:@"dataBase"] child:@"users"] child:self.interlocutorID] child:@"chat"] child:self.user.uid];
+//            [self dissmisProgressHud];
+//        }
+//    });
+    
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         
         if (self.interlocutorID) {
-            
-            self.messageRefUser = [[[[[self.refchat child:@"dataBase"] child:@"users"] child:self.user.uid] child:@"chat"] child:self.interlocutorID];
-            self.messageRefInterlocutor = [[[[[self.refchat child:@"dataBase"] child:@"users"] child:self.interlocutorID] child:@"chat"] child:self.user.uid];
-            
+            self.messageRefUser = [[[[[self.refChat child:@"dataBase"] child:@"chats"] child:self.user.uid] child:@"chat"] child:self.interlocutorID];
+            self.messageRefInterlocutor = [[[[[self.refChat child:@"dataBase"] child:@"chats"] child:self.interlocutorID] child:@"chat"] child:self.user.uid];
             [self dissmisProgressHud];
         }
     });
-}
 
+}
 
 #pragma mark - Action
 
@@ -271,53 +264,55 @@
 
 - (void)interlocutorButtonNavBarActoin
 {
-    //определитель говорит TSSwipeView кнопке chat о том что при нажатии должен сработать метод удаления TSSwipeView с экрана
-    recognizerTransitionOnChatController = 0;
-    
-    //если есть клавиатура на экране то убираю её
-    if ([self.inputToolbar.contentView.textView isFirstResponder]) {
-        [self.inputToolbar.contentView.textView resignFirstResponder];
-    }
-    
-    self.swipeView = [TSSwipeView initDetailView];
-    self.swipeView.frame = CGRectMake(10, - 400, self.swipeView.frame.size.width, self.swipeView.frame.size.width);
-    self.swipeView.nameLabel.text = self.interlocName;
-    self.swipeView.ageLabel.text = self.fireInterlocutor.age;
-    
-    if ([self.fireInterlocutor.photos count] > 0) {
-        self.swipeView.countPhotoLabel.text = [NSString stringWithFormat:@"%ld",
-                                          (long)[self.fireInterlocutor.photos count] - 1];
-    }
-    
-    self.swipeView.avatarImageView.image = self.interlocutorAvatar;
-    self.swipeView.backgroundImageView.image = self.interlocutorAvatar;
-    self.swipeView.parameterUser = self.fireInterlocutor.parameters;
-    self.swipeView.photos = self.fireInterlocutor.photos;
-    self.swipeView.interlocutorUid = self.interlocutorID;
-    
-    [self.view addSubview:self.swipeView];
+    //добавляю вью на экран лишь в том случае если её там ещё нету
+    if (![self.swipeView isDescendantOfView:self.view]) {
+        //определитель говорит TSSwipeView кнопке chat о том что при нажатии должен сработать метод удаления TSSwipeView с экрана
+        recognizerTransitionOnChatController = 0;
         
-    [UIView animateWithDuration:0.35
-                          delay:0
-         usingSpringWithDamping:0.6
-          initialSpringVelocity:1.2
-                        options:0
-                     animations:^{
-
-                         self.swipeView.frame = self.frameBySizeDevice;
-                     } completion:nil];
-    
-    UITapGestureRecognizer *tapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self
-                                                                                           action:@selector(hendlePanGesture)];
-    tapGestureRecognizer.numberOfTapsRequired = 2;
-    [self.swipeView addGestureRecognizer:tapGestureRecognizer];
-    
-    //определитель TSSwipeView устанавливается в положение вызова чата из TSCardsViewController
-    recognizerTransitionOnChatController = 2;
+        //если есть клавиатура на экране то убираю её
+        if ([self.inputToolbar.contentView.textView isFirstResponder]) {
+            [self.inputToolbar.contentView.textView resignFirstResponder];
+        }
+        
+        self.swipeView = [TSSwipeView initDetailView];
+        self.swipeView.frame = CGRectMake(10, - 400, self.swipeView.frame.size.width, self.swipeView.frame.size.width);
+        self.swipeView.nameLabel.text = self.interlocName;
+        self.swipeView.ageLabel.text = self.fireInterlocutor.age;
+        
+        if ([self.fireInterlocutor.photos count] > 0) {
+            self.swipeView.countPhotoLabel.text = [NSString stringWithFormat:@"%ld",
+                                                   (long)[self.fireInterlocutor.photos count] - 1];
+        }
+        
+        self.swipeView.avatarImageView.image = self.interlocutorAvatar;
+        self.swipeView.backgroundImageView.image = self.interlocutorAvatar;
+        self.swipeView.parameterUser = self.fireInterlocutor.parameters;
+        self.swipeView.photos = self.fireInterlocutor.photos;
+        self.swipeView.interlocutorUid = self.interlocutorID;
+        
+        [self.view addSubview:self.swipeView];
+        
+        [UIView animateWithDuration:0.35
+                              delay:0
+             usingSpringWithDamping:0.6
+              initialSpringVelocity:1.2
+                            options:0
+                         animations:^{
+                             
+                             self.swipeView.frame = self.frameBySizeDevice;
+                         } completion:nil];
+        
+        UITapGestureRecognizer *tapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self
+                                                                                               action:@selector(hendlePanGesture)];
+        tapGestureRecognizer.numberOfTapsRequired = 2;
+        [self.swipeView addGestureRecognizer:tapGestureRecognizer];
+        
+        //определитель TSSwipeView устанавливается в положение вызова чата из TSCardsViewController
+        recognizerTransitionOnChatController = 2;
+    }
 }
 
 #pragma mark - UITapGestureRecognizer
-
 
 - (void)hendlePanGesture
 {
@@ -348,21 +343,17 @@
     });
     
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        
         [[TSGetInterlocutorParameters sharedGetInterlocutor] getInterlocutorFromDatabase:self.interlocutorID
                                                                               respondent:@"ChatViewController"];
     });
 }
 
-
 #pragma mark - JSQMessagesCollectionViewDataSource
-
 
 - (id<JSQMessageData>)collectionView:(JSQMessagesCollectionView *)collectionView messageDataForItemAtIndexPath:(NSIndexPath *)indexPath
 {
     return self.messages[indexPath.item];
 }
-
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
 {
@@ -381,23 +372,16 @@
     }
 }
 
-
 - (UICollectionViewCell *)collectionView:(JSQMessagesCollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    
     JSQMessagesCollectionViewCell *cell = (JSQMessagesCollectionViewCell *)[super collectionView:collectionView cellForItemAtIndexPath:indexPath];
-    
     JSQMessage *message = self.messages[indexPath.item];
-    
     if ([message.senderId isEqualToString:self.senderId]) {
-        
         cell.textView.textColor = [UIColor whiteColor];
     } else {
         cell.textView.textColor = [UIColor darkGrayColor];
     }
-    
-    cell.textView.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:15.f];
-    
+    cell.textView.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:self.fontSizeBubble];
     return cell;
 }
 
@@ -414,7 +398,7 @@
             userImage = [UIImage imageNamed:@"placeholder_avarar"];
         }
         return [JSQMessagesAvatarImageFactory avatarImageWithImage:userImage
-                                                          diameter:60];
+                                                          diameter:kDiameterAvatar];
     } else {
         UIImage *interlocutorImage = nil;
         if (self.interlocutorAvatar) {
@@ -423,7 +407,7 @@
             interlocutorImage = [UIImage imageNamed:@"placeholder_message"];
         }
         return [JSQMessagesAvatarImageFactory avatarImageWithImage:interlocutorImage
-                                                          diameter:60];
+                                                          diameter:kDiameterAvatar];
     }
 }
 
@@ -451,15 +435,17 @@
 - (void)didPressSendButton:(UIButton *)button withMessageText:(NSString *)text senderId:(NSString *)senderId
          senderDisplayName:(NSString *)senderDisplayName date:(NSDate *)date
 {
-    FIRDatabaseReference *itemRefUser = [self.messageRefUser childByAutoId];
-    FIRDatabaseReference *itemRefInterlocutor = [self.messageRefInterlocutor childByAutoId];
-    
-    NSDictionary *messageItem = @{@"text":text, @"senderId":senderId};
-    [itemRefUser setValue:messageItem];
-    [itemRefInterlocutor setValue:messageItem];
-    [JSQSystemSoundPlayer jsq_playMessageSentSound];
-    
-    self.inputToolbar.contentView.textView.text = @"";
+    //если текст не введён, кнопка отправки не нажимается
+    if (!([self.inputToolbar.contentView.textView.text length] == 0)) {
+        FIRDatabaseReference *itemRefUser = [self.messageRefUser childByAutoId];
+        FIRDatabaseReference *itemRefInterlocutor = [self.messageRefInterlocutor childByAutoId];
+        
+        NSDictionary *messageItem = @{@"text":text, @"senderId":senderId};
+        [itemRefUser setValue:messageItem];
+        [itemRefInterlocutor setValue:messageItem];
+        [JSQSystemSoundPlayer jsq_playMessageSentSound];
+        self.inputToolbar.contentView.textView.text = @"";
+    }
 }
 
 //добавление наблюдателя за новыми сообщениями
@@ -477,17 +463,12 @@
         NSString *lastKey = [allKeys lastObject];
         
         NSString *ID = snapshot.value[@"senderId"];
-        
         if ([firstKey isEqualToString:@"senderId"] && [lastKey isEqualToString:@"text"]) {
-            
             NSString *text = snapshot.value[@"text"];
             [self addMessage:ID text:text];
             [self finishReceivingMessageAnimated:YES];
-            
         } else if ([firstKey isEqualToString:@"imageURL"] && [lastKey isEqualToString:@"senderId"]) {
-            
             NSString *imageURL = snapshot.value[@"imageURL"];
-            
             JSQPhotoMediaItem *mediaItem = [[JSQPhotoMediaItem alloc] initWithMaskAsOutgoing:YES];
             [self addPhotoMessage:ID key:snapshot.key mediaItem:mediaItem];
             
@@ -497,23 +478,18 @@
             }
         }
     }];
- 
 }
 
 //отправка изображений
 
-
 - (NSString *)sendPhotoMessage
 {
     FIRDatabaseReference *itemRef = [self.messageRefUser childByAutoId];
-    
     NSDictionary *messageItem = @{@"imageURL":self.imageURLNotSetKey,
                                   @"senderId":self.fireUser.uid};
-    
     [itemRef setValue:messageItem];
     [JSQSystemSoundPlayer jsq_playMessageSentSound];
     [self finishSendingMessage];
-    
     return itemRef.key;
 }
 
@@ -523,39 +499,35 @@
     [itemRef updateChildValues:@{@"imageURL":url}];
 }
 
-
 - (void)didPressAccessoryButton:(UIButton *)sender
 {
-    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"Выберите фото"
-                                                                             message:nil
-                                                                      preferredStyle:UIAlertControllerStyleActionSheet];
-    UIAlertAction *camera = [UIAlertAction actionWithTitle:@"Камера"
-                                                     style:UIAlertActionStyleDefault
-                                                   handler:^(UIAlertAction * _Nonnull action) {
-                                                       [self makePhoto];
-                                                   }];
+//    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"Выберите фото"
+//                                                                             message:nil
+//                                                                      preferredStyle:UIAlertControllerStyleActionSheet];
+//    UIAlertAction *camera = [UIAlertAction actionWithTitle:@"Камера"
+//                                                     style:UIAlertActionStyleDefault
+//                                                   handler:^(UIAlertAction * _Nonnull action) {
+//                                                       [self makePhoto];
+//                                                   }];
+//    
+//    UIAlertAction *galery = [UIAlertAction actionWithTitle:@"Галерея"
+//                                                     style:UIAlertActionStyleDefault
+//                                                   handler:^(UIAlertAction * _Nonnull action) {
+//                                                       [self selectPhoto];
+//                                                   }];
+//    
+//    UIAlertAction *cancel = [UIAlertAction actionWithTitle:@"Отменить"
+//                                                     style:UIAlertActionStyleDefault
+//                                                   handler:nil];
+//    
+//    [alertController customizationAlertView:@"Выберите фото" byFont:20.f];
+//    [alertController addAction:camera];
+//    [alertController addAction:galery];
+//    [alertController addAction:cancel];
+//    [self presentViewController:alertController animated:YES completion:nil];
     
-    UIAlertAction *galery = [UIAlertAction actionWithTitle:@"Галерея"
-                                                     style:UIAlertActionStyleDefault
-                                                   handler:^(UIAlertAction * _Nonnull action) {
-                                                       [self selectPhoto];
-                                                   }];
-    
-    UIAlertAction *cancel = [UIAlertAction actionWithTitle:@"Отменить"
-                                                     style:UIAlertActionStyleDefault
-                                                   handler:^(UIAlertAction * _Nonnull action) {
-                                                       
-                                                   }];
-    
-    [alertController customizationAlertView:@"Выберите фото" byFont:20.f];
-    
-    [alertController addAction:camera];
-    [alertController addAction:galery];
-    [alertController addAction:cancel];
-    
-    [self presentViewController:alertController animated:YES completion:nil];
+    [self selectPhoto];
 }
-
 
 - (void)makePhoto {
     
@@ -564,11 +536,8 @@
     picker.delegate = self;
     picker.allowsEditing = YES;
     picker.sourceType = UIImagePickerControllerSourceTypeCamera;
-    
     [self presentViewController:picker animated:YES completion:NULL];
-    
 }
-
 
 - (void)selectPhoto {
     
@@ -577,23 +546,17 @@
     picker.delegate = self;
     picker.allowsEditing = YES;
     picker.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
-    
     [self presentViewController:picker animated:YES completion:NULL];
-    
 }
-
 
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
 {
-    
     [picker dismissViewControllerAnimated:YES completion:NULL];
-    
     NSString *key = [self sendPhotoMessage];
     UIImage *image = info[UIImagePickerControllerEditedImage];
     NSData *imageData = UIImageJPEGRepresentation(image, 0.8);
     NSString *path = [NSString stringWithFormat:@"%@/sendImage/%lld.jpg", [FIRAuth auth].currentUser.uid,
                       (long long)([NSDate date].timeIntervalSince1970 * 1000.0)];
-    
     FIRStorageReference *storageRef = [[FIRStorage storage] reference];
     FIRStorageReference *imagesRef = [storageRef child:path];
     FIRStorageMetadata *metadata = [FIRStorageMetadata new];
@@ -601,13 +564,10 @@
     
     [[self.storageRef child:path] putData:imageData metadata:metadata
                           completion:^(FIRStorageMetadata * _Nullable metadata, NSError * _Nullable error) {
-                              
                               if (!error) {
-                                  
                                   [imagesRef downloadURLWithCompletion:^(NSURL * _Nullable URL, NSError * _Nullable error)
                                   {
                                       NSString *photoURL = [NSString stringWithFormat:@"%@", URL];
-                                      
                                       if (!error) {
                                           [self setImageURL:photoURL forPhotoMessageWithKey:key];
                                       } else {
@@ -617,54 +577,41 @@
                               } else {
                                   NSLog(@"Error uploading: %@", error);
                               }
-                              
                           }];
-
 }
-
-
 
 - (void)addPhotoMessage:(NSString *)withId key:(NSString *)key mediaItem:(JSQPhotoMediaItem *)mediaItem
 {
     JSQMessage * message = [JSQMessage messageWithSenderId:self.fireUser.uid displayName:self.fireUser.displayName
                                                      media:mediaItem];
     [self.messages addObject:message];
-    
     if (mediaItem.image == nil) {
         mediaItem = [self photoMessageMap];
     }
-    
     [self.collectionView reloadData];
 }
-
 
 - (void)fetchImageDataAtURL:(NSString *)imageUrl forMediaItem:(JSQPhotoMediaItem *)mediaItem
   clearsPhotoMessageMapOnSuccessForKey:(NSString *)key
 {
     FIRStorageReference *storageRef = [[FIRStorage storage] referenceForURL:imageUrl];
-    
     [storageRef dataWithMaxSize:INT64_MAX completion:^(NSData * _Nullable data, NSError * _Nullable error) {
-        
         if (error) {
             NSLog(@"Error downloading image data %@", error.description);
         }
         
         [storageRef metadataWithCompletion:^(FIRStorageMetadata * _Nullable metadata, NSError * _Nullable error) {
-            
             if (!error) {
                 mediaItem.image = [UIImage imageWithData:data];
             } else {
                 NSLog(@"Error downloading metadata %@", error.description);
             }
-            
             [self.collectionView reloadData];
         }];
     }];
 }
 
-
 #pragma mark - ProgressHUD
-
 
 - (void)showProgressHud
 {
@@ -674,17 +621,14 @@
     [SVProgressHUD setForegroundColor:DARK_GRAY_COLOR];
 }
 
-
 - (void)dissmisProgressHud
 {
     [SVProgressHUD dismiss];
 }
 
-
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
 
 }
-
 
 @end

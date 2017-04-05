@@ -10,8 +10,4 @@
 
 @interface TSRegistrationViewController : UIViewController
 
-@property (assign, nonatomic) NSInteger counter;
-
-- (NSString *)checkAvailabilityAtAnEmail;
-
 @end

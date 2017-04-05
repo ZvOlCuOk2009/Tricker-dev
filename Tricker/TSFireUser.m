@@ -10,25 +10,21 @@
 
 @implementation TSFireUser
 
-
 + (TSFireUser *)initWithSnapshot:(FIRDataSnapshot *)snapshot
 {
-
     TSFireUser *user = [[TSFireUser alloc] init];
-
     NSString *token = [[NSUserDefaults standardUserDefaults] valueForKey:@"token"];
     FIRUser *fireUser = [FIRAuth auth].currentUser;
 
     if(token)
     {
-        
         NSString *keyUserData = [NSString stringWithFormat:@"dataBase/users/%@/userData", fireUser.uid];
         NSString *keyToParameters = [NSString stringWithFormat:@"dataBase/users/%@", fireUser.uid];
-        NSString *keyToChats = [NSString stringWithFormat:@"dataBase/users/%@", fireUser.uid];
+//        NSString *keyToChats = [NSString stringWithFormat:@"dataBase/users/%@", fireUser.uid];
+        NSString *keyToChats = [NSString stringWithFormat:@"dataBase/chats/%@", fireUser.uid];
         NSString *keyToPhotos = [NSString stringWithFormat:@"dataBase/users/%@", fireUser.uid];
         NSString *keyToReviews = [NSString stringWithFormat:@"dataBase/users/%@", fireUser.uid];
         NSString *keyToLikes = [NSString stringWithFormat:@"dataBase/users/%@", fireUser.uid];
-        
         
         FIRDataSnapshot *fireUser = [snapshot childSnapshotForPath:keyUserData];
         FIRDataSnapshot *fireUserParameters = [snapshot childSnapshotForPath:keyToParameters];
@@ -36,7 +32,6 @@
         FIRDataSnapshot *fireUserPhotos = [snapshot childSnapshotForPath:keyToPhotos];
         FIRDataSnapshot *fireUserReviews = [snapshot childSnapshotForPath:keyToReviews];
         FIRDataSnapshot *fireUserLikes = [snapshot childSnapshotForPath:keyToLikes];
-        
         
         FIRDataSnapshot *userIdent = fireUser.value[@"userID"]; 
         FIRDataSnapshot *userName = fireUser.value[@"displayName"];
@@ -47,11 +42,17 @@
         FIRDataSnapshot *gender = fireUser.value[@"gender"];
         FIRDataSnapshot *online = fireUser.value[@"online"];
         FIRDataSnapshot *parameters = fireUserParameters.value[@"parameters"];
-        FIRDataSnapshot *chats = fireUserChats.value[@"chat"];
+//        FIRDataSnapshot *chats = fireUserChats.value[@"chat"];
+        FIRDataSnapshot *chats = nil;
+        if ([snapshot hasChild:keyToChats]) {
+            chats = fireUserChats.value[@"chat"];
+        }
+        
         FIRDataSnapshot *photos = fireUserPhotos.value[@"photos"];
         FIRDataSnapshot *reviews = fireUserReviews.value[@"reviews"];
         FIRDataSnapshot *likes = fireUserLikes.value[@"likes"];
-        
+        FIRDataSnapshot *countReviews = fireUserReviews.value[@"reviewsCount"];
+        FIRDataSnapshot *countLikes = fireUserLikes.value[@"likesCount"];
         
         user.uid = (NSString *)userIdent;
         user.displayName = (NSString *)userName;
@@ -66,9 +67,9 @@
         user.photos = (NSMutableArray *)photos;
         user.reviews = (NSMutableArray *)reviews;
         user.likes = (NSMutableArray *)likes;
-        
+        user.countReviews = (NSString *)countReviews;
+        user.countLikes = (NSString *)countLikes;
     }
-    
     return user;
 }
 

@@ -26,7 +26,7 @@
 
 @property (strong, nonatomic) FIRUser *user;
 @property (strong, nonatomic) TSFireUser *fireUser;
-@property (strong, nonatomic) FIRDatabaseReference *ref;
+@property (strong, nonatomic) FIRDatabaseReference *refChat;
 @property (strong, nonatomic) FIRDatabaseReference *refForUpdateChat;
 @property (strong, nonatomic) NSDictionary *fireBase;
 
@@ -34,10 +34,12 @@
 @property (strong, nonatomic) IBOutlet UITableView *tableView;
 
 @property (strong, nonatomic) NSMutableArray *interlocutors;
-@property (strong, nonatomic) NSMutableArray *lastPosts;
+//@property (strong, nonatomic) NSMutableArray *lastPosts;
 
 @property (strong, nonatomic) NSMutableArray *interlocAvatar;
 @property (strong, nonatomic) NSMutableDictionary *chats;
+
+@property (assign, nonatomic) NSInteger count;
 
 @end
 
@@ -45,33 +47,25 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-
-    self.ref = [[FIRDatabase database] reference];
-    self.refForUpdateChat = [[FIRDatabase database] reference];
-    
     NSLog(@"TSChatsTableViewController");
+    self.refChat = [[FIRDatabase database] reference];
+    self.refForUpdateChat = [[FIRDatabase database] reference];
 }
-
-//удаление аватара на навбаре
 
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    
     if ([[TSReachability sharedReachability] verificationInternetConnection]) {
-        
         //проверка откуда вызван контроллер из чат тейблвью контроллера или свайп вью
         if (recognizerTransitionOnChatController == 1) {
             [self transitionToChatViewController];
+        } else {
+            [self.refChat observeEventType:FIRDataEventTypeValue withBlock:^(FIRDataSnapshot * _Nonnull snapshot) {
+                self.fireUser = [TSFireUser initWithSnapshot:snapshot];
+                self.fireBase = [TSFireBase initWithSnapshot:snapshot];
+                [self configureController];
+            }];
         }
-        
-        [self.ref observeEventType:FIRDataEventTypeValue withBlock:^(FIRDataSnapshot * _Nonnull snapshot) {
-            
-            self.fireUser = [TSFireUser initWithSnapshot:snapshot];
-            self.fireBase = [TSFireBase initWithSnapshot:snapshot];
-            [self configureController];
-        }];
-        
     } else {
         TSAlertController *alertController =
         [TSAlertController noInternetConnection:@"Проверьте интернет соединение..."];
@@ -82,14 +76,13 @@
 - (void)viewDidDisappear:(BOOL)animated
 {
     [super viewDidDisappear:animated];
-    [self.ref removeAllObservers];
+//    [self.refChat removeAllObservers];
 }
 
 - (void)configureController
 {
     if (!self.interlocutors && recognizerTransitionOnChatController == 0) {
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-            
             self.chats = (NSMutableDictionary *)self.fireUser.chats;
             NSArray *allKeys = nil;
             
@@ -101,16 +94,15 @@
                 
                 allKeys = [self.fireUser.chats allKeys];
                 self.interlocutors = [NSMutableArray array];
-                self.lastPosts = [NSMutableArray array];
+//                self.lastPosts = [NSMutableArray array];
                 self.interlocAvatar = [NSMutableArray array];
             }
             
             for (int i = 0; i < [allKeys count]; i++) {
-                
+                /*
                 NSDictionary *chat = [self.chats objectForKey:[allKeys objectAtIndex:i]];
                 NSArray *chatKeys = [chat allKeys];
                 NSString *lastKey = [chatKeys lastObject];
-                
                 NSDictionary *lastDict = [chat objectForKey:lastKey];
                 NSString *lastPost = [lastDict objectForKey:@"text"];
                 
@@ -119,23 +111,30 @@
                 }
                 
                 [self.lastPosts addObject:lastPost];
-                NSString *interlocetorIdent = [allKeys objectAtIndex:i];
+                 */
                 
-                [self.ref observeEventType:FIRDataEventTypeValue withBlock:^(FIRDataSnapshot * _Nonnull snapshot) {
-                    
+                NSString *interlocetorIdent = [allKeys objectAtIndex:i];
+                [self.refChat observeEventType:FIRDataEventTypeValue withBlock:^(FIRDataSnapshot * _Nonnull snapshot) {
+                    NSLog(@"TSFireInterlocutor %ld", (long)self.count);
                     TSFireInterlocutor *fireInterlocutor = [TSFireInterlocutor initWithSnapshot:snapshot
                                                                                    byIdentifier:interlocetorIdent];
                     [self.interlocutors addObject:fireInterlocutor];
                     [self.interlocAvatar addObject:[self setInterlocutorsAvatarByUrl:fireInterlocutor.photoURL]];
                     
                     dispatch_async(dispatch_get_main_queue(), ^{
-                        
                         [self.tableView reloadData];
                         [SVProgressHUD dismiss];
                     });
+                    ++self.count;
                 }];
             }
         });
+    }
+    
+    if ([self.fireUser.chats count] == 0) {
+        TSAlertController *alertController =
+        [TSAlertController noInternetConnection:@"В данный момент у Вас нету диалогов с другими пользователями"];
+        [self presentViewController:alertController animated:YES completion:nil];
     }
 }
 
@@ -214,8 +213,25 @@
     }
 }
 
+- (NSString *)tableView:(UITableView *)tableView titleForDeleteConfirmationButtonForRowAtIndexPath:(NSIndexPath *)indexPath {
+    return @"Удалить";
+}
+
 - (void)deleteChatByUid:(NSInteger)uid
 {
+//    TSFireInterlocutor *fireInterlocutor = [self.interlocutors objectAtIndex:uid];
+//    NSString *uidUserChat = fireInterlocutor.uid;
+//    [self.chats removeObjectForKey:uidUserChat];
+//    [self.interlocutors removeObjectAtIndex:uid];
+//    [self.interlocAvatar removeObjectAtIndex:uid];
+//    [self.tableView reloadData];
+//    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+//        [[[[[self.refForUpdateChat child:@"dataBase"] child:@"users"] child:self.fireUser.uid]
+//          child:@"chat"] setValue:self.chats];
+//    });
+//    [self.refForUpdateChat removeAllObservers];
+
+    
     TSFireInterlocutor *fireInterlocutor = [self.interlocutors objectAtIndex:uid];
     NSString *uidUserChat = fireInterlocutor.uid;
     [self.chats removeObjectForKey:uidUserChat];
@@ -223,10 +239,10 @@
     [self.interlocAvatar removeObjectAtIndex:uid];
     [self.tableView reloadData];
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        [[[[[self.refForUpdateChat child:@"dataBase"] child:@"users"] child:self.fireUser.uid]
+        [[[[[self.refChat child:@"dataBase"] child:@"chats"] child:self.fireUser.uid]
           child:@"chat"] setValue:self.chats];
     });
-    [self.refForUpdateChat removeAllObservers];
+    [self.refChat removeAllObservers];
 }
 
 - (void)didReceiveMemoryWarning {

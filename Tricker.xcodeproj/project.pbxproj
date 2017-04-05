@@ -16,7 +16,6 @@
 		FD0C1C9D1DE7810000D37B61 /* TSCardsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FD0C1C9C1DE7810000D37B61 /* TSCardsViewController.m */; };
 		FD0C1CA01DE783B500D37B61 /* TSSwipeView.xib in Resources */ = {isa = PBXBuildFile; fileRef = FD0C1C9F1DE783B500D37B61 /* TSSwipeView.xib */; };
 		FD0C1CA31DE78B9B00D37B61 /* TSSwipeView.m in Sources */ = {isa = PBXBuildFile; fileRef = FD0C1CA21DE78B9B00D37B61 /* TSSwipeView.m */; };
-		FD0C1CA61DE7930100D37B61 /* TSMapViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FD0C1CA51DE7930100D37B61 /* TSMapViewController.m */; };
 		FD0E42831DF7051200399621 /* TSChatViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FD0E42821DF7051200399621 /* TSChatViewController.m */; };
 		FD11E9041E259D6200E822ED /* TSGetInterlocutorParameters.m in Sources */ = {isa = PBXBuildFile; fileRef = FD11E9031E259D6200E822ED /* TSGetInterlocutorParameters.m */; };
 		FD1C4F331DCE252200CF63E9 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = FD1C4F321DCE252200CF63E9 /* main.m */; };
@@ -65,7 +64,6 @@
 		FD8220031E2C410000D886E2 /* TSSwipeViewIpad.xib in Resources */ = {isa = PBXBuildFile; fileRef = FD8220021E2C410000D886E2 /* TSSwipeViewIpad.xib */; };
 		FDBDDDDF1DDB8745008EE73E /* TSSettingsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FDBDDDDE1DDB8745008EE73E /* TSSettingsTableViewController.m */; };
 		FDD4E1D51E32C66500D10093 /* TSIntroductionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FDD4E1D41E32C66500D10093 /* TSIntroductionViewController.m */; };
-		FDD72E921E38139200773F65 /* LaunchScreenIpad.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FDD72E911E38139100773F65 /* LaunchScreenIpad.storyboard */; };
 		FDE927391DE840EC00FF884F /* TSFireBase.m in Sources */ = {isa = PBXBuildFile; fileRef = FDE927381DE840EC00FF884F /* TSFireBase.m */; };
 		FDE9273C1DE8EC4600FF884F /* TSIntermediateViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FDE9273B1DE8EC4600FF884F /* TSIntermediateViewController.m */; };
 		FDEBE3E81DF1C4AB0073A0FF /* TSCollCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = FDEBE3E71DF1C4AB0073A0FF /* TSCollCell.xib */; };
@@ -78,7 +76,6 @@
 		FDF4BB1D1DF02DB1003D3841 /* TSPhotoView.m in Sources */ = {isa = PBXBuildFile; fileRef = FDF4BB1C1DF02DB1003D3841 /* TSPhotoView.m */; };
 		FDF4BB201DF03F38003D3841 /* TSPhotosViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FDF4BB1F1DF03F38003D3841 /* TSPhotosViewController.m */; };
 		FDF4BB241DF076B2003D3841 /* TSCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = FDF4BB231DF076B2003D3841 /* TSCollectionViewCell.m */; };
-		FDF7FF8E1DCFE6AE00846997 /* libVK-ios-sdk.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FDF7FF8D1DCFE6AE00846997 /* libVK-ios-sdk.a */; };
 		FDF901581DF89F700067DE87 /* TSChatTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = FDF901571DF89F6F0067DE87 /* TSChatTableViewCell.m */; };
 		FDF963991DD10890000877B5 /* TSRegistrationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FDF963981DD10890000877B5 /* TSRegistrationViewController.m */; };
 		FDF9639C1DD14598000877B5 /* TSPhotoAndNameViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FDF9639B1DD14598000877B5 /* TSPhotoAndNameViewController.m */; };
@@ -121,8 +118,6 @@
 		FD0C1C9F1DE783B500D37B61 /* TSSwipeView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TSSwipeView.xib; sourceTree = "<group>"; };
 		FD0C1CA11DE78B9B00D37B61 /* TSSwipeView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSSwipeView.h; sourceTree = "<group>"; };
 		FD0C1CA21DE78B9B00D37B61 /* TSSwipeView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSSwipeView.m; sourceTree = "<group>"; };
-		FD0C1CA41DE7930100D37B61 /* TSMapViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSMapViewController.h; sourceTree = "<group>"; };
-		FD0C1CA51DE7930100D37B61 /* TSMapViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSMapViewController.m; sourceTree = "<group>"; };
 		FD0E42811DF7051200399621 /* TSChatViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSChatViewController.h; sourceTree = "<group>"; };
 		FD0E42821DF7051200399621 /* TSChatViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSChatViewController.m; sourceTree = "<group>"; };
 		FD11E9021E259D6200E822ED /* TSGetInterlocutorParameters.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSGetInterlocutorParameters.h; sourceTree = "<group>"; };
@@ -198,7 +193,6 @@
 		FDBDDDDE1DDB8745008EE73E /* TSSettingsTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSSettingsTableViewController.m; sourceTree = "<group>"; };
 		FDD4E1D31E32C66500D10093 /* TSIntroductionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSIntroductionViewController.h; sourceTree = "<group>"; };
 		FDD4E1D41E32C66500D10093 /* TSIntroductionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSIntroductionViewController.m; sourceTree = "<group>"; };
-		FDD72E911E38139100773F65 /* LaunchScreenIpad.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = LaunchScreenIpad.storyboard; sourceTree = "<group>"; };
 		FDE927371DE840EC00FF884F /* TSFireBase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSFireBase.h; sourceTree = "<group>"; };
 		FDE927381DE840EC00FF884F /* TSFireBase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSFireBase.m; sourceTree = "<group>"; };
 		FDE9273A1DE8EC4600FF884F /* TSIntermediateViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSIntermediateViewController.h; sourceTree = "<group>"; };
@@ -242,7 +236,6 @@
 			files = (
 				FD51DB971E2CFB2E009333FE /* SystemConfiguration.framework in Frameworks */,
 				FDEF72631DD65CAB00CAF773 /* CoreLocation.framework in Frameworks */,
-				FDF7FF8E1DCFE6AE00846997 /* libVK-ios-sdk.a in Frameworks */,
 				2C27B593A68DE82F875D0227 /* libPods-Tricker.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -312,8 +305,6 @@
 				FD64A9401E241D440019BB94 /* TSReviewsViewController.m */,
 				FD64A93C1E241D1C0019BB94 /* TSLikesViewController.h */,
 				FD64A93D1E241D1C0019BB94 /* TSLikesViewController.m */,
-				FD0C1CA41DE7930100D37B61 /* TSMapViewController.h */,
-				FD0C1CA51DE7930100D37B61 /* TSMapViewController.m */,
 				FDE9273A1DE8EC4600FF884F /* TSIntermediateViewController.h */,
 				FDE9273B1DE8EC4600FF884F /* TSIntermediateViewController.m */,
 				FD0C1C9B1DE7810000D37B61 /* TSCardsViewController.h */,
@@ -546,7 +537,6 @@
 				FD68B45E1DDA7CFC00EF19C3 /* ChatStoryboard.storyboard */,
 				FD68B4601DDA7D0C00EF19C3 /* SettingStoryboard.storyboard */,
 				FD1C4F3F1DCE252200CF63E9 /* LaunchScreen.storyboard */,
-				FDD72E911E38139100773F65 /* LaunchScreenIpad.storyboard */,
 			);
 			name = Storyboards;
 			sourceTree = "<group>";
@@ -766,7 +756,6 @@
 				FD1C4F411DCE252200CF63E9 /* LaunchScreen.storyboard in Resources */,
 				FDED429F1E06BC8A005E0948 /* TSDetailView.xib in Resources */,
 				FD821FF21E2BB96600D886E2 /* TSDetailView5.xib in Resources */,
-				FDD72E921E38139200773F65 /* LaunchScreenIpad.storyboard in Resources */,
 				FD06541C1DFCA24200AE45EF /* TSSwipeView6plus.xib in Resources */,
 				FD821FF41E2BBCB600D886E2 /* TSPhotoDetailView5.xib in Resources */,
 				FD68B45D1DDA7CEC00EF19C3 /* CardsStoryboard.storyboard in Resources */,
@@ -888,7 +877,6 @@
 				FDF4BB241DF076B2003D3841 /* TSCollectionViewCell.m in Sources */,
 				FDE927391DE840EC00FF884F /* TSFireBase.m in Sources */,
 				FDF4BB1D1DF02DB1003D3841 /* TSPhotoView.m in Sources */,
-				FD0C1CA61DE7930100D37B61 /* TSMapViewController.m in Sources */,
 				FDFDFC981DD293E0007811EF /* TSProfileTableViewController.m in Sources */,
 				FD0E42831DF7051200399621 /* TSChatViewController.m in Sources */,
 				FD1C4F691DCE282100CF63E9 /* TSSocialNetworkLoginViewController.m in Sources */,
@@ -1064,6 +1052,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "Tsvigun-Sasha.Tricker";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
 		};
@@ -1084,6 +1073,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "Tsvigun-Sasha.Tricker";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
 		};

@@ -20,7 +20,6 @@
 @property (weak, nonatomic) IBOutlet UILabel *reviewsLabel;
 @property (weak, nonatomic) IBOutlet UILabel *likesLabel;
 
-- (void)doneAction:(id)sender;
 - (void)showProgressHud;
 - (void)dissmisProgressHud;
 

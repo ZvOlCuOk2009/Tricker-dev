@@ -144,38 +144,43 @@
 - (void)fillingDataSource
 {
     [self progressHubShow];
-
-    [self.ref observeEventType:FIRDataEventTypeValue withBlock:^(FIRDataSnapshot * _Nonnull snapshot) {
-        
-        self.fireBase = [TSFireBase initWithSnapshot:snapshot];
-        
-        for (NSString *reviewsUserUid in self.likesUsersUid) {
-            NSDictionary *userDataReviews = [self.fireBase objectForKey:reviewsUserUid];
-            NSString *nameUserInterest = [[userDataReviews objectForKey:@"userData"] objectForKey:@"displayName"];
-            NSString *ageUserInterest = [[userDataReviews objectForKey:@"userData"] objectForKey:@"age"];
-            NSString *photoUserInterest = [[userDataReviews objectForKey:@"userData"] objectForKey:@"photoURL"];
-            NSArray *paramsLikes = [userDataReviews objectForKey:@"parameters"];
-            NSArray *photosLikes = [userDataReviews objectForKey:@"photos"];
+    
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        [self.ref observeEventType:FIRDataEventTypeValue withBlock:^(FIRDataSnapshot * _Nonnull snapshot) {
+            self.fireBase = [TSFireBase initWithSnapshot:snapshot];
             
-            NSDictionary *userDataLikeParam = @{@"nameUserInterest":nameUserInterest,
-                                                  @"ageUserInterest":ageUserInterest};
-            [self.likesUsers addObject:userDataLikeParam];
-            [self.likesUsersAvatar addObject:[self convertAvatarByUrl:photoUserInterest]];
-            [self.likesUsersParams addObject:paramsLikes];
-            
-            if (photosLikes) {
-                [self.likesPhotos addObject:photosLikes];
-            } else {
-                NSArray *emptyArray = @[];
-                [self.likesPhotos addObject:emptyArray];
+            for (NSString *reviewsUserUid in self.likesUsersUid) {
+                if (![self.fireUser.uid isEqualToString:reviewsUserUid]) {
+                    NSDictionary *userDataReviews = [self.fireBase objectForKey:reviewsUserUid];
+                    NSString *nameUserInterest = [[userDataReviews objectForKey:@"userData"] objectForKey:@"displayName"];
+                    NSString *ageUserInterest = [[userDataReviews objectForKey:@"userData"] objectForKey:@"age"];
+                    NSString *photoUserInterest = [[userDataReviews objectForKey:@"userData"] objectForKey:@"photoURL"];
+                    NSArray *paramsLikes = [userDataReviews objectForKey:@"parameters"];
+                    NSArray *photosLikes = [userDataReviews objectForKey:@"photos"];
+                    
+                    NSDictionary *userDataLikeParam = @{@"nameUserInterest":nameUserInterest,
+                                                        @"ageUserInterest":ageUserInterest};
+                    [self.likesUsers addObject:userDataLikeParam];
+                    [self.likesUsersAvatar addObject:[self convertAvatarByUrl:photoUserInterest]];
+                    [self.likesUsersParams addObject:paramsLikes];
+                    
+                    if (photosLikes) {
+                        [self.likesPhotos addObject:photosLikes];
+                    } else {
+                        NSArray *emptyArray = @[];
+                        [self.likesPhotos addObject:emptyArray];
+                    }
+                }
             }
-        }
-        
-        if ([self.likesUsers count] > 0) {
-            [self.tableView reloadData];
-            [self progressHubDismiss];
-        }
-    }];
+            
+            dispatch_async(dispatch_get_main_queue(), ^{
+                if ([self.likesUsers count] > 0) {
+                    [self.tableView reloadData];
+                    [self progressHubDismiss];
+                }
+            });
+        }];
+    });
 }
 
 #pragma mark - UITableViewDataSource
@@ -221,49 +226,50 @@
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
-    NSString *nameReviewUser = [[self.likesUsers objectAtIndex:indexPath.row] objectForKey:@"nameUserInterest"];
-    NSString *ageReviewUser = [[self.likesUsers objectAtIndex:indexPath.row] objectForKey:@"ageUserInterest"];
-    
-    self.swipeView = [TSSwipeView initDetailView];
-    self.swipeView.frame = CGRectMake(10, - 400, self.swipeView.frame.size.width, self.swipeView.frame.size.width);
-    self.swipeView.nameLabel.text = nameReviewUser;
-    self.swipeView.ageLabel.text = ageReviewUser;
-    
-    self.swipeView.avatarImageView.image = [self.likesUsersAvatar objectAtIndex:indexPath.row];
-    self.swipeView.backgroundImageView.image = [self.likesUsersAvatar objectAtIndex:indexPath.row];
-    self.swipeView.parameterUser = [self.likesUsersParams objectAtIndex:indexPath.row];
-    
-    NSMutableArray *photos = [self.likesPhotos objectAtIndex:indexPath.row];
-    
-    self.swipeView.photos = photos;
-    
-    if ([photos count] > 0) {
-        self.swipeView.countPhotoLabel.text = [NSString stringWithFormat:@"%ld",
-                                               (long)[photos count] - 1];
+    //swipeView добавляется лишь в случае если её ещё нету на экране
+    if (![self.swipeView isDescendantOfView:self.view]) {
+        NSString *nameReviewUser = [[self.likesUsers objectAtIndex:indexPath.row] objectForKey:@"nameUserInterest"];
+        NSString *ageReviewUser = [[self.likesUsers objectAtIndex:indexPath.row] objectForKey:@"ageUserInterest"];
+        
+        self.swipeView = [TSSwipeView initDetailView];
+        self.swipeView.frame = CGRectMake(10, - 400, self.swipeView.frame.size.width, self.swipeView.frame.size.width);
+        self.swipeView.nameLabel.text = nameReviewUser;
+        self.swipeView.ageLabel.text = ageReviewUser;
+        self.swipeView.avatarImageView.image = [self.likesUsersAvatar objectAtIndex:indexPath.row];
+        self.swipeView.backgroundImageView.image = [self.likesUsersAvatar objectAtIndex:indexPath.row];
+        self.swipeView.parameterUser = [self.likesUsersParams objectAtIndex:indexPath.row];
+        
+        NSMutableArray *photos = [self.likesPhotos objectAtIndex:indexPath.row];
+        self.swipeView.photos = photos;
+        
+        if ([photos count] > 0) {
+            self.swipeView.countPhotoLabel.text = [NSString stringWithFormat:@"%ld",
+                                                   (long)[photos count] - 1];
+        }
+        
+        [self.view addSubview:self.swipeView];
+        
+        [UIView animateWithDuration:0.35
+                              delay:0
+             usingSpringWithDamping:0.6
+              initialSpringVelocity:1.2
+                            options:0
+                         animations:^{
+                             self.swipeView.frame = self.frameBySizeDevice;
+                         } completion:nil];
+        
+        //передача ID пользователя на два разных контроллера в зависимости от потребности
+        
+        self.interlocutorID = [self.likesUsersUid objectAtIndex:indexPath.row];
+        self.swipeView.interlocutorUid = [self.likesUsersUid objectAtIndex:indexPath.row];
+        
+        UITapGestureRecognizer *tapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self
+                                                                                               action:@selector(hendlePanGesture)];
+        tapGestureRecognizer.numberOfTapsRequired = 2;
+        [self.swipeView addGestureRecognizer:tapGestureRecognizer];
+        
+        recognizerTransitionOnChatController = 2;
     }
-    
-    [self.view addSubview:self.swipeView];
-    
-    [UIView animateWithDuration:0.35
-                          delay:0
-         usingSpringWithDamping:0.6
-          initialSpringVelocity:1.2
-                        options:0
-                     animations:^{
-                         self.swipeView.frame = self.frameBySizeDevice;
-                     } completion:nil];
-    
-    //передача ID пользователя на два разных контроллера в зависимости от потребности
-    
-    self.interlocutorID = [self.likesUsersUid objectAtIndex:indexPath.row];
-    self.swipeView.interlocutorUid = [self.likesUsersUid objectAtIndex:indexPath.row];
-    
-    UITapGestureRecognizer *tapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self
-                                                                                           action:@selector(hendlePanGesture)];
-    tapGestureRecognizer.numberOfTapsRequired = 2;
-    [self.swipeView addGestureRecognizer:tapGestureRecognizer];
-    
-    recognizerTransitionOnChatController = 2;
 }
 
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -283,7 +289,6 @@
         });
     }
 }
-
 
 - (void)hendlePanGesture
 {

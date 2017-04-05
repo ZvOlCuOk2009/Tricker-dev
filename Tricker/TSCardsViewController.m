@@ -42,13 +42,11 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-     
     [self configureController];
 }
 
 - (void)configureController
 {
-     
      if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone)
      {
           if (IS_IPHONE_4) {
@@ -64,9 +62,7 @@
                self.heartInitFrame = kTSInitialHeartCardContrRect6plus;
                self.heartFinalFrame = kTSFinalHeartCardContrRect6plus;
           }
-          
      } else if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
-          
           if (IS_IPAD_2) {
                self.heartInitFrame = kTSInitialHeartCardContrRect;
                self.heartFinalFrame = kTSFinalHeartCardContrRect;
@@ -74,17 +70,14 @@
      }
      
     CGRect frame = CGRectMake(0, - 20, self.view.bounds.size.width, self.view.bounds.size.height);
-    
     self.swipeableView = [[ZLSwipeableView alloc] initWithFrame:self.view.frame];
     self.swipeableView.frame = frame;
     [self.view addSubview:self.swipeableView];
     
     self.swipeableView.dataSource = self;
     self.swipeableView.delegate = self;
-    
     [self.swipeableView swipeTopViewToLeft];
     [self.swipeableView swipeTopViewToRight];
-    
     [self.swipeableView discardAllViews];
     [self.swipeableView loadViewsIfNeeded];
     
@@ -100,7 +93,6 @@
     [super viewWillAppear:animated];
      
      if ([[TSReachability sharedReachability] verificationInternetConnection]) {
-          
           if (self.cap) {
                self.cap.hidden = NO;
           } else {
@@ -109,7 +101,6 @@
                NSArray *buttons = @[@"", @"", self.cap];
                [self.tabBarController setToolbarItems:buttons];
           }
-          
           recognizerControllersCardsAndChat = 1;
      } else {
           TSAlertController *alertController =
@@ -122,30 +113,21 @@
 - (void)viewDidDisappear:(BOOL)animated
 {
     [super viewDidDisappear:animated];
-
     self.cap.hidden = YES;
 }
 
-
 #pragma mark - ZLSwipeableViewDataSource
-
 
 - (UIView *)nextViewForSwipeableView:(ZLSwipeableView *)swipeableView
 {
-    
     NSIndexPath *indexPath = [NSIndexPath indexPathForRow:self.counterIndexPath inSection:0];
-    
     NSInteger max = [self.selectedUsers count];
     self.indexPathRow = indexPath.row;
     
     if (self.selectedUsers.count > 0) {
-         
          if (self.indexPathRow <= max - 1) {
-        
             NSDictionary *selectedUser = [self.selectedUsers objectAtIndex:self.indexPathRow];
-            
             self.swipeView = [TSSwipeView initProfileView];
-            
             self.selectedUserData = [selectedUser objectForKey:@"userData"];
             NSDictionary *parametersUser = [selectedUser objectForKey:@"parameters"];
             NSMutableArray *photosUser = [selectedUser objectForKey:@"photos"];
@@ -154,11 +136,9 @@
             NSString *age = [self.selectedUserData objectForKey:@"age"];
             NSString *online = [self.selectedUserData objectForKey:@"online"];
             NSString *uid = [self.selectedUserData objectForKey:@"userID"];
-              
             self.selectedReviews = [selectedUser objectForKey:@"reviews"];
             
             //установка индикации онлайн
-            
             if ([online isEqualToString:@"оффлайн"]) {
                 self.swipeView.onlineView.backgroundColor = [UIColor redColor];
             } else if ([online isEqualToString:@"онлайн"]) {
@@ -166,19 +146,14 @@
             }
             
             //установка изображения и фона
-              
             if (photoURL) {
-                 
                 self.swipeView.backgroundImageView.image = [self.userAvatars objectAtIndex:self.indexPathRow];
                 self.swipeView.avatarImageView.image = [self.userAvatars objectAtIndex:self.indexPathRow];
-                 
             } else {
-                 
                 photoURL = @"";
                 self.swipeView.avatarImageView.image = [UIImage imageNamed:@"placeholder"];
                 self.swipeView.backgroundImageView.image = [UIImage imageNamed:@"placeholder"];
             }
-
             
             NSString *firstString = [photosUser firstObject];
             if ([firstString isEqualToString:@""]) {
@@ -186,27 +161,21 @@
             }
             
             //установка параметров
-
             self.swipeView.nameLabel.text = displayName;
             self.swipeView.ageLabel.text = age;
             self.swipeView.interlocutorAvatarUrl = photoURL;
-              
             NSInteger countPhotos = [photosUser count];
-            
             if (countPhotos > 0) {
                 countPhotos = countPhotos - 1;
             }
             
             NSString *countPhoto = [NSString stringWithFormat:@"%ld", (long)countPhotos];
-            
             if ([countPhoto isEqualToString:@"0"]) {
                 countPhoto = @"";
             }
             
             //передача параметров
-              
             self.swipeView.countPhotoLabel.text = countPhoto;
-            
             self.swipeView.parameterUser = parametersUser;
             self.swipeView.photos = photosUser;
             self.swipeView.interlocutorUid = uid;
@@ -214,10 +183,8 @@
             self.swipeView.interlocutorName = displayName;
               
             //параметры просмотров и лайков
-              
             self.swipeView.interlocutorData = self.selectedUserData;
             self.swipeView.interlocutorReviews = self.selectedReviews;
-              
         }
         
         self.counterIndexPath++;
@@ -230,57 +197,39 @@
              UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"По данным параметрам пользователей больше нету..."
                                                                                       message:nil
                                                                                preferredStyle:UIAlertControllerStyleAlert];
-             
              UIAlertAction *repearAction = [UIAlertAction actionWithTitle:@"Просмотреть ещё раз"
                                                               style:UIAlertActionStyleDefault
                                                             handler:^(UIAlertAction * _Nonnull action) {
-
                                                                  [self callTabBarControllerByIndex:1];
-
                                                             }];
              
              UIAlertAction *changeAction = [UIAlertAction actionWithTitle:@"Изменить параметры поиска"
                                                               style:UIAlertActionStyleDefault
                                                             handler:^(UIAlertAction * _Nonnull action) {
-
                                                                  [self callTabBarControllerByIndex:3];
                                                             }];
              
              UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"Отменить"
                                                               style:UIAlertActionStyleDefault
-                                                            handler:^(UIAlertAction * _Nonnull action) {
-                                                                 
-                                                            }];
-             
+                                                            handler:nil];
              [alertController customizationAlertView:@"По данным параметрам пользователей больше нету" byFont:16.f];
-             
              [alertController addAction:repearAction];
              [alertController addAction:changeAction];
              [alertController addAction:cancelAction];
-             
              [self presentViewController:alertController animated:YES completion:nil];
-            
          }
-        
      } else {
-        
         //алерт вызывается в случае когда пользователей нету по заданным параметрам
-        
           UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"По данным параметрам    пользователей не найдено..."
                                                                                    message:nil
                                                                             preferredStyle:UIAlertControllerStyleAlert];
-        
           UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"Oк"
                                                              style:UIAlertActionStyleDefault
-                                                           handler:^(UIAlertAction * _Nonnull action) {
-                                                              
-                                                           }];
+                                                           handler:nil];
          
           [alertController customizationAlertView:@"По данным параметрам пользователей не найдено..." byFont:16.f];
-         
           [alertController addAction:okAction];
           [self presentViewController:alertController animated:YES completion:nil];
-        
      }
      
      UITapGestureRecognizer *tapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self
@@ -293,9 +242,7 @@
      } else {
           return self.swipeView;
      }
-    
 }
-
 
 - (void)callTabBarControllerByIndex:(NSInteger)index
 {
@@ -306,14 +253,12 @@
      [self presentViewController:controller animated:YES completion:nil];
 }
 
-
 #pragma mark - UITapGestureRecognizer
 
 //обработка лайков
 
 - (void)hendlePanGesture
 {
-     
      if ([self.view subviews] > 0) {
           
           UIImageView *heart = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"heart"]];
@@ -330,7 +275,6 @@
                                 heart.alpha = 1;
                                 heart.frame = self.heartFinalFrame;
                            } completion:nil];
-          
           
           dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.6 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
                [UIView animateWithDuration:0.15
@@ -349,17 +293,12 @@
                
                [[TSLikeAndReviewSave sharedLikeAndReviewSaveManager] saveLikeInTheDatabase:likeUserData];
           });
-          
      }
-     
 }
-
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
-
-
 
 @end
