@@ -13,4 +13,5 @@ pod 'Google/SignIn'
 pod 'SVProgressHUD'
 pod 'ZLSwipeableView'
 pod 'JSQMessagesViewController'
+pod "MDCSwipeToChoose"
 end

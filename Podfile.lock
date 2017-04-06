@@ -79,6 +79,7 @@ PODS:
   - JSQMessagesViewController (7.3.4):
     - JSQSystemSoundPlayer (~> 2.0.1)
   - JSQSystemSoundPlayer (2.0.1)
+  - MDCSwipeToChoose (0.2.3)
   - SVProgressHUD (2.1.2)
   - ZLSwipeableView (0.0.8)
 
@@ -92,6 +93,7 @@ DEPENDENCIES:
   - Firebase/Storage
   - Google/SignIn
   - JSQMessagesViewController
+  - MDCSwipeToChoose
   - SVProgressHUD
   - ZLSwipeableView
 
@@ -117,9 +119,10 @@ SPEC CHECKSUMS:
   GTMSessionFetcher: a1f8ed39e4fe21c68957daed472c7afbcdf29166
   JSQMessagesViewController: 39fed975e3c9f8eba7292071e29eeb541d105e66
   JSQSystemSoundPlayer: c5850e77a4363ffd374cd851154b9af93264ed8d
+  MDCSwipeToChoose: 56239d98b4558c66e7c3c9069482befd26092270
   SVProgressHUD: c404a55d78acbeb7ebb78b76d3faf986475a6994
   ZLSwipeableView: df385760ff4838935cdbcb62878ac5acd7355949
 
-PODFILE CHECKSUM: da9c7740ebeebebb03396531b63f2e1b43c76e79
+PODFILE CHECKSUM: 8abd249c6235ea9178780e5ccdd8e437ce030fbb
 
 COCOAPODS: 1.1.1

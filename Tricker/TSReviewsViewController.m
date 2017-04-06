@@ -17,6 +17,7 @@
 #import "TSAlertController.h"
 #import "TSTrickerPrefixHeader.pch"
 
+#import <MDCSwipeToChoose/MDCSwipeToChoose.h>
 #import <SVProgressHUD.h>
 
 @import FirebaseDatabase;
@@ -60,6 +61,31 @@
     self.reviewsUsersAvatar = [NSMutableArray array];
     self.reviewsUsersParams = [NSMutableArray array];
     self.reviewsPhotos = [NSMutableArray array];
+    
+    
+    
+}
+
+- (void)viewDidCancelSwipe:(UIView *)view {
+    NSLog(@"Couldn't decide, huh?");
+}
+
+// Sent before a choice is made. Cancel the choice by returning `NO`. Otherwise return `YES`.
+- (BOOL)view:(UIView *)view shouldBeChosenWithDirection:(MDCSwipeDirection)direction {
+    [UIView animateWithDuration:0.16 animations:^{
+        view.transform = CGAffineTransformIdentity;
+        view.center = [view superview].center;
+    }];
+    return YES;
+}
+
+// This is called then a user swipes the view fully left or right.
+- (void)view:(UIView *)view wasChosenWithDirection:(MDCSwipeDirection)direction {
+    if (direction == MDCSwipeDirectionLeft) {
+        NSLog(@"Photo deleted!");
+    } else {
+        NSLog(@"Photo saved!");
+    }
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -217,13 +243,29 @@
         self.swipeView.backgroundImageView.image = [self.reviewsUsersAvatar objectAtIndex:indexPath.row];
         self.swipeView.parameterUser = [self.reviewsUsersParams objectAtIndex:indexPath.row];
         
+        MDCSwipeToChooseViewOptions *options = [MDCSwipeToChooseViewOptions new];
+        //options.likedText = @"Keep";
+        options.likedColor = [UIColor blueColor];
+        //options.nopeText = @"Delete";
+        options.onPan = ^(MDCPanState *state){
+            if (state.thresholdRatio == 1.f && state.direction == MDCSwipeDirectionLeft) {
+                NSLog(@"Let go now to delete the photo!");
+            }
+        };
+        
+        TSSwipeView *view = (TSSwipeView *)[[MDCSwipeToChooseView alloc] initWithFrame:self.swipeView.bounds
+                                                                               options:nil];
+        view.backgroundColor = [UIColor clearColor];
+        //view.imageView.image = [UIImage imageNamed:@"heart"];
+        [view addSubview:self.swipeView];
+        
         NSMutableArray *photos = [self.reviewsPhotos objectAtIndex:indexPath.row];
         self.swipeView.photos = photos;
         
         if ([photos count] > 0) {
             self.swipeView.countPhotoLabel.text = [NSString stringWithFormat:@"%ld", (long)[photos count] - 1];
         }
-        [self.view addSubview:self.swipeView];
+        [self.view addSubview:view];
         
         [UIView animateWithDuration:0.35
                               delay:0
@@ -243,9 +285,6 @@
         tapGestureRecognizer.numberOfTapsRequired = 2;
         [self.swipeView addGestureRecognizer:tapGestureRecognizer];
         recognizerTransitionOnChatController = 2;
-        
-        UISwipeGestureRecognizer *swipeGestureRecognizer = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(hendleswipeGesture)];
-        [self.swipeView addGestureRecognizer:swipeGestureRecognizer];
     }
 }
 
@@ -304,37 +343,6 @@
         [[TSGetInterlocutorParameters sharedGetInterlocutor] getInterlocutorFromDatabase:self.interlocutorID
                                                                               respondent:@"ChatViewController"];
     });
-}
-
-- (void)hendleswipeGesture:(UISwipeGestureRecognizer *)gesture
-{
-    
-}
-
-//тут баг, падение при свайпе, свайп горизонтальный и кривой
-
-- (void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event
-{
-    CGPoint pointInView = [[touches anyObject] locationInView:self.view];
-    
-    float xTarget = pointInView.x - self.difference;
-    if(xTarget > self.tableView.frame.size.width) {
-        xTarget = self.tableView.frame.size.width;
-    } else if( xTarget < 0) {
-        xTarget = 0;
-    }
-    [UIView animateWithDuration:.25
-                     animations:^{
-                         [self.swipeView setFrame:CGRectMake(xTarget, self.swipeView.frame.origin.y, self.swipeView.frame.size.width, self.swipeView.frame.size.height)];
-                     }
-     ];
-}
-
-
--(void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
-{
-    self.swipeView.hidden = YES;
-    [self.swipeView removeFromSuperview];
 }
 
 #pragma mark - SVProgressHUD
