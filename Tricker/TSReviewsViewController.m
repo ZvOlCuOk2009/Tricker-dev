@@ -31,6 +31,7 @@
 @property (strong, nonatomic) NSDictionary *fireBase;
 @property (strong, nonatomic) NSString *interlocutorID;
 @property (strong, nonatomic) NSMutableArray *reviewsUsersUid;
+@property (strong, nonatomic) NSMutableArray *reviewsUsersUidUpdate;
 @property (strong, nonatomic) NSMutableArray *reviewsUsers;
 @property (strong, nonatomic) NSMutableArray *reviewsUsersAvatar;
 @property (strong, nonatomic) NSMutableArray *reviewsUsersParams;
@@ -39,7 +40,7 @@
 @property (assign, nonatomic) CGRect frameBySizeDevice;
 @property (assign, nonatomic) CGRect heartInitFrame;
 @property (assign, nonatomic) CGRect heartFinalFrame;
-@property (assign, nonatomic) float difference;
+//@property (assign, nonatomic) float difference;
 
 @end
 
@@ -57,35 +58,21 @@
     [backItem setAction:@selector(cancelInteraction)];
     
     self.reviewsUsersUid = [NSMutableArray array];
+    self.reviewsUsersUidUpdate = [NSMutableArray array];
     self.reviewsUsers = [NSMutableArray array];
     self.reviewsUsersAvatar = [NSMutableArray array];
     self.reviewsUsersParams = [NSMutableArray array];
     self.reviewsPhotos = [NSMutableArray array];
-    
-    
-    
 }
 
-- (void)viewDidCancelSwipe:(UIView *)view {
-    NSLog(@"Couldn't decide, huh?");
-}
+#pragma mark - MDCSwipeToChoose
 
-// Sent before a choice is made. Cancel the choice by returning `NO`. Otherwise return `YES`.
 - (BOOL)view:(UIView *)view shouldBeChosenWithDirection:(MDCSwipeDirection)direction {
     [UIView animateWithDuration:0.16 animations:^{
         view.transform = CGAffineTransformIdentity;
         view.center = [view superview].center;
     }];
     return YES;
-}
-
-// This is called then a user swipes the view fully left or right.
-- (void)view:(UIView *)view wasChosenWithDirection:(MDCSwipeDirection)direction {
-    if (direction == MDCSwipeDirectionLeft) {
-        NSLog(@"Photo deleted!");
-    } else {
-        NSLog(@"Photo saved!");
-    }
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -174,6 +161,7 @@
                     [self.reviewsUsers addObject:userDataReviewParam];
                     [self.reviewsUsersAvatar addObject:[self convertAvatarByUrl:photoUserInterest]];
                     [self.reviewsUsersParams addObject:paramsReviews];
+                    [self.reviewsUsersUidUpdate addObject:reviewsUserUid];
                     if (photosReviews) {
                         [self.reviewsPhotos addObject:photosReviews];
                     } else {
@@ -243,21 +231,12 @@
         self.swipeView.backgroundImageView.image = [self.reviewsUsersAvatar objectAtIndex:indexPath.row];
         self.swipeView.parameterUser = [self.reviewsUsersParams objectAtIndex:indexPath.row];
         
-        MDCSwipeToChooseViewOptions *options = [MDCSwipeToChooseViewOptions new];
-        //options.likedText = @"Keep";
-        options.likedColor = [UIColor blueColor];
-        //options.nopeText = @"Delete";
-        options.onPan = ^(MDCPanState *state){
-            if (state.thresholdRatio == 1.f && state.direction == MDCSwipeDirectionLeft) {
-                NSLog(@"Let go now to delete the photo!");
-            }
-        };
-        
-        TSSwipeView *view = (TSSwipeView *)[[MDCSwipeToChooseView alloc] initWithFrame:self.swipeView.bounds
+        //container for swipeView
+        MDCSwipeToChooseView *containerView = [[MDCSwipeToChooseView alloc] initWithFrame:self.view.bounds
                                                                                options:nil];
-        view.backgroundColor = [UIColor clearColor];
-        //view.imageView.image = [UIImage imageNamed:@"heart"];
-        [view addSubview:self.swipeView];
+        //containerView.backgroundColor = [UIColor clearColor];
+        [containerView addSubview:self.swipeView];
+        [self.view addSubview:containerView];
         
         NSMutableArray *photos = [self.reviewsPhotos objectAtIndex:indexPath.row];
         self.swipeView.photos = photos;
@@ -265,7 +244,6 @@
         if ([photos count] > 0) {
             self.swipeView.countPhotoLabel.text = [NSString stringWithFormat:@"%ld", (long)[photos count] - 1];
         }
-        [self.view addSubview:view];
         
         [UIView animateWithDuration:0.35
                               delay:0
@@ -278,13 +256,13 @@
         
         //передача ID пользователя на два разных контроллера в зависимости от потребности
         
-        self.interlocutorID = [self.reviewsUsersUid objectAtIndex:indexPath.row];
-        self.swipeView.interlocutorUid = [self.reviewsUsersUid objectAtIndex:indexPath.row];
+        self.interlocutorID = [self.reviewsUsersUidUpdate objectAtIndex:indexPath.row];
+        self.swipeView.interlocutorUid = [self.reviewsUsersUidUpdate objectAtIndex:indexPath.row];
         UITapGestureRecognizer *tapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self
                                                                                                action:@selector(hendlePanGesture)];
         tapGestureRecognizer.numberOfTapsRequired = 2;
         [self.swipeView addGestureRecognizer:tapGestureRecognizer];
-        recognizerTransitionOnChatController = 2;
+        recognizerTransitionOnChatController = 0;
     }
 }
 
@@ -294,13 +272,13 @@
 
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
     if (editingStyle == UITableViewCellEditingStyleDelete) {
-        [self.reviewsUsersUid removeObjectAtIndex:indexPath.row];
+        [self.reviewsUsersUidUpdate removeObjectAtIndex:indexPath.row];
         [self.reviewsUsers removeObjectAtIndex:indexPath.row];
         [self.reviewsUsersAvatar removeObjectAtIndex:indexPath.row];
         [tableView reloadData];
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
             [[[[[self.ref child:@"dataBase"] child:@"users"] child:self.fireUser.uid]
-              child:@"reviews"] setValue:self.reviewsUsersUid];
+              child:@"reviews"] setValue:self.reviewsUsersUidUpdate];
         });
     }
 }

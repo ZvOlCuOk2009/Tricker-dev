@@ -17,6 +17,7 @@
 #import "TSAlertController.h"
 #import "TSTrickerPrefixHeader.pch"
 
+#import <MDCSwipeToChoose/MDCSwipeToChoose.h>
 #import <SVProgressHUD.h>
 
 @interface TSLikesViewController ()
@@ -28,6 +29,7 @@
 @property (strong, nonatomic) NSDictionary *fireBase;
 @property (strong, nonatomic) NSString *interlocutorID;
 @property (strong, nonatomic) NSMutableArray *likesUsersUid;
+@property (strong, nonatomic) NSMutableArray *likesUsersUidUpdate;
 @property (strong, nonatomic) NSMutableArray *likesUsers;
 @property (strong, nonatomic) NSMutableArray *likesUsersAvatar;
 @property (strong, nonatomic) NSMutableArray *likesUsersParams;
@@ -57,13 +59,22 @@
     [backItem setAction:@selector(cancelInteraction)];
     
     self.likesUsersUid = [NSMutableArray array];
+    self.likesUsersUidUpdate = [NSMutableArray array];
     self.likesUsers = [NSMutableArray array];
     self.likesUsersAvatar = [NSMutableArray array];
     self.likesUsersParams = [NSMutableArray array];
     self.likesPhotos = [NSMutableArray array];
-    
 }
 
+#pragma mark - MDCSwipeToChoose
+
+- (BOOL)view:(UIView *)view shouldBeChosenWithDirection:(MDCSwipeDirection)direction {
+    [UIView animateWithDuration:0.16 animations:^{
+        view.transform = CGAffineTransformIdentity;
+        view.center = [view superview].center;
+    }];
+    return YES;
+}
 
 - (void)viewWillAppear:(BOOL)animated
 {
@@ -163,7 +174,7 @@
                     [self.likesUsers addObject:userDataLikeParam];
                     [self.likesUsersAvatar addObject:[self convertAvatarByUrl:photoUserInterest]];
                     [self.likesUsersParams addObject:paramsLikes];
-                    
+                    [self.likesUsersUidUpdate addObject:reviewsUserUid];
                     if (photosLikes) {
                         [self.likesPhotos addObject:photosLikes];
                     } else {
@@ -226,7 +237,7 @@
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
-    //swipeView добавляется лишь в случае если её ещё нету на экране
+    //swipeView добавляется лишь в случае если его ещё нету на экране
     if (![self.swipeView isDescendantOfView:self.view]) {
         NSString *nameReviewUser = [[self.likesUsers objectAtIndex:indexPath.row] objectForKey:@"nameUserInterest"];
         NSString *ageReviewUser = [[self.likesUsers objectAtIndex:indexPath.row] objectForKey:@"ageUserInterest"];
@@ -238,6 +249,12 @@
         self.swipeView.avatarImageView.image = [self.likesUsersAvatar objectAtIndex:indexPath.row];
         self.swipeView.backgroundImageView.image = [self.likesUsersAvatar objectAtIndex:indexPath.row];
         self.swipeView.parameterUser = [self.likesUsersParams objectAtIndex:indexPath.row];
+
+        //container for swipeView
+        MDCSwipeToChooseView *containerView = [[MDCSwipeToChooseView alloc] initWithFrame:self.view.bounds
+                                                                                  options:nil];
+        [containerView addSubview:self.swipeView];
+        [self.view addSubview:containerView];
         
         NSMutableArray *photos = [self.likesPhotos objectAtIndex:indexPath.row];
         self.swipeView.photos = photos;
@@ -246,8 +263,6 @@
             self.swipeView.countPhotoLabel.text = [NSString stringWithFormat:@"%ld",
                                                    (long)[photos count] - 1];
         }
-        
-        [self.view addSubview:self.swipeView];
         
         [UIView animateWithDuration:0.35
                               delay:0
@@ -260,15 +275,15 @@
         
         //передача ID пользователя на два разных контроллера в зависимости от потребности
         
-        self.interlocutorID = [self.likesUsersUid objectAtIndex:indexPath.row];
-        self.swipeView.interlocutorUid = [self.likesUsersUid objectAtIndex:indexPath.row];
+        self.interlocutorID = [self.likesUsersUidUpdate objectAtIndex:indexPath.row];
+        self.swipeView.interlocutorUid = [self.likesUsersUidUpdate objectAtIndex:indexPath.row];
         
         UITapGestureRecognizer *tapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self
                                                                                                action:@selector(hendlePanGesture)];
         tapGestureRecognizer.numberOfTapsRequired = 2;
         [self.swipeView addGestureRecognizer:tapGestureRecognizer];
         
-        recognizerTransitionOnChatController = 2;
+        recognizerTransitionOnChatController = 0;
     }
 }
 
@@ -278,14 +293,14 @@
 
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
     if (editingStyle == UITableViewCellEditingStyleDelete) {
-        [self.likesUsersUid removeObjectAtIndex:indexPath.row];
+        [self.likesUsersUidUpdate removeObjectAtIndex:indexPath.row];
         [self.likesUsers removeObjectAtIndex:indexPath.row];
         [self.likesUsersAvatar removeObjectAtIndex:indexPath.row];
         [tableView reloadData];
         
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
             [[[[[self.ref child:@"dataBase"] child:@"users"] child:self.fireUser.uid]
-              child:@"likes"] setValue:self.likesUsersUid];
+              child:@"likes"] setValue:self.likesUsersUidUpdate];
         });
     }
 }

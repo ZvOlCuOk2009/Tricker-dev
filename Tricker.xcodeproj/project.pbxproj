@@ -319,13 +319,13 @@
 			name = Controllers;
 			sourceTree = "<group>";
 		};
-		FD0C1C9E1DE7833100D37B61 /* Xib */ = {
+		FD0C1C9E1DE7833100D37B61 /* View */ = {
 			isa = PBXGroup;
 			children = (
 				FDFEA3CF1DFC9C1D00FB4363 /* View */,
 				FDFEA3CE1DFC9BFB00FB4363 /* Xib */,
 			);
-			name = Xib;
+			name = View;
 			sourceTree = "<group>";
 		};
 		FD1C4F251DCE252200CF63E9 = {
@@ -357,7 +357,7 @@
 				FD51DB921E2CFA03009333FE /* Reachability */,
 				FDF716C71DEB32A10014171F /* Manager */,
 				FDE927361DE840B900FF884F /* Models */,
-				FD0C1C9E1DE7833100D37B61 /* Xib */,
+				FD0C1C9E1DE7833100D37B61 /* View */,
 				FD45D0821DD7CEDC00EB2640 /* Cell */,
 				FD51DB9B1E2D0704009333FE /* Alert */,
 				FD45D07D1DD7BDD900EB2640 /* SearchBar */,

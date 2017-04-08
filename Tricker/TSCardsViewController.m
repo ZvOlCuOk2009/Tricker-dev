@@ -191,7 +191,6 @@
         
         //алерт вызывается когда пользователи закончились
         if (self.indexPathRow == max + 1) {
-          
              
              UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"По данным параметрам пользователей больше нету..."
                                                                                       message:nil

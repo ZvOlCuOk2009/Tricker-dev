@@ -113,9 +113,7 @@ NSInteger recognizerControllersCardsAndChat;
         counterParamArray++;
     }
     
-    
-    if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone)
-    {
+    if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone) {
         if (IS_IPHONE_4) {
             self.photosView = kTSPhotoView;
         } else if (IS_IPHONE_5) {
@@ -128,6 +126,15 @@ NSInteger recognizerControllersCardsAndChat;
     } else if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
         self.photosView = kTSPhotoViewIpad;
     }
+    
+    UIImage *chatImage = [UIImage imageNamed:@"chat"];
+    UIImage *cancelViewImage = [UIImage imageNamed:@"cancel_view"];
+    
+    if (recognizerTransitionOnChatController == 0) {
+        [self.chatButton setImage:chatImage forState:UIControlStateNormal];
+    } else {
+        [self.chatButton setImage:cancelViewImage forState:UIControlStateNormal];
+    }    
 }
 
 
