@@ -100,6 +100,7 @@
     UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"ProfileStoryboard" bundle:[NSBundle mainBundle]];
     TSProfileTableViewController *controller = [storyboard instantiateViewControllerWithIdentifier:@"TSProfileTableViewController"];
     controller.likesLabel.hidden = YES;
+    [self.ref removeAllObservers];
 }
 
 
@@ -141,7 +142,6 @@
     }
     
     [self.ref observeEventType:FIRDataEventTypeValue withBlock:^(FIRDataSnapshot * _Nonnull snapshot) {
-        
         self.fireUser = [TSFireUser initWithSnapshot:snapshot];
         self.likesUsersUid = self.fireUser.likes;
         
@@ -158,7 +158,6 @@
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         [self.ref observeEventType:FIRDataEventTypeValue withBlock:^(FIRDataSnapshot * _Nonnull snapshot) {
             self.fireBase = [TSFireBase initWithSnapshot:snapshot];
-            
             for (NSString *reviewsUserUid in self.likesUsersUid) {
                 if (![self.fireUser.uid isEqualToString:reviewsUserUid]) {
                     NSDictionary *userDataReviews = [self.fireBase objectForKey:reviewsUserUid];

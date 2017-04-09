@@ -37,7 +37,7 @@
 @property (strong, nonatomic) FIRDatabaseReference *messageRefInterlocutor;
 @property (strong, nonatomic) FIRDatabaseQuery *usersTypingQuery;
 @property (strong, nonatomic) FIRStorageReference *storageRef;
-@property (assign, nonatomic) FIRDatabaseHandle *updatedMessageRefHandle;
+@property (assign, nonatomic) FIRDatabaseHandle handle;
 
 @property (strong, nonatomic) NSMutableArray <JSQMessage *> *messages;
 @property (strong, nonatomic) JSQMessagesBubbleImage *outgoingBubbleImageView;
@@ -85,9 +85,8 @@
         self.senderDisplayName = @"";
     }
     
-    CGSize rectAvatar = kRectAvatar;
-    self.collectionView.collectionViewLayout.outgoingAvatarViewSize = rectAvatar;
-    self.collectionView.collectionViewLayout.incomingAvatarViewSize = rectAvatar;
+    self.collectionView.collectionViewLayout.outgoingAvatarViewSize = kRectAvatar;
+    self.collectionView.collectionViewLayout.incomingAvatarViewSize = kRectAvatar;
     
     UIBarButtonItem *backItem = [[UIBarButtonItem alloc] init];
     [backItem setImage:[UIImage imageNamed:@"back"]];
@@ -110,8 +109,7 @@
     
     if ([[TSReachability sharedReachability] verificationInternetConnection]) {
         [self setupBubbles];
-        [self.refChat observeEventType:FIRDataEventTypeValue withBlock:^(FIRDataSnapshot * _Nonnull snapshot) {
-            
+        self.handle = [self.refChat observeEventType:FIRDataEventTypeValue withBlock:^(FIRDataSnapshot * _Nonnull snapshot) {
             self.fireUser = [TSFireUser initWithSnapshot:snapshot];
             [self configureCurrentChat];
             
@@ -151,7 +149,7 @@
 
 - (void)setDataInterlocutorToCard:(NSString *)identifier
 {
-    [self.refChat observeEventType:FIRDataEventTypeValue withBlock:^(FIRDataSnapshot * _Nonnull snapshot) {
+    self.handle = [self.refChat observeEventType:FIRDataEventTypeValue withBlock:^(FIRDataSnapshot * _Nonnull snapshot) {
         self.fireInterlocutor = [TSFireInterlocutor initWithSnapshot:snapshot
                                                         byIdentifier:identifier];
         self.interlocutorAvatar =
@@ -454,6 +452,7 @@
         [itemRefInterlocutor setValue:messageItem];
         [JSQSystemSoundPlayer jsq_playMessageSentSound];
         self.inputToolbar.contentView.textView.text = @"";
+        [self.refChat removeObserverWithHandle:self.handle];
     }
 }
 

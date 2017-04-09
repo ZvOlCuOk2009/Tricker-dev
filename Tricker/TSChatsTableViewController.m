@@ -21,6 +21,7 @@
 
 @import Firebase;
 @import FirebaseDatabase;
+@import FirebaseInstanceID;
 
 @interface TSChatsTableViewController () <UITableViewDataSource, UITableViewDelegate>
 
@@ -28,6 +29,7 @@
 @property (strong, nonatomic) TSFireUser *fireUser;
 @property (strong, nonatomic) FIRDatabaseReference *refChat;
 @property (strong, nonatomic) FIRDatabaseReference *refForUpdateChat;
+@property (assign, nonatomic) FIRDatabaseHandle handle;
 @property (strong, nonatomic) NSDictionary *fireBase;
 
 @property (strong, nonatomic) IBOutlet UIButton *navAvatarInterlocutorButton;
@@ -76,7 +78,7 @@
 - (void)viewDidDisappear:(BOOL)animated
 {
     [super viewDidDisappear:animated];
-    [self.refChat removeAllObservers];
+    [self.refChat removeObserverWithHandle:self.handle];
 }
 
 - (void)configureController
@@ -114,7 +116,7 @@
                  */
                 
                 NSString *interlocetorIdent = [allKeys objectAtIndex:i];
-                [self.refChat observeEventType:FIRDataEventTypeValue withBlock:^(FIRDataSnapshot * _Nonnull snapshot) {
+                self.handle = [self.refChat observeEventType:FIRDataEventTypeValue withBlock:^(FIRDataSnapshot * _Nonnull snapshot) {
                     NSLog(@"TSFireInterlocutor %ld", (long)self.count);
                     TSFireInterlocutor *fireInterlocutor = [TSFireInterlocutor initWithSnapshot:snapshot
                                                                                    byIdentifier:interlocetorIdent];
@@ -143,7 +145,6 @@
 {
     UIStoryboard *storyboard =
     [UIStoryboard storyboardWithName:@"ChatStoryboard" bundle:[NSBundle mainBundle]];
-    
     TSChatViewController *controller =
     [storyboard instantiateViewControllerWithIdentifier:@"TSChatViewController"];
     [self.navigationController pushViewController:controller animated:NO];

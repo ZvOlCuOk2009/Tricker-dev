@@ -116,8 +116,8 @@ NSString * const UpdateParametersNotification = @"UpdateParametersNotification";
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    
     if ([[TSReachability sharedReachability] verificationInternetConnection]) {
+        self.ref = [[FIRDatabase database] reference];
         [self configureController];
         [self setDataUser];
     } else {
@@ -190,8 +190,6 @@ NSString * const UpdateParametersNotification = @"UpdateParametersNotification";
         [self showProgressHud];
         ++self.progressHUD;
     }
-    
-    self.ref = [[FIRDatabase database] reference];
     
     [self.ref observeEventType:FIRDataEventTypeValue withBlock:^(FIRDataSnapshot * _Nonnull snapshot) {
         self.fireUser = [TSFireUser initWithSnapshot:snapshot];

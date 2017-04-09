@@ -29,6 +29,7 @@
 @property (strong, nonatomic) UIBarButtonItem *doneButton;
 @property (strong, nonatomic) TSFireUser *fireUser;
 
+@property (assign, nonatomic) FIRDatabaseHandle handle;
 @property (strong, nonatomic) FIRDatabaseReference *ref;
 @property (strong, nonatomic) FIRStorageReference *storageRef;
 
@@ -184,6 +185,7 @@
 - (void)viewDidDisappear:(BOOL)animated
 {
     [super viewDidDisappear:animated];
+    [self.ref removeObserverWithHandle:self.handle];
 }
 
 - (void)callIntroductionViewController
@@ -210,7 +212,7 @@
     self.storageRef = [[FIRStorage storage] reference];
     
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        [self.ref observeEventType:FIRDataEventTypeValue withBlock:^(FIRDataSnapshot * _Nonnull snapshot) {
+        self.handle = [self.ref observeEventType:FIRDataEventTypeValue withBlock:^(FIRDataSnapshot * _Nonnull snapshot) {
             self.fireUser = [TSFireUser initWithSnapshot:snapshot];
             
             if (self.setUserOnlinePosition == 1) {

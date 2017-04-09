@@ -40,7 +40,6 @@
 @property (assign, nonatomic) CGRect frameBySizeDevice;
 @property (assign, nonatomic) CGRect heartInitFrame;
 @property (assign, nonatomic) CGRect heartFinalFrame;
-//@property (assign, nonatomic) float difference;
 
 @end
 
@@ -147,7 +146,6 @@
 {
     [self progressHubShow];
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        
         [self.ref observeEventType:FIRDataEventTypeValue withBlock:^(FIRDataSnapshot * _Nonnull snapshot) {
             self.fireBase = [TSFireBase initWithSnapshot:snapshot];
             for (NSString *reviewsUserUid in self.reviewsUsersUid) {
