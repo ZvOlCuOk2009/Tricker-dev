@@ -131,9 +131,9 @@ NSInteger recognizerControllersCardsAndChat;
     UIImage *cancelViewImage = [UIImage imageNamed:@"cancel_view"];
     
     if (recognizerTransitionOnChatController == 0) {
-        [self.chatButton setImage:chatImage forState:UIControlStateNormal];
+        self.chatImageView.image = chatImage;
     } else {
-        [self.chatButton setImage:cancelViewImage forState:UIControlStateNormal];
+        self.chatImageView.image = cancelViewImage;
     }    
 }
 

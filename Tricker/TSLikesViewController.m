@@ -45,9 +45,8 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
+    NSLog(@"TSLikesViewController");
     self.ref = [[FIRDatabase database] reference];
-    
     self.title = @"Вы нравитесь";
     
     UIBarButtonItem *backItem = [[UIBarButtonItem alloc] init];

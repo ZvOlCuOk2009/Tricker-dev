@@ -76,7 +76,7 @@
 - (void)viewDidDisappear:(BOOL)animated
 {
     [super viewDidDisappear:animated];
-//    [self.refChat removeAllObservers];
+    [self.refChat removeAllObservers];
 }
 
 - (void)configureController
@@ -125,6 +125,7 @@
                         [self.tableView reloadData];
                         [SVProgressHUD dismiss];
                     });
+                    [self.refChat removeAllObservers];
                     ++self.count;
                 }];
             }

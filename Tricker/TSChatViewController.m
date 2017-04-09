@@ -20,6 +20,7 @@
 #import "TSAlertController.h"
 #import "TSTrickerPrefixHeader.pch"
 
+#import <MDCSwipeToChoose/MDCSwipeToChoose.h>
 #import <SVProgressHUD.h>
 
 @import Photos;
@@ -137,6 +138,7 @@
     }
     [self setMessageRef];
     clearArrayMessageChat = 0;
+    [self.inputToolbar.contentView.textView becomeFirstResponder];
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -161,6 +163,8 @@
         NSArray *componentName = [self.interlocName componentsSeparatedByString:@" "];
         if (componentName.count > 1) {
             self.title = [componentName firstObject];
+        } else {
+            self.title = self.interlocName;
         }
     }];
 }
@@ -238,15 +242,6 @@
 
 - (void)setMessageRef
 {
-//    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-//        
-//        if (self.interlocutorID) {
-//            self.messageRefUser = [[[[[self.refchat child:@"dataBase"] child:@"users"] child:self.user.uid] child:@"chat"] child:self.interlocutorID];
-//            self.messageRefInterlocutor = [[[[[self.refchat child:@"dataBase"] child:@"users"] child:self.interlocutorID] child:@"chat"] child:self.user.uid];
-//            [self dissmisProgressHud];
-//        }
-//    });
-    
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         
         if (self.interlocutorID) {
@@ -260,16 +255,16 @@
 
 #pragma mark - Action
 
-//селектор вызова вьюхи деталей
+//call selector swipeView details
 
 - (void)interlocutorButtonNavBarActoin
 {
-    //добавляю вью на экран лишь в том случае если её там ещё нету
+    //add a view to the screen only if it is not there yet
     if (![self.swipeView isDescendantOfView:self.view]) {
-        //определитель говорит TSSwipeView кнопке chat о том что при нажатии должен сработать метод удаления TSSwipeView с экрана
+        //The identifier tells the TSSwipeView chat button that when pressed it should trigger the TSSwipeView removal method from the screen
         recognizerTransitionOnChatController = 0;
         
-        //если есть клавиатура на экране то убираю её
+        //if there is a keyboard on the screen, then I remove it
         if ([self.inputToolbar.contentView.textView isFirstResponder]) {
             [self.inputToolbar.contentView.textView resignFirstResponder];
         }
@@ -290,8 +285,12 @@
         self.swipeView.photos = self.fireInterlocutor.photos;
         self.swipeView.interlocutorUid = self.interlocutorID;
         
-        [self.view addSubview:self.swipeView];
-        
+        //container for swipeView
+        MDCSwipeToChooseView *containerView = [[MDCSwipeToChooseView alloc] initWithFrame:self.view.bounds
+                                                                                  options:nil];
+        [containerView addSubview:self.swipeView];
+        [self.view addSubview:containerView];
+                
         [UIView animateWithDuration:0.35
                               delay:0
              usingSpringWithDamping:0.6
@@ -346,6 +345,16 @@
         [[TSGetInterlocutorParameters sharedGetInterlocutor] getInterlocutorFromDatabase:self.interlocutorID
                                                                               respondent:@"ChatViewController"];
     });
+}
+
+#pragma mark - MDCSwipeToChoose
+
+- (BOOL)view:(UIView *)view shouldBeChosenWithDirection:(MDCSwipeDirection)direction {
+    [UIView animateWithDuration:0.16 animations:^{
+        view.transform = CGAffineTransformIdentity;
+        view.center = [view superview].center;
+    }];
+    return YES;
 }
 
 #pragma mark - JSQMessagesCollectionViewDataSource
@@ -480,7 +489,7 @@
     }];
 }
 
-//отправка изображений
+#pragma mark - send image
 
 - (NSString *)sendPhotoMessage
 {

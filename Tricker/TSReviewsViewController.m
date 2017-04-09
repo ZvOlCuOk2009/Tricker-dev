@@ -48,6 +48,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    NSLog(@"TSReviewsViewController");
     self.ref = [[FIRDatabase database] reference];
     self.title = @"Вашу анкету смотрели";
     UIBarButtonItem *backItem = [[UIBarButtonItem alloc] init];
@@ -95,6 +96,7 @@
     UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"ProfileStoryboard" bundle:[NSBundle mainBundle]];
     TSProfileTableViewController *controller = [storyboard instantiateViewControllerWithIdentifier:@"TSProfileTableViewController"];
     controller.reviewsLabel.hidden = YES;
+    [self.ref removeAllObservers];
 }
 
 - (void)cancelInteraction
@@ -170,8 +172,15 @@
                     }
                 }
             }
+            
+            if (self.reviewsUsers) {
+                NSCache *reviewsUsersCache = [[NSCache alloc] init];
+                reviewsUsersCache.name = @"reviewsUsersCache";
+                [reviewsUsersCache setObject:self.reviewsUsers forKey:@"reviewsUsersCache"];
+                NSLog(@"reviewsUsersCache %@", reviewsUsersCache.description);
+            }
+            
             dispatch_async(dispatch_get_main_queue(), ^{
-                
                 if ([self.reviewsUsers count] > 0) {
                     [self.tableView reloadData];
                     [self progressHubDismiss];
@@ -218,7 +227,7 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    //swipeView добавляется лишь в случае если её ещё нету на экране
+    //swipeView adds only if it is not already on the screen
     if (![self.swipeView isDescendantOfView:self.view]) {
         NSString *nameReviewUser = [[self.reviewsUsers objectAtIndex:indexPath.row] objectForKey:@"nameUserInterest"];
         NSString *ageReviewUser = [[self.reviewsUsers objectAtIndex:indexPath.row] objectForKey:@"ageUserInterest"];
@@ -234,7 +243,6 @@
         //container for swipeView
         MDCSwipeToChooseView *containerView = [[MDCSwipeToChooseView alloc] initWithFrame:self.view.bounds
                                                                                options:nil];
-        //containerView.backgroundColor = [UIColor clearColor];
         [containerView addSubview:self.swipeView];
         [self.view addSubview:containerView];
         
@@ -254,7 +262,7 @@
                              self.swipeView.frame = self.frameBySizeDevice;
                          } completion:nil];
         
-        //передача ID пользователя на два разных контроллера в зависимости от потребности
+        //transfer of the user ID to two different controllers depending on the need
         
         self.interlocutorID = [self.reviewsUsersUidUpdate objectAtIndex:indexPath.row];
         self.swipeView.interlocutorUid = [self.reviewsUsersUidUpdate objectAtIndex:indexPath.row];

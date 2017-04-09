@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="11542" systemVersion="15G31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="11762" systemVersion="15G1217" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11524"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11757"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -93,7 +93,7 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <color key="tintColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                <state key="normal" backgroundImage="cancel_view">
+                                <state key="normal">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <userDefinedRuntimeAttributes>
@@ -105,6 +105,10 @@
                                     <action selector="chatActionButton:" destination="iN0-l3-epB" eventType="touchUpInside" id="ALF-8F-ec9"/>
                                 </connections>
                             </button>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="BEQ-5c-cMe">
+                                <rect key="frame" x="230" y="436" width="48" height="48"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </imageView>
                             <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Ir1-jG-1l4">
                                 <rect key="frame" x="55" y="361" width="8" height="8"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -155,6 +159,7 @@
                 <outlet property="backgroundImageView" destination="NGx-0R-SI2" id="VAa-Ik-Wkw"/>
                 <outlet property="backgroundTableView" destination="Lgh-aH-RIY" id="aw9-Aw-kVk"/>
                 <outlet property="chatButton" destination="fCN-fX-kgU" id="3ro-Fl-KZB"/>
+                <outlet property="chatImageView" destination="BEQ-5c-cMe" id="Prr-8G-0E8"/>
                 <outlet property="countPhotoLabel" destination="zfm-nQ-UYy" id="0uh-s5-bSY"/>
                 <outlet property="nameLabel" destination="Ugn-8n-d6n" id="bXj-Wb-egK"/>
                 <outlet property="nopeButton" destination="qtU-hZ-yMH" id="kcG-p0-QM9"/>
@@ -166,7 +171,6 @@
         </view>
     </objects>
     <resources>
-        <image name="cancel_view" width="64" height="64"/>
         <image name="list" width="64" height="64"/>
         <image name="photos" width="64" height="64"/>
     </resources>

@@ -98,6 +98,10 @@
                                     <action selector="chatActionButton:" destination="iN0-l3-epB" eventType="touchUpInside" id="OhC-dM-cGr"/>
                                 </connections>
                             </button>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="P1R-0E-a9c">
+                                <rect key="frame" x="198" y="310" width="32" height="32"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="01E-mp-t8a">
                                 <rect key="frame" x="20" y="292" width="28" height="15"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -155,6 +159,7 @@
                 <outlet property="backgroundImageView" destination="7OP-uf-HjE" id="rZ4-JQ-DIl"/>
                 <outlet property="backgroundTableView" destination="uui-hw-6k1" id="5rF-bb-uBK"/>
                 <outlet property="chatButton" destination="wvA-Vp-OSf" id="orT-z4-8tm"/>
+                <outlet property="chatImageView" destination="P1R-0E-a9c" id="yFM-W3-utL"/>
                 <outlet property="countPhotoLabel" destination="ynz-hI-U4h" id="563-4J-SBo"/>
                 <outlet property="nameLabel" destination="2zu-AH-iUX" id="sgQ-IE-dQ0"/>
                 <outlet property="nopeButton" destination="hKL-8K-TIr" id="lmq-Nl-Xw5"/>

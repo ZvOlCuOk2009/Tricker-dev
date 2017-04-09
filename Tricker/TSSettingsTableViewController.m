@@ -107,8 +107,6 @@ NSString * const UpdateParametersNotification = @"UpdateParametersNotification";
     
     NSLog(@"TSSettingsTableViewController");
     
-    self.ref = [[FIRDatabase database] reference];
-    
     UIImageView *imageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"background"]];
     self.tableView.backgroundView = imageView;
     [self.tableView setSeparatorColor:DARK_GRAY_COLOR];
@@ -193,8 +191,9 @@ NSString * const UpdateParametersNotification = @"UpdateParametersNotification";
         ++self.progressHUD;
     }
     
+    self.ref = [[FIRDatabase database] reference];
+    
     [self.ref observeEventType:FIRDataEventTypeValue withBlock:^(FIRDataSnapshot * _Nonnull snapshot) {
-        
         self.fireUser = [TSFireUser initWithSnapshot:snapshot];
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
             UIImage *avatar = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:self.fireUser.photoURL]]];

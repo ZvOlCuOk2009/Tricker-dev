@@ -20,8 +20,9 @@ extern NSInteger recognizerControllersCardsAndChat;
 @property (weak, nonatomic) IBOutlet UIImageView *avatarImageView;
 @property (weak, nonatomic) IBOutlet UIView *onlineView;
 @property (weak, nonatomic) IBOutlet UIButton *nopeButton;
-@property (weak, nonatomic) IBOutlet UIButton *chatButton;
 @property (weak, nonatomic) IBOutlet UIButton *photoButton;
+@property (weak, nonatomic) IBOutlet UIButton *chatButton;
+@property (weak, nonatomic) IBOutlet UIImageView *chatImageView;
 
 @property (strong, nonatomic) UIImage *interlocutorAvatar;
 @property (strong, nonatomic) NSString *interlocutorAvatarUrl;
@@ -31,7 +32,6 @@ extern NSInteger recognizerControllersCardsAndChat;
 @property (strong, nonatomic) NSMutableDictionary *interlocutorData;
 @property (strong, nonatomic) NSMutableArray *interlocutorReviews;
 @property (strong, nonatomic) NSMutableArray *photos;
-
 
 + (instancetype)initProfileView;
 + (instancetype)initDetailView;
