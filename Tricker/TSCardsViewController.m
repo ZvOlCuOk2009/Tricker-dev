@@ -129,63 +129,7 @@
          if (self.indexPathRow <= max - 1) {
             NSDictionary *selectedUser = [self.selectedUsers objectAtIndex:self.indexPathRow];
             self.swipeView = [TSSwipeView initProfileView];
-            self.selectedUserData = [selectedUser objectForKey:@"userData"];
-            NSDictionary *parametersUser = [selectedUser objectForKey:@"parameters"];
-            NSMutableArray *photosUser = [selectedUser objectForKey:@"photos"];
-            NSString *photoURL = [self.selectedUserData objectForKey:@"photoURL"];
-            NSString *displayName = [self.selectedUserData objectForKey:@"displayName"];
-            NSString *age = [self.selectedUserData objectForKey:@"age"];
-            NSString *online = [self.selectedUserData objectForKey:@"online"];
-            NSString *uid = [self.selectedUserData objectForKey:@"userID"];
-            self.selectedReviews = [selectedUser objectForKey:@"reviews"];
-            
-            //установка индикации онлайн
-            if ([online isEqualToString:@"оффлайн"]) {
-                self.swipeView.onlineView.backgroundColor = [UIColor redColor];
-            } else if ([online isEqualToString:@"онлайн"]) {
-                self.swipeView.onlineView.backgroundColor = [UIColor greenColor];
-            }
-            
-            //установка изображения и фона
-            if (photoURL) {
-                self.swipeView.backgroundImageView.image = [self.userAvatars objectAtIndex:self.indexPathRow];
-                self.swipeView.avatarImageView.image = [self.userAvatars objectAtIndex:self.indexPathRow];
-            } else {
-                photoURL = @"";
-                self.swipeView.avatarImageView.image = [UIImage imageNamed:@"placeholder"];
-                self.swipeView.backgroundImageView.image = [UIImage imageNamed:@"placeholder"];
-            }
-            
-            NSString *firstString = [photosUser firstObject];
-            if ([firstString isEqualToString:@""]) {
-                [photosUser removeObjectAtIndex:0];
-            }
-            
-            //установка параметров
-            self.swipeView.nameLabel.text = displayName;
-            self.swipeView.ageLabel.text = age;
-            self.swipeView.interlocutorAvatarUrl = photoURL;
-            NSInteger countPhotos = [photosUser count];
-            if (countPhotos > 0) {
-                countPhotos = countPhotos - 1;
-            }
-            
-            NSString *countPhoto = [NSString stringWithFormat:@"%ld", (long)countPhotos];
-            if ([countPhoto isEqualToString:@"0"]) {
-                countPhoto = @"";
-            }
-            
-            //передача параметров
-            self.swipeView.countPhotoLabel.text = countPhoto;
-            self.swipeView.parameterUser = parametersUser;
-            self.swipeView.photos = photosUser;
-            self.swipeView.interlocutorUid = uid;
-            self.swipeView.interlocutorAvatar = [self.userAvatars objectAtIndex:self.indexPathRow];
-            self.swipeView.interlocutorName = displayName;
-              
-            //параметры просмотров и лайков
-            self.swipeView.interlocutorData = self.selectedUserData;
-            self.swipeView.interlocutorReviews = self.selectedReviews;
+              [self setParametersFoundByUser:selectedUser];
         }
         
         self.counterIndexPath++;
@@ -241,6 +185,67 @@
      } else {
           return self.swipeView;
      }
+}
+
+- (void)setParametersFoundByUser:(NSDictionary *)selectedUser
+{
+     self.selectedUserData = [selectedUser objectForKey:@"userData"];
+     NSDictionary *parametersUser = [selectedUser objectForKey:@"parameters"];
+     NSMutableArray *photosUser = [selectedUser objectForKey:@"photos"];
+     NSString *photoURL = [self.selectedUserData objectForKey:@"photoURL"];
+     NSString *displayName = [self.selectedUserData objectForKey:@"displayName"];
+     NSString *age = [self.selectedUserData objectForKey:@"age"];
+     NSString *online = [self.selectedUserData objectForKey:@"online"];
+     NSString *uid = [self.selectedUserData objectForKey:@"userID"];
+     self.selectedReviews = [selectedUser objectForKey:@"reviews"];
+     
+     //установка индикации онлайн
+     if ([online isEqualToString:@"оффлайн"]) {
+          self.swipeView.onlineView.backgroundColor = [UIColor redColor];
+     } else if ([online isEqualToString:@"онлайн"]) {
+          self.swipeView.onlineView.backgroundColor = [UIColor greenColor];
+     }
+     
+     //установка изображения и фона
+     if (photoURL) {
+          self.swipeView.backgroundImageView.image = [self.userAvatars objectAtIndex:self.indexPathRow];
+          self.swipeView.avatarImageView.image = [self.userAvatars objectAtIndex:self.indexPathRow];
+     } else {
+          photoURL = @"";
+          self.swipeView.avatarImageView.image = [UIImage imageNamed:@"placeholder"];
+          self.swipeView.backgroundImageView.image = [UIImage imageNamed:@"placeholder"];
+     }
+     
+     NSString *firstString = [photosUser firstObject];
+     if ([firstString isEqualToString:@""]) {
+          [photosUser removeObjectAtIndex:0];
+     }
+     
+     //установка параметров
+     self.swipeView.nameLabel.text = displayName;
+     self.swipeView.ageLabel.text = age;
+     self.swipeView.interlocutorAvatarUrl = photoURL;
+     NSInteger countPhotos = [photosUser count];
+     if (countPhotos > 0) {
+          countPhotos = countPhotos - 1;
+     }
+     
+     NSString *countPhoto = [NSString stringWithFormat:@"%ld", (long)countPhotos];
+     if ([countPhoto isEqualToString:@"0"]) {
+          countPhoto = @"";
+     }
+     
+     //передача параметров
+     self.swipeView.countPhotoLabel.text = countPhoto;
+     self.swipeView.parameterUser = parametersUser;
+     self.swipeView.photos = photosUser;
+     self.swipeView.interlocutorUid = uid;
+     self.swipeView.interlocutorAvatar = [self.userAvatars objectAtIndex:self.indexPathRow];
+     self.swipeView.interlocutorName = displayName;
+     
+     //параметры просмотров и лайков
+     self.swipeView.interlocutorData = self.selectedUserData;
+     self.swipeView.interlocutorReviews = self.selectedReviews;
 }
 
 - (void)callTabBarControllerByIndex:(NSInteger)index
