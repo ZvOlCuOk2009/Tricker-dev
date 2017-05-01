@@ -85,13 +85,13 @@ NSInteger clearArrayMessageChat;
                                                                              message:nil
                                                                       preferredStyle:UIAlertControllerStyleAlert];
     UIAlertAction *alertActiionYes = [UIAlertAction actionWithTitle:@"Да"
-                                                           style:UIAlertActionStyleCancel
+                                                           style:UIAlertActionStyleDefault
                                                          handler:^(UIAlertAction * _Nonnull action) {
                                                              [self deletePhoto];
                                                          }];
     
     UIAlertAction *alertActiionNo = [UIAlertAction actionWithTitle:@"Нет"
-                                                              style:UIAlertActionStyleDefault
+                                                              style:UIAlertActionStyleCancel
                                                             handler:nil];
     
     [alertController customizationAlertView:@"Удалить фото?" byFont:20.f];

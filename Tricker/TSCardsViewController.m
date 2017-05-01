@@ -19,6 +19,7 @@
 #import "TSLikeAndReviewSave.h"
 #import "TSReachability.h"
 #import "TSAlertController.h"
+#import "TSSVProgressHUD.h"
 #import "TSTrickerPrefixHeader.pch"
 
 @interface TSCardsViewController () <ZLSwipeableViewDataSource, ZLSwipeableViewDelegate>
@@ -249,6 +250,14 @@
      [stotyboard instantiateViewControllerWithIdentifier:@"TSTabBarViewController"];
      [controller setSelectedIndex:index];
      [self presentViewController:controller animated:YES completion:nil];
+}
+
+- (void)setProgressHub
+{
+     [TSSVProgressHUD showProgressHud];
+     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(4.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+          [TSSVProgressHUD dissmisProgressHud];
+     });
 }
 
 #pragma mark - UITapGestureRecognizer

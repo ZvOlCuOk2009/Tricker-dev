@@ -15,9 +15,8 @@
 #import "TSSwipeView.h"
 #import "TSReachability.h"
 #import "TSAlertController.h"
+#import "TSSVProgressHUD.h"
 #import "TSTrickerPrefixHeader.pch"
-
-#import <SVProgressHUD.h>
 
 @import Firebase;
 @import FirebaseDatabase;
@@ -62,7 +61,8 @@
         if (recognizerTransitionOnChatController == 1) {
             [self transitionToChatViewController];
         } else {
-            [self.refChat observeEventType:FIRDataEventTypeValue withBlock:^(FIRDataSnapshot * _Nonnull snapshot) {
+            [TSSVProgressHUD showProgressHud];
+            self.handle = [self.refChat observeEventType:FIRDataEventTypeValue withBlock:^(FIRDataSnapshot * _Nonnull snapshot) {
                 self.fireUser = [TSFireUser initWithSnapshot:snapshot];
                 self.fireBase = [TSFireBase initWithSnapshot:snapshot];
                 [self configureController];
@@ -75,10 +75,16 @@
     }
 }
 
+- (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    NSLog(@"LOAD %ld !!!!", (long)[indexPath row]);
+}
+
 - (void)viewDidDisappear:(BOOL)animated
 {
     [super viewDidDisappear:animated];
     [self.refChat removeObserverWithHandle:self.handle];
+//    [self.refChat removeAllObservers];
 }
 
 - (void)configureController
@@ -87,13 +93,7 @@
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
             self.chats = (NSMutableDictionary *)self.fireUser.chats;
             NSArray *allKeys = nil;
-            
             if (self.chats) {
-                [SVProgressHUD show];
-                [SVProgressHUD setDefaultStyle:SVProgressHUDStyleCustom];
-                [SVProgressHUD setBackgroundColor:YELLOW_COLOR];
-                [SVProgressHUD setForegroundColor:DARK_GRAY_COLOR];
-                
                 allKeys = [self.fireUser.chats allKeys];
                 self.interlocutors = [NSMutableArray array];
 //                self.lastPosts = [NSMutableArray array];
@@ -125,7 +125,7 @@
                     
                     dispatch_async(dispatch_get_main_queue(), ^{
                         [self.tableView reloadData];
-                        [SVProgressHUD dismiss];
+                        [TSSVProgressHUD dissmisProgressHud];
                     });
                     [self.refChat removeAllObservers];
                     ++self.count;
@@ -164,7 +164,6 @@
     if (!cell) {
         cell = [[TSChatTableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:identifier];
     }
-    
     [self configureCell:cell atIndexPath:indexPath];
     return cell;
 }
@@ -221,19 +220,6 @@
 
 - (void)deleteChatByUid:(NSInteger)uid
 {
-//    TSFireInterlocutor *fireInterlocutor = [self.interlocutors objectAtIndex:uid];
-//    NSString *uidUserChat = fireInterlocutor.uid;
-//    [self.chats removeObjectForKey:uidUserChat];
-//    [self.interlocutors removeObjectAtIndex:uid];
-//    [self.interlocAvatar removeObjectAtIndex:uid];
-//    [self.tableView reloadData];
-//    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-//        [[[[[self.refForUpdateChat child:@"dataBase"] child:@"users"] child:self.fireUser.uid]
-//          child:@"chat"] setValue:self.chats];
-//    });
-//    [self.refForUpdateChat removeAllObservers];
-
-    
     TSFireInterlocutor *fireInterlocutor = [self.interlocutors objectAtIndex:uid];
     NSString *uidUserChat = fireInterlocutor.uid;
     [self.chats removeObjectForKey:uidUserChat];

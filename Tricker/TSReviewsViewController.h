@@ -10,7 +10,4 @@
 
 @interface TSReviewsViewController : UIViewController
 
-- (void)progressHubShow;
-- (void)progressHubDismiss;
-
 @end

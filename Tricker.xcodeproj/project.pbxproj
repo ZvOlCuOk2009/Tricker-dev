@@ -17,6 +17,7 @@
 		FD0C1CA01DE783B500D37B61 /* TSSwipeView.xib in Resources */ = {isa = PBXBuildFile; fileRef = FD0C1C9F1DE783B500D37B61 /* TSSwipeView.xib */; };
 		FD0C1CA31DE78B9B00D37B61 /* TSSwipeView.m in Sources */ = {isa = PBXBuildFile; fileRef = FD0C1CA21DE78B9B00D37B61 /* TSSwipeView.m */; };
 		FD0E42831DF7051200399621 /* TSChatViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FD0E42821DF7051200399621 /* TSChatViewController.m */; };
+		FD102B921E9BFD0C00FA31F1 /* TSSVProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = FD102B911E9BFD0C00FA31F1 /* TSSVProgressHUD.m */; };
 		FD11E9041E259D6200E822ED /* TSGetInterlocutorParameters.m in Sources */ = {isa = PBXBuildFile; fileRef = FD11E9031E259D6200E822ED /* TSGetInterlocutorParameters.m */; };
 		FD1C4F331DCE252200CF63E9 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = FD1C4F321DCE252200CF63E9 /* main.m */; };
 		FD1C4F361DCE252200CF63E9 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = FD1C4F351DCE252200CF63E9 /* AppDelegate.m */; };
@@ -120,6 +121,8 @@
 		FD0C1CA21DE78B9B00D37B61 /* TSSwipeView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSSwipeView.m; sourceTree = "<group>"; };
 		FD0E42811DF7051200399621 /* TSChatViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSChatViewController.h; sourceTree = "<group>"; };
 		FD0E42821DF7051200399621 /* TSChatViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSChatViewController.m; sourceTree = "<group>"; };
+		FD102B901E9BFD0C00FA31F1 /* TSSVProgressHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSSVProgressHUD.h; sourceTree = "<group>"; };
+		FD102B911E9BFD0C00FA31F1 /* TSSVProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSSVProgressHUD.m; sourceTree = "<group>"; };
 		FD11E9021E259D6200E822ED /* TSGetInterlocutorParameters.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSGetInterlocutorParameters.h; sourceTree = "<group>"; };
 		FD11E9031E259D6200E822ED /* TSGetInterlocutorParameters.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSGetInterlocutorParameters.m; sourceTree = "<group>"; };
 		FD1C4F2E1DCE252200CF63E9 /* Tricker.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Tricker.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -328,6 +331,15 @@
 			name = View;
 			sourceTree = "<group>";
 		};
+		FD102B8F1E9BFCBB00FA31F1 /* SVProgressHUD */ = {
+			isa = PBXGroup;
+			children = (
+				FD102B901E9BFD0C00FA31F1 /* TSSVProgressHUD.h */,
+				FD102B911E9BFD0C00FA31F1 /* TSSVProgressHUD.m */,
+			);
+			name = SVProgressHUD;
+			sourceTree = "<group>";
+		};
 		FD1C4F251DCE252200CF63E9 = {
 			isa = PBXGroup;
 			children = (
@@ -355,6 +367,7 @@
 			children = (
 				FD45D0811DD7BE1C00EB2640 /* App */,
 				FD51DB921E2CFA03009333FE /* Reachability */,
+				FD102B8F1E9BFCBB00FA31F1 /* SVProgressHUD */,
 				FDF716C71DEB32A10014171F /* Manager */,
 				FDE927361DE840B900FF884F /* Models */,
 				FD0C1C9E1DE7833100D37B61 /* View */,
@@ -882,6 +895,7 @@
 				FD1C4F691DCE282100CF63E9 /* TSSocialNetworkLoginViewController.m in Sources */,
 				FD64A93E1E241D1C0019BB94 /* TSLikesViewController.m in Sources */,
 				FDF4BB201DF03F38003D3841 /* TSPhotosViewController.m in Sources */,
+				FD102B921E9BFD0C00FA31F1 /* TSSVProgressHUD.m in Sources */,
 				FDBDDDDF1DDB8745008EE73E /* TSSettingsTableViewController.m in Sources */,
 				FD08BFA81E0F5AA900F90FA2 /* TSFireImage.m in Sources */,
 				FDF901581DF89F700067DE87 /* TSChatTableViewCell.m in Sources */,

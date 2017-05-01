@@ -14,9 +14,8 @@
 #import "UIAlertController+TSAlertController.h"
 #import "TSReachability.h"
 #import "TSAlertController.h"
+#import "TSSVProgressHUD.h"
 #import "TSTrickerPrefixHeader.pch"
-
-#import <SVProgressHUD.h>
 
 @import Firebase;
 @import FirebaseAuth;
@@ -148,32 +147,22 @@ static NSString * const reuseIdntifierButton = @"cellButton";
 {
     
     [self.ref observeEventType:FIRDataEventTypeValue withBlock:^(FIRDataSnapshot * _Nonnull snapshot) {
-        
         self.fireUser = [TSFireUser initWithSnapshot:snapshot];
-
         if (self.progressHUD == 0) {
-            [self showProgressHud];
-            
+            [TSSVProgressHUD showProgressHud];
             dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-                
                 if (self.fireUser.photos) {
                     self.urlPhotos = self.fireUser.photos;
                 } else {
                     self.urlPhotos = [NSMutableArray array];
-                    
                     NSString *cap = @"a";
                     [self.urlPhotos addObject:cap];
                     [self.photos addObject:cap];
                 }
-                
                 if (self.fireUser.photos && [self.photos count] == 0) {
-                    
                     for (int i = 0; i < [self.fireUser.photos count]; i++) {
-                        
                         NSString *url = [self.fireUser.photos objectAtIndex:i];
-                        
                         if ([url isEqual:[NSNull null]]) {
-                            
                         } else {
                             if ([url length] > 1) {
                                 UIImage *convertPhoto = [self photoWithPhoto:url];
@@ -187,9 +176,8 @@ static NSString * const reuseIdntifierButton = @"cellButton";
                 }
                 
                 dispatch_async(dispatch_get_main_queue(), ^{
-                    
                     [self.collectionView reloadData];
-                    [self dissmisProgressHud];
+                    [TSSVProgressHUD dissmisProgressHud];
                 });
             });
         }
@@ -207,12 +195,9 @@ static NSString * const reuseIdntifierButton = @"cellButton";
 - (void)willMoveToParentViewController:(UIViewController *)parent
 {
     [super willMoveToParentViewController:parent];
-    
     if (!parent) {
         if (self.recognizer == YES) {
-            
             dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-                
                 for (NSDictionary *selectPhoto in self.selectedPhotos) {
                     NSData *currentData = [selectPhoto objectForKey:@"currentData"];
                     NSString *currentPath = [selectPhoto objectForKey:@"currentPath"];
@@ -285,9 +270,7 @@ static NSString * const reuseIdntifierButton = @"cellButton";
     picker.sourceType = UIImagePickerControllerSourceTypeCamera;
     
     [self presentViewController:picker animated:YES completion:NULL];
-    
 }
-
 
 - (void)selectPhoto {
     
@@ -298,9 +281,7 @@ static NSString * const reuseIdntifierButton = @"cellButton";
     picker.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
     
     [self presentViewController:picker animated:YES completion:NULL];
-    
 }
-
 
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
 {
@@ -330,9 +311,7 @@ static NSString * const reuseIdntifierButton = @"cellButton";
     self.recognizer = YES;
 }
 
-
 #pragma mark - UICollectionViewDataSource
-
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
 {
@@ -342,10 +321,8 @@ static NSString * const reuseIdntifierButton = @"cellButton";
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    
     TSCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:reuseIdntifier
                                                                            forIndexPath:indexPath];
-    
     NSInteger myIndexPaht = indexPath.item;
     UIImage *photo = [self.photos objectAtIndex:myIndexPaht];
     
@@ -353,18 +330,13 @@ static NSString * const reuseIdntifierButton = @"cellButton";
         TSCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:reuseIdntifierButton
                                                                                forIndexPath:indexPath];
         return cell;
-
     } else {
-        
         cell.imageView.image = photo;
     }
-    
     return cell;
 }
 
-
 #pragma mark - UICollectionViewDelegate
-
 
 - (CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout minimumLineSpacingForSectionAtIndex:(NSInteger)section
 {
@@ -378,7 +350,6 @@ static NSString * const reuseIdntifierButton = @"cellButton";
 {
     return self.collViewCellSize;
 }
-
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -403,29 +374,9 @@ static NSString * const reuseIdntifierButton = @"cellButton";
     [self presentViewController:controller animated:YES completion:nil];
 }
 
-
-#pragma mark - ProgressHUD
-
-
-- (void)showProgressHud
-{
-    [SVProgressHUD show];
-    [SVProgressHUD setDefaultStyle:SVProgressHUDStyleCustom];
-    [SVProgressHUD setBackgroundColor:YELLOW_COLOR];
-    [SVProgressHUD setForegroundColor:DARK_GRAY_COLOR];
-}
-
-
-- (void)dissmisProgressHud
-{
-    [SVProgressHUD dismiss];
-}
-
-
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
 
 }
-
 
 @end

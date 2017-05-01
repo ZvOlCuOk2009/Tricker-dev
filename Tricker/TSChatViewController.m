@@ -1,4 +1,4 @@
- //
+//
 //  TSChatViewController.m
 //  Tricker
 //
@@ -18,10 +18,10 @@
 #import "UIAlertController+TSAlertController.h"
 #import "TSReachability.h"
 #import "TSAlertController.h"
+#import "TSSVProgressHUD.h"
 #import "TSTrickerPrefixHeader.pch"
 
 #import <MDCSwipeToChoose/MDCSwipeToChoose.h>
-#import <SVProgressHUD.h>
 
 @import Photos;
 @import Firebase;
@@ -94,7 +94,7 @@
     self.navigationItem.leftBarButtonItem = backItem;
     [backItem setTarget:self];
     [backItem setAction:@selector(cancelInteraction)];
-    [self showProgressHud];
+    [TSSVProgressHUD showProgressHud];
     
     if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone) {
         self.fontSizeBubble = kFontBubbleChatIphone;
@@ -164,6 +164,7 @@
         } else {
             self.title = self.interlocName;
         }
+        [self.refChat removeObserverWithHandle:self.handle];
     }];
 }
 
@@ -177,6 +178,7 @@
     }
     //удаление кнопки с навбара в момент возврата на контроллер чатов
     [self.interlocutorAvatarButtonNavBar removeFromSuperview];
+    [self.refChat removeObserverWithHandle:self.handle];
 }
 
 - (void)configureCurrentChat
@@ -241,14 +243,12 @@
 - (void)setMessageRef
 {
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        
         if (self.interlocutorID) {
             self.messageRefUser = [[[[[self.refChat child:@"dataBase"] child:@"chats"] child:self.user.uid] child:@"chat"] child:self.interlocutorID];
             self.messageRefInterlocutor = [[[[[self.refChat child:@"dataBase"] child:@"chats"] child:self.interlocutorID] child:@"chat"] child:self.user.uid];
-            [self dissmisProgressHud];
+            [TSSVProgressHUD dissmisProgressHud];
         }
     });
-
 }
 
 #pragma mark - Action
@@ -295,7 +295,6 @@
               initialSpringVelocity:1.2
                             options:0
                          animations:^{
-                             
                              self.swipeView.frame = self.frameBySizeDevice;
                          } completion:nil];
         
@@ -617,21 +616,6 @@
             [self.collectionView reloadData];
         }];
     }];
-}
-
-#pragma mark - ProgressHUD
-
-- (void)showProgressHud
-{
-    [SVProgressHUD show];
-    [SVProgressHUD setDefaultStyle:SVProgressHUDStyleCustom];
-    [SVProgressHUD setBackgroundColor:YELLOW_COLOR];
-    [SVProgressHUD setForegroundColor:DARK_GRAY_COLOR];
-}
-
-- (void)dissmisProgressHud
-{
-    [SVProgressHUD dismiss];
 }
 
 - (void)didReceiveMemoryWarning {

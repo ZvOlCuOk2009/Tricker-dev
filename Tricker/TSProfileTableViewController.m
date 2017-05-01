@@ -18,9 +18,8 @@
 #import "TSReachability.h"
 #import "TSAlertController.h"
 #import "TSIntroductionViewController.h"
+#import "TSSVProgressHUD.h"
 #import "TSTrickerPrefixHeader.pch"
-
-#import <SVProgressHUD.h>
 
 @interface TSProfileTableViewController () <UINavigationControllerDelegate, UIImagePickerControllerDelegate>
 
@@ -174,6 +173,8 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     if ([[TSReachability sharedReachability] verificationInternetConnection]) {
+        self.ref = [[FIRDatabase database] reference];
+        self.storageRef = [[FIRStorage storage] reference];
         [self configureController];
     } else {
         TSAlertController *alertController =
@@ -204,12 +205,9 @@
 - (void)configureController
 {
     if (self.progressHUD == 0) {
-        [self showProgressHud];
+        [TSSVProgressHUD showProgressHud];
         ++self.progressHUD;
     }
-    
-    self.ref = [[FIRDatabase database] reference];
-    self.storageRef = [[FIRStorage storage] reference];
     
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         self.handle = [self.ref observeEventType:FIRDataEventTypeValue withBlock:^(FIRDataSnapshot * _Nonnull snapshot) {
@@ -224,7 +222,7 @@
                 if (self.fireUser) {
                     [self setAvatarAndBackground:avatar];
                     [self setParametrUser:self.fireUser];
-                    [self dissmisProgressHud];
+                    [TSSVProgressHUD dissmisProgressHud];
                 }
             });
         }];
@@ -252,7 +250,7 @@
 {
     self.avatarImageView.image = avatar;
     self.backgroundImageView.image = avatar;
-    [self dissmisProgressHud];
+    [TSSVProgressHUD dissmisProgressHud];
 }
 
 - (void)setParametrUser:(TSFireUser *)fireUser
@@ -688,21 +686,6 @@
     }
     self.logo.frame = CGRectMake((self.view.frame.size.width / 2) - (self.logo.frame.size.width / 2), - (changeHeight / 4), self.logo.frame.size.width, self.logo.frame.size.height);
     self.logo.alpha = 4 / changeHeight;
-}
-
-#pragma mark - ProgressHUD
-
-- (void)showProgressHud
-{
-    [SVProgressHUD show];
-    [SVProgressHUD setDefaultStyle:SVProgressHUDStyleCustom];
-    [SVProgressHUD setBackgroundColor:YELLOW_COLOR];
-    [SVProgressHUD setForegroundColor:DARK_GRAY_COLOR];
-}
-
-- (void)dissmisProgressHud
-{
-    [SVProgressHUD dismiss];
 }
 
 - (NSUInteger)application:(UIApplication *)application supportedInterfaceOrientationsForWindow:(UIWindow *)window

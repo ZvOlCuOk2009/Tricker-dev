@@ -16,6 +16,8 @@
 #import "TSGetInterlocutorParameters.h"
 #import "TSTrickerPrefixHeader.pch"
 
+#import <SVProgressHUD.h>
+
 NSInteger recognizerTransitionOnChatController;
 NSInteger recognizerControllersCardsAndChat;
 
@@ -77,7 +79,6 @@ NSInteger recognizerControllersCardsAndChat;
         NSString *key = [self.allKeys objectAtIndex:i];
         NSString *shortKey = [key substringFromIndex:3];
         NSInteger index = [shortKey integerValue];
-        
         NSString *parameter = [self.parameterUser objectForKey:key];
         
         if ([parameter isEqualToString:@"man"]) {
@@ -113,7 +114,7 @@ NSInteger recognizerControllersCardsAndChat;
         counterParamArray++;
     }
     
-    if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone) {
+    if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone) {
         if (IS_IPHONE_4) {
             self.photosView = kTSPhotoView;
         } else if (IS_IPHONE_5) {
@@ -136,7 +137,6 @@ NSInteger recognizerControllersCardsAndChat;
         self.chatImageView.image = cancelViewImage;
     }    
 }
-
 
 - (void)setup {
    
@@ -315,18 +315,19 @@ NSInteger recognizerControllersCardsAndChat;
         
         recognizerTransitionOnChatController = 0;
     } else {
+        
         recognizerTransitionOnChatController = 1;
         
         NSUserDefaults *userDefault = [NSUserDefaults standardUserDefaults];
         [userDefault setObject:self.interlocutorUid forKey:@"intelocID"];
         [userDefault synchronize];
 
-        UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:[NSBundle mainBundle]];
-        TSTabBarViewController *controller =
-        [storyboard instantiateViewControllerWithIdentifier:@"TSTabBarViewController"];
-        [controller setSelectedIndex:2];
+        UIStoryboard *mainStoryboard = [UIStoryboard storyboardWithName:@"Main" bundle:[NSBundle mainBundle]];
+        TSTabBarViewController *tabBarViewController =
+        [mainStoryboard instantiateViewControllerWithIdentifier:@"TSTabBarViewController"];
+        [tabBarViewController setSelectedIndex:2];
         UIViewController *currentTopVC = [self currentTopViewController];
-        [currentTopVC presentViewController:controller animated:YES completion:nil];
+        [currentTopVC presentViewController:tabBarViewController animated:YES completion:nil];
     }
 }
 

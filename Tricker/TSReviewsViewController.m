@@ -15,16 +15,17 @@
 #import "TSFireBase.h"
 #import "TSReachability.h"
 #import "TSAlertController.h"
+#import "TSSVProgressHUD.h"
 #import "TSTrickerPrefixHeader.pch"
 
 #import <MDCSwipeToChoose/MDCSwipeToChoose.h>
-#import <SVProgressHUD.h>
 
 @import FirebaseDatabase;
 
 @interface TSReviewsViewController ()
 
 @property (strong, nonatomic) IBOutlet UITableView *tableView;
+@property (assign, nonatomic) FIRDatabaseHandle handle;
 @property (strong, nonatomic) FIRDatabaseReference *ref;
 @property (strong, nonatomic) TSFireUser *fireUser;
 @property (strong, nonatomic) TSSwipeView *swipeView;
@@ -95,7 +96,8 @@
     UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"ProfileStoryboard" bundle:[NSBundle mainBundle]];
     TSProfileTableViewController *controller = [storyboard instantiateViewControllerWithIdentifier:@"TSProfileTableViewController"];
     controller.reviewsLabel.hidden = YES;
-    [self.ref removeAllObservers];
+    //[self.ref removeAllObservers];
+    [self.ref removeObserverWithHandle:self.handle];
 }
 
 - (void)cancelInteraction
@@ -133,7 +135,7 @@
         }
     }
     
-    [self.ref observeEventType:FIRDataEventTypeValue withBlock:^(FIRDataSnapshot * _Nonnull snapshot) {
+    self.handle = [self.ref observeEventType:FIRDataEventTypeValue withBlock:^(FIRDataSnapshot * _Nonnull snapshot) {
         self.fireUser = [TSFireUser initWithSnapshot:snapshot];
         self.reviewsUsersUid = self.fireUser.reviews;
         if ([self.reviewsUsersUid count] > 0) {
@@ -144,7 +146,7 @@
 
 - (void)fillingDataSource
 {
-    [self progressHubShow];
+    [TSSVProgressHUD showProgressHud];
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         [self.ref observeEventType:FIRDataEventTypeValue withBlock:^(FIRDataSnapshot * _Nonnull snapshot) {
             self.fireBase = [TSFireBase initWithSnapshot:snapshot];
@@ -181,7 +183,8 @@
             dispatch_async(dispatch_get_main_queue(), ^{
                 if ([self.reviewsUsers count] > 0) {
                     [self.tableView reloadData];
-                    [self progressHubDismiss];
+                    [self.ref removeObserverWithHandle:self.handle];
+                    [TSSVProgressHUD dissmisProgressHud];
                 }
             });
         }];
@@ -285,6 +288,7 @@
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
             [[[[[self.ref child:@"dataBase"] child:@"users"] child:self.fireUser.uid]
               child:@"reviews"] setValue:self.reviewsUsersUidUpdate];
+            [self.ref removeObserverWithHandle:self.handle];
         });
     }
 }
@@ -327,21 +331,6 @@
         [[TSGetInterlocutorParameters sharedGetInterlocutor] getInterlocutorFromDatabase:self.interlocutorID
                                                                               respondent:@"ChatViewController"];
     });
-}
-
-#pragma mark - SVProgressHUD
-
-- (void)progressHubShow
-{
-    [SVProgressHUD show];
-    [SVProgressHUD setDefaultStyle:SVProgressHUDStyleCustom];
-    [SVProgressHUD setBackgroundColor:YELLOW_COLOR];
-    [SVProgressHUD setForegroundColor:DARK_GRAY_COLOR];
-}
-
-- (void)progressHubDismiss
-{
-    [SVProgressHUD dismiss];
 }
 
 - (void)didReceiveMemoryWarning {

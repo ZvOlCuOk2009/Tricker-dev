@@ -30,6 +30,7 @@
 
 @property (strong, nonatomic) NSString *notification;
 
+@property (assign, nonatomic) FIRDatabaseHandle handle;
 @property (strong, nonatomic) FIRDatabaseReference *ref;
 @property (strong, nonatomic) TSFireUser *fireUser;
 
@@ -69,17 +70,15 @@
 -(void)viewDidDisappear:(BOOL)animated
 {
     [super viewDidDisappear:animated];
+    [self.ref removeObserverWithHandle:self.handle];
 }
 
 - (void)downloadController
 {
     self.ref = [[FIRDatabase database] reference];
-    
-    [self.ref observeEventType:FIRDataEventTypeValue withBlock:^(FIRDataSnapshot * _Nonnull snapshot) {
-        
+    self.handle = [self.ref observeEventType:FIRDataEventTypeValue withBlock:^(FIRDataSnapshot * _Nonnull snapshot) {
         self.fireUser = [TSFireUser initWithSnapshot:snapshot];
         self.fireBase = [TSFireBase initWithSnapshot:snapshot]; 
-        
         [self configureController];
         
     }];
@@ -91,25 +90,20 @@
 {
     self.genderSearch = [self.fireUser.parameters objectForKey:@"key1"];
     self.ageSearch = [self.fireUser.parameters objectForKey:@"key2"];
-    
     NSArray *keysTaBase = [self.fireBase allKeys];
-    
     self.usersFoundOnTheGender = [NSMutableArray array];
     self.usersFoundOnTheAge = [NSMutableArray array];
     self.usersFoundOnGenderAndAge = [NSMutableArray array];
     
     if (self.genderSearch) {
-        
         [self userSelectionOfGender:keysTaBase];
     }
     
     if (self.ageSearch) {
-        
         [self userSelectionOfAge:keysTaBase];
     }
     
     if (self.genderSearch && self.ageSearch) {
-        
         for (NSDictionary *selectedUserTheGender in self.usersFoundOnTheGender) {
             NSDictionary *userData = [selectedUserTheGender objectForKey:@"userData"];
             NSString *age = [userData objectForKey:@"age"];
@@ -119,7 +113,6 @@
             }
         }
     }
-    
     [self prepareForSegue];
 }
 
@@ -127,9 +120,7 @@
 {
     NSString *genderSearch = [self.fireUser.parameters objectForKey:@"key1"];
     NSArray *componentGender = [genderSearch componentsSeparatedByString:@" "];
-    
     if ([componentGender count] > 1) {
-        
         NSString *man = [componentGender objectAtIndex:0];
         NSString *woman = [componentGender objectAtIndex:1];
         
@@ -160,7 +151,6 @@
 - (void)userSelectionOfAge:(NSArray *)allKeysTaBase
 {
     NSString *ageSearch = [self.fireUser.parameters objectForKey:@"key2"];
-    
     for (NSString *key in allKeysTaBase) {
         NSDictionary *anyUser = [self.fireBase objectForKey:key];
         NSDictionary *userData = [anyUser objectForKey:@"userData"];
@@ -208,7 +198,6 @@
     }
     
     for (NSDictionary *user in selectedUsers) {
-        
         NSDictionary *userData = [user objectForKey:@"userData"];
         NSString *photoURL = [userData objectForKey:@"photoURL"];
         UIImage *avatar = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:photoURL]]];
@@ -218,7 +207,6 @@
     TSCardsViewController *controller = [self.storyboard instantiateViewControllerWithIdentifier:@"TSCardsViewController"];
     controller.selectedUsers = selectedUsers;
     controller.userAvatars = avatarsUsers;
-    
     [self.navigationController pushViewController:controller animated:NO];
 }
 
@@ -226,6 +214,5 @@
     [super didReceiveMemoryWarning];
 
 }
-
 
 @end

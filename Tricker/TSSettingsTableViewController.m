@@ -16,9 +16,8 @@
 #import "TSReachability.h"
 #import "TSAlertController.h"
 #import "UIAlertController+TSAlertController.h"
+#import "TSSVProgressHUD.h"
 #import "TSTrickerPrefixHeader.pch"
-
-#import <SVProgressHUD.h>
 
 NSString * const UpdateParametersNotification = @"UpdateParametersNotification";
 
@@ -58,6 +57,7 @@ NSString * const UpdateParametersNotification = @"UpdateParametersNotification";
 
 @property (strong, nonatomic) UIPickerView *pickerView;
 
+@property (assign, nonatomic) FIRDatabaseHandle handle;
 @property (strong, nonatomic) FIRDatabaseReference *ref;
 @property (strong, nonatomic) TSFireUser *fireUser;
 
@@ -130,6 +130,7 @@ NSString * const UpdateParametersNotification = @"UpdateParametersNotification";
 - (void)viewDidDisappear:(BOOL)animated
 {
     [super viewDidDisappear:animated];
+    [self.ref removeObserverWithHandle:self.handle];
 }
 
 #pragma mark - configure the controller
@@ -187,11 +188,11 @@ NSString * const UpdateParametersNotification = @"UpdateParametersNotification";
 {
     //получение модели пользователя из базы
     if (self.progressHUD == 0) {
-        [self showProgressHud];
+        [TSSVProgressHUD showProgressHud];
         ++self.progressHUD;
     }
     
-    [self.ref observeEventType:FIRDataEventTypeValue withBlock:^(FIRDataSnapshot * _Nonnull snapshot) {
+    self.handle = [self.ref observeEventType:FIRDataEventTypeValue withBlock:^(FIRDataSnapshot * _Nonnull snapshot) {
         self.fireUser = [TSFireUser initWithSnapshot:snapshot];
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
             UIImage *avatar = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:self.fireUser.photoURL]]];
@@ -199,7 +200,7 @@ NSString * const UpdateParametersNotification = @"UpdateParametersNotification";
                 if (self.fireUser) {
                     [self setParametrUser:self.fireUser];
                     self.avatarImageView.image = avatar;
-                    [self dissmisProgressHud];
+                    [TSSVProgressHUD dissmisProgressHud];
                 }
                 self.avatarImageView.layer.cornerRadius = 40;
                 self.avatarImageView.clipsToBounds = YES;
@@ -219,7 +220,6 @@ NSString * const UpdateParametersNotification = @"UpdateParametersNotification";
     if (fireUser.age) {
         self.ageLabel.text = fireUser.age;
     }
-    
     self.nameLabel.text = fireUser.displayName;
     
     //установка параметров из базы если уже есть данные
@@ -236,7 +236,6 @@ NSString * const UpdateParametersNotification = @"UpdateParametersNotification";
             }
             
             //установка изображения кнопок если выбранна позиция
-            
             NSString *shortKey = [key substringFromIndex:3];
             if ([shortKey isEqualToString:@"1"]) {
                 NSString *searchGender = [fireUser.parameters objectForKey:key];
@@ -815,21 +814,6 @@ NSString * const UpdateParametersNotification = @"UpdateParametersNotification";
     UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:[NSBundle mainBundle]];
     TSSocialNetworkLoginViewController *controller = [storyboard instantiateViewControllerWithIdentifier:@"TSSocialNetworkLoginViewController"];
     [self presentViewController:controller animated:YES completion:nil];
-}
-
-#pragma mark - ProgressHUD
-
-- (void)showProgressHud
-{
-    [SVProgressHUD show];
-    [SVProgressHUD setDefaultStyle:SVProgressHUDStyleCustom];
-    [SVProgressHUD setBackgroundColor:YELLOW_COLOR];
-    [SVProgressHUD setForegroundColor:DARK_GRAY_COLOR];
-}
-
-- (void)dissmisProgressHud
-{
-    [SVProgressHUD dismiss];
 }
 
 @end
