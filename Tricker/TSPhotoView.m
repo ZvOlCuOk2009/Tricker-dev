@@ -60,7 +60,6 @@ static NSString * const reuseIdntifier = @"cell";
             [self.collectionView reloadData];
             [TSSVProgressHUD dissmisProgressHud];
         });
-        
     });
     
     if ([self.photos count] == 0 || self.photos == nil) {

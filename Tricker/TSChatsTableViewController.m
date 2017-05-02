@@ -140,6 +140,7 @@
         TSAlertController *alertController =
         [TSAlertController noInternetConnection:@"В данный момент у Вас нету диалогов с другими пользователями"];
         [self presentViewController:alertController animated:YES completion:nil];
+        [TSSVProgressHUD dissmisProgressHud];
     }
 }
 
@@ -209,16 +210,6 @@
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
     return YES;
 }
-
-//- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
-//    if (editingStyle == UITableViewCellEditingStyleDelete) {
-//        [self deleteChatByUid:indexPath.row];
-//    }
-//}
-//
-//- (NSString *)tableView:(UITableView *)tableView titleForDeleteConfirmationButtonForRowAtIndexPath:(NSIndexPath *)indexPath {
-//    return @"Удалить";
-//}
 
 - (NSArray *)tableView:(UITableView *)tableView editActionsForRowAtIndexPath:(NSIndexPath *)indexPath {
     UITableViewRowAction *button =

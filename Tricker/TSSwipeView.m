@@ -286,7 +286,6 @@ NSInteger recognizerControllersCardsAndChat;
                      }];
     
     self.tapGesture.enabled = YES;
-    
     [self markReviewUserByRecognizer];
 }
 
@@ -307,6 +306,7 @@ NSInteger recognizerControllersCardsAndChat;
         recognizerTransitionOnChatController = 0;
     } else {
         recognizerTransitionOnChatController = 1;
+        
         NSUserDefaults *userDefault = [NSUserDefaults standardUserDefaults];
         [userDefault setObject:self.interlocutorUid forKey:@"intelocID"];
         [userDefault synchronize];
@@ -373,11 +373,14 @@ NSInteger recognizerControllersCardsAndChat;
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     static NSString *identifier = @"cell";
+    
     TSViewCell *cell = [tableView dequeueReusableCellWithIdentifier:identifier];
+    
     if (!cell)
     {
         cell = [[[NSBundle mainBundle] loadNibNamed:@"TSViewCell" owner:self options:nil] firstObject];
     }
+    
     NSInteger index = indexPath.row;
     NSString *title = [self.updateDataSource objectAtIndex:index];
     cell.titleLabel.text = [NSString stringWithFormat:@"%@", title];
@@ -386,9 +389,11 @@ NSInteger recognizerControllersCardsAndChat;
         cell.titleLabel.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:20.f];
         cell.parameterLabel.text = @"";
     } else {
+        
         NSString *parameter = [self.getParameters objectAtIndex:index];
         cell.parameterLabel.text = [NSString stringWithFormat:@"%@", parameter];
     }
+    
     return cell;
 }
 

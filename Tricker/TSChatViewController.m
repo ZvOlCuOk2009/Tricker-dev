@@ -137,7 +137,7 @@ NSInteger openChatVC;
     }
     [self setMessageRef];
     clearArrayMessageChat = 0;
-    [self.inputToolbar.contentView.textView becomeFirstResponder];
+    //[self.inputToolbar.contentView.textView becomeFirstResponder];
 }
 
 - (void)viewDidAppear:(BOOL)animated
