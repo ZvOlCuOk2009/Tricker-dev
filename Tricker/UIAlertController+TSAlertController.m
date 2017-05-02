@@ -19,13 +19,11 @@
     alertContentView.layer.cornerRadius = 10;
     self.view.tintColor = DARK_GRAY_COLOR;
     
-    
     NSMutableAttributedString *mutableAttrString = [[NSMutableAttributedString alloc] initWithString:title];
     [mutableAttrString addAttribute:NSFontAttributeName
                               value:[UIFont fontWithName:@"HelveticaNeue-Light" size:size]
                               range:NSMakeRange(0, [title length])];
     [self setValue:mutableAttrString forKey:@"attributedTitle"];
-    
     return self;
 }
 

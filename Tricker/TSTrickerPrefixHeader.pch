@@ -60,7 +60,7 @@
 
 #define kTSSwipeViewFrame CGRectMake(10, 74, 300, 396)
 #define kTSSwipeView5Frame CGRectMake(10, 74, 300, 484)
-#define kTSSwipeView6Frame CGRectMake(15, 74, 345, 558)
+#define kTSSwipeView6Frame CGRectMake(15, 80, 345, 558)
 #define kTSSwipeView6PlusFrame CGRectMake(15, 81, 384, 627)
 #define kTSSwipeViewIpadFrame CGRectMake(20, 74, 728, 900)
 
@@ -68,7 +68,7 @@
 
 #define kTSSwipeDetailViewFrame CGRectMake(10, 71, 300, 352)
 #define kTSSwipeDetailView5Frame CGRectMake(10, 71, 300, 440)
-#define kTSSwipeDetailView6Frame CGRectMake(15, 74, 345, 519)
+#define kTSSwipeDetailView6Frame CGRectMake(15, 80, 345, 519)
 #define kTSSwipeDetailView6PlusFrame CGRectMake(15, 74, 384, 583)
 #define kTSSwipeDetailViewIpadFrame CGRectMake(15, 74, 728, 880)
 

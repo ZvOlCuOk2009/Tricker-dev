@@ -173,7 +173,6 @@ NSInteger recognizerControllersCardsAndChat;
 + (instancetype)initProfileView
 {
     TSSwipeView *view = nil;
-    
     if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone)
     {
         if (IS_IPHONE_4) {
@@ -200,7 +199,6 @@ NSInteger recognizerControllersCardsAndChat;
 + (instancetype)initDetailView
 {
     TSSwipeView *view = nil;
-    
     if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone)
     {
         if (IS_IPHONE_4) {
@@ -220,7 +218,6 @@ NSInteger recognizerControllersCardsAndChat;
         view = [self initDetailViewNibBySizeDevice:view nameNib:@"TSDetailViewIpad"
                                           frameNib:kTSSwipeDetailViewIpadFrame];
     }
-    
     return view;
 }
 
@@ -243,7 +240,6 @@ NSInteger recognizerControllersCardsAndChat;
     UINib *nib = [UINib nibWithNibName:name bundle:nil];
     view = [nib instantiateWithOwner:self options:nil][0];
     view.frame = frame;
-    
     return view;
 }
 
@@ -255,7 +251,6 @@ NSInteger recognizerControllersCardsAndChat;
 {
     self.photoView = [[[NSBundle mainBundle] loadNibNamed:self.photosView
                                                     owner:self options:nil] firstObject];
-    
     [self addSubview:self.photoView];
     [self.photoView setFrame:CGRectMake(0.0f, self.photoView.frame.size.height,
                                    self.photoView.frame.size.width, self.photoView.frame.size.height)];
@@ -263,7 +258,6 @@ NSInteger recognizerControllersCardsAndChat;
     [UIView setAnimationDuration:0.3];
     [self.photoView setFrame:CGRectMake(0.0f, 0.0f,self.photoView.frame.size.width,self.photoView.frame.size.height)];
     [UIView commitAnimations];
-
     self.photoView.photos = self.photos;
     [self markReviewUserByRecognizer];
 }
@@ -299,7 +293,6 @@ NSInteger recognizerControllersCardsAndChat;
 - (IBAction)chatActionButton:(id)sender
 {
     if (recognizerTransitionOnChatController == 2) {
-        
         [UIView animateWithDuration:0.5
                               delay:0
              usingSpringWithDamping:0.7
@@ -308,16 +301,12 @@ NSInteger recognizerControllersCardsAndChat;
                          animations:^{
                              self.frame = CGRectMake(10, 1000, self.frame.size.width, self.frame.size.height);
                          } completion:nil];
-        
         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
             [self removeFromSuperview];
         });
-        
         recognizerTransitionOnChatController = 0;
     } else {
-        
         recognizerTransitionOnChatController = 1;
-        
         NSUserDefaults *userDefault = [NSUserDefaults standardUserDefaults];
         [userDefault setObject:self.interlocutorUid forKey:@"intelocID"];
         [userDefault synchronize];
@@ -331,7 +320,6 @@ NSInteger recognizerControllersCardsAndChat;
     }
 }
 
-
 - (UIViewController *)currentTopViewController {
     UIViewController *topVC = [[[[UIApplication sharedApplication] delegate] window] rootViewController];
     while (topVC.presentedViewController) {
@@ -340,9 +328,7 @@ NSInteger recognizerControllersCardsAndChat;
     return topVC;
 }
 
-
 //возвращение карточки в исходное положение
-
 
 - (void)handleSingleTap:(UITapGestureRecognizer *)recognizer
 {
@@ -362,7 +348,6 @@ NSInteger recognizerControllersCardsAndChat;
 
 #pragma mark - Save mark review user
 
-
 - (void)markReviewUserByRecognizer
 {
     if (recognizerControllersCardsAndChat == 1) {
@@ -378,27 +363,21 @@ NSInteger recognizerControllersCardsAndChat;
     }
 }
 
-
 #pragma mark - UITableViewDataSource
-
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     return [self.getParameters count];
 }
 
-
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     static NSString *identifier = @"cell";
-    
     TSViewCell *cell = [tableView dequeueReusableCellWithIdentifier:identifier];
-    
     if (!cell)
     {
         cell = [[[NSBundle mainBundle] loadNibNamed:@"TSViewCell" owner:self options:nil] firstObject];
     }
-    
     NSInteger index = indexPath.row;
     NSString *title = [self.updateDataSource objectAtIndex:index];
     cell.titleLabel.text = [NSString stringWithFormat:@"%@", title];
@@ -407,19 +386,15 @@ NSInteger recognizerControllersCardsAndChat;
         cell.titleLabel.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:20.f];
         cell.parameterLabel.text = @"";
     } else {
-        
         NSString *parameter = [self.getParameters objectAtIndex:index];
         cell.parameterLabel.text = [NSString stringWithFormat:@"%@", parameter];
     }
-    
     return cell;
 }
-
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
-
 
 @end

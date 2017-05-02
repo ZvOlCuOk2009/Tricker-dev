@@ -25,33 +25,21 @@
     TSAlertController *alertController = [TSAlertController alertControllerWithTitle:text
                                                                              message:nil
                                                                       preferredStyle:UIAlertControllerStyleAlert];
-    
     UIAlertAction *cancel = [UIAlertAction actionWithTitle:@"Ок"
                                                      style:UIAlertActionStyleDefault
-                                                   handler:^(UIAlertAction * _Nonnull action) {
-                                                       
-                                                   }];
-    
+                                                   handler:nil];
     [alertController customizationAlertView:text byFont:20.f];
-    
     [alertController addAction:cancel];
-    
     return alertController;
 }
-
 
 + (TSAlertController *)sharedAlertController:(NSString *)text
 {
     TSAlertController *alertController = [TSAlertController alertControllerWithTitle:text
                                                                              message:nil
                                                                       preferredStyle:UIAlertControllerStyleAlert];
-    
     [alertController customizationAlertView:text byFont:20.f];
-    
     return alertController;
-
 }
-
-
 
 @end

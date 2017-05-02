@@ -93,15 +93,11 @@ static NSString * const reuseIdntifierButton = @"cellButton";
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    
     if ([[TSReachability sharedReachability] verificationInternetConnection]) {
-        
         if (self.recognizerController == NO) {
             [self loadPhotos];
         }
-        
         NSMutableArray *tempArray = nil;
-        
         for (UIImage *firstImage in self.photos) {
             if ([firstImage isKindOfClass:[UIImage class]]) {
                 if (!(firstImage.size.width == 40) && !(firstImage.size.height == 40)) {
@@ -124,28 +120,21 @@ static NSString * const reuseIdntifierButton = @"cellButton";
                 break;
             }
         }
-        
         [self.collectionView reloadData];
-        
     } else {
-        
         TSAlertController *alertController =
         [TSAlertController noInternetConnection:@"Проверьте интернет соединение..."];
-        
         [self presentViewController:alertController animated:YES completion:nil];
     }
 }
-
 
 - (void)viewDidDisappear:(BOOL)animated
 {
     [super viewDidDisappear:animated];
 }
 
-
 - (void)loadPhotos
 {
-    
     [self.ref observeEventType:FIRDataEventTypeValue withBlock:^(FIRDataSnapshot * _Nonnull snapshot) {
         self.fireUser = [TSFireUser initWithSnapshot:snapshot];
         if (self.progressHUD == 0) {
@@ -184,13 +173,11 @@ static NSString * const reuseIdntifierButton = @"cellButton";
     }];
 }
 
-
 - (void)cancelInteraction
 {
     [self.navigationController popToViewController:[self.navigationController.viewControllers objectAtIndex:0]
                                           animated:YES];
 }
-
 
 - (void)willMoveToParentViewController:(UIViewController *)parent
 {
@@ -211,9 +198,7 @@ static NSString * const reuseIdntifierButton = @"cellButton";
     }
 }
 
-
 #pragma mark - compression photo
-
 
 - (UIImage *)photoWithPhoto:(NSString *)url
 {
@@ -221,9 +206,7 @@ static NSString * const reuseIdntifierButton = @"cellButton";
     return photo;
 }
 
-
 #pragma mark - Action
-
 
 - (IBAction)addPhotoActionButton:(id)sender
 {
@@ -354,7 +337,6 @@ static NSString * const reuseIdntifierButton = @"cellButton";
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
     UIImage *capImage = [self.photos firstObject];
-    
     if (capImage.size.width == 40 && capImage.size.height == 40) {
         [self.photos removeObjectAtIndex:0];
     }
@@ -362,15 +344,12 @@ static NSString * const reuseIdntifierButton = @"cellButton";
     UIStoryboard *stotyboard = [UIStoryboard storyboardWithName:@"CardsStoryboard" bundle:[NSBundle mainBundle]];
     TSPhotoZoomViewController *controller =
     [stotyboard instantiateViewControllerWithIdentifier:@"TSPhotoZoomViewController"];
-    
     controller.photos = self.photos;
     controller.hiddenDeleteButton = NO;
     controller.currentPage = indexPath.item - 1;
     controller.fireUser = self.fireUser;
     controller.addPhotos = self.addPhotos;
-    
     self.recognizerController = YES;
-    
     [self presentViewController:controller animated:YES completion:nil];
 }
 

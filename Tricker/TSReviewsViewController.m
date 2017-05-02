@@ -81,6 +81,7 @@
     [super viewWillAppear:animated];
     if ([[TSReachability sharedReachability] verificationInternetConnection]) {
         if ([self.reviewsUsers count] == 0) {
+            [TSSVProgressHUD showProgressHud];
             [self configureController];
         }
     } else {
@@ -97,12 +98,13 @@
     TSProfileTableViewController *controller = [storyboard instantiateViewControllerWithIdentifier:@"TSProfileTableViewController"];
     controller.reviewsLabel.hidden = YES;
     //[self.ref removeAllObservers];
-    [self.ref removeObserverWithHandle:self.handle];
+    //[self.ref removeObserverWithHandle:self.handle];
 }
 
 - (void)cancelInteraction
 {
-    [self.navigationController popToViewController:[self.navigationController.viewControllers objectAtIndex:0]
+    [self.navigationController popToViewController:[self.navigationController.viewControllers
+                                                objectAtIndex:0]
                                           animated:YES];
 }
 
@@ -146,7 +148,6 @@
 
 - (void)fillingDataSource
 {
-    [TSSVProgressHUD showProgressHud];
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         [self.ref observeEventType:FIRDataEventTypeValue withBlock:^(FIRDataSnapshot * _Nonnull snapshot) {
             self.fireBase = [TSFireBase initWithSnapshot:snapshot];
@@ -279,8 +280,10 @@
     return YES;
 }
 
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (editingStyle == UITableViewCellEditingStyleDelete) {
+- (NSArray *)tableView:(UITableView *)tableView editActionsForRowAtIndexPath:(NSIndexPath *)indexPath {
+    UITableViewRowAction *button =
+    [UITableViewRowAction rowActionWithStyle:UITableViewRowActionStyleDefault title:@"Удалить" handler:^(UITableViewRowAction *action, NSIndexPath *indexPath)
+    {
         [self.reviewsUsersUidUpdate removeObjectAtIndex:indexPath.row];
         [self.reviewsUsers removeObjectAtIndex:indexPath.row];
         [self.reviewsUsersAvatar removeObjectAtIndex:indexPath.row];
@@ -290,7 +293,9 @@
               child:@"reviews"] setValue:self.reviewsUsersUidUpdate];
             [self.ref removeObserverWithHandle:self.handle];
         });
-    }
+    }];
+    button.backgroundColor = DARK_GRAY_COLOR;
+    return @[button];
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath

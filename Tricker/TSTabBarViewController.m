@@ -24,9 +24,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-
     self.refCountMessage = [[FIRDatabase database] reference];
-    
     [self.viewControllers enumerateObjectsUsingBlock:^(UIViewController *vc, NSUInteger idx, BOOL *stop) {
         vc.title = nil;
     }];    

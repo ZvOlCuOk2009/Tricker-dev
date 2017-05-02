@@ -48,8 +48,7 @@
 
 - (void)configureController
 {
-     if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone)
-     {
+     if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone) {
           if (IS_IPHONE_4) {
                self.heartInitFrame = kTSInitialHeartCardContrRect;
                self.heartFinalFrame = kTSFinalHeartCardContrRect;
@@ -91,8 +90,7 @@
 
 - (void)viewWillAppear:(BOOL)animated
 {
-    [super viewWillAppear:animated];
-     
+     [super viewWillAppear:animated];
      if ([[TSReachability sharedReachability] verificationInternetConnection]) {
           if (self.cap) {
                self.cap.hidden = NO;
@@ -109,7 +107,6 @@
           [self presentViewController:alertController animated:YES completion:nil];
      }
 }
-
 
 - (void)viewDidDisappear:(BOOL)animated
 {
@@ -131,12 +128,10 @@
             self.swipeView = [TSSwipeView initProfileView];
               [self setParametersFoundByUser:selectedUser];
         }
-        
         self.counterIndexPath++;
         
         //алерт вызывается когда пользователи закончились
         if (self.indexPathRow == max + 1) {
-             
              UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"По данным параметрам пользователей больше нету..."
                                                                                       message:nil
                                                                                preferredStyle:UIAlertControllerStyleAlert];
@@ -163,7 +158,7 @@
          }
      } else {
         //алерт вызывается в случае когда пользователей нету по заданным параметрам
-          UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"По данным параметрам    пользователей не найдено..."
+          UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"По данным параметрам пользователей не найдено..."
                                                                                    message:nil
                                                                             preferredStyle:UIAlertControllerStyleAlert];
           UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"Oк"

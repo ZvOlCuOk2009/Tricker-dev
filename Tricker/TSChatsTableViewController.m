@@ -61,10 +61,12 @@
         if (recognizerTransitionOnChatController == 1) {
             [self transitionToChatViewController];
         } else {
-            [TSSVProgressHUD showProgressHud];
             self.handle = [self.refChat observeEventType:FIRDataEventTypeValue withBlock:^(FIRDataSnapshot * _Nonnull snapshot) {
                 self.fireUser = [TSFireUser initWithSnapshot:snapshot];
                 self.fireBase = [TSFireBase initWithSnapshot:snapshot];
+                if (openChatVC == 0) {
+                    [TSSVProgressHUD showProgressHud];
+                }
                 [self configureController];
             }];
         }
@@ -83,8 +85,8 @@
 - (void)viewDidDisappear:(BOOL)animated
 {
     [super viewDidDisappear:animated];
-    [self.refChat removeObserverWithHandle:self.handle];
-//    [self.refChat removeAllObservers];
+//    [self.refChat removeObserverWithHandle:self.handle];
+    [self.refChat removeAllObservers];
 }
 
 - (void)configureController
@@ -208,14 +210,24 @@
     return YES;
 }
 
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (editingStyle == UITableViewCellEditingStyleDelete) {
-        [self deleteChatByUid:indexPath.row];
-    }
-}
+//- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
+//    if (editingStyle == UITableViewCellEditingStyleDelete) {
+//        [self deleteChatByUid:indexPath.row];
+//    }
+//}
+//
+//- (NSString *)tableView:(UITableView *)tableView titleForDeleteConfirmationButtonForRowAtIndexPath:(NSIndexPath *)indexPath {
+//    return @"Удалить";
+//}
 
-- (NSString *)tableView:(UITableView *)tableView titleForDeleteConfirmationButtonForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return @"Удалить";
+- (NSArray *)tableView:(UITableView *)tableView editActionsForRowAtIndexPath:(NSIndexPath *)indexPath {
+    UITableViewRowAction *button =
+    [UITableViewRowAction rowActionWithStyle:UITableViewRowActionStyleDefault title:@"Удалить" handler:^(UITableViewRowAction *action, NSIndexPath *indexPath)
+     {
+         [self deleteChatByUid:indexPath.row];
+     }];
+    button.backgroundColor = DARK_GRAY_COLOR;
+    return @[button];
 }
 
 - (void)deleteChatByUid:(NSInteger)uid

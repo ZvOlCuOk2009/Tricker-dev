@@ -33,8 +33,12 @@ NSInteger clearArrayMessageChat;
     self.pageControl.numberOfPages = [self.photos count];
     self.pageControl.currentPage = self.currentPage;
     self.scrollView.pagingEnabled = YES;
-
     clearArrayMessageChat = 1;
+}
+
+- (void)viewDidDisappear:(BOOL)animated
+{
+    [super viewDidDisappear:animated];
 }
 
 #pragma mark - UIScrollView

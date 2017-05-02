@@ -11,9 +11,8 @@
 #import "TSCollCell.h"
 #import "TSPhotoZoomViewController.h"
 #import "TSCardsViewController.h"
+#import "TSSVProgressHUD.h"
 #import "TSTrickerPrefixHeader.pch"
-
-#import <SVProgressHUD.h>
 
 @interface TSPhotoView () <UICollectionViewDataSource, UICollectionViewDelegate, UIGestureRecognizerDelegate>
 
@@ -28,39 +27,27 @@ static NSString * const reuseIdntifier = @"cell";
 
 @implementation TSPhotoView
 
-
 - (void)drawRect:(CGRect)rect {
-    
     
     if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone)
     {
         if (IS_IPHONE_4) {
-            
             self.cellSize = kTSCollCellSize;
-            
         } else if (IS_IPHONE_5) {
-            
             self.cellSize = kTSCollCellSize;
-            
         } else if (IS_IPHONE_6) {
-            
             self.cellSize = kTSCollCellSize6;
-            
         } else if (IS_IPHONE_6_PLUS) {
-            
             self.cellSize = kTSCollCellSize_6_Plus;
         }
     } else if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
-        
         self.cellSize = kTSCollCellSizeIpad;
     }
     
     self.convertPhotos = [NSMutableArray array];
-    
-    [self showProgressHud];
+    [TSSVProgressHUD showProgressHud];
     
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        
         for (NSString *imageUrl in self.photos) {
             if (![imageUrl isEqual:[NSNull null]]) {
                 if ([imageUrl length] > 1) {
@@ -69,12 +56,9 @@ static NSString * const reuseIdntifier = @"cell";
                 }
             }
         }
-        
         dispatch_async(dispatch_get_main_queue(), ^{
-            
             [self.collectionView reloadData];
-            [self dissmisProgressHud];
-            
+            [TSSVProgressHUD dissmisProgressHud];
         });
         
     });
@@ -87,24 +71,19 @@ static NSString * const reuseIdntifier = @"cell";
         label.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:20.f];
         [self addSubview:label];
     }
-    
 }
-
 
 - (void)awakeFromNib {
     
     [super awakeFromNib];
-    
     [self.collectionView registerNib:[UINib nibWithNibName:@"TSCollCell" bundle:nil] forCellWithReuseIdentifier:reuseIdntifier];
 }
-
 
 - (UIImage *)convertPhotoByUrl:(NSString *)url
 {
     UIImage *photo = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:url]]];
     return photo;
 }
-
 
 - (IBAction)cancelPhotoViewAction:(id)sender
 {
@@ -115,15 +94,12 @@ static NSString * const reuseIdntifier = @"cell";
     [UIView commitAnimations];
 }
 
-
 #pragma mark - UICollectionViewDataSource
-
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
 {
     return self.convertPhotos.count;
 }
-
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -135,10 +111,8 @@ static NSString * const reuseIdntifier = @"cell";
     return cell;
 }
 
-
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    
     UIStoryboard *stotyboard = [UIStoryboard storyboardWithName:@"CardsStoryboard" bundle:[NSBundle mainBundle]];
     TSPhotoZoomViewController *controller =
     [stotyboard instantiateViewControllerWithIdentifier:@"TSPhotoZoomViewController"];
@@ -147,9 +121,7 @@ static NSString * const reuseIdntifier = @"cell";
     controller.photos = self.convertPhotos;
     controller.hiddenDeleteButton = YES;
     controller.currentPage = indexPath.item;
-    
     [currentTopVC presentViewController:controller animated:YES completion:nil];
-
 }
 
 - (UIViewController *)currentTopViewController {
@@ -160,39 +132,17 @@ static NSString * const reuseIdntifier = @"cell";
     return topVC;
 }
 
-
 #pragma mark - UICollectionViewDelegate
-
 
 - (CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout minimumLineSpacingForSectionAtIndex:(NSInteger)section
 {
     return 1;
 }
 
-
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout
   sizeForItemAtIndexPath:(NSIndexPath *)indexPath
 {
     return self.cellSize;
 }
-
-
-#pragma mark - ProgressHUD
-
-
-- (void)showProgressHud
-{
-    [SVProgressHUD show];
-    [SVProgressHUD setDefaultStyle:SVProgressHUDStyleCustom];
-    [SVProgressHUD setBackgroundColor:YELLOW_COLOR];
-    [SVProgressHUD setForegroundColor:DARK_GRAY_COLOR];
-}
-
-
-- (void)dissmisProgressHud
-{
-    [SVProgressHUD dismiss];
-}
-
 
 @end

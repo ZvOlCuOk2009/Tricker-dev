@@ -23,6 +23,8 @@
 
 #import <MDCSwipeToChoose/MDCSwipeToChoose.h>
 
+NSInteger openChatVC;
+
 @import Photos;
 @import Firebase;
 @import FirebaseDatabase;
@@ -101,12 +103,12 @@
     } else if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
         self.fontSizeBubble = kFontBubbleChatIpad;
     }
+    openChatVC = 1;
 }
 
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    
     if ([[TSReachability sharedReachability] verificationInternetConnection]) {
         [self setupBubbles];
         self.handle = [self.refChat observeEventType:FIRDataEventTypeValue withBlock:^(FIRDataSnapshot * _Nonnull snapshot) {
@@ -127,7 +129,6 @@
             self.interlocutorID = [userDefaults objectForKey:@"intelocID"];
             [self setDataInterlocutorToCard:self.interlocutorID];
         }
-        
         recognizerControllersCardsAndChat = 2;
     } else {
         TSAlertController *alertController =
@@ -460,25 +461,24 @@
 - (void)observeMessages
 {
     [self.messages removeAllObjects];
-    
     FIRDatabaseQuery *messagesQuery = [self.messageRefUser queryLimitedToLast:20];
     [messagesQuery observeEventType:FIRDataEventTypeChildAdded withBlock:^(FIRDataSnapshot * _Nonnull snapshot) {
-        
         NSDictionary *messageData = snapshot.value;
         NSArray *allKeys = [messageData allKeys];
         NSString *firstKey = [allKeys firstObject];
         NSString *lastKey = [allKeys lastObject];
-        
         NSString *ID = snapshot.value[@"senderId"];
         if ([firstKey isEqualToString:@"senderId"] && [lastKey isEqualToString:@"text"]) {
             NSString *text = snapshot.value[@"text"];
-            [self addMessage:ID text:text];
+            JSQMessage *message = [self.messages lastObject];
+            if (![message.text isEqualToString:text]) {
+                [self addMessage:ID text:text];
+            }
             [self finishReceivingMessageAnimated:YES];
         } else if ([firstKey isEqualToString:@"imageURL"] && [lastKey isEqualToString:@"senderId"]) {
             NSString *imageURL = snapshot.value[@"imageURL"];
             JSQPhotoMediaItem *mediaItem = [[JSQPhotoMediaItem alloc] initWithMaskAsOutgoing:YES];
             [self addPhotoMessage:ID key:snapshot.key mediaItem:mediaItem];
-            
             if ([imageURL hasPrefix:@"https://"]) {
                 [self fetchImageDataAtURL:imageURL forMediaItem:mediaItem
      clearsPhotoMessageMapOnSuccessForKey:nil];

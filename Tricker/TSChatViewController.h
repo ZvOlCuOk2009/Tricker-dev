@@ -9,6 +9,8 @@
 #import <UIKit/UIKit.h>
 #import <JSQMessagesViewController/JSQMessages.h>
 
+extern NSInteger openChatVC;
+
 @interface TSChatViewController : JSQMessagesViewController
 
 @property (strong, nonatomic) NSString *interlocutorID;

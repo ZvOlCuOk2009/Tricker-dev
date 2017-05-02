@@ -81,18 +81,16 @@
     [super viewWillAppear:animated];
     
     if ([[TSReachability sharedReachability] verificationInternetConnection]) {
-        
         if ([self.likesUsers count] == 0) {
+            [TSSVProgressHUD showProgressHud];
             [self configureController];
         }
     } else {
-        
         TSAlertController *alertController =
         [TSAlertController noInternetConnection:@"Проверьте интернет соединение..."];
         [self presentViewController:alertController animated:YES completion:nil];
     }
 }
-
 
 - (void)viewDidDisappear:(BOOL)animated
 {
@@ -102,10 +100,8 @@
     TSProfileTableViewController *controller = [storyboard instantiateViewControllerWithIdentifier:@"TSProfileTableViewController"];
     controller.likesLabel.hidden = YES;
     //[self.ref removeAllObservers];
-    [self.ref removeObserverWithHandle:self.handle];
-
+    //[self.ref removeObserverWithHandle:self.handle];
 }
-
 
 - (void)cancelInteraction
 {
@@ -156,7 +152,6 @@
 
 - (void)fillingDataSource
 {
-    [TSSVProgressHUD showProgressHud];
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         [self.ref observeEventType:FIRDataEventTypeValue withBlock:^(FIRDataSnapshot * _Nonnull snapshot) {
             self.fireBase = [TSFireBase initWithSnapshot:snapshot];
@@ -287,22 +282,27 @@
     }
 }
 
+
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
     return YES;
 }
 
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (editingStyle == UITableViewCellEditingStyleDelete) {
-        [self.likesUsersUidUpdate removeObjectAtIndex:indexPath.row];
-        [self.likesUsers removeObjectAtIndex:indexPath.row];
-        [self.likesUsersAvatar removeObjectAtIndex:indexPath.row];
-        [tableView reloadData];
-        
-        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-            [[[[[self.ref child:@"dataBase"] child:@"users"] child:self.fireUser.uid]
-              child:@"likes"] setValue:self.likesUsersUidUpdate];
-        });
-    }
+- (NSArray *)tableView:(UITableView *)tableView editActionsForRowAtIndexPath:(NSIndexPath *)indexPath {
+    UITableViewRowAction *button =
+    [UITableViewRowAction rowActionWithStyle:UITableViewRowActionStyleDefault title:@"Удалить" handler:^(UITableViewRowAction *action, NSIndexPath *indexPath)
+     {
+         [self.likesUsersUidUpdate removeObjectAtIndex:indexPath.row];
+         [self.likesUsers removeObjectAtIndex:indexPath.row];
+         [self.likesUsersAvatar removeObjectAtIndex:indexPath.row];
+         [tableView reloadData];
+         
+         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+             [[[[[self.ref child:@"dataBase"] child:@"users"] child:self.fireUser.uid]
+               child:@"likes"] setValue:self.likesUsersUidUpdate];
+         });
+     }];
+    button.backgroundColor = DARK_GRAY_COLOR;
+    return @[button];
 }
 
 - (void)hendlePanGesture

@@ -186,7 +186,8 @@
 - (void)viewDidDisappear:(BOOL)animated
 {
     [super viewDidDisappear:animated];
-    [self.ref removeObserverWithHandle:self.handle];
+    //[self.ref removeObserverWithHandle:self.handle];
+    [self.ref removeAllObservers];
 }
 
 - (void)callIntroductionViewController
