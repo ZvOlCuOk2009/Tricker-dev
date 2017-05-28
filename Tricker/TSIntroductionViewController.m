@@ -73,9 +73,7 @@
     NSString *textFivePage = @"Всех найденных пользователей Вы сможете посмотреть простым смахиванием в данной вкладке";
     //NSString *textSixPage = @"Так же двойным ксанием, Вы можете ставить лайки понравимшимся пользователям. О чем их уведомит приложение";
     
-    
-    if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone)
-    {
+    if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone) {
         if (IS_IPHONE_4) {
             self.images = @[image_introduction_iphone4_1, image_introduction_iphone4_2, image_introduction_iphone4_3, image_introduction_iphone4_4, image_introduction_iphone4_5];
         } else if (IS_IPHONE_5) {
@@ -92,7 +90,6 @@
             self.images = @[image_introduction_ipad_1, image_introduction_ipad_2, image_introduction_ipad_3, image_introduction_ipad_4, image_introduction_ipad_5];
         } else if (IS_IPAD_PRO) {
             self.images = @[image_introduction_ipad_1, image_introduction_ipad_2, image_introduction_ipad_3, image_introduction_ipad_4, image_introduction_ipad_5];
-            
         }
     }
     
@@ -141,7 +138,6 @@
     [self setupScroll];
 }
 
-
 - (void)setupScroll {
     
     self.scrollView.contentSize = CGSizeMake(self.scrollView.bounds.size.width * [self.images count], self.scrollView.bounds.size.height);
@@ -168,8 +164,10 @@
 
 - (void)setText
 {
-    NSString *text = [self.texts objectAtIndex:self.page];
-    [self.textLabel setText:text];
+    if (self.page < [self.texts count]) {
+        NSString *text = [self.texts objectAtIndex:self.page];
+        [self.textLabel setText:text];
+    }
 }
 
 - (void)pressedCancelButton
@@ -198,7 +196,7 @@
     NSInteger currentPage = self.scrollView.contentOffset.x / self.scrollView.frame.size.width;
     CGFloat weight = self.scrollView.frame.size.width;
     NSInteger nextPage;
-    if (currentPage < [self.texts count]) {
+    if (currentPage < [self.texts count] - 1) {
         nextPage = (weight * currentPage) + weight;
     } else {
         nextPage = currentPage * weight;

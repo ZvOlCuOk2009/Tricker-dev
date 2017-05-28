@@ -20,7 +20,6 @@
     {
         NSString *keyUserData = [NSString stringWithFormat:@"dataBase/users/%@/userData", fireUser.uid];
         NSString *keyToParameters = [NSString stringWithFormat:@"dataBase/users/%@", fireUser.uid];
-//        NSString *keyToChats = [NSString stringWithFormat:@"dataBase/users/%@", fireUser.uid];
         NSString *keyToChats = [NSString stringWithFormat:@"dataBase/chats/%@", fireUser.uid];
         NSString *keyToPhotos = [NSString stringWithFormat:@"dataBase/users/%@", fireUser.uid];
         NSString *keyToReviews = [NSString stringWithFormat:@"dataBase/users/%@", fireUser.uid];
@@ -42,7 +41,6 @@
         FIRDataSnapshot *gender = fireUser.value[@"gender"];
         FIRDataSnapshot *online = fireUser.value[@"online"];
         FIRDataSnapshot *parameters = fireUserParameters.value[@"parameters"];
-//        FIRDataSnapshot *chats = fireUserChats.value[@"chat"];
         FIRDataSnapshot *chats = nil;
         if ([snapshot hasChild:keyToChats]) {
             chats = fireUserChats.value[@"chat"];

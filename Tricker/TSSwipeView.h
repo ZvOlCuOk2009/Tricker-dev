@@ -32,6 +32,7 @@ extern NSInteger recognizerControllersCardsAndChat;
 @property (strong, nonatomic) NSMutableDictionary *interlocutorData;
 @property (strong, nonatomic) NSMutableArray *interlocutorReviews;
 @property (strong, nonatomic) NSMutableArray *photos;
+@property (strong, nonatomic) NSString *onlineState;
 
 + (instancetype)initProfileView;
 + (instancetype)initDetailView;

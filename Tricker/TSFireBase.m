@@ -12,15 +12,12 @@
 
 + (NSDictionary *)initWithSnapshot:(FIRDataSnapshot *)snapshot
 {
-    
     NSDictionary *base = [NSDictionary dictionary];
     NSString *key = @"dataBase";
     FIRDataSnapshot *fireBase = [snapshot childSnapshotForPath:key];
     FIRDataSnapshot *users = fireBase.value[@"users"];
     base = (NSDictionary *)users;
-    
     return base;
-    
 }
 
 @end

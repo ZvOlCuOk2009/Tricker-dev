@@ -44,24 +44,17 @@
 - (void)getInterlocutorFromDatabase:(NSString *)interlocutorUid respondent:(NSString *)respondent
 {
     [self.ref observeEventType:FIRDataEventTypeValue withBlock:^(FIRDataSnapshot * _Nonnull snapshot) {
-        
         self.fireBase = [TSFireBase initWithSnapshot:snapshot];
         
         NSMutableDictionary *searchInterlocutor = [self.fireBase objectForKey:interlocutorUid];
         NSMutableArray *reviews = [searchInterlocutor objectForKey:@"reviews"];
         
         if ([respondent isEqualToString:@"ChatViewController"] && searchInterlocutor) {
-            
             [[TSLikeAndReviewSave sharedLikeAndReviewSaveManager] saveLikeInTheDatabase:searchInterlocutor];
-            
         } else if ([respondent isEqualToString:@"TSSwipeView"]) {
-            
             [[TSLikeAndReviewSave sharedLikeAndReviewSaveManager] saveReviewInTheDatabase:searchInterlocutor reviews:reviews];
-            
         }
-        
     }];
-    
 }
 
 @end

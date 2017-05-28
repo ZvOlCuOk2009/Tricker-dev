@@ -38,6 +38,13 @@
 @property (strong, nonatomic) NSMutableArray *reviewsUsersParams;
 @property (strong, nonatomic) NSMutableArray *reviewsPhotos;
 
+@property (strong, nonatomic) NSString *nameUserInterest;
+@property (strong, nonatomic) NSString *ageUserInterest;
+@property (strong, nonatomic) NSString *onlineUserInterest;
+@property (strong, nonatomic) NSString *photoUserInterest;
+@property (strong, nonatomic) NSArray *paramsReviews;
+@property (strong, nonatomic) NSArray *photosReviews;
+
 @property (assign, nonatomic) CGRect frameBySizeDevice;
 @property (assign, nonatomic) CGRect heartInitFrame;
 @property (assign, nonatomic) CGRect heartFinalFrame;
@@ -98,7 +105,7 @@
     TSProfileTableViewController *controller = [storyboard instantiateViewControllerWithIdentifier:@"TSProfileTableViewController"];
     controller.reviewsLabel.hidden = YES;
     //[self.ref removeAllObservers];
-    //[self.ref removeObserverWithHandle:self.handle];
+    [self.ref removeObserverWithHandle:self.handle];
 }
 
 - (void)cancelInteraction
@@ -110,8 +117,7 @@
 
 - (void)configureController
 {
-    if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone)
-    {
+    if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone) {
         if (IS_IPHONE_4) {
             self.frameBySizeDevice = kTSSwipeDetailViewFrame;
             self.heartInitFrame = kTSInitialHeartRect;
@@ -142,6 +148,8 @@
         self.reviewsUsersUid = self.fireUser.reviews;
         if ([self.reviewsUsersUid count] > 0) {
             [self fillingDataSource];
+        } else {
+            [TSSVProgressHUD dissmisProgressHud];
         }
     }];
 }
@@ -154,19 +162,26 @@
             for (NSString *reviewsUserUid in self.reviewsUsersUid) {
                 if (![self.fireUser.uid isEqualToString:reviewsUserUid]) {
                     NSDictionary *userDataReviews = [self.fireBase objectForKey:reviewsUserUid];
-                    NSString *nameUserInterest = [[userDataReviews objectForKey:@"userData"] objectForKey:@"displayName"];
-                    NSString *ageUserInterest = [[userDataReviews objectForKey:@"userData"] objectForKey:@"age"];
-                    NSString *photoUserInterest = [[userDataReviews objectForKey:@"userData"] objectForKey:@"photoURL"];
-                    NSArray *paramsReviews = [userDataReviews objectForKey:@"parameters"];
-                    NSArray *photosReviews = [userDataReviews objectForKey:@"photos"];
-                    NSDictionary *userDataReviewParam = @{@"nameUserInterest":nameUserInterest,
-                                                          @"ageUserInterest":ageUserInterest};
+                    self.nameUserInterest = [[userDataReviews objectForKey:@"userData"] objectForKey:@"displayName"];
+                    self.ageUserInterest = [[userDataReviews objectForKey:@"userData"] objectForKey:@"age"];
+                    self.onlineUserInterest = [[userDataReviews objectForKey:@"userData"] objectForKey:@"online"];
+                    self.photoUserInterest = [[userDataReviews objectForKey:@"userData"] objectForKey:@"photoURL"];
+                    self.paramsReviews = [userDataReviews objectForKey:@"parameters"];
+                    self.photosReviews = [userDataReviews objectForKey:@"photos"];
+                    
+                    if (self.nameUserInterest == nil) {
+                        [self setCaps];
+                    }
+                    
+                    NSDictionary *userDataReviewParam = @{@"nameUserInterest":self.nameUserInterest,
+                                                          @"ageUserInterest":self.ageUserInterest,
+                                                          @"onlineUserInterest":self.onlineUserInterest};
                     [self.reviewsUsers addObject:userDataReviewParam];
-                    [self.reviewsUsersAvatar addObject:[self convertAvatarByUrl:photoUserInterest]];
-                    [self.reviewsUsersParams addObject:paramsReviews];
+                    [self.reviewsUsersAvatar addObject:[self convertAvatarByUrl:self.photoUserInterest]];
+                    [self.reviewsUsersParams addObject:self.paramsReviews];
                     [self.reviewsUsersUidUpdate addObject:reviewsUserUid];
-                    if (photosReviews) {
-                        [self.reviewsPhotos addObject:photosReviews];
+                    if (self.photosReviews) {
+                        [self.reviewsPhotos addObject:self.photosReviews];
                     } else {
                         NSArray *emptyArray = @[];
                         [self.reviewsPhotos addObject:emptyArray];
@@ -190,6 +205,33 @@
             });
         }];
     });
+}
+
+- (void)setCaps
+{
+    if (self.nameUserInterest == nil) {
+        self.nameUserInterest = @"not found";
+    }
+    
+    if (self.ageUserInterest == nil) {
+        self.ageUserInterest = @"not found";
+    }
+    
+    if (self.onlineUserInterest == nil) {
+        self.onlineUserInterest = @"not found";
+    }
+    
+    if (self.photoUserInterest == nil) {
+        self.photoUserInterest = @"not found";
+    }
+    
+    if (self.paramsReviews == nil) {
+        self.paramsReviews = [NSArray arrayWithObject:@""];
+    }
+    
+    if (self.photosReviews == nil) {
+        self.photosReviews = [NSArray arrayWithObject:@""];
+    }
 }
 
 #pragma mark - UITableViewDataSource
@@ -220,7 +262,12 @@
 
 - (UIImage *)convertAvatarByUrl:(NSString *)url
 {
-    UIImage *avatar = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:url]]];
+    UIImage *avatar = nil;
+    if ([url isEqualToString:@"not found"]) {
+        avatar = [UIImage imageNamed:@"placeholder_avarar"];
+    } else {
+        avatar = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:url]]];
+    }
     return avatar;
 }
 
@@ -233,46 +280,52 @@
     if (![self.swipeView isDescendantOfView:self.view]) {
         NSString *nameReviewUser = [[self.reviewsUsers objectAtIndex:indexPath.row] objectForKey:@"nameUserInterest"];
         NSString *ageReviewUser = [[self.reviewsUsers objectAtIndex:indexPath.row] objectForKey:@"ageUserInterest"];
+        NSString *onlineUserInterest = [[self.reviewsUsers objectAtIndex:indexPath.row] objectForKey:@"onlineUserInterest"];
         
-        self.swipeView = [TSSwipeView initDetailView];
-        self.swipeView.frame = CGRectMake(10, - 600, self.swipeView.frame.size.width, self.swipeView.frame.size.width);
-        self.swipeView.nameLabel.text = nameReviewUser;
-        self.swipeView.ageLabel.text = ageReviewUser;
-        self.swipeView.avatarImageView.image = [self.reviewsUsersAvatar objectAtIndex:indexPath.row];
-        self.swipeView.backgroundImageView.image = [self.reviewsUsersAvatar objectAtIndex:indexPath.row];
-        self.swipeView.parameterUser = [self.reviewsUsersParams objectAtIndex:indexPath.row];
-        
-        //container for swipeView
-        MDCSwipeToChooseView *containerView = [[MDCSwipeToChooseView alloc] initWithFrame:self.view.bounds
-                                                                               options:nil];
-        [containerView addSubview:self.swipeView];
-        [self.view addSubview:containerView];
-        
-        NSMutableArray *photos = [self.reviewsPhotos objectAtIndex:indexPath.row];
-        self.swipeView.photos = photos;
-        
-        if ([photos count] > 0) {
-            self.swipeView.countPhotoLabel.text = [NSString stringWithFormat:@"%ld", (long)[photos count] - 1];
+        if ([nameReviewUser isEqualToString:@"not found"]) {
+            TSAlertController *alertController = [TSAlertController noInternetConnection:@"Пользователь удален!!!"];
+            [self presentViewController:alertController animated:YES completion:nil];
+        } else {
+            self.swipeView = [TSSwipeView initDetailView];
+            self.swipeView.frame = CGRectMake(10, - 600, self.swipeView.frame.size.width, self.swipeView.frame.size.width);
+            self.swipeView.nameLabel.text = nameReviewUser;
+            self.swipeView.ageLabel.text = ageReviewUser;
+            self.swipeView.onlineState = onlineUserInterest;
+            self.swipeView.avatarImageView.image = [self.reviewsUsersAvatar objectAtIndex:indexPath.row];
+            self.swipeView.backgroundImageView.image = [self.reviewsUsersAvatar objectAtIndex:indexPath.row];
+            self.swipeView.parameterUser = [self.reviewsUsersParams objectAtIndex:indexPath.row];
+            //container for swipeView
+            MDCSwipeToChooseView *containerView = [[MDCSwipeToChooseView alloc] initWithFrame:self.view.bounds
+                                                                                      options:nil];
+            [containerView addSubview:self.swipeView];
+            [self.view addSubview:containerView];
+            
+            NSMutableArray *photos = [self.reviewsPhotos objectAtIndex:indexPath.row];
+            self.swipeView.photos = photos;
+            
+            if ([photos count] > 0) {
+                self.swipeView.countPhotoLabel.text = [NSString stringWithFormat:@"%ld", (long)[photos count] - 1];
+            }
+            
+            [UIView animateWithDuration:0.35
+                                  delay:0
+                 usingSpringWithDamping:0.6
+                  initialSpringVelocity:1.2
+                                options:0
+                             animations:^{
+                                 self.swipeView.frame = self.frameBySizeDevice;
+                             } completion:nil];
+            
+            //transfer of the user ID to two different controllers depending on the need
+            
+            self.interlocutorID = [self.reviewsUsersUidUpdate objectAtIndex:indexPath.row];
+            self.swipeView.interlocutorUid = [self.reviewsUsersUidUpdate objectAtIndex:indexPath.row];
+            UITapGestureRecognizer *tapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self
+                                                                                                   action:@selector(hendlePanGesture)];
+            tapGestureRecognizer.numberOfTapsRequired = 2;
+            [self.swipeView addGestureRecognizer:tapGestureRecognizer];
+            recognizerTransitionOnChatController = 0;
         }
-        
-        [UIView animateWithDuration:0.35
-                              delay:0
-             usingSpringWithDamping:0.6
-              initialSpringVelocity:1.2
-                            options:0
-                         animations:^{
-                             self.swipeView.frame = self.frameBySizeDevice;
-                         } completion:nil];
-        
-        //transfer of the user ID to two different controllers depending on the need
-        
-        self.interlocutorID = [self.reviewsUsersUidUpdate objectAtIndex:indexPath.row];
-        self.swipeView.interlocutorUid = [self.reviewsUsersUidUpdate objectAtIndex:indexPath.row];
-        UITapGestureRecognizer *tapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self
-                                                                                               action:@selector(hendlePanGesture)];
-        tapGestureRecognizer.numberOfTapsRequired = 2;
-        [self.swipeView addGestureRecognizer:tapGestureRecognizer];
-        recognizerTransitionOnChatController = 0;
     }
 }
 

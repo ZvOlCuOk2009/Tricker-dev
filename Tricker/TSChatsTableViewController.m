@@ -85,8 +85,8 @@
 - (void)viewDidDisappear:(BOOL)animated
 {
     [super viewDidDisappear:animated];
-//    [self.refChat removeObserverWithHandle:self.handle];
-    [self.refChat removeAllObservers];
+    [self.refChat removeObserverWithHandle:self.handle];
+//    [self.refChat removeAllObservers];
 }
 
 - (void)configureController

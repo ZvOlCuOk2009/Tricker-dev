@@ -99,7 +99,7 @@
         [self userSelectionOfGender:keysTaBase];
     }
     
-    if (self.ageSearch) {
+    if (self.ageSearch && self.genderSearch != nil) {
         [self userSelectionOfAge:keysTaBase];
     }
     
@@ -135,7 +135,6 @@
             }
         }
     } else {
-        
         for (NSString *key in allKeysTaBase) {
             NSDictionary *anyUser = [self.fireBase objectForKey:key];
             NSDictionary *userData = [anyUser objectForKey:@"userData"];

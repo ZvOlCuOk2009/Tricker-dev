@@ -74,12 +74,9 @@ NSString * TSFireImageOpenTabBarNotification = @"TSFireImageOpenTabBarNotificati
                               [imagesRef downloadURLWithCompletion:^(NSURL * _Nullable URL, NSError * _Nullable error) {
                                   
                                   NSString *photoURL = [NSString stringWithFormat:@"%@", URL];
-                                  
                                   [photos addObject:photoURL];
-                                  
                                   [[[[[ref child:@"dataBase"] child:@"users"] child:fireUser.uid] child:@"photos"] setValue:photos];
                               }];
-                              
                           }];
 }
 

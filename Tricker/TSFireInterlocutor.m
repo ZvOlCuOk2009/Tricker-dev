@@ -12,7 +12,6 @@
 
 + (TSFireInterlocutor *)initWithSnapshot:(FIRDataSnapshot *)snapshot byIdentifier:(NSString *)identifier
 {
-    
     TSFireInterlocutor *interlocutor = [[TSFireInterlocutor alloc] init];
     
     NSString *keyInterlocutorData = [NSString stringWithFormat:@"dataBase/users/%@/userData", identifier];
@@ -34,7 +33,6 @@
     FIRDataSnapshot *online = fireInterlocutor.value[@"online"];
     FIRDataSnapshot *parameters = fireInterlocutorParameters.value[@"parameters"];
     FIRDataSnapshot *photos = fireInterlocutorPhotos.value[@"photos"];
-    
     
     interlocutor.uid = (NSString *)interlocutorIdent;
     interlocutor.displayName = (NSString *)interlocutorName;

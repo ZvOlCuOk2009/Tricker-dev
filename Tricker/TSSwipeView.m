@@ -45,7 +45,6 @@ NSInteger recognizerControllersCardsAndChat;
 - (void)drawRect:(CGRect)rect {
     
     [self awakeFromNib];
-    
     self.dataSource = @[@"Ищу", @"Возраст", @"С целью", @"Рост", @"Вес", @"Фигура", @"Глаза", @"Волосы", @"Отношения", @"Дети", @"Доход", @"Образование", @"Жильё", @"Автомобиль", @"Отношение к курению", @"Алкоголь"];
     self.counter = 0;
     
@@ -135,7 +134,14 @@ NSInteger recognizerControllersCardsAndChat;
         self.chatImageView.image = chatImage;
     } else {
         self.chatImageView.image = cancelViewImage;
-    }    
+    }
+    
+    //установка индикации онлайн
+    if ([self.onlineState isEqualToString:@"оффлайн"]) {
+        self.onlineView.backgroundColor = [UIColor redColor];
+    } else if ([self.onlineState isEqualToString:@"онлайн"]) {
+        self.onlineView.backgroundColor = [UIColor greenColor];
+    }
 }
 
 - (void)setup {
@@ -221,9 +227,7 @@ NSInteger recognizerControllersCardsAndChat;
     return view;
 }
 
-
 #pragma mark - init nib
-
 
 + (TSSwipeView *)initProfileViewNibBySizeDevice:(TSSwipeView *)view nameNib:(NSString *)name frameNib:(CGRect)frame
 {
@@ -234,7 +238,6 @@ NSInteger recognizerControllersCardsAndChat;
     return view;
 }
 
-
 + (TSSwipeView *)initDetailViewNibBySizeDevice:(TSSwipeView *)view nameNib:(NSString *)name frameNib:(CGRect)frame
 {
     UINib *nib = [UINib nibWithNibName:name bundle:nil];
@@ -243,9 +246,7 @@ NSInteger recognizerControllersCardsAndChat;
     return view;
 }
 
-
 #pragma mark - Actions
-
 
 - (IBAction)photoActionButton:(id)sender
 {
@@ -261,7 +262,6 @@ NSInteger recognizerControllersCardsAndChat;
     self.photoView.photos = self.photos;
     [self markReviewUserByRecognizer];
 }
-
 
 //разворот карточки на 180 градусов
 

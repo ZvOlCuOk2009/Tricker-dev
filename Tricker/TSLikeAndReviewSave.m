@@ -44,7 +44,6 @@
 
 - (void)saveReviewInTheDatabase:(NSMutableDictionary *)reviewsUserData reviews:(NSMutableArray *)reviews
 {
-
     NSString *reviewUserUid = [reviewsUserData objectForKey:@"userID"];
     
     if (!reviewUserUid) {
@@ -72,7 +71,6 @@
         if (recognizer == NO) {
             [updateReviews addObject:self.userUid];
         }
-        
     }
     
     if ([updateReviews count] > 0) {
@@ -81,7 +79,6 @@
     
     [self saveParametrsReviewAndLikesToDatabase:reviewUserUid byKeyField:@"reviews" parametr:reviews];
 }
-
 
 - (void)saveLikeInTheDatabase:(NSMutableDictionary *)likeUser
 {
@@ -119,9 +116,7 @@
     if (likes) {
         [self saveParametrsReviewAndLikesToDatabase:likeUserUid byKeyField:@"likes" parametr:likes];
     }
-    
 }
-
 
 - (void)saveParametrsReviewAndLikesToDatabase:(NSString *)keyUid byKeyField:(NSString *)keyField
                                      parametr:(NSMutableArray *)parameter
@@ -129,6 +124,5 @@
     [[[[[self.ref child:@"dataBase"] child:@"users"] child:keyUid] child:keyField] setValue:parameter];
     [self.ref  removeAllObservers];
 }
-
 
 @end

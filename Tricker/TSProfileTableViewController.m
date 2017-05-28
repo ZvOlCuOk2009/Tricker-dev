@@ -82,8 +82,7 @@
     self.tableView.backgroundView = imageView;
     
     //начальные парметры аватара
-    if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone)
-    {
+    if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone) {
         if (IS_IPHONE_4) {
             self.heightHeader = kHeightHeader_4_5;
             self.valueWidthAvatarConstraint.constant = kAvatarSide_4_5;

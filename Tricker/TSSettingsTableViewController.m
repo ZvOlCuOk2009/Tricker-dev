@@ -307,7 +307,7 @@ NSString * const UpdateParametersNotification = @"UpdateParametersNotification";
 }
 
 - (IBAction)logOutPressedbutton:(id)sender
-{    ///***********************
+{
     //алерт выхода вызывается лишь в случае если не отображен на экране pickerView
     if (![self.pickerView isDescendantOfView:self.view]) {
         TSAlertController *alertController = [TSAlertController sharedAlertController:@"Выберите"];
@@ -383,7 +383,6 @@ NSString * const UpdateParametersNotification = @"UpdateParametersNotification";
     
     [alertController addAction:delete];
     [alertController addAction:cancel];
-    
     [self presentViewController:alertController animated:YES completion:nil];
 }
 
@@ -802,11 +801,15 @@ NSString * const UpdateParametersNotification = @"UpdateParametersNotification";
     [user deleteWithCompletion:^(NSError *_Nullable error) {
         if (error) {
             NSLog(@"Error %@", error.localizedDescription);
+            [self reauthenticateUser];
         } else {
             NSLog(@"Delete user");
+            [[FIRAuth auth] signOut:nil];
+            [[[[self.ref child:@"dataBase"] child:@"users"] child:self.fireUser.uid] removeValue];
+            [self reauthenticateUser];
+            [self callTabBarController];
         }
     }];
-    
 }
 
 - (void)callTabBarController
@@ -814,6 +817,23 @@ NSString * const UpdateParametersNotification = @"UpdateParametersNotification";
     UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:[NSBundle mainBundle]];
     TSSocialNetworkLoginViewController *controller = [storyboard instantiateViewControllerWithIdentifier:@"TSSocialNetworkLoginViewController"];
     [self presentViewController:controller animated:YES completion:nil];
+}
+
+- (void)reauthenticateUser
+{
+    FIRUser *user = [FIRAuth auth].currentUser;
+    FIRAuthCredential *credential;
+    [user reauthenticateWithCredential:credential completion:^(NSError *_Nullable error) {
+        if (error) {
+            NSLog(@"Error %@", error.localizedDescription);
+        } else {
+            NSLog(@"Delete user");
+            [[FIRAuth auth] signOut:nil];
+            [[[[self.ref child:@"dataBase"] child:@"users"] child:self.fireUser.uid] removeValue];
+            [self reauthenticateUser];
+            [self callTabBarController];
+        }
+    }];
 }
 
 @end
