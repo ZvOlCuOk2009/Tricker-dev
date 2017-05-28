@@ -50,22 +50,22 @@
 {
      if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone) {
           if (IS_IPHONE_4) {
-               self.heartInitFrame = kTSInitialHeartCardContrRect;
-               self.heartFinalFrame = kTSFinalHeartCardContrRect;
+               self.heartInitFrame = kTSInitialHeartCardContrRect5;
+               self.heartFinalFrame = kTSFinalHeartCardContrRect5;
           } else if (IS_IPHONE_5) {
-               self.heartInitFrame = kTSInitialHeartCardContrRect;
-               self.heartFinalFrame = kTSFinalHeartCardContrRect;
+               self.heartInitFrame = kTSInitialHeartCardContrRect5;
+               self.heartFinalFrame = kTSFinalHeartCardContrRect5;
           } else if (IS_IPHONE_6) {
-               self.heartInitFrame = kTSInitialHeartCardContrRect;
-               self.heartFinalFrame = kTSFinalHeartCardContrRect;
+               self.heartInitFrame = kTSInitialHeartCardContrRect6;
+               self.heartFinalFrame = kTSFinalHeartCardContrRect6;
           } else if (IS_IPHONE_6_PLUS) {
                self.heartInitFrame = kTSInitialHeartCardContrRect6plus;
                self.heartFinalFrame = kTSFinalHeartCardContrRect6plus;
           }
      } else if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
           if (IS_IPAD_2) {
-               self.heartInitFrame = kTSInitialHeartCardContrRect;
-               self.heartFinalFrame = kTSFinalHeartCardContrRect;
+               self.heartInitFrame = kTSInitialHeartCardContrRectIpad;
+               self.heartFinalFrame = kTSFinalHeartCardContrRectIpad;
           }
      }
      
@@ -297,7 +297,6 @@
           NSMutableDictionary *likeUserData = [self.selectedUsers objectAtIndex:self.indexPathRow - 1];
           
           dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-               
                [[TSLikeAndReviewSave sharedLikeAndReviewSaveManager] saveLikeInTheDatabase:likeUserData];
           });
      }

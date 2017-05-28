@@ -184,20 +184,19 @@ NSInteger openChatVC;
 
 - (void)configureCurrentChat
 {
-    if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone)
-    {
+    if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone) {
         if (IS_IPHONE_4) {
             self.frameBySizeDevice = kTSSwipeDetailViewFrame;
-            self.heartInitFrame = kTSInitialHeartRect;
-            self.heartFinalFrame = kTSFinalHeartRect;
+            self.heartInitFrame = kTSInitialHeartRect5;
+            self.heartFinalFrame = kTSFinalHeartRect5;
         } else if (IS_IPHONE_5) {
             self.frameBySizeDevice = kTSSwipeDetailView5Frame;
-            self.heartInitFrame = kTSInitialHeartRect;
-            self.heartFinalFrame = kTSFinalHeartRect;
+            self.heartInitFrame = kTSInitialHeartRect5;
+            self.heartFinalFrame = kTSFinalHeartRect5;
         } else if (IS_IPHONE_6) {
             self.frameBySizeDevice = kTSSwipeDetailView6Frame;
-            self.heartInitFrame = kTSInitialHeartCardContrRect;
-            self.heartFinalFrame = kTSFinalHeartCardContrRect;
+            self.heartInitFrame = kTSInitialHeartRect6;
+            self.heartFinalFrame = kTSFinalHeartRect6;
         } else if (IS_IPHONE_6_PLUS) {
             self.frameBySizeDevice = kTSSwipeDetailView6PlusFrame;
             self.heartInitFrame = kTSInitialHeartRect6plus;
@@ -206,8 +205,8 @@ NSInteger openChatVC;
     } else if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
         if (IS_IPAD_2) {
             self.frameBySizeDevice = kTSSwipeDetailViewIpadFrame;
-            self.heartInitFrame = kTSInitialHeartCardContrRect;
-            self.heartFinalFrame = kTSFinalHeartCardContrRect;
+            self.heartInitFrame = kTSInitialHeartRectIpad;
+            self.heartFinalFrame = kTSFinalHeartRectIpad;
         }
     }
     
@@ -318,10 +317,10 @@ NSInteger openChatVC;
     heart.alpha = 0;
     [self.swipeView addSubview:heart];
     
-    [UIView animateWithDuration:0.35
+    [UIView animateWithDuration:0.4
                           delay:0
-         usingSpringWithDamping:0.7
-          initialSpringVelocity:0.8
+         usingSpringWithDamping:1.2
+          initialSpringVelocity:1.3
                         options:UIViewAnimationOptionLayoutSubviews
                      animations:^{
                          heart.alpha = 1;

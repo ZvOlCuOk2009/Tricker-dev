@@ -70,7 +70,7 @@
 #define kTSSwipeDetailView5Frame CGRectMake(10, 71, 300, 440)
 #define kTSSwipeDetailView6Frame CGRectMake(15, 80, 345, 519)
 #define kTSSwipeDetailView6PlusFrame CGRectMake(15, 74, 384, 583)
-#define kTSSwipeDetailViewIpadFrame CGRectMake(15, 74, 728, 880)
+#define kTSSwipeDetailViewIpadFrame CGRectMake(20, 74, 728, 880)
 
 //collectionView album cell
 
@@ -88,17 +88,24 @@
 
 //frame like heart
 
-#define kTSInitialHeartRect CGRectMake(- 155, 0, 630, 600)
-#define kTSFinalHeartRect CGRectMake(75, 110, 150, 130)
-
-#define kTSInitialHeartCardContrRect CGRectMake(-165, 0, 650, 650)
-#define kTSFinalHeartCardContrRect CGRectMake(85, 150, 150, 130)
-
+#define kTSInitialHeartRect5 CGRectMake(- 155, 0, 630, 600)
+#define kTSFinalHeartRect5 CGRectMake(75, 110, 150, 130)
+#define kTSInitialHeartRect6 CGRectMake(- 155, 0, 630, 600)
+#define kTSFinalHeartRect6 CGRectMake(93, 110, 150, 130)
 #define kTSInitialHeartRect6plus CGRectMake(- 168, 0, 750, 750)
-#define kTSFinalHeartRect6plus CGRectMake(115, 130, 180, 150)
+#define kTSFinalHeartRect6plus CGRectMake(94, 120, 200, 170)
 
+#define kTSInitialHeartCardContrRect5 CGRectMake(-165, 0, 650, 650)
+#define kTSFinalHeartCardContrRect5 CGRectMake(85, 150, 150, 130)
+#define kTSInitialHeartCardContrRect6 CGRectMake(-130, 0, 650, 650)
+#define kTSFinalHeartCardContrRect6 CGRectMake(113, 150, 150, 130)
 #define kTSInitialHeartCardContrRect6plus CGRectMake(-168, 0, 750, 750)
-#define kTSFinalHeartCardContrRect6plus CGRectMake(120, 170, 180, 150)
+#define kTSFinalHeartCardContrRect6plus CGRectMake(110, 160, 200, 170)
+
+#define kTSInitialHeartRectIpad CGRectMake(-366, 0, 1500, 1500)
+#define kTSFinalHeartRectIpad CGRectMake(220, 150, 280, 245)
+#define kTSInitialHeartCardContrRectIpad CGRectMake(-366, 0, 1500, 1500)
+#define kTSFinalHeartCardContrRectIpad CGRectMake(224, 180, 320, 280)
 
 //color
 

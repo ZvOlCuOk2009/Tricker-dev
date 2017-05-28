@@ -16,8 +16,7 @@
     NSString *token = [[NSUserDefaults standardUserDefaults] valueForKey:@"token"];
     FIRUser *fireUser = [FIRAuth auth].currentUser;
 
-    if(token)
-    {
+    if(token) {
         NSString *keyUserData = [NSString stringWithFormat:@"dataBase/users/%@/userData", fireUser.uid];
         NSString *keyToParameters = [NSString stringWithFormat:@"dataBase/users/%@", fireUser.uid];
         NSString *keyToChats = [NSString stringWithFormat:@"dataBase/chats/%@", fireUser.uid];

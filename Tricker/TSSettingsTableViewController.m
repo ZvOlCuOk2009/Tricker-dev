@@ -318,11 +318,11 @@ NSString * const UpdateParametersNotification = @"UpdateParametersNotification";
                                                          [self logOutUser];
                                                      }];
         
-        UIAlertAction *deleteAcuont = [UIAlertAction actionWithTitle:@"Удалить аккаунт"
-                                                               style:UIAlertActionStyleDefault
-                                                             handler:^(UIAlertAction * _Nonnull action) {
-                                                                 [self deleteUserOfDataBase];
-                                                             }];
+//        UIAlertAction *deleteAcuont = [UIAlertAction actionWithTitle:@"Удалить аккаунт"
+//                                                               style:UIAlertActionStyleDefault
+//                                                             handler:^(UIAlertAction * _Nonnull action) {
+//                                                                 [self deleteUserOfDataBase];
+//                                                             }];
         
         UIAlertAction *cancel = [UIAlertAction actionWithTitle:@"Отменить"
                                                          style:UIAlertActionStyleDefault
@@ -333,7 +333,7 @@ NSString * const UpdateParametersNotification = @"UpdateParametersNotification";
         [alertController customizationAlertView:@"Выберите" byFont:20.f];
         
         [alertController addAction:exit];
-        [alertController addAction:deleteAcuont];
+//        [alertController addAction:deleteAcuont];
         [alertController addAction:cancel];
         
         [self presentViewController:alertController animated:YES completion:nil];
