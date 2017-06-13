@@ -20,13 +20,13 @@
 @import FirebaseStorage;
 @import FirebaseDatabase;
 
-@interface TSPhotoAndNameViewController () <UIImagePickerControllerDelegate, UINavigationControllerDelegate>
+@interface TSPhotoAndNameViewController () <UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITextFieldDelegate>
 
 @property (weak, nonatomic) IBOutlet UITextField *nameTextField;
 @property (weak, nonatomic) IBOutlet UIButton *cameraButton;
 @property (weak, nonatomic) IBOutlet UIImage *image;
 @property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
-@property (strong, nonatomic) IBOutlet UIButton *signInButton;
+@property (strong, nonatomic) IBOutlet UIButton *authButton;
 
 @property (strong, nonatomic) FIRDatabaseReference *ref;
 @property (strong, nonatomic) FIRStorageReference *storageRef;
@@ -39,6 +39,7 @@
     [super viewDidLoad];
     self.ref = [[FIRDatabase database] reference];
     self.storageRef = [[FIRStorage storage] reference];
+    self.nameTextField.delegate = self;
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardDidShow:)
                                                  name:UIKeyboardDidShowNotification object:nil];
@@ -222,6 +223,17 @@
         [TSAlertController noInternetConnection:@"Проверьте интернет соединение..."];
         [self presentViewController:alertController animated:YES completion:nil];
     }
+}
+
+#pragma mark - UITextFieldDelegate
+
+- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
+    if (self.nameTextField.text.length > 1) {
+        self.authButton.backgroundColor = DARK_GRAY_COLOR;
+    } else {
+        self.authButton.backgroundColor = LIGHT_GRAY_COLOR;
+    }
+    return YES;
 }
 
 #pragma mark - UIAlertControllers

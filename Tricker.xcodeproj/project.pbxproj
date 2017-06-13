@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		2C27B593A68DE82F875D0227 /* libPods-Tricker.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 28CCB341251CEF3778160ABF /* libPods-Tricker.a */; };
+		8495AD031EF09CB900AD5262 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8495AD021EF09CB900AD5262 /* Assets.xcassets */; };
 		FD002C651DFA162900D47428 /* TSChatsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FD002C641DFA162900D47428 /* TSChatsTableViewController.m */; };
 		FD06541C1DFCA24200AE45EF /* TSSwipeView6plus.xib in Resources */ = {isa = PBXBuildFile; fileRef = FD06541B1DFCA24200AE45EF /* TSSwipeView6plus.xib */; };
 		FD06541E1DFCBDD200AE45EF /* TSPhotoView6Plus.xib in Resources */ = {isa = PBXBuildFile; fileRef = FD06541D1DFCBDD200AE45EF /* TSPhotoView6Plus.xib */; };
@@ -22,7 +23,6 @@
 		FD1C4F331DCE252200CF63E9 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = FD1C4F321DCE252200CF63E9 /* main.m */; };
 		FD1C4F361DCE252200CF63E9 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = FD1C4F351DCE252200CF63E9 /* AppDelegate.m */; };
 		FD1C4F3C1DCE252200CF63E9 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FD1C4F3A1DCE252200CF63E9 /* Main.storyboard */; };
-		FD1C4F3E1DCE252200CF63E9 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FD1C4F3D1DCE252200CF63E9 /* Assets.xcassets */; };
 		FD1C4F411DCE252200CF63E9 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FD1C4F3F1DCE252200CF63E9 /* LaunchScreen.storyboard */; };
 		FD1C4F4C1DCE252300CF63E9 /* TrickerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = FD1C4F4B1DCE252300CF63E9 /* TrickerTests.m */; };
 		FD1C4F571DCE252300CF63E9 /* TrickerUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = FD1C4F561DCE252300CF63E9 /* TrickerUITests.m */; };
@@ -105,6 +105,7 @@
 /* Begin PBXFileReference section */
 		1FBEFE542591B48DB688ED44 /* Pods-Tricker.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Tricker.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Tricker/Pods-Tricker.debug.xcconfig"; sourceTree = "<group>"; };
 		28CCB341251CEF3778160ABF /* libPods-Tricker.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Tricker.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		8495AD021EF09CB900AD5262 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		94B94787D384A5D991ACF5EE /* Pods-Tricker.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Tricker.release.xcconfig"; path = "Pods/Target Support Files/Pods-Tricker/Pods-Tricker.release.xcconfig"; sourceTree = "<group>"; };
 		FD002C631DFA162900D47428 /* TSChatsTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSChatsTableViewController.h; sourceTree = "<group>"; };
 		FD002C641DFA162900D47428 /* TSChatsTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSChatsTableViewController.m; sourceTree = "<group>"; };
@@ -130,7 +131,6 @@
 		FD1C4F341DCE252200CF63E9 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		FD1C4F351DCE252200CF63E9 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		FD1C4F3B1DCE252200CF63E9 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
-		FD1C4F3D1DCE252200CF63E9 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		FD1C4F401DCE252200CF63E9 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		FD1C4F421DCE252200CF63E9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		FD1C4F471DCE252300CF63E9 /* TrickerTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TrickerTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -378,11 +378,11 @@
 				FDF9639D1DD145B0000877B5 /* Registration controllers */,
 				FD0C1C9A1DE780BC00D37B61 /* Controllers */,
 				FDF8CDB31DDA768400E159B1 /* Storyboards */,
-				FD1C4F3D1DCE252200CF63E9 /* Assets.xcassets */,
 				FD1C4F421DCE252200CF63E9 /* Info.plist */,
 				FD1C4F721DCE9F4400CF63E9 /* GoogleService-Info.plist */,
 				FDFDFC921DD1C99E007811EF /* Tricker.entitlements */,
 				FDF7FE8A1DCFBB4B00846997 /* Default-568h@2x.png */,
+				8495AD021EF09CB900AD5262 /* Assets.xcassets */,
 				FD1C4F311DCE252200CF63E9 /* Supporting Files */,
 				FDF7FE891DCF56EA00846997 /* TSTrickerPrefixHeader.pch */,
 			);
@@ -773,7 +773,6 @@
 				FD821FF41E2BBCB600D886E2 /* TSPhotoDetailView5.xib in Resources */,
 				FD68B45D1DDA7CEC00EF19C3 /* CardsStoryboard.storyboard in Resources */,
 				FD51DBA21E2D763C009333FE /* TSDetailViewIpad.xib in Resources */,
-				FD1C4F3E1DCE252200CF63E9 /* Assets.xcassets in Resources */,
 				FD1C4F731DCE9F4400CF63E9 /* GoogleService-Info.plist in Resources */,
 				FD06541E1DFCBDD200AE45EF /* TSPhotoView6Plus.xib in Resources */,
 				FDFED0D61E1ADD0E00AB6805 /* TSPhotoDetailView.xib in Resources */,
@@ -783,6 +782,7 @@
 				FD821FFC1E2C1A2300D886E2 /* TSPhotoView6.xib in Resources */,
 				FD51DBA41E2D7B2A009333FE /* TSPhotoDetailViewIpad.xib in Resources */,
 				FD0C1CA01DE783B500D37B61 /* TSSwipeView.xib in Resources */,
+				8495AD031EF09CB900AD5262 /* Assets.xcassets in Resources */,
 				FD821FF01E2BB7E100D886E2 /* TSPhotoView5.xib in Resources */,
 				FD8220031E2C410000D886E2 /* TSSwipeViewIpad.xib in Resources */,
 				FD821FFE1E2C1A4800D886E2 /* TSDetailView6.xib in Resources */,

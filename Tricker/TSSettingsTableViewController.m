@@ -310,9 +310,9 @@ NSString * const UpdateParametersNotification = @"UpdateParametersNotification";
 {
     //алерт выхода вызывается лишь в случае если не отображен на экране pickerView
     if (![self.pickerView isDescendantOfView:self.view]) {
-        TSAlertController *alertController = [TSAlertController sharedAlertController:@"Выберите"];
+        TSAlertController *alertController = [TSAlertController sharedAlertController:@"Выйти"];
         
-        UIAlertAction *exit = [UIAlertAction actionWithTitle:@"Выйти"
+        UIAlertAction *exit = [UIAlertAction actionWithTitle:@"Да"
                                                        style:UIAlertActionStyleDefault
                                                      handler:^(UIAlertAction * _Nonnull action) {
                                                          [self logOutUser];
@@ -330,7 +330,7 @@ NSString * const UpdateParametersNotification = @"UpdateParametersNotification";
                                                            
                                                        }];
         
-        [alertController customizationAlertView:@"Выберите" byFont:20.f];
+        [alertController customizationAlertView:@"Выйти" byFont:20.f];
         
         [alertController addAction:exit];
 //        [alertController addAction:deleteAcuont];

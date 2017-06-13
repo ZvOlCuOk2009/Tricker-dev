@@ -31,14 +31,14 @@
     
     NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
     NSString *firstInput = [userDefaults objectForKey:@"firstInput"];
-//    if (!firstInput) {
+    if (!firstInput) {
         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(10.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
             [self callIntroductionViewController];
             NSString *firstInput = @"firstInput";
             [userDefaults setObject:firstInput forKey:@"firstInput"];
             [userDefaults synchronize];
         });
-//    }
+    }
     
 //    [self.refCountMessage observeEventType:FIRDataEventTypeValue withBlock:^(FIRDataSnapshot * _Nonnull snapshot) {
 //        self.fireUser = [TSFireUser initWithSnapshot:snapshot];
