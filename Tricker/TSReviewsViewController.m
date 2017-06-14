@@ -16,6 +16,7 @@
 #import "TSReachability.h"
 #import "TSAlertController.h"
 #import "TSSVProgressHUD.h"
+#import "UIAlertController+TSAlertController.h"
 #import "TSTrickerPrefixHeader.pch"
 
 #import <MDCSwipeToChoose/MDCSwipeToChoose.h>
@@ -149,6 +150,14 @@
         if ([self.reviewsUsersUid count] > 0) {
             [self fillingDataSource];
         } else {
+            TSAlertController *alertController = [TSAlertController sharedAlertController:@"Вашу анкету ещё не просматривали"];
+            UIAlertAction *exit = [UIAlertAction actionWithTitle:@"Ок"
+                                                           style:UIAlertActionStyleDefault
+                                                         handler:nil];
+            [alertController customizationAlertView:@"Вашу анкету ещё не просматривали" byFont:20.f];
+            [alertController addAction:exit];
+            
+            [self presentViewController:alertController animated:YES completion:nil];
             [TSSVProgressHUD dissmisProgressHud];
         }
     }];

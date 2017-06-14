@@ -30,12 +30,14 @@
     }];    
     
     NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
-    NSString *firstInput = [userDefaults objectForKey:@"firstInput"];
-    if (!firstInput) {
+//    NSString *firstInput = [userDefaults objectForKey:@"firstInput"];
+    NSInteger firstInput = [userDefaults integerForKey:@"firstInput"];
+    if (firstInput == 0) {
         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(10.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
             [self callIntroductionViewController];
-            NSString *firstInput = @"firstInput";
-            [userDefaults setObject:firstInput forKey:@"firstInput"];
+//            NSString *firstInput = @"firstInput";
+//            [userDefaults setObject:firstInput forKey:@"firstInput"];
+            [userDefaults setInteger:1 forKey:@"firstInput"];
             [userDefaults synchronize];
         });
     }
