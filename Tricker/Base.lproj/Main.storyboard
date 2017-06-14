@@ -283,35 +283,42 @@
                                 <rect key="frame" x="0.0" y="104" width="375" height="40"/>
                                 <color key="backgroundColor" red="0.98823529409999999" green="0.87450980389999999" blue="0.6588235294" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="40" id="0cQ-rT-XYd"/>
+                                    <constraint firstAttribute="height" constant="40" id="Pfg-Xh-EyG"/>
                                 </constraints>
                             </view>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Електронная почта" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="eKO-2m-rBj">
-                                <rect key="frame" x="15" y="104" width="360" height="40"/>
-                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                <color key="tintColor" red="0.51372549020000002" green="0.61960784310000006" blue="0.69803921570000005" alpha="1" colorSpace="calibratedRGB"/>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="NrP-5J-ZbL">
+                                <rect key="frame" x="0.0" y="152" width="375" height="40"/>
+                                <color key="backgroundColor" red="0.98823529409999999" green="0.87450980389999999" blue="0.6588235294" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="40" id="nLN-QN-NED"/>
+                                    <constraint firstAttribute="height" constant="40" id="aR6-Ew-uoe"/>
                                 </constraints>
-                                <color key="textColor" red="0.51372549020000002" green="0.61960784310000006" blue="0.69803921570000005" alpha="1" colorSpace="calibratedRGB"/>
-                                <fontDescription key="fontDescription" type="system" weight="light" pointSize="16"/>
-                                <textInputTraits key="textInputTraits" autocorrectionType="no"/>
-                                <connections>
-                                    <outlet property="delegate" destination="MWZ-P4-PVV" id="eLd-iq-mv6"/>
-                                </connections>
-                            </textField>
+                            </view>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Пароль" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="cat-rN-KWN">
-                                <rect key="frame" x="15" y="150" width="360" height="40"/>
+                                <rect key="frame" x="15" y="152" width="360" height="40"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <color key="tintColor" red="0.51372549020000002" green="0.61960784310000006" blue="0.69803921570000005" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="40" id="cfu-uX-wtM"/>
+                                    <constraint firstAttribute="height" constant="40" id="nrT-SG-DgB"/>
                                 </constraints>
                                 <color key="textColor" red="0.51372549020000002" green="0.61960784310000006" blue="0.69803921570000005" alpha="1" colorSpace="calibratedRGB"/>
                                 <fontDescription key="fontDescription" type="system" weight="light" pointSize="16"/>
                                 <textInputTraits key="textInputTraits" secureTextEntry="YES"/>
                                 <connections>
                                     <outlet property="delegate" destination="MWZ-P4-PVV" id="GLd-Wl-fWP"/>
+                                </connections>
+                            </textField>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Електронная почта" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="eKO-2m-rBj">
+                                <rect key="frame" x="15" y="104" width="360" height="40"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                <color key="tintColor" red="0.51372549020000002" green="0.61960784310000006" blue="0.69803921570000005" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="40" id="DwN-wm-rqU"/>
+                                </constraints>
+                                <color key="textColor" red="0.51372549020000002" green="0.61960784310000006" blue="0.69803921570000005" alpha="1" colorSpace="calibratedRGB"/>
+                                <fontDescription key="fontDescription" type="system" weight="light" pointSize="16"/>
+                                <textInputTraits key="textInputTraits" autocorrectionType="no"/>
+                                <connections>
+                                    <outlet property="delegate" destination="MWZ-P4-PVV" id="eLd-iq-mv6"/>
                                 </connections>
                             </textField>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="l8v-qx-TQk">
@@ -362,42 +369,35 @@
                                     <action selector="signIngActionButton:" destination="MWZ-P4-PVV" eventType="touchUpInside" id="Jak-Bf-TPm"/>
                                 </connections>
                             </button>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="NrP-5J-ZbL">
-                                <rect key="frame" x="0.0" y="152" width="375" height="40"/>
-                                <color key="backgroundColor" red="0.98823529409999999" green="0.87450980389999999" blue="0.6588235294" alpha="1" colorSpace="calibratedRGB"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="40" id="dTQ-oA-iAl"/>
-                                </constraints>
-                            </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="V32-vh-kzK" firstAttribute="top" secondItem="l8v-qx-TQk" secondAttribute="bottom" constant="39" id="0wC-7q-u02"/>
-                            <constraint firstAttribute="trailing" secondItem="NrP-5J-ZbL" secondAttribute="trailing" id="5Yb-T7-ajc"/>
+                            <constraint firstAttribute="trailing" secondItem="cat-rN-KWN" secondAttribute="trailing" id="2eh-az-tL6"/>
+                            <constraint firstItem="NrP-5J-ZbL" firstAttribute="leading" secondItem="LOa-AM-wMf" secondAttribute="leading" id="3wc-6V-32q"/>
+                            <constraint firstItem="cat-rN-KWN" firstAttribute="leading" secondItem="LOa-AM-wMf" secondAttribute="leading" constant="15" id="4OA-Ra-dqz"/>
                             <constraint firstAttribute="trailing" secondItem="l8v-qx-TQk" secondAttribute="trailing" id="Br2-hR-84u"/>
                             <constraint firstItem="l8v-qx-TQk" firstAttribute="leading" secondItem="LOa-AM-wMf" secondAttribute="leading" id="Cb5-AW-Luc"/>
-                            <constraint firstAttribute="trailing" secondItem="cat-rN-KWN" secondAttribute="trailing" id="K79-bh-VE3"/>
                             <constraint firstItem="M3I-An-eah" firstAttribute="top" secondItem="OfA-Py-Xvu" secondAttribute="bottom" constant="10" id="KQD-bG-N1e"/>
-                            <constraint firstAttribute="trailing" secondItem="V32-vh-kzK" secondAttribute="trailing" id="WJg-az-uUj"/>
-                            <constraint firstItem="cat-rN-KWN" firstAttribute="leading" secondItem="LOa-AM-wMf" secondAttribute="leading" constant="15" id="X8M-ms-S8l"/>
+                            <constraint firstItem="NrP-5J-ZbL" firstAttribute="top" secondItem="eKO-2m-rBj" secondAttribute="bottom" constant="8" id="O0b-Ai-eth"/>
+                            <constraint firstItem="eKO-2m-rBj" firstAttribute="top" secondItem="l8v-qx-TQk" secondAttribute="bottom" constant="39" id="Prm-I3-iDe"/>
+                            <constraint firstItem="V32-vh-kzK" firstAttribute="leading" secondItem="LOa-AM-wMf" secondAttribute="leading" id="S0R-Ix-ReP"/>
+                            <constraint firstItem="V32-vh-kzK" firstAttribute="top" secondItem="l8v-qx-TQk" secondAttribute="bottom" constant="39" id="Sq5-9h-QqL"/>
+                            <constraint firstAttribute="trailing" secondItem="V32-vh-kzK" secondAttribute="trailing" id="VHM-jA-pJL"/>
+                            <constraint firstItem="eKO-2m-rBj" firstAttribute="leading" secondItem="LOa-AM-wMf" secondAttribute="leading" constant="15" id="VpN-uH-9jk"/>
+                            <constraint firstAttribute="trailing" secondItem="NrP-5J-ZbL" secondAttribute="trailing" id="Wk1-8w-iqL"/>
                             <constraint firstItem="6f9-J0-0bL" firstAttribute="top" secondItem="zzB-x8-zJf" secondAttribute="bottom" constant="22" id="bLV-vR-C5P"/>
-                            <constraint firstItem="eKO-2m-rBj" firstAttribute="leading" secondItem="LOa-AM-wMf" secondAttribute="leading" constant="15" id="brj-z4-Zhg"/>
+                            <constraint firstAttribute="trailing" secondItem="eKO-2m-rBj" secondAttribute="trailing" id="cMv-Pn-H2y"/>
                             <constraint firstItem="l8v-qx-TQk" firstAttribute="top" secondItem="M3I-An-eah" secondAttribute="bottom" constant="13" id="d0t-rR-EyD"/>
                             <constraint firstAttribute="trailing" secondItem="du7-GR-gNU" secondAttribute="trailing" id="d9L-T3-IIH"/>
-                            <constraint firstItem="eKO-2m-rBj" firstAttribute="top" secondItem="l8v-qx-TQk" secondAttribute="bottom" constant="39" id="edv-pD-jYf"/>
                             <constraint firstItem="I2P-Cp-qml" firstAttribute="top" secondItem="OfA-Py-Xvu" secondAttribute="bottom" constant="11" id="fAZ-P3-u7f"/>
                             <constraint firstItem="zzB-x8-zJf" firstAttribute="leading" secondItem="LOa-AM-wMf" secondAttribute="leading" constant="22" id="gSx-BW-gRo"/>
-                            <constraint firstItem="V32-vh-kzK" firstAttribute="leading" secondItem="LOa-AM-wMf" secondAttribute="leading" id="jul-iS-5N3"/>
-                            <constraint firstItem="cat-rN-KWN" firstAttribute="top" secondItem="eKO-2m-rBj" secondAttribute="bottom" constant="6" id="jwC-5q-ybF"/>
+                            <constraint firstItem="cat-rN-KWN" firstAttribute="top" secondItem="eKO-2m-rBj" secondAttribute="bottom" constant="8" id="iKu-kD-JK8"/>
                             <constraint firstItem="M3I-An-eah" firstAttribute="centerX" secondItem="LOa-AM-wMf" secondAttribute="centerX" id="k5W-NG-fpb"/>
                             <constraint firstItem="6f9-J0-0bL" firstAttribute="top" secondItem="du7-GR-gNU" secondAttribute="bottom" id="kSK-wh-bp6"/>
                             <constraint firstItem="du7-GR-gNU" firstAttribute="leading" secondItem="LOa-AM-wMf" secondAttribute="leading" id="m8Y-Bn-eMr"/>
                             <constraint firstItem="du7-GR-gNU" firstAttribute="top" secondItem="LOa-AM-wMf" secondAttribute="top" id="n0S-P6-sLf"/>
                             <constraint firstAttribute="trailing" secondItem="zzB-x8-zJf" secondAttribute="trailing" constant="23" id="nZf-he-6I9"/>
                             <constraint firstItem="I2P-Cp-qml" firstAttribute="leading" secondItem="LOa-AM-wMf" secondAttribute="leading" constant="16" id="pUp-83-GJn"/>
-                            <constraint firstItem="NrP-5J-ZbL" firstAttribute="top" secondItem="eKO-2m-rBj" secondAttribute="bottom" constant="8" id="qGs-SY-OXV"/>
-                            <constraint firstItem="NrP-5J-ZbL" firstAttribute="leading" secondItem="LOa-AM-wMf" secondAttribute="leading" id="sAO-oN-Qm0"/>
-                            <constraint firstAttribute="trailing" secondItem="eKO-2m-rBj" secondAttribute="trailing" id="zAX-Ez-11S"/>
                         </constraints>
                     </view>
                     <connections>
