@@ -680,7 +680,7 @@
 				TargetAttributes = {
 					FD1C4F2D1DCE252200CF63E9 = {
 						CreatedOnToolsVersion = 8.0;
-						DevelopmentTeam = 5D7GRV784H;
+						DevelopmentTeam = 2ZQMG97HLH;
 						ProvisioningStyle = Automatic;
 						SystemCapabilities = {
 							com.apple.Keychain = {
@@ -1055,7 +1055,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = Tricker/Tricker.entitlements;
-				DEVELOPMENT_TEAM = 5D7GRV784H;
+				DEVELOPMENT_TEAM = 2ZQMG97HLH;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Tricker/GoogleMaps/Frameworks",
@@ -1076,7 +1076,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = Tricker/Tricker.entitlements;
-				DEVELOPMENT_TEAM = 5D7GRV784H;
+				DEVELOPMENT_TEAM = 2ZQMG97HLH;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Tricker/GoogleMaps/Frameworks",
