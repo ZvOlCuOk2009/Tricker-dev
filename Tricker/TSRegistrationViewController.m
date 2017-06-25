@@ -108,8 +108,14 @@
 - (void)keyboardWillShow:(NSNotification *)notification {
     
     if (self.counter == 0) {
+        NSInteger offset = 0;
+        if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone) {
+            offset = - 210;
+        } else {
+            offset = - 310;
+        }
         [UIView animateWithDuration:0.35f animations:^{
-            CGRect frame = CGRectOffset(self.doneButton.frame, 0, - 210);
+            CGRect frame = CGRectOffset(self.doneButton.frame, 0, offset);
             self.doneButton.frame = frame;
         }];
         self.counter = 1;

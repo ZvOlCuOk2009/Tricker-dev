@@ -125,13 +125,19 @@
 - (void)keyboardWillShow:(NSNotification *)notification {
     
     if (self.counter == 0) {
+        NSInteger offset = 0;
+        if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone) {
+            offset = - 210;
+        } else {
+            offset = - 310;
+        }
         [UIView animateWithDuration:0.35f animations:^{
             
 //            CGRect frame = CGRectOffset(self.signIngButton.frame, 0, + 200);
 //            self.signIngButton.frame = frame;
 //                CGRect fram = CGRectMake(22, 0, self.signIngButton.frame.size.width, self.signIngButton.frame.size.height);
 //            CGRect frame = CGRectOffset(self.signIngButton.frame, 0, - 440);
-            CGRect frame = CGRectOffset(self.signIngButton.frame, 0, - 210);
+            CGRect frame = CGRectOffset(self.signIngButton.frame, 0, offset);
             self.signIngButton.frame = frame;
         }];
         self.counter = 1;

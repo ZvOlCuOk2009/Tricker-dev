@@ -207,6 +207,10 @@ NSInteger openChatVC;
             self.frameBySizeDevice = kTSSwipeDetailViewIpadFrame;
             self.heartInitFrame = kTSInitialHeartRectIpad;
             self.heartFinalFrame = kTSFinalHeartRectIpad;
+        } else if (IS_IPAD_PRO) {
+            self.frameBySizeDevice = kTSSwipeDetailViewIpadProFrame;
+            self.heartInitFrame = kTSInitialHeartRectIpad;
+            self.heartFinalFrame = kTSFinalHeartRectIpad;
         }
     }
     
@@ -267,8 +271,13 @@ NSInteger openChatVC;
             [self.inputToolbar.contentView.textView resignFirstResponder];
         }
         
+        NSInteger leftValue = 10;
+        if (IS_IPAD_PRO) {
+            leftValue = 30;
+        }
+        
         self.swipeView = [TSSwipeView initDetailView];
-        self.swipeView.frame = CGRectMake(10, - 400, self.swipeView.frame.size.width, self.swipeView.frame.size.width);
+        self.swipeView.frame = CGRectMake(leftValue, - 400, self.swipeView.frame.size.width, self.swipeView.frame.size.width);
         self.swipeView.nameLabel.text = self.interlocName;
         self.swipeView.ageLabel.text = self.fireInterlocutor.age;
         

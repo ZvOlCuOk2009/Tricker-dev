@@ -130,6 +130,15 @@
             self.fixOffset = kAvatarOffsetIpad;
             self.fixCornerRadius = kAvatarCornerRadiusIpad;
             self.correctingValue = -150;
+        } else if (IS_IPAD_PRO) {
+            self.heightHeader = kHeightHeaderIpadPro;
+            self.valueWidthAvatarConstraint.constant = kAvatarSideIpadPro;
+            self.valueHieghtAvatarConstraint.constant = kAvatarSideIpadPro;
+            self.avatarImageView.layer.cornerRadius = kAvatarSideIpadPro / 2;
+            self.fixSide = kAvatarSideIpadPro;
+            self.fixOffset = kAvatarOffsetIpadPro;
+            self.fixCornerRadius = kAvatarCornerRadiusIpadPro;
+            self.correctingValue = -217;
         }
     }
     

@@ -13,6 +13,7 @@
 #import "TSReachability.h"
 #import "TSAlertController.h"
 #import "UIAlertController+TSAlertController.h"
+#import "TSSVProgressHUD.h"
 #import "TSTrickerPrefixHeader.pch"
 
 @import Firebase;
@@ -217,59 +218,8 @@
                                        password:password
                                      completion:^(FIRUser * _Nullable user, NSError * _Nullable error) {
                                          if (!error) {
-                                             
                                              if (user.uid) {
-                                                 
-                                                 NSString *dateOfBirth = @"";
-                                                 NSString *location = @"";
-                                                 NSString *photoURL = @"";
-                                                 NSString *gender = @"";
-                                                 NSString *age = @"";
-                                                 NSString *online = @"";
-                                                 
-                                                 NSData *imageData = UIImageJPEGRepresentation(self.image, 0.8);
-                                                 
-                                                 NSString *imagePath = [NSString stringWithFormat:@"%@/%lld.jpg", user.uid, (long long)([NSDate date].timeIntervalSince1970 * 1000.0)];
-                                                 
-                                                 NSMutableDictionary *userData = [NSMutableDictionary dictionary];
-                                                 
-                                                 [userData setObject:user.uid forKey:@"userID"];
-                                                 [userData setObject:displayName forKey:@"displayName"];
-                                                 [userData setObject:dateOfBirth forKey:@"dateOfBirth"];
-                                                 [userData setObject:photoURL forKey:@"photoURL"];
-                                                 [userData setObject:location forKey:@"location"];
-                                                 [userData setObject:gender forKey:@"gender"];
-                                                 [userData setObject:age forKey:@"age"];
-                                                 [userData setObject:online forKey:@"online"];
-                                                 
-                                                 FIRStorageReference *imagesRef = [self.storageRef child:imagePath];
-                                                 FIRStorageMetadata *metadata = [FIRStorageMetadata new];
-                                                 metadata.contentType = @"image/jpeg";
-                                                 
-                                                 [[self.storageRef child:imagePath] putData:imageData metadata:metadata
-                                                                                 completion:^(FIRStorageMetadata * _Nullable metadata, NSError * _Nullable error) {
-                                                                                     
-                                                                                     if (error) {
-                                                                                         NSLog(@"Error uploading: %@", error);
-                                                                                     }
-                                                                                     
-                                                                                     [imagesRef downloadURLWithCompletion:^(NSURL * _Nullable URL, NSError * _Nullable error) {
-                                                                                         
-                                                                                         NSString *photoURL = [NSString stringWithFormat:@"%@", URL];
-                                                                                         
-                                                                                         [userData setObject:photoURL forKey:@"photoURL"];
-                                                                                         
-                                                                                         [[[[[self.ref child:@"dataBase"] child:@"users"] child:user.uid] child:@"userData"] setValue:userData];
-                                                                                         
-                                                                                         NSString *token = user.uid;
-                                                                                         
-                                                                                         [[NSUserDefaults standardUserDefaults] setObject:token forKey:@"token"];
-                                                                                         [[NSUserDefaults standardUserDefaults] synchronize];
-                                                                                         
-                                                                                         TSTabBarViewController *controller = [self.storyboard instantiateViewControllerWithIdentifier:@"TSTabBarViewController"];
-                                                                                         [self presentViewController:controller animated:YES completion:nil];
-                                                                                     }];
-                                                                                 }];
+                                                 [self createdUser:user name:displayName];
                                              }
                                          } else {
                                              NSLog(@"Error - %@", error.localizedDescription);
@@ -284,6 +234,62 @@
         [TSAlertController noInternetConnection:@"Проверьте интернет соединение..."];
         [self presentViewController:alertController animated:YES completion:nil];
     }
+}
+
+- (void)createdUser:(FIRUser *)user name:(NSString *)displayName
+{
+    NSString *dateOfBirth = @"";
+    NSString *location = @"";
+    NSString *photoURL = @"";
+    NSString *gender = @"";
+    NSString *age = @"";
+    NSString *online = @"";
+    
+    NSData *imageData = UIImageJPEGRepresentation(self.image, 0.8);
+    
+    NSString *imagePath = [NSString stringWithFormat:@"%@/%lld.jpg", user.uid, (long long)([NSDate date].timeIntervalSince1970 * 1000.0)];
+    
+    NSMutableDictionary *userData = [NSMutableDictionary dictionary];
+    
+    [userData setObject:user.uid forKey:@"userID"];
+    [userData setObject:displayName forKey:@"displayName"];
+    [userData setObject:dateOfBirth forKey:@"dateOfBirth"];
+    [userData setObject:photoURL forKey:@"photoURL"];
+    [userData setObject:location forKey:@"location"];
+    [userData setObject:gender forKey:@"gender"];
+    [userData setObject:age forKey:@"age"];
+    [userData setObject:online forKey:@"online"];
+    
+    FIRStorageReference *imagesRef = [self.storageRef child:imagePath];
+    FIRStorageMetadata *metadata = [FIRStorageMetadata new];
+    metadata.contentType = @"image/jpeg";
+    
+    [TSSVProgressHUD showProgressHud];
+    
+    [[self.storageRef child:imagePath] putData:imageData metadata:metadata
+                                    completion:^(FIRStorageMetadata * _Nullable metadata, NSError * _Nullable error) {
+                                        
+                                        if (error) {
+                                            NSLog(@"Error uploading: %@", error);
+                                        }
+                                        
+                                        [imagesRef downloadURLWithCompletion:^(NSURL * _Nullable URL, NSError * _Nullable error) {
+                                            
+                                            NSString *photoURL = [NSString stringWithFormat:@"%@", URL];
+                                            
+                                            [userData setObject:photoURL forKey:@"photoURL"];
+                                            
+                                            [[[[[self.ref child:@"dataBase"] child:@"users"] child:user.uid] child:@"userData"] setValue:userData];
+                                            
+                                            NSString *token = user.uid;
+                                            
+                                            [[NSUserDefaults standardUserDefaults] setObject:token forKey:@"token"];
+                                            [[NSUserDefaults standardUserDefaults] synchronize];
+                                            
+                                            TSTabBarViewController *controller = [self.storyboard instantiateViewControllerWithIdentifier:@"TSTabBarViewController"];
+                                            [self presentViewController:controller animated:YES completion:nil];
+                                        }];
+                                    }];
 }
 
 #pragma mark - UITextFieldDelegate

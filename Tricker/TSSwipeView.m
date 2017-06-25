@@ -124,7 +124,11 @@ NSInteger recognizerControllersCardsAndChat;
             self.photosView = kTSPhotoView_6_Plus;
         }
     } else if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
-        self.photosView = kTSPhotoViewIpad;
+        if (IS_IPAD_2) {
+            self.photosView = kTSPhotoViewIpad;
+        } else if (IS_IPAD_PRO) {
+            self.photosView = kTSPhotoViewIpadPro;
+        }
     }
     
     UIImage *chatImage = [UIImage imageNamed:@"chat"];
@@ -179,8 +183,7 @@ NSInteger recognizerControllersCardsAndChat;
 + (instancetype)initProfileView
 {
     TSSwipeView *view = nil;
-    if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone)
-    {
+    if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone) {
         if (IS_IPHONE_4) {
             view = [self initProfileViewNibBySizeDevice:view nameNib:@"TSSwipeView"
                                                frameNib:kTSSwipeViewFrame];
@@ -194,10 +197,14 @@ NSInteger recognizerControllersCardsAndChat;
             view = [self initProfileViewNibBySizeDevice:view nameNib:@"TSSwipeView6plus"
                                                frameNib:kTSSwipeView6PlusFrame];
         }
-        
     } else if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
-        view = [self initProfileViewNibBySizeDevice:view nameNib:@"TSSwipeViewIpad"
-                                           frameNib:kTSSwipeViewIpadFrame];
+        if (IS_IPAD_2) {
+            view = [self initProfileViewNibBySizeDevice:view nameNib:@"TSSwipeViewIpad"
+                                               frameNib:kTSSwipeViewIpadFrame];
+        } else if (IS_IPAD_PRO) {
+            view = [self initDetailViewNibBySizeDevice:view nameNib:@"TSSwipeViewIpadPro"
+                                              frameNib:kTSSwipeViewIpadProFrame];
+        }
     }
     return view;
 }
@@ -205,8 +212,7 @@ NSInteger recognizerControllersCardsAndChat;
 + (instancetype)initDetailView
 {
     TSSwipeView *view = nil;
-    if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone)
-    {
+    if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone) {
         if (IS_IPHONE_4) {
             view = [self initDetailViewNibBySizeDevice:view nameNib:@"TSDetailView"
                                               frameNib:kTSSwipeDetailViewFrame];
@@ -221,8 +227,13 @@ NSInteger recognizerControllersCardsAndChat;
                                               frameNib:kTSSwipeDetailView6PlusFrame];
         }
     } else if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
-        view = [self initDetailViewNibBySizeDevice:view nameNib:@"TSDetailViewIpad"
-                                          frameNib:kTSSwipeDetailViewIpadFrame];
+        if (IS_IPAD_2) {
+            view = [self initDetailViewNibBySizeDevice:view nameNib:@"TSDetailViewIpad"
+                                              frameNib:kTSSwipeDetailViewIpadFrame];
+        } else if (IS_IPAD_PRO) {
+            view = [self initDetailViewNibBySizeDevice:view nameNib:@"TSDetailViewIpadPro"
+                                              frameNib:kTSSwipeDetailViewIpadProFrame];
+        }
     }
     return view;
 }

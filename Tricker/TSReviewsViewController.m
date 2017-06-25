@@ -141,6 +141,10 @@
             self.frameBySizeDevice = kTSSwipeDetailViewIpadFrame;
             self.heartInitFrame = kTSInitialHeartRectIpad;
             self.heartFinalFrame = kTSFinalHeartRectIpad;
+        } else if (IS_IPAD_PRO) {
+            self.frameBySizeDevice = kTSSwipeDetailViewIpadProFrame;
+            self.heartInitFrame = kTSInitialHeartRectIpad;
+            self.heartFinalFrame = kTSFinalHeartRectIpad;
         }
     }
     
@@ -199,10 +203,10 @@
             }
             
             if (self.reviewsUsers) {
-                NSCache *reviewsUsersCache = [[NSCache alloc] init];
-                reviewsUsersCache.name = @"reviewsUsersCache";
-                [reviewsUsersCache setObject:self.reviewsUsers forKey:@"reviewsUsersCache"];
-                NSLog(@"reviewsUsersCache %@", reviewsUsersCache.description);
+//                NSCache *reviewsUsersCache = [[NSCache alloc] init];
+//                reviewsUsersCache.name = @"reviewsUsersCache";
+//                [reviewsUsersCache setObject:self.reviewsUsers forKey:@"reviewsUsersCache"];
+//                NSLog(@"reviewsUsersCache %@", reviewsUsersCache.description);
             }
             
             dispatch_async(dispatch_get_main_queue(), ^{

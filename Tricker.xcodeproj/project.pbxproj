@@ -8,6 +8,10 @@
 
 /* Begin PBXBuildFile section */
 		2C27B593A68DE82F875D0227 /* libPods-Tricker.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 28CCB341251CEF3778160ABF /* libPods-Tricker.a */; };
+		845F126E1EFFCEEE002A2B3A /* TSSwipeViewIpadPro.xib in Resources */ = {isa = PBXBuildFile; fileRef = 845F126D1EFFCEEE002A2B3A /* TSSwipeViewIpadPro.xib */; };
+		845F12731EFFD89D002A2B3A /* TSPhotoDetailViewIpadPro.xib in Resources */ = {isa = PBXBuildFile; fileRef = 845F12701EFFD89D002A2B3A /* TSPhotoDetailViewIpadPro.xib */; };
+		845F12741EFFD89D002A2B3A /* TSPhotoViewIpadPro.xib in Resources */ = {isa = PBXBuildFile; fileRef = 845F12711EFFD89D002A2B3A /* TSPhotoViewIpadPro.xib */; };
+		845F12761EFFDAB7002A2B3A /* TSDetailViewIpadPro.xib in Resources */ = {isa = PBXBuildFile; fileRef = 845F12751EFFDAB6002A2B3A /* TSDetailViewIpadPro.xib */; };
 		8495AD031EF09CB900AD5262 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8495AD021EF09CB900AD5262 /* Assets.xcassets */; };
 		FD002C651DFA162900D47428 /* TSChatsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FD002C641DFA162900D47428 /* TSChatsTableViewController.m */; };
 		FD06541C1DFCA24200AE45EF /* TSSwipeView6plus.xib in Resources */ = {isa = PBXBuildFile; fileRef = FD06541B1DFCA24200AE45EF /* TSSwipeView6plus.xib */; };
@@ -105,6 +109,10 @@
 /* Begin PBXFileReference section */
 		1FBEFE542591B48DB688ED44 /* Pods-Tricker.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Tricker.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Tricker/Pods-Tricker.debug.xcconfig"; sourceTree = "<group>"; };
 		28CCB341251CEF3778160ABF /* libPods-Tricker.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Tricker.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		845F126D1EFFCEEE002A2B3A /* TSSwipeViewIpadPro.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TSSwipeViewIpadPro.xib; sourceTree = "<group>"; };
+		845F12701EFFD89D002A2B3A /* TSPhotoDetailViewIpadPro.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TSPhotoDetailViewIpadPro.xib; sourceTree = "<group>"; };
+		845F12711EFFD89D002A2B3A /* TSPhotoViewIpadPro.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TSPhotoViewIpadPro.xib; sourceTree = "<group>"; };
+		845F12751EFFDAB6002A2B3A /* TSDetailViewIpadPro.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TSDetailViewIpadPro.xib; sourceTree = "<group>"; };
 		8495AD021EF09CB900AD5262 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		94B94787D384A5D991ACF5EE /* Pods-Tricker.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Tricker.release.xcconfig"; path = "Pods/Target Support Files/Pods-Tricker/Pods-Tricker.release.xcconfig"; sourceTree = "<group>"; };
 		FD002C631DFA162900D47428 /* TSChatsTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSChatsTableViewController.h; sourceTree = "<group>"; };
@@ -269,6 +277,17 @@
 				28CCB341251CEF3778160ABF /* libPods-Tricker.a */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		845F126A1EFF1B55002A2B3A /* IpadPro */ = {
+			isa = PBXGroup;
+			children = (
+				845F126D1EFFCEEE002A2B3A /* TSSwipeViewIpadPro.xib */,
+				845F12751EFFDAB6002A2B3A /* TSDetailViewIpadPro.xib */,
+				845F12711EFFD89D002A2B3A /* TSPhotoViewIpadPro.xib */,
+				845F12701EFFD89D002A2B3A /* TSPhotoDetailViewIpadPro.xib */,
+			);
+			name = IpadPro;
 			sourceTree = "<group>";
 		};
 		BF14510272C93E322C52DF4E /* Pods */ = {
@@ -577,6 +596,7 @@
 				FD821FEB1E2B9D3A00D886E2 /* Iphone6 */,
 				FD821FEC1E2B9D5800D886E2 /* Iphone6plus */,
 				FD8220011E2C40B800D886E2 /* Ipad */,
+				845F126A1EFF1B55002A2B3A /* IpadPro */,
 				FDF4BB111DF019D4003D3841 /* TSViewCell.xib */,
 				FDEBE3E71DF1C4AB0073A0FF /* TSCollCell.xib */,
 			);
@@ -759,11 +779,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				FD8220001E2C1A6700D886E2 /* TSPhotoDetailView6.xib in Resources */,
+				845F12761EFFDAB7002A2B3A /* TSDetailViewIpadPro.xib in Resources */,
 				FDEBE3E81DF1C4AB0073A0FF /* TSCollCell.xib in Resources */,
 				FD821FFA1E2C19A100D886E2 /* TSSwipeView6.xib in Resources */,
 				FD68B4611DDA7D0C00EF19C3 /* SettingStoryboard.storyboard in Resources */,
 				FD68B45B1DDA7CC100EF19C3 /* MapStoryboard.storyboard in Resources */,
 				FDF4BB1A1DF02C3E003D3841 /* TSPhotoView.xib in Resources */,
+				845F126E1EFFCEEE002A2B3A /* TSSwipeViewIpadPro.xib in Resources */,
 				FD821FEE1E2BB3A300D886E2 /* TSSwipeView5.xib in Resources */,
 				FD68B45F1DDA7CFC00EF19C3 /* ChatStoryboard.storyboard in Resources */,
 				FD1C4F411DCE252200CF63E9 /* LaunchScreen.storyboard in Resources */,
@@ -779,6 +801,7 @@
 				FD1C4F3C1DCE252200CF63E9 /* Main.storyboard in Resources */,
 				FD821FF61E2BCCC000D886E2 /* TSDetailView6plus.xib in Resources */,
 				FDF4BB121DF019D4003D3841 /* TSViewCell.xib in Resources */,
+				845F12741EFFD89D002A2B3A /* TSPhotoViewIpadPro.xib in Resources */,
 				FD821FFC1E2C1A2300D886E2 /* TSPhotoView6.xib in Resources */,
 				FD51DBA41E2D7B2A009333FE /* TSPhotoDetailViewIpad.xib in Resources */,
 				FD0C1CA01DE783B500D37B61 /* TSSwipeView.xib in Resources */,
@@ -789,6 +812,7 @@
 				FD821FF81E2C01A000D886E2 /* TSPhotoDetailView6plus.xib in Resources */,
 				FD51DBA01E2D73D4009333FE /* TSPhotoViewIpad.xib in Resources */,
 				FD68B4591DDA7C5A00EF19C3 /* ProfileStoryboard.storyboard in Resources */,
+				845F12731EFFD89D002A2B3A /* TSPhotoDetailViewIpadPro.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

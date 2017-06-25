@@ -58,8 +58,7 @@ static NSString * const reuseIdntifierButton = @"cellButton";
     self.addPhotos = [NSMutableArray array];
     self.selectedPhotos = [NSMutableArray array];
     
-    if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone)
-    {
+    if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone) {
         if (IS_IPHONE_4) {
             self.collViewCellSize = kTSCollViewPhotoCell;
         } else if (IS_IPHONE_5) {
@@ -69,11 +68,11 @@ static NSString * const reuseIdntifierButton = @"cellButton";
         } else if (IS_IPHONE_6_PLUS) {
             self.collViewCellSize = kTSCollViewPhotoCell6plus;
         }
-        
     } else if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
-        
         if (IS_IPAD_2) {
             self.collViewCellSize = kTSCollCellPhotosSizeIpad;
+        } else if (IS_IPAD_PRO) {
+            self.collViewCellSize = kTSCollCellPhotosSizeIpadPro;
         }
     }
 
@@ -210,37 +209,78 @@ static NSString * const reuseIdntifierButton = @"cellButton";
 
 - (IBAction)addPhotoActionButton:(id)sender
 {
-    
-    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"Выберите фото"
-                                                                             message:nil
-                                                                      preferredStyle:UIAlertControllerStyleActionSheet];
-    
-    UIAlertAction *camera = [UIAlertAction actionWithTitle:@"Камера"
-                                                     style:UIAlertActionStyleDefault
-                                                   handler:^(UIAlertAction * _Nonnull action) {
-                                                       [self makePhoto];
-                                                   }];
-    
-    UIAlertAction *galery = [UIAlertAction actionWithTitle:@"Галерея"
-                                                     style:UIAlertActionStyleDefault
-                                                   handler:^(UIAlertAction * _Nonnull action) {
-                                                       [self selectPhoto];
-                                                   }];
-    
-    UIAlertAction *cancel = [UIAlertAction actionWithTitle:@"Отменить"
-                                                     style:UIAlertActionStyleDefault
-                                                   handler:^(UIAlertAction * _Nonnull action) {
-                                                       
-                                                   }];
-    
-    [alertController customizationAlertView:@"Выберите фото" byFont:20.f];
-    
-    [alertController addAction:camera];
-    [alertController addAction:galery];
-    [alertController addAction:cancel];
-    
-    [self presentViewController:alertController animated:YES completion:nil];
-    
+    if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone) {
+        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"Выберите фото"
+                                                                                 message:nil
+                                                                          preferredStyle:UIAlertControllerStyleActionSheet];
+        
+        UIAlertAction *camera = [UIAlertAction actionWithTitle:@"Камера"
+                                                         style:UIAlertActionStyleDefault
+                                                       handler:^(UIAlertAction * _Nonnull action) {
+                                                           [self makePhoto];
+                                                       }];
+        
+        UIAlertAction *galery = [UIAlertAction actionWithTitle:@"Галерея"
+                                                         style:UIAlertActionStyleDefault
+                                                       handler:^(UIAlertAction * _Nonnull action) {
+                                                           [self selectPhoto];
+                                                       }];
+        
+        UIAlertAction *cancel = [UIAlertAction actionWithTitle:@"Отменить"
+                                                         style:UIAlertActionStyleDefault
+                                                       handler:^(UIAlertAction * _Nonnull action) {
+                                                           
+                                                       }];
+        
+        [alertController customizationAlertView:@"Выберите фото" byFont:20.f];
+        
+        [alertController addAction:camera];
+        [alertController addAction:galery];
+        [alertController addAction:cancel];
+        
+        [self presentViewController:alertController animated:YES completion:nil];
+    } else {
+        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"Выберите фото"
+                                                                                 message:nil
+                                                                          preferredStyle:UIAlertControllerStyleActionSheet];
+        NSInteger value = self.view.frame.size.width / 2;
+        CGRect recr = CGRectMake(value / 2, self.view.frame.size.height / 4, value, value);
+        UIView *view = [[UIView alloc] initWithFrame:recr];
+        alertController.popoverPresentationController.sourceView = view;
+        alertController.popoverPresentationController.sourceRect = view.frame;
+        UIAlertAction *camera = [UIAlertAction actionWithTitle:@"Камера"
+                                                         style:UIAlertActionStyleDefault
+                                                       handler:^(UIAlertAction * _Nonnull action) {
+                                                           [self makePhoto];
+                                                       }];
+        
+        UIAlertAction *galery = [UIAlertAction actionWithTitle:@"Галерея"
+                                                         style:UIAlertActionStyleDefault
+                                                       handler:^(UIAlertAction * _Nonnull action) {
+                                                           [self selectPhoto];
+                                                       }];
+        
+        UIAlertAction *cancel = [UIAlertAction actionWithTitle:@"Отменить"
+                                                         style:UIAlertActionStyleDefault
+                                                       handler:nil];
+        
+        UIView *subview = alertController.view.subviews.firstObject;
+        UIView *alertContentView = subview.subviews.firstObject;
+        alertContentView.backgroundColor = YELLOW_COLOR;
+        alertContentView.layer.cornerRadius = 10;
+        alertController.view.tintColor = DARK_GRAY_COLOR;
+        
+        NSMutableAttributedString *mutableAttrString = [[NSMutableAttributedString alloc] initWithString:@"Выберите фото"];
+        [mutableAttrString addAttribute:NSFontAttributeName
+                                  value:[UIFont systemFontOfSize:20.0]
+                                  range:NSMakeRange(0, 13)];
+        [alertController setValue:mutableAttrString forKey:@"attributedTitle"];
+        
+        [alertController addAction:camera];
+        [alertController addAction:galery];
+        [alertController addAction:cancel];
+        [self presentViewController:alertController animated:YES completion:nil];
+    }    
 }
 
 

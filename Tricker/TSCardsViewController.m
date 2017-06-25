@@ -66,6 +66,9 @@
           if (IS_IPAD_2) {
                self.heartInitFrame = kTSInitialHeartCardContrRectIpad;
                self.heartFinalFrame = kTSFinalHeartCardContrRectIpad;
+          } else if (IS_IPAD_PRO) {
+               self.heartInitFrame = kTSInitialHeartCardContrRectIpad;
+               self.heartFinalFrame = kTSFinalHeartCardContrRectIpad;
           }
      }
      

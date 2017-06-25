@@ -29,8 +29,7 @@ static NSString * const reuseIdntifier = @"cell";
 
 - (void)drawRect:(CGRect)rect {
     
-    if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone)
-    {
+    if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone) {
         if (IS_IPHONE_4) {
             self.cellSize = kTSCollCellSize;
         } else if (IS_IPHONE_5) {
@@ -41,7 +40,11 @@ static NSString * const reuseIdntifier = @"cell";
             self.cellSize = kTSCollCellSize_6_Plus;
         }
     } else if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
-        self.cellSize = kTSCollCellSizeIpad;
+        if (IS_IPAD_2) {
+            self.cellSize = kTSCollCellSizeIpad;
+        } else if (IS_IPAD_PRO) {
+            self.cellSize = kTSCollCellSizeIpadPro;
+        }
     }
     
     self.convertPhotos = [NSMutableArray array];

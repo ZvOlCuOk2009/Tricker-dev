@@ -411,8 +411,7 @@ NSString * const UpdateParametersNotification = @"UpdateParametersNotification";
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
-    if (indexPath.row == 3 && self.statePickerView == NO)
-    {
+    if (indexPath.row == 3 && self.statePickerView == NO) {
         self.selectedRowInComponent = 2;
         self.tagSelectCell = 1;
         [self createdUipickerView:1];
@@ -541,10 +540,20 @@ NSString * const UpdateParametersNotification = @"UpdateParametersNotification";
     [self.navigationItem setRightBarButtonItems:nil animated:YES];
     self.statePickerView = NO;
     
+    [self updateDictionaryParametersUaer];
+}
+
+- (void)updateDictionaryParametersUaer
+{
     if (self.fireUser.parameters) {
         self.characteristicsUser = self.fireUser.parameters;
     } else {
-        self.characteristicsUser = [NSMutableDictionary dictionary];
+        NSString *selectAge = [self.characteristicsUser objectForKey:@"key2"];
+        if (selectAge) {
+            self.characteristicsUser = self.characteristicsUser;
+        } else {
+            self.characteristicsUser = [NSMutableDictionary dictionary];
+        }
     }
     //добавление параметров в словарь для последующего сохранения в базу
     //определение количества компонентов в UIPickerView
@@ -564,9 +573,9 @@ NSString * const UpdateParametersNotification = @"UpdateParametersNotification";
         }
     } else if (self.selectedRowInComponent == 2) {
         NSString *minAge = [self pickerView:self.pickerView
-                                         titleForRow:[self.pickerView selectedRowInComponent:0] forComponent:0];
+                                titleForRow:[self.pickerView selectedRowInComponent:0] forComponent:0];
         NSString *maxAge = [self pickerView:self.pickerView
-                                          titleForRow:[self.pickerView selectedRowInComponent:1] forComponent:0];
+                                titleForRow:[self.pickerView selectedRowInComponent:1] forComponent:0];
         NSString *selectAge = [NSString stringWithFormat:@"%@ %@", minAge, maxAge];
         self.updateCurrentMinAge = [minAge integerValue];
         self.updateCurrentMaxAge = [maxAge integerValue];
@@ -575,7 +584,7 @@ NSString * const UpdateParametersNotification = @"UpdateParametersNotification";
         NSString *key = @"key2";
         [self.characteristicsUser setObject:selectAge forKey:key];
     }
-
+    
     //обновление словаря с данными
     if (self.fireUser.parameters) {
         NSString *key = [NSString stringWithFormat:@"key%ld", (long)self.tagSelectCell];

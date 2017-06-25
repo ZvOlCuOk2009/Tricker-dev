@@ -139,9 +139,12 @@
         }
         
     } else if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
-        
         if (IS_IPAD_2) {
             self.frameBySizeDevice = kTSSwipeDetailViewIpadFrame;
+            self.heartInitFrame = kTSInitialHeartRectIpad;
+            self.heartFinalFrame = kTSFinalHeartRectIpad;
+        } else if (IS_IPAD_PRO) {
+            self.frameBySizeDevice = kTSSwipeDetailViewIpadProFrame;
             self.heartInitFrame = kTSInitialHeartRectIpad;
             self.heartFinalFrame = kTSFinalHeartRectIpad;
         }
