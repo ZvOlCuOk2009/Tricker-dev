@@ -65,7 +65,7 @@
                 self.fireUser = [TSFireUser initWithSnapshot:snapshot];
                 self.fireBase = [TSFireBase initWithSnapshot:snapshot];
                 if (openChatVC == 0) {
-                    [TSSVProgressHUD showProgressHud];
+//                    [TSSVProgressHUD showProgressHud];
                 }
                 [self configureController];
             }];

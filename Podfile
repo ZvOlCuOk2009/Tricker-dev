@@ -14,4 +14,5 @@ pod 'SVProgressHUD'
 pod 'ZLSwipeableView'
 pod 'JSQMessagesViewController'
 pod "MDCSwipeToChoose"
+pod 'Google-Mobile-Ads-SDK'
 end

@@ -67,9 +67,8 @@
 @property (assign, nonatomic) CGFloat fixOffset;
 @property (assign, nonatomic) CGFloat fixCornerRadius;
 @property (assign, nonatomic) CGFloat correctingValue;
-@property (assign, nonatomic) BOOL stateDatePicker;
-
 @property (strong, nonatomic) UIImageView *logo;
+@property (assign, nonatomic) BOOL stateDatePicker;
 
 @end
 

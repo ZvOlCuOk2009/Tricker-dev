@@ -16,6 +16,11 @@
 #import <FBSDKCoreKit/FBSDKCoreKit.h>
 #import <GoogleSignIn/GoogleSignIn.h>
 #import <GGLCore/GGLCore.h>
+#import <GoogleMobileAds/GoogleMobileAds.h>
+
+@import GoogleMobileAds;
+
+//#import <Appodeal/Appodeal.h>
 //#import <GoogleMaps/GoogleMaps.h>
 //#import <VKSdk.h>
 
@@ -43,11 +48,8 @@ NSString * AppDelegateStatusUserNotificatoin = @"AppDelegateStatusUserNotificato
     self.storyBoard = [UIStoryboard storyboardWithName:@"Main" bundle:[NSBundle mainBundle]];
     
     if (token) {
-        
         [self openTabBarController];
-        
     } else {
-        
         TSSocialNetworkLoginViewController *loginController = [self.storyBoard instantiateViewControllerWithIdentifier:@"TSSocialNetworkLoginViewController"];
         self.window.rootViewController = loginController;
     }
@@ -57,7 +59,11 @@ NSString * AppDelegateStatusUserNotificatoin = @"AppDelegateStatusUserNotificato
     
     [FIRApp configure];
     
+    [GADMobileAds configureWithApplicationID:API_KEY_ADMOB];
+    
 //    [GMSServices provideAPIKey:API_KEY_GOOGLE_MAPS];
+    
+//    [Appodeal initializeWithApiKey:API_KEY_APPODEAL types:(AppodealAdType)AppodealAdTypeRewardedVideo | AppodealAdTypeInterstitial];
     
     NSError* configureError;
     [[GGLContext sharedInstance] configureWithError: &configureError];

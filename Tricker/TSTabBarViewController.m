@@ -12,11 +12,13 @@
 #import "TSTrickerPrefixHeader.pch"
 
 @import FirebaseDatabase;
+//@import GoogleMobileAds;
 
 @interface TSTabBarViewController ()
 
 @property (strong, nonatomic) FIRDatabaseReference *refCountMessage;
 @property (strong, nonatomic) TSFireUser *fireUser;
+//@property (strong, nonatomic) GADBannerView *bannerView;
 
 @end
 
@@ -48,7 +50,21 @@
 //            [self setObserverForIncomingMessages:self.fireUser];
 //        });
 //    }];
+    
+//    [self setBannerView];
 }
+
+//- (void)setBannerView
+//{
+//    //    self.bannerView = [[GADBannerView alloc] initWithAdSize:kGADAdSizeBanner];
+//    self.bannerView = [[GADBannerView alloc] initWithFrame:CGRectMake(0,self.view.frame.size.height-50, self.view.frame.size.width, 50)];
+//    self.bannerView.adUnitID = @"ca-app-pub-3107226454186710/3620483386";
+//    //ca-app-pub-8501671653071605/1974659335
+//    self.bannerView.backgroundColor = [UIColor clearColor];
+//    [self.bannerView setRootViewController:self];
+//    [self.view addSubview:self.bannerView];
+//    [self.bannerView loadRequest:[GADRequest request]];
+//}
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

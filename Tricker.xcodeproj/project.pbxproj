@@ -12,6 +12,35 @@
 		845F12731EFFD89D002A2B3A /* TSPhotoDetailViewIpadPro.xib in Resources */ = {isa = PBXBuildFile; fileRef = 845F12701EFFD89D002A2B3A /* TSPhotoDetailViewIpadPro.xib */; };
 		845F12741EFFD89D002A2B3A /* TSPhotoViewIpadPro.xib in Resources */ = {isa = PBXBuildFile; fileRef = 845F12711EFFD89D002A2B3A /* TSPhotoViewIpadPro.xib */; };
 		845F12761EFFDAB7002A2B3A /* TSDetailViewIpadPro.xib in Resources */ = {isa = PBXBuildFile; fileRef = 845F12751EFFDAB6002A2B3A /* TSDetailViewIpadPro.xib */; };
+		845F127A1F044C1D002A2B3A /* AdSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 845F12791F044C1D002A2B3A /* AdSupport.framework */; };
+		845F127C1F044C29002A2B3A /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 845F127B1F044C29002A2B3A /* AudioToolbox.framework */; };
+		845F127E1F044C34002A2B3A /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 845F127D1F044C34002A2B3A /* AVFoundation.framework */; };
+		845F12801F044C3E002A2B3A /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 845F127F1F044C3E002A2B3A /* CFNetwork.framework */; };
+		845F12821F044C4A002A2B3A /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 845F12811F044C4A002A2B3A /* CoreFoundation.framework */; };
+		845F12881F044C6D002A2B3A /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 845F12831F044C6D002A2B3A /* CoreGraphics.framework */; };
+		845F12891F044C6D002A2B3A /* CoreImage.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 845F12841F044C6D002A2B3A /* CoreImage.framework */; };
+		845F128A1F044C6D002A2B3A /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 845F12851F044C6D002A2B3A /* CoreMedia.framework */; };
+		845F128B1F044C6D002A2B3A /* CoreMotion.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 845F12861F044C6D002A2B3A /* CoreMotion.framework */; };
+		845F128C1F044C6D002A2B3A /* CoreTelephony.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 845F12871F044C6D002A2B3A /* CoreTelephony.framework */; };
+		845F128F1F044C7B002A2B3A /* EventKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 845F128D1F044C7B002A2B3A /* EventKit.framework */; };
+		845F12901F044C7B002A2B3A /* EventKitUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 845F128E1F044C7B002A2B3A /* EventKitUI.framework */; };
+		845F12921F044C8F002A2B3A /* libc++.1.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 845F12911F044C8F002A2B3A /* libc++.1.tbd */; };
+		845F12941F044C9D002A2B3A /* MediaPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 845F12931F044C9D002A2B3A /* MediaPlayer.framework */; };
+		845F12961F044CA9002A2B3A /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 845F12951F044CA9002A2B3A /* MessageUI.framework */; };
+		845F12981F044CBA002A2B3A /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 845F12971F044CBA002A2B3A /* MobileCoreServices.framework */; };
+		845F129A1F044CC3002A2B3A /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 845F12991F044CC3002A2B3A /* QuartzCore.framework */; };
+		845F129C1F044CCE002A2B3A /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 845F129B1F044CCE002A2B3A /* Security.framework */; };
+		845F129E1F044CD9002A2B3A /* Social.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 845F129D1F044CD9002A2B3A /* Social.framework */; };
+		845F12A01F044CE1002A2B3A /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 845F129F1F044CE1002A2B3A /* StoreKit.framework */; };
+		845F12A21F044CFA002A2B3A /* Twitter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 845F12A11F044CFA002A2B3A /* Twitter.framework */; };
+		845F12A41F044D06002A2B3A /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 845F12A31F044D06002A2B3A /* UIKit.framework */; };
+		845F12A61F044D0D002A2B3A /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 845F12A51F044D0D002A2B3A /* WebKit.framework */; };
+		845F12A81F044D16002A2B3A /* JavaScriptCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 845F12A71F044D16002A2B3A /* JavaScriptCore.framework */; };
+		845F12AA1F044D20002A2B3A /* CoreBluetooth.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 845F12A91F044D20002A2B3A /* CoreBluetooth.framework */; };
+		845F12AC1F044D2C002A2B3A /* GLKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 845F12AB1F044D2C002A2B3A /* GLKit.framework */; };
+		845F12AE1F044D39002A2B3A /* SafariServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 845F12AD1F044D39002A2B3A /* SafariServices.framework */; };
+		845F12B01F05891E002A2B3A /* libz.1.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 845F12AF1F05891E002A2B3A /* libz.1.dylib */; };
+		845F12B21F058996002A2B3A /* libiconv.2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 845F12B11F058996002A2B3A /* libiconv.2.dylib */; };
 		8495AD031EF09CB900AD5262 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8495AD021EF09CB900AD5262 /* Assets.xcassets */; };
 		FD002C651DFA162900D47428 /* TSChatsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FD002C641DFA162900D47428 /* TSChatsTableViewController.m */; };
 		FD06541C1DFCA24200AE45EF /* TSSwipeView6plus.xib in Resources */ = {isa = PBXBuildFile; fileRef = FD06541B1DFCA24200AE45EF /* TSSwipeView6plus.xib */; };
@@ -113,6 +142,35 @@
 		845F12701EFFD89D002A2B3A /* TSPhotoDetailViewIpadPro.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TSPhotoDetailViewIpadPro.xib; sourceTree = "<group>"; };
 		845F12711EFFD89D002A2B3A /* TSPhotoViewIpadPro.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TSPhotoViewIpadPro.xib; sourceTree = "<group>"; };
 		845F12751EFFDAB6002A2B3A /* TSDetailViewIpadPro.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TSDetailViewIpadPro.xib; sourceTree = "<group>"; };
+		845F12791F044C1D002A2B3A /* AdSupport.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AdSupport.framework; path = System/Library/Frameworks/AdSupport.framework; sourceTree = SDKROOT; };
+		845F127B1F044C29002A2B3A /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
+		845F127D1F044C34002A2B3A /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
+		845F127F1F044C3E002A2B3A /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
+		845F12811F044C4A002A2B3A /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = System/Library/Frameworks/CoreFoundation.framework; sourceTree = SDKROOT; };
+		845F12831F044C6D002A2B3A /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		845F12841F044C6D002A2B3A /* CoreImage.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreImage.framework; path = System/Library/Frameworks/CoreImage.framework; sourceTree = SDKROOT; };
+		845F12851F044C6D002A2B3A /* CoreMedia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMedia.framework; path = System/Library/Frameworks/CoreMedia.framework; sourceTree = SDKROOT; };
+		845F12861F044C6D002A2B3A /* CoreMotion.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMotion.framework; path = System/Library/Frameworks/CoreMotion.framework; sourceTree = SDKROOT; };
+		845F12871F044C6D002A2B3A /* CoreTelephony.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreTelephony.framework; path = System/Library/Frameworks/CoreTelephony.framework; sourceTree = SDKROOT; };
+		845F128D1F044C7B002A2B3A /* EventKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = EventKit.framework; path = System/Library/Frameworks/EventKit.framework; sourceTree = SDKROOT; };
+		845F128E1F044C7B002A2B3A /* EventKitUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = EventKitUI.framework; path = System/Library/Frameworks/EventKitUI.framework; sourceTree = SDKROOT; };
+		845F12911F044C8F002A2B3A /* libc++.1.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = "libc++.1.tbd"; path = "usr/lib/libc++.1.tbd"; sourceTree = SDKROOT; };
+		845F12931F044C9D002A2B3A /* MediaPlayer.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MediaPlayer.framework; path = System/Library/Frameworks/MediaPlayer.framework; sourceTree = SDKROOT; };
+		845F12951F044CA9002A2B3A /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
+		845F12971F044CBA002A2B3A /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
+		845F12991F044CC3002A2B3A /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		845F129B1F044CCE002A2B3A /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
+		845F129D1F044CD9002A2B3A /* Social.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Social.framework; path = System/Library/Frameworks/Social.framework; sourceTree = SDKROOT; };
+		845F129F1F044CE1002A2B3A /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
+		845F12A11F044CFA002A2B3A /* Twitter.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Twitter.framework; path = System/Library/Frameworks/Twitter.framework; sourceTree = SDKROOT; };
+		845F12A31F044D06002A2B3A /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		845F12A51F044D0D002A2B3A /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = System/Library/Frameworks/WebKit.framework; sourceTree = SDKROOT; };
+		845F12A71F044D16002A2B3A /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
+		845F12A91F044D20002A2B3A /* CoreBluetooth.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreBluetooth.framework; path = System/Library/Frameworks/CoreBluetooth.framework; sourceTree = SDKROOT; };
+		845F12AB1F044D2C002A2B3A /* GLKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GLKit.framework; path = System/Library/Frameworks/GLKit.framework; sourceTree = SDKROOT; };
+		845F12AD1F044D39002A2B3A /* SafariServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SafariServices.framework; path = System/Library/Frameworks/SafariServices.framework; sourceTree = SDKROOT; };
+		845F12AF1F05891E002A2B3A /* libz.1.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.1.dylib; path = ../../../../usr/lib/libz.1.dylib; sourceTree = "<group>"; };
+		845F12B11F058996002A2B3A /* libiconv.2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libiconv.2.dylib; path = ../../../../usr/lib/libiconv.2.dylib; sourceTree = "<group>"; };
 		8495AD021EF09CB900AD5262 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		94B94787D384A5D991ACF5EE /* Pods-Tricker.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Tricker.release.xcconfig"; path = "Pods/Target Support Files/Pods-Tricker/Pods-Tricker.release.xcconfig"; sourceTree = "<group>"; };
 		FD002C631DFA162900D47428 /* TSChatsTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSChatsTableViewController.h; sourceTree = "<group>"; };
@@ -245,8 +303,37 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				845F12B21F058996002A2B3A /* libiconv.2.dylib in Frameworks */,
+				845F12B01F05891E002A2B3A /* libz.1.dylib in Frameworks */,
+				845F12AA1F044D20002A2B3A /* CoreBluetooth.framework in Frameworks */,
+				845F12AE1F044D39002A2B3A /* SafariServices.framework in Frameworks */,
+				845F12AC1F044D2C002A2B3A /* GLKit.framework in Frameworks */,
+				845F12A81F044D16002A2B3A /* JavaScriptCore.framework in Frameworks */,
+				845F12A61F044D0D002A2B3A /* WebKit.framework in Frameworks */,
+				845F12A41F044D06002A2B3A /* UIKit.framework in Frameworks */,
+				845F12A21F044CFA002A2B3A /* Twitter.framework in Frameworks */,
 				FD51DB971E2CFB2E009333FE /* SystemConfiguration.framework in Frameworks */,
+				845F12A01F044CE1002A2B3A /* StoreKit.framework in Frameworks */,
+				845F129E1F044CD9002A2B3A /* Social.framework in Frameworks */,
+				845F129C1F044CCE002A2B3A /* Security.framework in Frameworks */,
+				845F129A1F044CC3002A2B3A /* QuartzCore.framework in Frameworks */,
+				845F12981F044CBA002A2B3A /* MobileCoreServices.framework in Frameworks */,
+				845F12961F044CA9002A2B3A /* MessageUI.framework in Frameworks */,
+				845F12941F044C9D002A2B3A /* MediaPlayer.framework in Frameworks */,
+				845F12921F044C8F002A2B3A /* libc++.1.tbd in Frameworks */,
+				845F128F1F044C7B002A2B3A /* EventKit.framework in Frameworks */,
+				845F12901F044C7B002A2B3A /* EventKitUI.framework in Frameworks */,
+				845F12881F044C6D002A2B3A /* CoreGraphics.framework in Frameworks */,
+				845F12891F044C6D002A2B3A /* CoreImage.framework in Frameworks */,
+				845F128A1F044C6D002A2B3A /* CoreMedia.framework in Frameworks */,
+				845F128B1F044C6D002A2B3A /* CoreMotion.framework in Frameworks */,
+				845F128C1F044C6D002A2B3A /* CoreTelephony.framework in Frameworks */,
 				FDEF72631DD65CAB00CAF773 /* CoreLocation.framework in Frameworks */,
+				845F12821F044C4A002A2B3A /* CoreFoundation.framework in Frameworks */,
+				845F12801F044C3E002A2B3A /* CFNetwork.framework in Frameworks */,
+				845F127E1F044C34002A2B3A /* AVFoundation.framework in Frameworks */,
+				845F127C1F044C29002A2B3A /* AudioToolbox.framework in Frameworks */,
+				845F127A1F044C1D002A2B3A /* AdSupport.framework in Frameworks */,
 				2C27B593A68DE82F875D0227 /* libPods-Tricker.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -271,6 +358,35 @@
 		59452B679435EF299964D07D /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				845F12B11F058996002A2B3A /* libiconv.2.dylib */,
+				845F12AF1F05891E002A2B3A /* libz.1.dylib */,
+				845F12AD1F044D39002A2B3A /* SafariServices.framework */,
+				845F12AB1F044D2C002A2B3A /* GLKit.framework */,
+				845F12A91F044D20002A2B3A /* CoreBluetooth.framework */,
+				845F12A71F044D16002A2B3A /* JavaScriptCore.framework */,
+				845F12A51F044D0D002A2B3A /* WebKit.framework */,
+				845F12A31F044D06002A2B3A /* UIKit.framework */,
+				845F12A11F044CFA002A2B3A /* Twitter.framework */,
+				845F129F1F044CE1002A2B3A /* StoreKit.framework */,
+				845F129D1F044CD9002A2B3A /* Social.framework */,
+				845F129B1F044CCE002A2B3A /* Security.framework */,
+				845F12991F044CC3002A2B3A /* QuartzCore.framework */,
+				845F12971F044CBA002A2B3A /* MobileCoreServices.framework */,
+				845F12951F044CA9002A2B3A /* MessageUI.framework */,
+				845F12931F044C9D002A2B3A /* MediaPlayer.framework */,
+				845F12911F044C8F002A2B3A /* libc++.1.tbd */,
+				845F128D1F044C7B002A2B3A /* EventKit.framework */,
+				845F128E1F044C7B002A2B3A /* EventKitUI.framework */,
+				845F12831F044C6D002A2B3A /* CoreGraphics.framework */,
+				845F12841F044C6D002A2B3A /* CoreImage.framework */,
+				845F12851F044C6D002A2B3A /* CoreMedia.framework */,
+				845F12861F044C6D002A2B3A /* CoreMotion.framework */,
+				845F12871F044C6D002A2B3A /* CoreTelephony.framework */,
+				845F12811F044C4A002A2B3A /* CoreFoundation.framework */,
+				845F127F1F044C3E002A2B3A /* CFNetwork.framework */,
+				845F127D1F044C34002A2B3A /* AVFoundation.framework */,
+				845F127B1F044C29002A2B3A /* AudioToolbox.framework */,
+				845F12791F044C1D002A2B3A /* AdSupport.framework */,
 				FD51DB961E2CFB2E009333FE /* SystemConfiguration.framework */,
 				FDEF72621DD65CAA00CAF773 /* CoreLocation.framework */,
 				FDF7FF8D1DCFE6AE00846997 /* libVK-ios-sdk.a */,
@@ -1080,14 +1196,32 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = Tricker/Tricker.entitlements;
 				DEVELOPMENT_TEAM = 2ZQMG97HLH;
+				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Tricker/GoogleMaps/Frameworks",
 					"$(PROJECT_DIR)/Tricker/GoogleMaps/GoogleMapsSDKDemos",
+					"$(PROJECT_DIR)/Tricker",
 				);
 				INFOPLIST_FILE = Tricker/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"\"$(SRCROOT)\"/**",
+					"$(inherited)",
+					"\"$PODS_CONFIGURATION_BUILD_DIR/Bolts\"",
+					"\"$PODS_CONFIGURATION_BUILD_DIR/FBSDKCoreKit\"",
+					"\"$PODS_CONFIGURATION_BUILD_DIR/FBSDKLoginKit\"",
+					"\"$PODS_CONFIGURATION_BUILD_DIR/FBSDKShareKit\"",
+					"\"$PODS_CONFIGURATION_BUILD_DIR/GTMOAuth2\"",
+					"\"$PODS_CONFIGURATION_BUILD_DIR/GTMSessionFetcher\"",
+					"\"$PODS_CONFIGURATION_BUILD_DIR/GoogleToolboxForMac\"",
+					"\"$PODS_CONFIGURATION_BUILD_DIR/JSQMessagesViewController\"",
+					"\"$PODS_CONFIGURATION_BUILD_DIR/JSQSystemSoundPlayer\"",
+					"\"$PODS_CONFIGURATION_BUILD_DIR/MDCSwipeToChoose\"",
+					"\"$PODS_CONFIGURATION_BUILD_DIR/SVProgressHUD\"",
+					"\"$PODS_CONFIGURATION_BUILD_DIR/ZLSwipeableView\"",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = "Tsvigun-Sasha.Tricker";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -1101,14 +1235,32 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = Tricker/Tricker.entitlements;
 				DEVELOPMENT_TEAM = 2ZQMG97HLH;
+				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Tricker/GoogleMaps/Frameworks",
 					"$(PROJECT_DIR)/Tricker/GoogleMaps/GoogleMapsSDKDemos",
+					"$(PROJECT_DIR)/Tricker",
 				);
 				INFOPLIST_FILE = Tricker/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$PODS_CONFIGURATION_BUILD_DIR/Bolts\"",
+					"\"$PODS_CONFIGURATION_BUILD_DIR/FBSDKCoreKit\"",
+					"\"$PODS_CONFIGURATION_BUILD_DIR/FBSDKLoginKit\"",
+					"\"$PODS_CONFIGURATION_BUILD_DIR/FBSDKShareKit\"",
+					"\"$PODS_CONFIGURATION_BUILD_DIR/GTMOAuth2\"",
+					"\"$PODS_CONFIGURATION_BUILD_DIR/GTMSessionFetcher\"",
+					"\"$PODS_CONFIGURATION_BUILD_DIR/GoogleToolboxForMac\"",
+					"\"$PODS_CONFIGURATION_BUILD_DIR/JSQMessagesViewController\"",
+					"\"$PODS_CONFIGURATION_BUILD_DIR/JSQSystemSoundPlayer\"",
+					"\"$PODS_CONFIGURATION_BUILD_DIR/MDCSwipeToChoose\"",
+					"\"$PODS_CONFIGURATION_BUILD_DIR/SVProgressHUD\"",
+					"\"$PODS_CONFIGURATION_BUILD_DIR/ZLSwipeableView\"",
+					"\"$(SRCROOT)\"/**",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = "Tsvigun-Sasha.Tricker";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TARGETED_DEVICE_FAMILY = "1,2";

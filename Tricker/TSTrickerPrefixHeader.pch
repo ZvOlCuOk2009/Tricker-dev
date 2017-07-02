@@ -20,6 +20,7 @@
 
 #define APP_ID_VK @"5713737"
 #define API_KEY_GOOGLE_MAPS @"AIzaSyDESTdvfGMZCHyFjOEutdp4IcFepgMN3JA"
+#define API_KEY_ADMOB @"ca-app-pub-3107226454186710~6888994185"
 
 //frame main avatar
 
