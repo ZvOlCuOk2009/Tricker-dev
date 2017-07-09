@@ -15,7 +15,6 @@
 #import "TSTabBarViewController.h"
 #import "TSGetInterlocutorParameters.h"
 #import "TSPhotoZoomViewController.h"
-#import "UIAlertController+TSAlertController.h"
 #import "TSReachability.h"
 #import "TSAlertController.h"
 #import "TSSVProgressHUD.h"

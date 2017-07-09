@@ -15,7 +15,6 @@
 #import "TSFireImage.h"
 #import "TSReachability.h"
 #import "TSAlertController.h"
-#import "UIAlertController+TSAlertController.h"
 #import "TSSVProgressHUD.h"
 #import "TSTrickerPrefixHeader.pch"
 
@@ -310,7 +309,7 @@ NSString * const UpdateParametersNotification = @"UpdateParametersNotification";
 {
     //алерт выхода вызывается лишь в случае если не отображен на экране pickerView
     if (![self.pickerView isDescendantOfView:self.view]) {
-        TSAlertController *alertController = [TSAlertController sharedAlertController:@"Выйти"];
+        TSAlertController *alertController = [TSAlertController sharedAlertController:@"Выйти" size:20];
         
         UIAlertAction *exit = [UIAlertAction actionWithTitle:@"Да"
                                                        style:UIAlertActionStyleDefault
@@ -330,7 +329,7 @@ NSString * const UpdateParametersNotification = @"UpdateParametersNotification";
                                                            
                                                        }];
         
-        [alertController customizationAlertView:@"Выйти" byFont:20.f];
+//        [alertController customizationAlertView:@"Выйти" byFont:20.f];
         
         [alertController addAction:exit];
 //        [alertController addAction:deleteAcuont];
@@ -342,7 +341,7 @@ NSString * const UpdateParametersNotification = @"UpdateParametersNotification";
 
 - (void)logOutUser
 {
-    TSAlertController *alertController = [TSAlertController sharedAlertController:@"Подтвердите выход!"];
+    TSAlertController *alertController = [TSAlertController sharedAlertController:@"Подтвердите выход!" size:20];
     
     UIAlertAction *exit = [UIAlertAction actionWithTitle:@"Да"
                                                    style:UIAlertActionStyleDefault
@@ -356,7 +355,7 @@ NSString * const UpdateParametersNotification = @"UpdateParametersNotification";
                                                        
                                                    }];
     
-    [alertController customizationAlertView:@"Подтвердите выход!" byFont:20.f];
+//    [alertController customizationAlertView:@"Подтвердите выход!" byFont:20.f];
     
     [alertController addAction:exit];
     [alertController addAction:cancel];
@@ -366,7 +365,7 @@ NSString * const UpdateParametersNotification = @"UpdateParametersNotification";
 
 - (void)deleteUserOfDataBase
 {
-    TSAlertController *alertController = [TSAlertController sharedAlertController:@"Вы действительно хотите удалить аккаунт и покинуть ""Tricker""?"];
+    TSAlertController *alertController = [TSAlertController sharedAlertController:@"Вы действительно хотите удалить аккаунт и покинуть ""Tricker""?" size:16];
     
     UIAlertAction *delete = [UIAlertAction actionWithTitle:@"Да"
                                                    style:UIAlertActionStyleDefault
@@ -378,8 +377,8 @@ NSString * const UpdateParametersNotification = @"UpdateParametersNotification";
                                                      style:UIAlertActionStyleDefault
                                                    handler:nil];
     
-    [alertController customizationAlertView:@"Вы действительно хотите удалить аккаунт и покинуть ""Tricker""?"
-                                     byFont:16.f];
+//    [alertController customizationAlertView:@"Вы действительно хотите удалить аккаунт и покинуть ""Tricker""?"
+//                                     byFont:16.f];
     
     [alertController addAction:delete];
     [alertController addAction:cancel];

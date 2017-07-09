@@ -99,14 +99,14 @@
 //frame like heart
 
 #define kTSInitialHeartRect5 CGRectMake(- 155, 0, 630, 600)
-#define kTSFinalHeartRect5 CGRectMake(75, 110, 150, 130)
+#define kTSFinalHeartRect5 CGRectMake(75, 90, 150, 130)
 #define kTSInitialHeartRect6 CGRectMake(- 155, 0, 630, 600)
 #define kTSFinalHeartRect6 CGRectMake(93, 110, 150, 130)
 #define kTSInitialHeartRect6plus CGRectMake(- 168, 0, 750, 750)
 #define kTSFinalHeartRect6plus CGRectMake(94, 120, 200, 170)
 
 #define kTSInitialHeartCardContrRect5 CGRectMake(-165, 0, 650, 650)
-#define kTSFinalHeartCardContrRect5 CGRectMake(85, 150, 150, 130)
+#define kTSFinalHeartCardContrRect5 CGRectMake(85, 120, 150, 130)
 #define kTSInitialHeartCardContrRect6 CGRectMake(-130, 0, 650, 650)
 #define kTSFinalHeartCardContrRect6 CGRectMake(113, 150, 150, 130)
 #define kTSInitialHeartCardContrRect6plus CGRectMake(-168, 0, 750, 750)

@@ -11,4 +11,6 @@
 
 @interface TSAutorizationViewController : UIViewController
 
+- (void)showAlertRecovePassword:(NSInteger)result;
+
 @end

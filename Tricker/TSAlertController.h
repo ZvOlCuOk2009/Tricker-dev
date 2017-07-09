@@ -11,6 +11,6 @@
 @interface TSAlertController : UIAlertController
 
 + (TSAlertController *)noInternetConnection:(NSString *)text;
-+ (TSAlertController *)sharedAlertController:(NSString *)text;
++ (TSAlertController *)sharedAlertController:(NSString *)text size:(NSInteger)size;
 
 @end

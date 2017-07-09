@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		2C27B593A68DE82F875D0227 /* libPods-Tricker.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 28CCB341251CEF3778160ABF /* libPods-Tricker.a */; };
+		84057FD11F0D8FAF000D7D23 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 84057FD01F0D8FAF000D7D23 /* Assets.xcassets */; };
 		845F126E1EFFCEEE002A2B3A /* TSSwipeViewIpadPro.xib in Resources */ = {isa = PBXBuildFile; fileRef = 845F126D1EFFCEEE002A2B3A /* TSSwipeViewIpadPro.xib */; };
 		845F12731EFFD89D002A2B3A /* TSPhotoDetailViewIpadPro.xib in Resources */ = {isa = PBXBuildFile; fileRef = 845F12701EFFD89D002A2B3A /* TSPhotoDetailViewIpadPro.xib */; };
 		845F12741EFFD89D002A2B3A /* TSPhotoViewIpadPro.xib in Resources */ = {isa = PBXBuildFile; fileRef = 845F12711EFFD89D002A2B3A /* TSPhotoViewIpadPro.xib */; };
@@ -41,11 +42,9 @@
 		845F12AE1F044D39002A2B3A /* SafariServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 845F12AD1F044D39002A2B3A /* SafariServices.framework */; };
 		845F12B01F05891E002A2B3A /* libz.1.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 845F12AF1F05891E002A2B3A /* libz.1.dylib */; };
 		845F12B21F058996002A2B3A /* libiconv.2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 845F12B11F058996002A2B3A /* libiconv.2.dylib */; };
-		8495AD031EF09CB900AD5262 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8495AD021EF09CB900AD5262 /* Assets.xcassets */; };
 		FD002C651DFA162900D47428 /* TSChatsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FD002C641DFA162900D47428 /* TSChatsTableViewController.m */; };
 		FD06541C1DFCA24200AE45EF /* TSSwipeView6plus.xib in Resources */ = {isa = PBXBuildFile; fileRef = FD06541B1DFCA24200AE45EF /* TSSwipeView6plus.xib */; };
 		FD06541E1DFCBDD200AE45EF /* TSPhotoView6Plus.xib in Resources */ = {isa = PBXBuildFile; fileRef = FD06541D1DFCBDD200AE45EF /* TSPhotoView6Plus.xib */; };
-		FD0654431E1EE1FF0080046A /* UIAlertController+TSAlertController.m in Sources */ = {isa = PBXBuildFile; fileRef = FD0654421E1EE1FE0080046A /* UIAlertController+TSAlertController.m */; };
 		FD08BFA81E0F5AA900F90FA2 /* TSFireImage.m in Sources */ = {isa = PBXBuildFile; fileRef = FD08BFA71E0F5AA900F90FA2 /* TSFireImage.m */; };
 		FD0C1C9D1DE7810000D37B61 /* TSCardsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FD0C1C9C1DE7810000D37B61 /* TSCardsViewController.m */; };
 		FD0C1CA01DE783B500D37B61 /* TSSwipeView.xib in Resources */ = {isa = PBXBuildFile; fileRef = FD0C1C9F1DE783B500D37B61 /* TSSwipeView.xib */; };
@@ -138,6 +137,7 @@
 /* Begin PBXFileReference section */
 		1FBEFE542591B48DB688ED44 /* Pods-Tricker.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Tricker.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Tricker/Pods-Tricker.debug.xcconfig"; sourceTree = "<group>"; };
 		28CCB341251CEF3778160ABF /* libPods-Tricker.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Tricker.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		84057FD01F0D8FAF000D7D23 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		845F126D1EFFCEEE002A2B3A /* TSSwipeViewIpadPro.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TSSwipeViewIpadPro.xib; sourceTree = "<group>"; };
 		845F12701EFFD89D002A2B3A /* TSPhotoDetailViewIpadPro.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TSPhotoDetailViewIpadPro.xib; sourceTree = "<group>"; };
 		845F12711EFFD89D002A2B3A /* TSPhotoViewIpadPro.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TSPhotoViewIpadPro.xib; sourceTree = "<group>"; };
@@ -171,14 +171,11 @@
 		845F12AD1F044D39002A2B3A /* SafariServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SafariServices.framework; path = System/Library/Frameworks/SafariServices.framework; sourceTree = SDKROOT; };
 		845F12AF1F05891E002A2B3A /* libz.1.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.1.dylib; path = ../../../../usr/lib/libz.1.dylib; sourceTree = "<group>"; };
 		845F12B11F058996002A2B3A /* libiconv.2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libiconv.2.dylib; path = ../../../../usr/lib/libiconv.2.dylib; sourceTree = "<group>"; };
-		8495AD021EF09CB900AD5262 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		94B94787D384A5D991ACF5EE /* Pods-Tricker.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Tricker.release.xcconfig"; path = "Pods/Target Support Files/Pods-Tricker/Pods-Tricker.release.xcconfig"; sourceTree = "<group>"; };
 		FD002C631DFA162900D47428 /* TSChatsTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSChatsTableViewController.h; sourceTree = "<group>"; };
 		FD002C641DFA162900D47428 /* TSChatsTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSChatsTableViewController.m; sourceTree = "<group>"; };
 		FD06541B1DFCA24200AE45EF /* TSSwipeView6plus.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TSSwipeView6plus.xib; sourceTree = "<group>"; };
 		FD06541D1DFCBDD200AE45EF /* TSPhotoView6Plus.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TSPhotoView6Plus.xib; sourceTree = "<group>"; };
-		FD0654411E1EE1FE0080046A /* UIAlertController+TSAlertController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIAlertController+TSAlertController.h"; sourceTree = "<group>"; };
-		FD0654421E1EE1FE0080046A /* UIAlertController+TSAlertController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIAlertController+TSAlertController.m"; sourceTree = "<group>"; };
 		FD08BFA61E0F5AA900F90FA2 /* TSFireImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSFireImage.h; sourceTree = "<group>"; };
 		FD08BFA71E0F5AA900F90FA2 /* TSFireImage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSFireImage.m; sourceTree = "<group>"; };
 		FD0C1C9B1DE7810000D37B61 /* TSCardsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSCardsViewController.h; sourceTree = "<group>"; };
@@ -415,15 +412,6 @@
 			name = Pods;
 			sourceTree = "<group>";
 		};
-		FD0654401E1EE1BF0080046A /* Category */ = {
-			isa = PBXGroup;
-			children = (
-				FD0654411E1EE1FE0080046A /* UIAlertController+TSAlertController.h */,
-				FD0654421E1EE1FE0080046A /* UIAlertController+TSAlertController.m */,
-			);
-			name = Category;
-			sourceTree = "<group>";
-		};
 		FD0C1C9A1DE780BC00D37B61 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
@@ -509,15 +497,14 @@
 				FD45D0821DD7CEDC00EB2640 /* Cell */,
 				FD51DB9B1E2D0704009333FE /* Alert */,
 				FD45D07D1DD7BDD900EB2640 /* SearchBar */,
-				FD0654401E1EE1BF0080046A /* Category */,
 				FDF9639D1DD145B0000877B5 /* Registration controllers */,
 				FD0C1C9A1DE780BC00D37B61 /* Controllers */,
 				FDF8CDB31DDA768400E159B1 /* Storyboards */,
 				FD1C4F421DCE252200CF63E9 /* Info.plist */,
 				FD1C4F721DCE9F4400CF63E9 /* GoogleService-Info.plist */,
+				84057FD01F0D8FAF000D7D23 /* Assets.xcassets */,
 				FDFDFC921DD1C99E007811EF /* Tricker.entitlements */,
 				FDF7FE8A1DCFBB4B00846997 /* Default-568h@2x.png */,
-				8495AD021EF09CB900AD5262 /* Assets.xcassets */,
 				FD1C4F311DCE252200CF63E9 /* Supporting Files */,
 				FDF7FE891DCF56EA00846997 /* TSTrickerPrefixHeader.pch */,
 			);
@@ -898,6 +885,7 @@
 				845F12761EFFDAB7002A2B3A /* TSDetailViewIpadPro.xib in Resources */,
 				FDEBE3E81DF1C4AB0073A0FF /* TSCollCell.xib in Resources */,
 				FD821FFA1E2C19A100D886E2 /* TSSwipeView6.xib in Resources */,
+				84057FD11F0D8FAF000D7D23 /* Assets.xcassets in Resources */,
 				FD68B4611DDA7D0C00EF19C3 /* SettingStoryboard.storyboard in Resources */,
 				FD68B45B1DDA7CC100EF19C3 /* MapStoryboard.storyboard in Resources */,
 				FDF4BB1A1DF02C3E003D3841 /* TSPhotoView.xib in Resources */,
@@ -921,7 +909,6 @@
 				FD821FFC1E2C1A2300D886E2 /* TSPhotoView6.xib in Resources */,
 				FD51DBA41E2D7B2A009333FE /* TSPhotoDetailViewIpad.xib in Resources */,
 				FD0C1CA01DE783B500D37B61 /* TSSwipeView.xib in Resources */,
-				8495AD031EF09CB900AD5262 /* Assets.xcassets in Resources */,
 				FD821FF01E2BB7E100D886E2 /* TSPhotoView5.xib in Resources */,
 				FD8220031E2C410000D886E2 /* TSSwipeViewIpad.xib in Resources */,
 				FD821FFE1E2C1A4800D886E2 /* TSDetailView6.xib in Resources */,
@@ -1024,7 +1011,6 @@
 				FDEBE3F11DF1C7F40073A0FF /* TSCollCell.m in Sources */,
 				FD0C1C9D1DE7810000D37B61 /* TSCardsViewController.m in Sources */,
 				FD5FFB231E05DA5900CB807F /* TSFireInterlocutor.m in Sources */,
-				FD0654431E1EE1FF0080046A /* UIAlertController+TSAlertController.m in Sources */,
 				FD64A93B1E2419010019BB94 /* TSTableViewStatisticsCell.m in Sources */,
 				FDD4E1D51E32C66500D10093 /* TSIntroductionViewController.m in Sources */,
 				FDF4BB241DF076B2003D3841 /* TSCollectionViewCell.m in Sources */,
@@ -1222,7 +1208,7 @@
 					"\"$PODS_CONFIGURATION_BUILD_DIR/SVProgressHUD\"",
 					"\"$PODS_CONFIGURATION_BUILD_DIR/ZLSwipeableView\"",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "Tsvigun-Sasha.Tricker";
+				PRODUCT_BUNDLE_IDENTIFIER = "Tsvigun-Sasha.Tricker.1-Tsvigun-Sasha.Tricker.1";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -1261,7 +1247,7 @@
 					"\"$PODS_CONFIGURATION_BUILD_DIR/ZLSwipeableView\"",
 					"\"$(SRCROOT)\"/**",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "Tsvigun-Sasha.Tricker";
+				PRODUCT_BUNDLE_IDENTIFIER = "Tsvigun-Sasha.Tricker.1-Tsvigun-Sasha.Tricker.1";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};

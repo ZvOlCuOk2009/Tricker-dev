@@ -16,7 +16,6 @@
 #import "TSReachability.h"
 #import "TSAlertController.h"
 #import "TSSVProgressHUD.h"
-#include "UIAlertController+TSAlertController.h"
 #import "TSTrickerPrefixHeader.pch"
 
 #import <MDCSwipeToChoose/MDCSwipeToChoose.h>
@@ -157,11 +156,10 @@
         if ([self.likesUsersUid count] > 0) {
             [self fillingDataSource];
         } else {
-            TSAlertController *alertController = [TSAlertController sharedAlertController:@"Вашу анкету ещё не лайкали"];
+            TSAlertController *alertController = [TSAlertController sharedAlertController:@"Вашу анкету ещё не лайкали" size:20];
             UIAlertAction *exit = [UIAlertAction actionWithTitle:@"Ок"
                                                            style:UIAlertActionStyleDefault
                                                          handler:nil];
-            [alertController customizationAlertView:@"Вашу анкету ещё не лайкали" byFont:20.f];
             [alertController addAction:exit];
             
             [self presentViewController:alertController animated:YES completion:nil];
@@ -194,7 +192,9 @@
                                                         @"onlineUserInterest":self.onlineUserInterest};
                     [self.likesUsers addObject:userDataLikeParam];
                     [self.likesUsersAvatar addObject:[self convertAvatarByUrl:self.photoUserInterest]];
-                    [self.likesUsersParams addObject:self.paramsLikes];
+                    if (self.paramsLikes.count > 0) {
+                        [self.likesUsersParams addObject:self.paramsLikes];
+                    }
                     [self.likesUsersUidUpdate addObject:reviewsUserUid];
                     if (self.photosLikes) {
                         [self.likesPhotos addObject:self.photosLikes];

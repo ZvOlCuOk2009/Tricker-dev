@@ -11,7 +11,6 @@
 #import "TSFireUser.h"
 #import "TSFireImage.h"
 #import "TSPhotoZoomViewController.h"
-#import "UIAlertController+TSAlertController.h"
 #import "TSReachability.h"
 #import "TSAlertController.h"
 #import "TSSVProgressHUD.h"
@@ -87,7 +86,6 @@ static NSString * const reuseIdntifierButton = @"cellButton";
     self.progressHUD = 0;
     self.recognizer = NO;
 }
-
 
 - (void)viewWillAppear:(BOOL)animated
 {
@@ -210,9 +208,9 @@ static NSString * const reuseIdntifierButton = @"cellButton";
 - (IBAction)addPhotoActionButton:(id)sender
 {
     if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone) {
-        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"Выберите фото"
-                                                                                 message:nil
-                                                                          preferredStyle:UIAlertControllerStyleActionSheet];
+        
+        TSAlertController *alertController =
+        [TSAlertController sharedAlertController:@"Выберите фото" size:20];
         
         UIAlertAction *camera = [UIAlertAction actionWithTitle:@"Камера"
                                                          style:UIAlertActionStyleDefault
@@ -232,8 +230,6 @@ static NSString * const reuseIdntifierButton = @"cellButton";
                                                            
                                                        }];
         
-        [alertController customizationAlertView:@"Выберите фото" byFont:20.f];
-        
         [alertController addAction:camera];
         [alertController addAction:galery];
         [alertController addAction:cancel];
@@ -243,6 +239,7 @@ static NSString * const reuseIdntifierButton = @"cellButton";
         UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"Выберите фото"
                                                                                  message:nil
                                                                           preferredStyle:UIAlertControllerStyleActionSheet];
+        
         NSInteger value = self.view.frame.size.width / 2;
         CGRect recr = CGRectMake(value / 2, self.view.frame.size.height / 4, value, value);
         UIView *view = [[UIView alloc] initWithFrame:recr];
@@ -267,7 +264,7 @@ static NSString * const reuseIdntifierButton = @"cellButton";
         UIView *subview = alertController.view.subviews.firstObject;
         UIView *alertContentView = subview.subviews.firstObject;
         alertContentView.backgroundColor = YELLOW_COLOR;
-        alertContentView.layer.cornerRadius = 10;
+        alertContentView.layer.cornerRadius = 14;
         alertController.view.tintColor = DARK_GRAY_COLOR;
         
         NSMutableAttributedString *mutableAttrString = [[NSMutableAttributedString alloc] initWithString:@"Выберите фото"];

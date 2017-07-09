@@ -14,7 +14,6 @@
 #import "TSIntermediateViewController.h"
 #import "TSSettingsTableViewController.h"
 #import "TSTabBarViewController.h"
-#import "UIAlertController+TSAlertController.h"
 #import "TSPhotoZoomViewController.h"
 #import "TSLikeAndReviewSave.h"
 #import "TSReachability.h"
@@ -135,9 +134,8 @@
         
         //алерт вызывается когда пользователи закончились
         if (self.indexPathRow == max + 1) {
-             UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"По данным параметрам пользователей больше нету..."
-                                                                                      message:nil
-                                                                               preferredStyle:UIAlertControllerStyleAlert];
+             TSAlertController *alertController =
+             [TSAlertController sharedAlertController:@"По данным параметрам пользователей больше нету..." size:18];
              UIAlertAction *repearAction = [UIAlertAction actionWithTitle:@"Просмотреть ещё раз"
                                                               style:UIAlertActionStyleDefault
                                                             handler:^(UIAlertAction * _Nonnull action) {
@@ -153,7 +151,6 @@
              UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"Отменить"
                                                               style:UIAlertActionStyleDefault
                                                             handler:nil];
-             [alertController customizationAlertView:@"По данным параметрам пользователей больше нету" byFont:16.f];
              [alertController addAction:repearAction];
              [alertController addAction:changeAction];
              [alertController addAction:cancelAction];
@@ -161,14 +158,11 @@
          }
      } else {
         //алерт вызывается в случае когда пользователей нету по заданным параметрам
-          UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"По данным параметрам пользователей не найдено..."
-                                                                                   message:nil
-                                                                            preferredStyle:UIAlertControllerStyleAlert];
+          TSAlertController *alertController =
+          [TSAlertController sharedAlertController:@"По данным параметрам пользователей не найдено..." size:18];
           UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"Oк"
                                                              style:UIAlertActionStyleDefault
                                                            handler:nil];
-         
-          [alertController customizationAlertView:@"По данным параметрам пользователей не найдено..." byFont:16.f];
           [alertController addAction:okAction];
           [self presentViewController:alertController animated:YES completion:nil];
      }

@@ -10,7 +10,6 @@
 #import "TSTabBarViewController.h"
 #import "TSReachability.h"
 #import "TSAlertController.h"
-#import "UIAlertController+TSAlertController.h"
 #import "TSTrickerPrefixHeader.pch"
 
 @import FirebaseAuth;
@@ -20,6 +19,7 @@
 @property (weak, nonatomic) IBOutlet UIButton *signIngButton;
 @property (weak, nonatomic) IBOutlet UITextField *emailTextField;
 @property (weak, nonatomic) IBOutlet UITextField *passwordTextField;
+@property (strong, nonatomic) UITextField *recoverPasswordTextField;
 @property (assign, nonatomic) NSInteger counter;
 
 @end
@@ -71,6 +71,62 @@
     }
 }
 
+#pragma mark - reset password
+
+- (IBAction)resetPassword:(id)sender
+{
+    TSAlertController *alertController =
+    [TSAlertController sharedAlertController:@"Сброс пароля!!!" size:18];
+    [alertController addTextFieldWithConfigurationHandler:^(UITextField * _Nonnull textField) {
+        textField.placeholder = @"Електронная почта";
+        textField.secureTextEntry = YES;
+        self.recoverPasswordTextField = textField;
+    }];
+    UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"Ок"
+                                                       style:UIAlertActionStyleDefault
+                                                     handler:^(UIAlertAction * _Nonnull action) {
+                                                         
+                                                         [[FIRAuth auth] sendPasswordResetWithEmail:self.recoverPasswordTextField.text
+                                                                                         completion:^(NSError * _Nullable error) {
+                                                                                             if (!error) {
+                                                                                                 NSLog(@"сборос");
+                                                                                                 [self showAlertRecovePassword:1];
+                                                                                             } else {
+                                                                                                 [self showAlertRecovePassword:0];
+                                                                                                 NSLog(@"ошибка");
+                                                                                             }
+                                                                                         }];
+                                                         
+                                                     }];
+    [alertController addAction:okAction];
+    [self presentViewController:alertController animated:YES completion:nil];
+    
+}
+
+- (void)showAlertRecovePassword:(NSInteger)result
+{
+    NSString *massage = nil;
+
+    switch (result) {
+        case 0:
+            massage = @"Не существует пользователя с указанной электронной почтой...";
+            break;
+        case 1:
+            massage = @"Письмо по сбросу пароля было отправленно на Вашу электронную почту!";
+            break;
+        default:
+            break;
+    }
+    
+    TSAlertController *alertController =
+    [TSAlertController sharedAlertController:massage size:18];
+    UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"Ок"
+                                                       style:UIAlertActionStyleDefault
+                                                     handler:nil];
+    [alertController addAction:okAction];
+    [self presentViewController:alertController animated:YES completion:nil];
+}
+
 - (void)signInWithEmailAndPassword
 {
     [[FIRAuth auth] signInWithEmail:self.emailTextField.text
@@ -92,12 +148,12 @@
 - (void)alertController
 {
     TSAlertController *alertController =
-    [TSAlertController sharedAlertController:@"Неверный пароль или адрес электронной почты, попробуйте еще раз..."];
+    [TSAlertController sharedAlertController:@"Неверный пароль или адрес электронной почты, попробуйте еще раз..." size:20];
     UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"Ок"
                                                        style:UIAlertActionStyleDefault
                                                      handler:nil];
-    [alertController customizationAlertView:@"Неверный пароль или адрес электронной почты, попробуйте еще раз..."
-                                     byFont:20.f];
+//    [alertController customizationAlertView:@"Неверный пароль или адрес электронной почты, попробуйте еще раз..."
+//                                     byFont:20.f];
     [alertController addAction:okAction];
     [self presentViewController:alertController animated:YES completion:nil];
 }

@@ -12,7 +12,6 @@
 #import "TSFireImage.h"
 #import "TSReachability.h"
 #import "TSAlertController.h"
-#import "UIAlertController+TSAlertController.h"
 #import "TSSVProgressHUD.h"
 #import "TSTrickerPrefixHeader.pch"
 
@@ -307,11 +306,11 @@
 
 - (void)alertControllerEmail
 {
-    TSAlertController *alertController = [TSAlertController sharedAlertController:@"Этот электронной адрес уже зарегистрирован в базе данных, или его не существует..."];
+    TSAlertController *alertController = [TSAlertController sharedAlertController:@"Этот электронной адрес уже зарегистрирован в базе данных, или его не существует..." size:20];
     UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"Ок"
                                                    style:UIAlertActionStyleDefault
                                                  handler:nil];
-    [alertController customizationAlertView:@"Этот электронной адрес уже зарегистрирован в базе данных, или его не существует..." byFont:20.f];
+//    [alertController customizationAlertView:@"Этот электронной адрес уже зарегистрирован в базе данных, или его не существует..." byFont:20.f];
     [alertController addAction:okAction];
     [self presentViewController:alertController animated:YES completion:nil];
 }
@@ -319,12 +318,12 @@
 - (void)alertControllerTextFieldNil
 {
     TSAlertController *alertController =
-    [TSAlertController sharedAlertController:@"Пожалуйста, заполните все текстовые поля для регистрации..."];
+    [TSAlertController sharedAlertController:@"Пожалуйста, заполните все текстовые поля для регистрации..." size:20];
     UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"Ок"
                                                        style:UIAlertActionStyleDefault
                                                      handler:nil];
-    [alertController customizationAlertView:@"Пожалуйста, заполните все текстовые поля для регистрации..."
-                                     byFont:20.f];
+//    [alertController customizationAlertView:@"Пожалуйста, заполните все текстовые поля для регистрации..."
+//                                     byFont:20.f];
     [alertController addAction:okAction];
     [self presentViewController:alertController animated:YES completion:nil];
 }

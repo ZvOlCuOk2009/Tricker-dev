@@ -7,7 +7,7 @@
 //
 
 #import "TSPhotoZoomViewController.h"
-#import "UIAlertController+TSAlertController.h"
+#import "TSAlertController.h"
 
 NSInteger clearArrayMessageChat;
 
@@ -85,9 +85,8 @@ NSInteger clearArrayMessageChat;
 
 - (IBAction)deleteButton:(id)sender
 {
-    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"Удалить фото?"
-                                                                             message:nil
-                                                                      preferredStyle:UIAlertControllerStyleAlert];
+    TSAlertController *alertController =
+    [TSAlertController sharedAlertController:@"Удалить фото?" size:20];
     UIAlertAction *alertActiionYes = [UIAlertAction actionWithTitle:@"Да"
                                                            style:UIAlertActionStyleDefault
                                                          handler:^(UIAlertAction * _Nonnull action) {
@@ -97,9 +96,7 @@ NSInteger clearArrayMessageChat;
     UIAlertAction *alertActiionNo = [UIAlertAction actionWithTitle:@"Нет"
                                                               style:UIAlertActionStyleCancel
                                                             handler:nil];
-    
-    [alertController customizationAlertView:@"Удалить фото?" byFont:20.f];
-    
+        
     [alertController addAction:alertActiionYes];
     [alertController addAction:alertActiionNo];
     [self presentViewController:alertController animated:YES completion:nil];

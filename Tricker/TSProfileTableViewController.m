@@ -14,7 +14,6 @@
 #import "TSFacebookManager.h"
 #import "TSFireImage.h"
 #import "TSTabBarViewController.h"
-#import "UIAlertController+TSAlertController.h"
 #import "TSReachability.h"
 #import "TSAlertController.h"
 #import "TSIntroductionViewController.h"
@@ -274,7 +273,7 @@
         self.dateBirdthDayLabel.text = fireUser.dateOfBirth;
     }
     if (fireUser.age) {
-        self.nameLabel.text = [NSString stringWithFormat:@"%@ %@", fireUser.displayName, fireUser.age];
+        self.nameLabel.text = [NSString stringWithFormat:@"%@, %@", fireUser.displayName, fireUser.age];
         self.textFieldName.placeholder = [NSString stringWithFormat:@"%@ %@", fireUser.displayName, fireUser.age];
     } else {
         self.nameLabel.text = fireUser.displayName;
@@ -361,7 +360,7 @@
 
 - (IBAction)changeAvatarActionButton:(id)sender
 {
-    TSAlertController *alertController = [TSAlertController sharedAlertController:@"Выберите фото"];
+    TSAlertController *alertController = [TSAlertController sharedAlertController:@"Выберите фото" size:20];
     UIAlertAction *camera = [UIAlertAction actionWithTitle:@"Камера"
                                                      style:UIAlertActionStyleDefault
                                                    handler:^(UIAlertAction * _Nonnull action) {
@@ -375,7 +374,6 @@
     UIAlertAction *cancel = [UIAlertAction actionWithTitle:@"Отменить"
                                                      style:UIAlertActionStyleDefault
                                                    handler:nil];
-    [alertController customizationAlertView:@"Выберите фото" byFont:20.f];
     [alertController addAction:camera];
     [alertController addAction:galery];
     [alertController addAction:cancel];

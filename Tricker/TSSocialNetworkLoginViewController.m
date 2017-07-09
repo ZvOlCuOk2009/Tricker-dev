@@ -37,6 +37,7 @@
 
 @property (strong, nonatomic) NSArray *scope;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *logoTopLayoutConstraint;
+@property (strong, nonatomic) UIView *modalView;
 
 @end
 
@@ -222,6 +223,17 @@
 {
     TSTabBarViewController *controller = [self.storyboard instantiateViewControllerWithIdentifier:@"TSTabBarViewController"];
     [self presentViewController:controller animated:YES completion:nil];
+}
+
+- (void)deleteModalView
+{
+    NSInteger width = self.view.frame.size.width;
+    NSInteger height = self.view.frame.size.height;
+    
+    [UIView animateWithDuration:0.3
+                     animations:^{
+                         _modalView.frame = CGRectMake(width / 4, height + 100, (width / 4) - width, (height / 2) - height);
+                     }];
 }
 
 /*
