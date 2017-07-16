@@ -128,6 +128,10 @@
                                   range:NSMakeRange(0, 13)];
         [alertController setValue:mutableAttrString forKey:@"attributedTitle"];
         
+        [camera setValue:[UIColor blackColor] forKey:@"titleTextColor"];
+        [galery setValue:[UIColor blackColor] forKey:@"titleTextColor"];
+        [cancel setValue:[UIColor blackColor] forKey:@"titleTextColor"];
+        
         [alertController addAction:camera];
         [alertController addAction:galery];
         [alertController addAction:cancel];

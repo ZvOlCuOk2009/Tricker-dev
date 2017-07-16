@@ -96,7 +96,10 @@ NSInteger clearArrayMessageChat;
     UIAlertAction *alertActiionNo = [UIAlertAction actionWithTitle:@"Нет"
                                                               style:UIAlertActionStyleCancel
                                                             handler:nil];
-        
+    
+    [alertActiionYes setValue:[UIColor blackColor] forKey:@"titleTextColor"];
+    [alertActiionNo setValue:[UIColor blackColor] forKey:@"titleTextColor"];
+    
     [alertController addAction:alertActiionYes];
     [alertController addAction:alertActiionNo];
     [self presentViewController:alertController animated:YES completion:nil];

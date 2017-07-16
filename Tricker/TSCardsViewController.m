@@ -151,6 +151,11 @@
              UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"Отменить"
                                                               style:UIAlertActionStyleDefault
                                                             handler:nil];
+             
+             [repearAction setValue:[UIColor blackColor] forKey:@"titleTextColor"];
+             [changeAction setValue:[UIColor blackColor] forKey:@"titleTextColor"];
+             [cancelAction setValue:[UIColor blackColor] forKey:@"titleTextColor"];
+
              [alertController addAction:repearAction];
              [alertController addAction:changeAction];
              [alertController addAction:cancelAction];

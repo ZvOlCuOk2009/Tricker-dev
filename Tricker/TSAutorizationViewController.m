@@ -123,6 +123,7 @@
     UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"Ок"
                                                        style:UIAlertActionStyleDefault
                                                      handler:nil];
+    [okAction setValue:[UIColor blackColor] forKey:@"titleTextColor"];
     [alertController addAction:okAction];
     [self presentViewController:alertController animated:YES completion:nil];
 }
@@ -154,6 +155,7 @@
                                                      handler:nil];
 //    [alertController customizationAlertView:@"Неверный пароль или адрес электронной почты, попробуйте еще раз..."
 //                                     byFont:20.f];
+    [okAction setValue:[UIColor blackColor] forKey:@"titleTextColor"];
     [alertController addAction:okAction];
     [self presentViewController:alertController animated:YES completion:nil];
 }

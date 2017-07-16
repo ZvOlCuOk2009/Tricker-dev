@@ -160,6 +160,7 @@
             UIAlertAction *exit = [UIAlertAction actionWithTitle:@"Ок"
                                                            style:UIAlertActionStyleDefault
                                                          handler:nil];
+            [alertController setValue:[UIColor blackColor] forKey:@"titleTextColor"];
             [alertController addAction:exit];
             
             [self presentViewController:alertController animated:YES completion:nil];
@@ -343,7 +344,6 @@
             [self.swipeView addGestureRecognizer:tapGestureRecognizer];
             
             recognizerTransitionOnChatController = 0;
-
         }
     }
 }

@@ -157,6 +157,7 @@
             UIAlertAction *exit = [UIAlertAction actionWithTitle:@"Ок"
                                                            style:UIAlertActionStyleDefault
                                                          handler:nil];
+            [alertController setValue:[UIColor blackColor] forKey:@"titleTextColor"];
             [alertController addAction:exit];
             
             [self presentViewController:alertController animated:YES completion:nil];
@@ -400,8 +401,9 @@
     
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         
-        [[TSGetInterlocutorParameters sharedGetInterlocutor] getInterlocutorFromDatabase:self.interlocutorID
-                                                                              respondent:@"ChatViewController"];
+        [[TSGetInterlocutorParameters sharedGetInterlocutor]
+         getInterlocutorFromDatabase:self.interlocutorID
+         respondent:@"ChatViewController"];
     });
 }
 

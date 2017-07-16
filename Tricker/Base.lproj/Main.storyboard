@@ -264,6 +264,64 @@
             </objects>
             <point key="canvasLocation" x="2362.4000000000001" y="-544.67766116941539"/>
         </scene>
+        <!--Условия пользования-->
+        <scene sceneID="9wL-LV-usd">
+            <objects>
+                <viewController id="85r-Ud-gLC" customClass="TSPrivacyPolicyViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="wZH-jg-rKS"/>
+                        <viewControllerLayoutGuide type="bottom" id="wrg-1s-q9D"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="GaN-sc-Ig3">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="background" translatesAutoresizingMaskIntoConstraints="NO" id="lRV-02-A7H">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                            </imageView>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="9NI-Mx-WaH">
+                                <rect key="frame" x="15" y="79" width="345" height="573"/>
+                                <mutableString key="text">Мы хотим, чтобы вы знали, что мы не продаем вашу личную информацию. Мы предоставляем вашу личную информацию третьим лицам, не относящимся к Viber, в целях, перечисленных выше, и в следующих ситуациях:
+
+(a) Корпоративная группа Viber: Мы можем предоставлять информацию, которую собираем о вас, в пределах корпоративной группы Viber, в том числе нашей материнской компании, Rakuten Inc. (Подробная информация о компании Rakuten Inc., зарегистрированной на бирже в Японии, а также о её и наших дочерних и зависимых компаниях, доступна по этому адресу: http://global.rakuten.com/corp/about/). Информация может быть раскрыта, чтобы: (i) предоставлять общий контент и услуги (например, регистрация, использование единых учётных записей в пределах корпоративной группы Viber, проведение транзакций, аналитика и поддержка пользователей); (ii) выявлять и предотвращать потенциально незаконные действия, нарушения наших политик и правил, мошеннические действия и/или нарушения безопасности данных.
+
+(b) Поставщики приложений и другие третьи лица: Мы имеем право раскрывать вашу информацию в рамках договоров с поставщиками услуг и другими третьими лицами, которые помогают нам при предоставлении наших Сервисов или иных сервисов, которые предоставляются третьими лицами через Сервисы Viber (включая, но не ограничиваясь ими, расследование действий, связанных с мошенничеством и спамом, обработку платежей, эксплуатацию и аналитику сайта, обеспечение специальных партнёрских возможностей с нашим Сервисом, а также рекламу – либо без идентификации пользователей, либо с использованием уникального идентификатора, не привязанного личности пользователя). Это необходимо для защиты полученных данных, чтобы сохранить вашу личную информацию.
+
+(c) Прочие третьи лица с вашего согласия: Мы можем раскрывать вашу информацию иным третьим лицам на основе вашего прямого разрешения, чтобы отправлять вашу информацию в пределах использования интегрированных услуг (или тех, о которых вас прямо проинформировали, и вы дали согласие, при использовании конкретной услуги). В пределах Сервиса вы можете интересоваться использованием других сервисов или регистрироваться для получения их услуг. В этом случае, мы будем предоставлять информацию о вас таким третьим лицам или тем лицам, которые выступают от их имени, чтобы реализовать ваш запрос. Безопасность переданной информации будет обеспечиваться политикой конфиденциальности принимающей третьей стороны.
+
+(d) Юридическая и правовая ответственность: Мы можем раскрывать вашу информацию органам правопорядка, правительственным учреждениям или уполномоченным на то сторонним организациям в ответ на подтверждённый запрос, имеющий отношение к предотвращению террористической деятельности, уголовным делам, предполагаемой незаконной деятельности, или в отношении любой другой деятельности, которая может повлечь с вашей стороны, с нашей стороны или со стороны любого другого пользователя Viber правовую ответственность.
+
+(e) Изменение структуры управления – Новые владельцы: Мы можем предоставить вашу информацию другому юридическому лицу в случае возможного слияния с таким лицом, или если такое лицо планирует приобрести Viber или участвует в сделке с аналогичным финансовым результатом. В этом случае мы будем прилагать все разумные усилия, чтобы обеспечить соблюдение условий данной Политики по отношению к вашей личной информации со стороны нового объединенного юридического лица или другой структуры. Если ваша личная информация была предназначена для использования в других целях, мы будем требовать, чтобы новая организация отправила вам предварительное уведомление.</mutableString>
+                                <color key="textColor" red="0.51372549020000002" green="0.61960784310000006" blue="0.69803921570000005" alpha="1" colorSpace="calibratedRGB"/>
+                                <fontDescription key="fontDescription" type="system" weight="light" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                            </textView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="trailing" secondItem="lRV-02-A7H" secondAttribute="trailing" id="A5v-bG-I2i"/>
+                            <constraint firstAttribute="trailing" secondItem="9NI-Mx-WaH" secondAttribute="trailing" constant="15" id="U41-wx-Fci"/>
+                            <constraint firstItem="lRV-02-A7H" firstAttribute="leading" secondItem="GaN-sc-Ig3" secondAttribute="leading" id="dmb-rj-sgX"/>
+                            <constraint firstItem="lRV-02-A7H" firstAttribute="top" secondItem="GaN-sc-Ig3" secondAttribute="top" id="f99-Ff-c7u"/>
+                            <constraint firstItem="wrg-1s-q9D" firstAttribute="top" secondItem="9NI-Mx-WaH" secondAttribute="bottom" constant="15" id="iJq-bz-6Bu"/>
+                            <constraint firstItem="9NI-Mx-WaH" firstAttribute="leading" secondItem="GaN-sc-Ig3" secondAttribute="leading" constant="15" id="sAh-t4-KCZ"/>
+                            <constraint firstItem="wrg-1s-q9D" firstAttribute="top" secondItem="lRV-02-A7H" secondAttribute="bottom" id="w7V-iL-z4B"/>
+                            <constraint firstItem="9NI-Mx-WaH" firstAttribute="top" secondItem="wZH-jg-rKS" secondAttribute="bottom" constant="15" id="xym-w4-AU4"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" title="Условия пользования" id="zBN-lZ-uKN">
+                        <barButtonItem key="leftBarButtonItem" image="cancel" id="oYP-Du-Csw">
+                            <color key="tintColor" red="0.51372549020000002" green="0.61960784310000006" blue="0.69803921570000005" alpha="1" colorSpace="calibratedRGB"/>
+                            <connections>
+                                <action selector="cancelButton:" destination="85r-Ud-gLC" id="EFv-jb-zvM"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="l6c-ir-axJ" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="581.60000000000002" y="211.84407796101951"/>
+        </scene>
         <!--Autorization View Controller-->
         <scene sceneID="UKx-TV-nFM">
             <objects>
@@ -420,7 +478,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ctU-PI-WL9" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="604" y="194.75262368815595"/>
+            <point key="canvasLocation" x="1334" y="213"/>
         </scene>
         <!--Social Network Login View Controller-->
         <scene sceneID="tne-QT-ifu">
@@ -459,7 +517,7 @@
                                                 </connections>
                                             </button>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="NEK-78-Ss6">
-                                                <rect key="frame" x="22" y="605" width="331" height="39"/>
+                                                <rect key="frame" x="22" y="595" width="331" height="39"/>
                                                 <color key="backgroundColor" red="0.9882352941176471" green="0.8784313725490196" blue="0.72156862745098038" alpha="1" colorSpace="calibratedRGB"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="39" id="wTR-v7-xxZ"/>
@@ -478,7 +536,7 @@
                                                 </connections>
                                             </button>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="sRI-Dz-Rfh">
-                                                <rect key="frame" x="23" y="540" width="331" height="39"/>
+                                                <rect key="frame" x="23" y="535" width="331" height="39"/>
                                                 <color key="backgroundColor" red="0.51372549019607838" green="0.61960784313725492" blue="0.69803921568627447" alpha="1" colorSpace="calibratedRGB"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="39" id="4iE-Cy-TNS"/>
@@ -533,32 +591,61 @@
                                                     <constraint firstAttribute="height" constant="39" id="kHp-MY-kZj"/>
                                                 </constraints>
                                             </imageView>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Продолжая, я принимаю" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8CI-7y-LWS">
+                                                <rect key="frame" x="48" y="639" width="123" height="20"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="width" constant="123" id="LCU-Wr-U3l"/>
+                                                    <constraint firstAttribute="height" constant="20" id="hoI-lW-zG6"/>
+                                                </constraints>
+                                                <fontDescription key="fontDescription" type="system" weight="light" pointSize="10"/>
+                                                <nil key="textColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="QF6-uL-INg">
+                                                <rect key="frame" x="175" y="639" width="151" height="20"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="width" constant="151" id="LRz-4c-wkv"/>
+                                                    <constraint firstAttribute="height" constant="20" id="STM-Oi-jlb"/>
+                                                </constraints>
+                                                <fontDescription key="fontDescription" type="system" weight="light" pointSize="10"/>
+                                                <state key="normal" title="политику кофиденциальности">
+                                                    <color key="titleColor" red="0.51372549020000002" green="0.61960784310000006" blue="0.69803921570000005" alpha="1" colorSpace="calibratedRGB"/>
+                                                </state>
+                                                <connections>
+                                                    <segue destination="u3l-qK-k4c" kind="presentation" id="3iM-Tx-xDQ"/>
+                                                </connections>
+                                            </button>
                                         </subviews>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <constraints>
                                             <constraint firstItem="29c-if-uJV" firstAttribute="leading" secondItem="qXQ-rV-eg2" secondAttribute="trailing" constant="23" id="0Wd-qn-T46"/>
+                                            <constraint firstItem="QF6-uL-INg" firstAttribute="top" secondItem="NEK-78-Ss6" secondAttribute="bottom" constant="5" id="0nI-fd-szE"/>
                                             <constraint firstItem="3nY-Za-EfL" firstAttribute="centerY" secondItem="qXQ-rV-eg2" secondAttribute="centerY" id="1KF-Qy-t9U"/>
                                             <constraint firstItem="3nY-Za-EfL" firstAttribute="centerX" secondItem="qXQ-rV-eg2" secondAttribute="centerX" constant="-1" id="1e1-7d-apz"/>
                                             <constraint firstAttribute="trailing" secondItem="29c-if-uJV" secondAttribute="trailing" constant="21" id="6sz-du-rjk"/>
-                                            <constraint firstAttribute="bottom" secondItem="NEK-78-Ss6" secondAttribute="bottom" constant="23" id="8wb-uS-Qjk"/>
                                             <constraint firstItem="qXQ-rV-eg2" firstAttribute="width" secondItem="29c-if-uJV" secondAttribute="width" id="8yY-Sn-yA6"/>
                                             <constraint firstAttribute="trailing" secondItem="JUJ-u8-Loi" secondAttribute="trailing" constant="48" id="Adm-jR-hr6"/>
                                             <constraint firstItem="JUJ-u8-Loi" firstAttribute="top" secondItem="YW1-II-q5y" secondAttribute="top" constant="100" id="Luk-Sh-0cD"/>
                                             <constraint firstItem="WVG-Hm-eYj" firstAttribute="centerY" secondItem="29c-if-uJV" secondAttribute="centerY" id="T6S-gA-6FB"/>
                                             <constraint firstItem="NEK-78-Ss6" firstAttribute="leading" secondItem="YW1-II-q5y" secondAttribute="leading" constant="22" id="UCa-5P-Upr"/>
-                                            <constraint firstItem="sRI-Dz-Rfh" firstAttribute="top" secondItem="qXQ-rV-eg2" secondAttribute="bottom" constant="26" id="VMy-0m-DVr"/>
+                                            <constraint firstItem="sRI-Dz-Rfh" firstAttribute="top" secondItem="qXQ-rV-eg2" secondAttribute="bottom" constant="21" id="VMy-0m-DVr"/>
                                             <constraint firstItem="WVG-Hm-eYj" firstAttribute="centerX" secondItem="29c-if-uJV" secondAttribute="centerX" id="bB2-89-j7c"/>
+                                            <constraint firstItem="QF6-uL-INg" firstAttribute="centerX" secondItem="YW1-II-q5y" secondAttribute="centerX" constant="63" id="bQ6-Ed-S22"/>
                                             <constraint firstItem="qXQ-rV-eg2" firstAttribute="leading" secondItem="YW1-II-q5y" secondAttribute="leading" constant="23" id="bUJ-Yh-VsZ"/>
                                             <constraint firstAttribute="trailing" secondItem="hN5-E3-ebR" secondAttribute="trailing" id="cJq-ZO-udu"/>
                                             <constraint firstAttribute="trailing" secondItem="sRI-Dz-Rfh" secondAttribute="trailing" constant="21" id="cVp-Dw-eje"/>
+                                            <constraint firstItem="8CI-7y-LWS" firstAttribute="top" secondItem="NEK-78-Ss6" secondAttribute="bottom" constant="5" id="cYv-IL-lJN"/>
                                             <constraint firstItem="sRI-Dz-Rfh" firstAttribute="leading" secondItem="YW1-II-q5y" secondAttribute="leading" constant="23" id="esM-ah-Pay"/>
                                             <constraint firstAttribute="trailing" secondItem="NEK-78-Ss6" secondAttribute="trailing" constant="22" id="h61-TD-eee"/>
+                                            <constraint firstItem="QF6-uL-INg" firstAttribute="leading" secondItem="8CI-7y-LWS" secondAttribute="trailing" constant="4" id="kqq-60-gg9"/>
                                             <constraint firstItem="JUJ-u8-Loi" firstAttribute="leading" secondItem="YW1-II-q5y" secondAttribute="leading" constant="49" id="lWT-Gd-FsU"/>
+                                            <constraint firstAttribute="bottom" secondItem="QF6-uL-INg" secondAttribute="bottom" constant="8" id="nxw-n4-OZu"/>
                                             <constraint firstItem="hN5-E3-ebR" firstAttribute="top" secondItem="YW1-II-q5y" secondAttribute="top" id="oUa-wj-h30"/>
-                                            <constraint firstItem="sRI-Dz-Rfh" firstAttribute="top" secondItem="29c-if-uJV" secondAttribute="bottom" constant="26" id="sO5-4e-Hox"/>
+                                            <constraint firstItem="sRI-Dz-Rfh" firstAttribute="top" secondItem="29c-if-uJV" secondAttribute="bottom" constant="21" id="sO5-4e-Hox"/>
                                             <constraint firstItem="hN5-E3-ebR" firstAttribute="leading" secondItem="YW1-II-q5y" secondAttribute="leading" id="sRA-Zd-0a4"/>
                                             <constraint firstAttribute="bottom" secondItem="hN5-E3-ebR" secondAttribute="bottom" id="u1V-PI-dJH"/>
-                                            <constraint firstItem="NEK-78-Ss6" firstAttribute="top" secondItem="sRI-Dz-Rfh" secondAttribute="bottom" constant="26" id="yaj-wR-Wem"/>
+                                            <constraint firstAttribute="bottom" secondItem="8CI-7y-LWS" secondAttribute="bottom" constant="8" id="vEe-tP-q3L"/>
+                                            <constraint firstItem="NEK-78-Ss6" firstAttribute="top" secondItem="sRI-Dz-Rfh" secondAttribute="bottom" constant="21" id="yaj-wR-Wem"/>
                                         </constraints>
                                     </view>
                                 </subviews>
@@ -596,7 +683,7 @@
                 </viewControllerPlaceholder>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ktJ-BF-acw" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1921" y="413"/>
+            <point key="canvasLocation" x="2650" y="390"/>
         </scene>
         <!--ProfileStoryboard-->
         <scene sceneID="zXw-Qb-1td">
@@ -606,7 +693,7 @@
                 </viewControllerPlaceholder>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="eYz-F8-xrp" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1917" y="4"/>
+            <point key="canvasLocation" x="2650" y="60"/>
         </scene>
         <!--ChatStoryboard-->
         <scene sceneID="aBe-SR-U9F">
@@ -616,7 +703,7 @@
                 </viewControllerPlaceholder>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="6Zm-h6-sIE" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1908" y="303"/>
+            <point key="canvasLocation" x="2638" y="280"/>
         </scene>
         <!--CardsStoryboard-->
         <scene sceneID="haf-3y-MRc">
@@ -626,7 +713,7 @@
                 </viewControllerPlaceholder>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="6Rc-96-BTN" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1912" y="195"/>
+            <point key="canvasLocation" x="2642" y="172"/>
         </scene>
         <!--Tab Bar View Controller-->
         <scene sceneID="THg-Sa-hN5">
@@ -655,14 +742,14 @@
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Y2e-Zg-VpS" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1321" y="197"/>
+            <point key="canvasLocation" x="2050" y="215"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="9b1-De-UX6">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="njS-gW-L85" sceneMemberID="viewController">
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="eZb-dA-ybm">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="eZb-dA-ybm">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="barTintColor" red="0.9882352941176471" green="0.87450980392156863" blue="0.6588235294117647" alpha="1" colorSpace="calibratedRGB"/>
@@ -679,6 +766,29 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="c3h-6U-ogO" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1321" y="-544"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="NaJ-aN-Ydw">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="u3l-qK-k4c" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="L5O-yM-vGj">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <color key="barTintColor" red="0.9882352941176471" green="0.87450980392156863" blue="0.6588235294117647" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <textAttributes key="titleTextAttributes">
+                            <fontDescription key="fontDescription" type="system" weight="light" pointSize="18"/>
+                            <color key="textColor" red="0.51372549020000002" green="0.61960784310000006" blue="0.69803921570000005" alpha="1" colorSpace="calibratedRGB"/>
+                        </textAttributes>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="85r-Ud-gLC" kind="relationship" relationship="rootViewController" id="ejY-Mm-iz7"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Ih3-uY-6xa" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-170" y="212"/>
         </scene>
     </scenes>
     <resources>

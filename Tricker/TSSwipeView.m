@@ -14,6 +14,7 @@
 #import "TSPhotoView.h"
 #import "TSLikeAndReviewSave.h"
 #import "TSGetInterlocutorParameters.h"
+#import "TSAlertController.h"
 #import "TSTrickerPrefixHeader.pch"
 
 #import <SVProgressHUD.h>
@@ -330,6 +331,118 @@ NSInteger recognizerControllersCardsAndChat;
         [currentTopVC presentViewController:tabBarViewController animated:YES completion:nil];
     }
 }
+
+- (IBAction)yetActionButton:(id)sender
+{
+    TSAlertController *alertController = [TSAlertController sharedAlertController:@"Выберите" size:20];
+    
+    UIAlertAction *complain = [UIAlertAction actionWithTitle:@"Пожаловаться на пользователя"
+                                                   style:UIAlertActionStyleDefault
+                                                 handler:^(UIAlertAction * _Nonnull action) {
+                                                     [self complainAboutUser];
+                                                 }];
+    
+    UIAlertAction *block = [UIAlertAction actionWithTitle:@"Заблокировать пользователя"
+                                                     style:UIAlertActionStyleDefault
+                                                   handler:^(UIAlertAction * _Nonnull action) {
+                                                       [self blockUser];
+                                                   }];
+    
+    [complain setValue:[UIColor blackColor] forKey:@"titleTextColor"];
+    [block setValue:[UIColor blackColor] forKey:@"titleTextColor"];
+    
+    [alertController addAction:complain];
+    [alertController addAction:block];
+    
+    UIViewController *currentTopVC = [self currentTopViewController];
+    [currentTopVC presentViewController:alertController animated:YES completion:nil];
+}
+
+- (void)complainAboutUser
+{
+    TSAlertController *alertController = [TSAlertController sharedAlertController:@"" size:20];
+    
+    UIAlertAction *insults = [UIAlertAction actionWithTitle:@"Пишет оскорбления"
+                                                   style:UIAlertActionStyleDefault
+                                                 handler:^(UIAlertAction * _Nonnull action) {
+
+                                                 }];
+    
+    UIAlertAction *spam = [UIAlertAction actionWithTitle:@"Распространяет спам"
+                                                     style:UIAlertActionStyleDefault
+                                                   handler:^(UIAlertAction * _Nonnull action) {
+
+                                                   }];
+    
+    UIAlertAction *porno = [UIAlertAction actionWithTitle:@"Распространяет порнографические фото"
+                                                   style:UIAlertActionStyleDefault
+                                                 handler:^(UIAlertAction * _Nonnull action) {
+
+                                                 }];
+    
+    UIAlertAction *violence = [UIAlertAction actionWithTitle:@"Распространяет фото насильственного характера"
+                                                     style:UIAlertActionStyleDefault
+                                                   handler:^(UIAlertAction * _Nonnull action) {
+
+                                                   }];
+    
+    UIAlertAction *suicidec = [UIAlertAction actionWithTitle:@"Приывы к суициду"
+                                                      style:UIAlertActionStyleDefault
+                                                    handler:^(UIAlertAction * _Nonnull action) {
+
+                                                    }];
+    
+    UIAlertAction *cancel = [UIAlertAction actionWithTitle:@"Отменить"
+                                                     style:UIAlertActionStyleDefault
+                                                   handler:^(UIAlertAction * _Nonnull action) {
+                                                       
+                                                   }];
+    
+    [insults setValue:[UIColor blackColor] forKey:@"titleTextColor"];
+    [spam setValue:[UIColor blackColor] forKey:@"titleTextColor"];
+    [porno setValue:[UIColor blackColor] forKey:@"titleTextColor"];
+    [violence setValue:[UIColor blackColor] forKey:@"titleTextColor"];
+    [suicidec setValue:[UIColor blackColor] forKey:@"titleTextColor"];
+    [cancel setValue:[UIColor blackColor] forKey:@"titleTextColor"];
+    
+    [alertController addAction:insults];
+    [alertController addAction:spam];
+    [alertController addAction:porno];
+    [alertController addAction:violence];
+    [alertController addAction:suicidec];
+    [alertController addAction:cancel];
+    
+    UIViewController *currentTopVC = [self currentTopViewController];
+    [currentTopVC presentViewController:alertController animated:YES completion:nil];
+}
+
+- (void)blockUser
+{
+    TSAlertController *alertController = [TSAlertController sharedAlertController:@"Заблокировав пользователя, Вы не сможете получать от него сообщений и видеть его анкету" size:16];
+    
+    UIAlertAction *confirm = [UIAlertAction actionWithTitle:@"Подтвердить блокировку"
+                                                       style:UIAlertActionStyleDefault
+                                                     handler:^(UIAlertAction * _Nonnull action) {
+
+                                                     }];
+    
+    UIAlertAction *cancel = [UIAlertAction actionWithTitle:@"Отменить блокировку"
+                                                    style:UIAlertActionStyleDefault
+                                                  handler:^(UIAlertAction * _Nonnull action) {
+
+                                                  }];
+    
+    [confirm setValue:[UIColor blackColor] forKey:@"titleTextColor"];
+    [cancel setValue:[UIColor blackColor] forKey:@"titleTextColor"];
+    
+    [alertController addAction:confirm];
+    [alertController addAction:cancel];
+    
+    UIViewController *currentTopVC = [self currentTopViewController];
+    [currentTopVC presentViewController:alertController animated:YES completion:nil];
+}
+
+//отобразить алерт с вьюхи
 
 - (UIViewController *)currentTopViewController {
     UIViewController *topVC = [[[[UIApplication sharedApplication] delegate] window] rootViewController];

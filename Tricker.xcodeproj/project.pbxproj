@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		2C27B593A68DE82F875D0227 /* libPods-Tricker.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 28CCB341251CEF3778160ABF /* libPods-Tricker.a */; };
 		84057FD11F0D8FAF000D7D23 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 84057FD01F0D8FAF000D7D23 /* Assets.xcassets */; };
+		8457FA0C1F1C1F4000E38866 /* TSPrivacyPolicyViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8457FA0B1F1C1F4000E38866 /* TSPrivacyPolicyViewController.m */; };
 		845F126E1EFFCEEE002A2B3A /* TSSwipeViewIpadPro.xib in Resources */ = {isa = PBXBuildFile; fileRef = 845F126D1EFFCEEE002A2B3A /* TSSwipeViewIpadPro.xib */; };
 		845F12731EFFD89D002A2B3A /* TSPhotoDetailViewIpadPro.xib in Resources */ = {isa = PBXBuildFile; fileRef = 845F12701EFFD89D002A2B3A /* TSPhotoDetailViewIpadPro.xib */; };
 		845F12741EFFD89D002A2B3A /* TSPhotoViewIpadPro.xib in Resources */ = {isa = PBXBuildFile; fileRef = 845F12711EFFD89D002A2B3A /* TSPhotoViewIpadPro.xib */; };
@@ -138,6 +139,8 @@
 		1FBEFE542591B48DB688ED44 /* Pods-Tricker.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Tricker.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Tricker/Pods-Tricker.debug.xcconfig"; sourceTree = "<group>"; };
 		28CCB341251CEF3778160ABF /* libPods-Tricker.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Tricker.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		84057FD01F0D8FAF000D7D23 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		8457FA0A1F1C1F4000E38866 /* TSPrivacyPolicyViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSPrivacyPolicyViewController.h; sourceTree = "<group>"; };
+		8457FA0B1F1C1F4000E38866 /* TSPrivacyPolicyViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSPrivacyPolicyViewController.m; sourceTree = "<group>"; };
 		845F126D1EFFCEEE002A2B3A /* TSSwipeViewIpadPro.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TSSwipeViewIpadPro.xib; sourceTree = "<group>"; };
 		845F12701EFFD89D002A2B3A /* TSPhotoDetailViewIpadPro.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TSPhotoDetailViewIpadPro.xib; sourceTree = "<group>"; };
 		845F12711EFFD89D002A2B3A /* TSPhotoViewIpadPro.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TSPhotoViewIpadPro.xib; sourceTree = "<group>"; };
@@ -687,6 +690,8 @@
 				FDF9639B1DD14598000877B5 /* TSPhotoAndNameViewController.m */,
 				FDFDFC931DD26A27007811EF /* TSAutorizationViewController.h */,
 				FDFDFC941DD26A27007811EF /* TSAutorizationViewController.m */,
+				8457FA0A1F1C1F4000E38866 /* TSPrivacyPolicyViewController.h */,
+				8457FA0B1F1C1F4000E38866 /* TSPrivacyPolicyViewController.m */,
 			);
 			name = "Registration controllers";
 			sourceTree = "<group>";
@@ -994,6 +999,7 @@
 				FD45D0801DD7BE0F00EB2640 /* TSSearchBar.m in Sources */,
 				FD1C4F661DCE280400CF63E9 /* TSTabBarViewController.m in Sources */,
 				FD0C1CA31DE78B9B00D37B61 /* TSSwipeView.m in Sources */,
+				8457FA0C1F1C1F4000E38866 /* TSPrivacyPolicyViewController.m in Sources */,
 				FD51DB951E2CFA2B009333FE /* Reachability.m in Sources */,
 				FDF963991DD10890000877B5 /* TSRegistrationViewController.m in Sources */,
 				FD51DB9E1E2D0748009333FE /* TSAlertController.m in Sources */,

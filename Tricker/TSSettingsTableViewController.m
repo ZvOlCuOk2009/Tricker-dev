@@ -331,6 +331,9 @@ NSString * const UpdateParametersNotification = @"UpdateParametersNotification";
         
 //        [alertController customizationAlertView:@"Выйти" byFont:20.f];
         
+        [exit setValue:[UIColor blackColor] forKey:@"titleTextColor"];
+        [cancel setValue:[UIColor blackColor] forKey:@"titleTextColor"];
+        
         [alertController addAction:exit];
 //        [alertController addAction:deleteAcuont];
         [alertController addAction:cancel];
@@ -357,6 +360,9 @@ NSString * const UpdateParametersNotification = @"UpdateParametersNotification";
     
 //    [alertController customizationAlertView:@"Подтвердите выход!" byFont:20.f];
     
+    [exit setValue:[UIColor blackColor] forKey:@"titleTextColor"];
+    [cancel setValue:[UIColor blackColor] forKey:@"titleTextColor"];
+
     [alertController addAction:exit];
     [alertController addAction:cancel];
     
