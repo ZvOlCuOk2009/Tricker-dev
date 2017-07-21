@@ -281,7 +281,7 @@
                             </imageView>
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="9NI-Mx-WaH">
                                 <rect key="frame" x="15" y="79" width="345" height="573"/>
-                                <mutableString key="text">Мы хотим, чтобы вы знали, что мы не продаем вашу личную информацию. Мы предоставляем вашу личную информацию третьим лицам, не относящимся к Viber, в целях, перечисленных выше, и в следующих ситуациях:
+                                <string key="text">Мы хотим, чтобы вы знали, что мы не продаем вашу личную информацию. Мы предоставляем вашу личную информацию третьим лицам, не относящимся к Viber, в целях, перечисленных выше, и в следующих ситуациях:
 
 (a) Корпоративная группа Viber: Мы можем предоставлять информацию, которую собираем о вас, в пределах корпоративной группы Viber, в том числе нашей материнской компании, Rakuten Inc. (Подробная информация о компании Rakuten Inc., зарегистрированной на бирже в Японии, а также о её и наших дочерних и зависимых компаниях, доступна по этому адресу: http://global.rakuten.com/corp/about/). Информация может быть раскрыта, чтобы: (i) предоставлять общий контент и услуги (например, регистрация, использование единых учётных записей в пределах корпоративной группы Viber, проведение транзакций, аналитика и поддержка пользователей); (ii) выявлять и предотвращать потенциально незаконные действия, нарушения наших политик и правил, мошеннические действия и/или нарушения безопасности данных.
 
@@ -291,7 +291,7 @@
 
 (d) Юридическая и правовая ответственность: Мы можем раскрывать вашу информацию органам правопорядка, правительственным учреждениям или уполномоченным на то сторонним организациям в ответ на подтверждённый запрос, имеющий отношение к предотвращению террористической деятельности, уголовным делам, предполагаемой незаконной деятельности, или в отношении любой другой деятельности, которая может повлечь с вашей стороны, с нашей стороны или со стороны любого другого пользователя Viber правовую ответственность.
 
-(e) Изменение структуры управления – Новые владельцы: Мы можем предоставить вашу информацию другому юридическому лицу в случае возможного слияния с таким лицом, или если такое лицо планирует приобрести Viber или участвует в сделке с аналогичным финансовым результатом. В этом случае мы будем прилагать все разумные усилия, чтобы обеспечить соблюдение условий данной Политики по отношению к вашей личной информации со стороны нового объединенного юридического лица или другой структуры. Если ваша личная информация была предназначена для использования в других целях, мы будем требовать, чтобы новая организация отправила вам предварительное уведомление.</mutableString>
+(e) Изменение структуры управления – Новые владельцы: Мы можем предоставить вашу информацию другому юридическому лицу в случае возможного слияния с таким лицом, или если такое лицо планирует приобрести Viber или участвует в сделке с аналогичным финансовым результатом. В этом случае мы будем прилагать все разумные усилия, чтобы обеспечить соблюдение условий данной Политики по отношению к вашей личной информации со стороны нового объединенного юридического лица или другой структуры. Если ваша личная информация была предназначена для использования в других целях, мы будем требовать, чтобы новая организация отправила вам предварительное уведомление.</string>
                                 <color key="textColor" red="0.51372549020000002" green="0.61960784310000006" blue="0.69803921570000005" alpha="1" colorSpace="calibratedRGB"/>
                                 <fontDescription key="fontDescription" type="system" weight="light" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
@@ -338,7 +338,11 @@
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                             </imageView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="I1i-ct-wSf">
-                                <rect key="frame" x="146" y="200" width="83" height="27"/>
+                                <rect key="frame" x="146" y="192" width="83" height="22"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="83" id="NQZ-1p-GM5"/>
+                                    <constraint firstAttribute="height" constant="22" id="hbI-1m-tEh"/>
+                                </constraints>
                                 <fontDescription key="fontDescription" type="system" weight="light" pointSize="12"/>
                                 <color key="tintColor" red="0.51372549020000002" green="0.61960784310000006" blue="0.69803921570000005" alpha="1" colorSpace="calibratedRGB"/>
                                 <state key="normal" title="Сброс пароля"/>
@@ -418,25 +422,6 @@
                                 <color key="textColor" red="0.51372549019607838" green="0.61960784313725492" blue="0.69803921568627447" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zzB-x8-zJf">
-                                <rect key="frame" x="22" y="235" width="330" height="39"/>
-                                <color key="backgroundColor" red="0.74509803919999995" green="0.81568627449999997" blue="0.85490196080000003" alpha="1" colorSpace="calibratedRGB"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="39" id="HA2-Vx-hmH"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" type="system" weight="light" pointSize="20"/>
-                                <state key="normal" title="Войти">
-                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <userDefinedRuntimeAttributes>
-                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
-                                        <real key="value" value="19.5"/>
-                                    </userDefinedRuntimeAttribute>
-                                </userDefinedRuntimeAttributes>
-                                <connections>
-                                    <action selector="signIngActionButton:" destination="MWZ-P4-PVV" eventType="touchUpInside" id="Jak-Bf-TPm"/>
-                                </connections>
-                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
@@ -450,30 +435,26 @@
                             <constraint firstItem="eKO-2m-rBj" firstAttribute="top" secondItem="l8v-qx-TQk" secondAttribute="bottom" constant="39" id="Prm-I3-iDe"/>
                             <constraint firstItem="V32-vh-kzK" firstAttribute="leading" secondItem="LOa-AM-wMf" secondAttribute="leading" id="S0R-Ix-ReP"/>
                             <constraint firstItem="V32-vh-kzK" firstAttribute="top" secondItem="l8v-qx-TQk" secondAttribute="bottom" constant="39" id="Sq5-9h-QqL"/>
-                            <constraint firstItem="I1i-ct-wSf" firstAttribute="centerX" secondItem="LOa-AM-wMf" secondAttribute="centerX" id="U1E-ma-y67"/>
                             <constraint firstAttribute="trailing" secondItem="V32-vh-kzK" secondAttribute="trailing" id="VHM-jA-pJL"/>
                             <constraint firstItem="eKO-2m-rBj" firstAttribute="leading" secondItem="LOa-AM-wMf" secondAttribute="leading" constant="15" id="VpN-uH-9jk"/>
                             <constraint firstAttribute="trailing" secondItem="NrP-5J-ZbL" secondAttribute="trailing" id="Wk1-8w-iqL"/>
-                            <constraint firstItem="6f9-J0-0bL" firstAttribute="top" secondItem="zzB-x8-zJf" secondAttribute="bottom" constant="393" id="bLV-vR-C5P"/>
+                            <constraint firstItem="I1i-ct-wSf" firstAttribute="centerX" secondItem="LOa-AM-wMf" secondAttribute="centerX" id="Zhz-nd-QFz"/>
                             <constraint firstAttribute="trailing" secondItem="eKO-2m-rBj" secondAttribute="trailing" id="cMv-Pn-H2y"/>
                             <constraint firstItem="l8v-qx-TQk" firstAttribute="top" secondItem="M3I-An-eah" secondAttribute="bottom" constant="13" id="d0t-rR-EyD"/>
                             <constraint firstAttribute="trailing" secondItem="du7-GR-gNU" secondAttribute="trailing" id="d9L-T3-IIH"/>
                             <constraint firstItem="I2P-Cp-qml" firstAttribute="top" secondItem="OfA-Py-Xvu" secondAttribute="bottom" constant="11" id="fAZ-P3-u7f"/>
-                            <constraint firstItem="zzB-x8-zJf" firstAttribute="leading" secondItem="LOa-AM-wMf" secondAttribute="leading" constant="22" id="gSx-BW-gRo"/>
+                            <constraint firstItem="I1i-ct-wSf" firstAttribute="top" secondItem="cat-rN-KWN" secondAttribute="bottom" id="hip-3u-XuK"/>
                             <constraint firstItem="cat-rN-KWN" firstAttribute="top" secondItem="eKO-2m-rBj" secondAttribute="bottom" constant="8" id="iKu-kD-JK8"/>
                             <constraint firstItem="M3I-An-eah" firstAttribute="centerX" secondItem="LOa-AM-wMf" secondAttribute="centerX" id="k5W-NG-fpb"/>
                             <constraint firstItem="6f9-J0-0bL" firstAttribute="top" secondItem="du7-GR-gNU" secondAttribute="bottom" id="kSK-wh-bp6"/>
                             <constraint firstItem="du7-GR-gNU" firstAttribute="leading" secondItem="LOa-AM-wMf" secondAttribute="leading" id="m8Y-Bn-eMr"/>
                             <constraint firstItem="du7-GR-gNU" firstAttribute="top" secondItem="LOa-AM-wMf" secondAttribute="top" id="n0S-P6-sLf"/>
-                            <constraint firstAttribute="trailing" secondItem="zzB-x8-zJf" secondAttribute="trailing" constant="23" id="nZf-he-6I9"/>
                             <constraint firstItem="I2P-Cp-qml" firstAttribute="leading" secondItem="LOa-AM-wMf" secondAttribute="leading" constant="16" id="pUp-83-GJn"/>
-                            <constraint firstItem="I1i-ct-wSf" firstAttribute="top" secondItem="cat-rN-KWN" secondAttribute="bottom" constant="8" id="xKO-V3-AtF"/>
                         </constraints>
                     </view>
                     <connections>
                         <outlet property="emailTextField" destination="eKO-2m-rBj" id="a0J-RX-Fy1"/>
                         <outlet property="passwordTextField" destination="cat-rN-KWN" id="1mH-8V-xGf"/>
-                        <outlet property="signIngButton" destination="zzB-x8-zJf" id="ju6-hW-Wpg"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ctU-PI-WL9" userLabel="First Responder" sceneMemberID="firstResponder"/>

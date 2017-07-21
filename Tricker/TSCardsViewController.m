@@ -7,7 +7,7 @@
 //
 
 #import "TSCardsViewController.h"
-#import "TSFireUser.h"
+//#import "TSFireUser.h"
 #import "TSFireBase.h"
 #import "ZLSwipeableView.h"
 #import "TSSwipeView.h"

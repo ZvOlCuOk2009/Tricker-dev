@@ -443,6 +443,7 @@
     NSString *dateOfBirth = nil;
     NSString *age = nil;
     NSString *location = nil;
+    NSString *blocked = nil;
     
     userID = self.fireUser.uid;
     name = self.fireUser.displayName;
@@ -500,6 +501,10 @@
         online = @"";
     }
     
+    if ([blocked length] == 0) {
+        blocked = @"";
+    }
+    
     if ([userStatus isEqualToString:@"offline"]) {
         online = @"оффлайн";
     } else if ([userStatus isEqualToString:@"online"]) {
@@ -514,7 +519,8 @@
                                    @"photoURL":photoURL,
                                    @"age":age,
                                    @"location":location,
-                                   @"online":online};
+                                   @"online":online,
+                                   @"blocked":blocked};
         
         [[[[[self.ref child:@"dataBase"] child:@"users"] child:userID] child:@"userData"] setValue:userData];
         dispatch_async(dispatch_get_main_queue(), ^{

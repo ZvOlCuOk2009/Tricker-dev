@@ -152,6 +152,7 @@ void HandleSignal(int signal) {
                                                       NSString *gender = @"";
                                                       NSString *age = @"";
                                                       NSString *online = @"";
+                                                      NSString *blocked = @"";
                                                       NSString *stringPhoto = nil;
                                                       if (self.googleUser.profile.hasImage) {
                                                           stringPhoto = [[self.googleUser.profile imageURLWithDimension:600] absoluteString];
@@ -164,6 +165,7 @@ void HandleSignal(int signal) {
                                                       [userData setObject:gender forKey:@"gender"];
                                                       [userData setObject:age forKey:@"age"];
                                                       [userData setObject:online forKey:@"online"];
+                                                      [userData setObject:blocked forKey:@"blocked"];
                                                       
                                                       NSData *avatarData = [NSData dataWithContentsOfURL:[NSURL URLWithString:stringPhoto]];
                                                       

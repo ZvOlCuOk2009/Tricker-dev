@@ -230,6 +230,10 @@ static NSString * const reuseIdntifierButton = @"cellButton";
                                                            
                                                        }];
         
+        [camera setValue:[UIColor blackColor] forKey:@"titleTextColor"];
+        [galery setValue:[UIColor blackColor] forKey:@"titleTextColor"];
+        [cancel setValue:[UIColor blackColor] forKey:@"titleTextColor"];
+        
         [alertController addAction:camera];
         [alertController addAction:galery];
         [alertController addAction:cancel];

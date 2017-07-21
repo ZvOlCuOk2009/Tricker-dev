@@ -316,26 +316,16 @@ NSString * const UpdateParametersNotification = @"UpdateParametersNotification";
                                                      handler:^(UIAlertAction * _Nonnull action) {
                                                          [self logOutUser];
                                                      }];
-        
-//        UIAlertAction *deleteAcuont = [UIAlertAction actionWithTitle:@"Удалить аккаунт"
-//                                                               style:UIAlertActionStyleDefault
-//                                                             handler:^(UIAlertAction * _Nonnull action) {
-//                                                                 [self deleteUserOfDataBase];
-//                                                             }];
-        
         UIAlertAction *cancel = [UIAlertAction actionWithTitle:@"Отменить"
                                                          style:UIAlertActionStyleDefault
                                                        handler:^(UIAlertAction * _Nonnull action) {
                                                            
                                                        }];
         
-//        [alertController customizationAlertView:@"Выйти" byFont:20.f];
-        
         [exit setValue:[UIColor blackColor] forKey:@"titleTextColor"];
         [cancel setValue:[UIColor blackColor] forKey:@"titleTextColor"];
         
         [alertController addAction:exit];
-//        [alertController addAction:deleteAcuont];
         [alertController addAction:cancel];
         
         [self presentViewController:alertController animated:YES completion:nil];
@@ -382,10 +372,6 @@ NSString * const UpdateParametersNotification = @"UpdateParametersNotification";
     UIAlertAction *cancel = [UIAlertAction actionWithTitle:@"Нет"
                                                      style:UIAlertActionStyleDefault
                                                    handler:nil];
-    
-//    [alertController customizationAlertView:@"Вы действительно хотите удалить аккаунт и покинуть ""Tricker""?"
-//                                     byFont:16.f];
-    
     [alertController addAction:delete];
     [alertController addAction:cancel];
     [self presentViewController:alertController animated:YES completion:nil];

@@ -16,11 +16,12 @@
 
 @interface TSAutorizationViewController ()
 
-@property (weak, nonatomic) IBOutlet UIButton *signIngButton;
+@property (strong, nonatomic) UIButton *signInButton;
 @property (weak, nonatomic) IBOutlet UITextField *emailTextField;
 @property (weak, nonatomic) IBOutlet UITextField *passwordTextField;
 @property (strong, nonatomic) UITextField *recoverPasswordTextField;
 @property (assign, nonatomic) NSInteger counter;
+
 
 @end
 
@@ -49,9 +50,31 @@
 - (void)configureController
 {
     self.counter = 0;
+    CGRect frame = CGRectMake(22, 419, 276, 39);
+    _signInButton = [[UIButton alloc] init];
+    _signInButton.frame = frame;
+    _signInButton.backgroundColor = LIGHT_GRAY_COLOR;
+    [_signInButton setTitle:@"Войти" forState:UIControlStateNormal];
+    _signInButton.layer.cornerRadius = 19.5f;
+    [_signInButton addTarget:self action:@selector(signIn) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:_signInButton];
+    NSLog(@"signIngButton %f %f %f %f", _signInButton.frame.origin.x, _signInButton.frame.origin.y, _signInButton.frame.size.width, _signInButton.frame.size.height);
 }
 
 #pragma mark - Actions
+
+- (void)signIn
+{
+    if ([[TSReachability sharedReachability] verificationInternetConnection]) {
+        if (![self.emailTextField.text isEqualToString:@""] && ![self.passwordTextField.text isEqualToString:@""]) {
+            [self signInWithEmailAndPassword];
+        }
+    } else {
+        TSAlertController *alertController =
+        [TSAlertController noInternetConnection:@"Проверьте интернет соединение..."];
+        [self presentViewController:alertController animated:YES completion:nil];
+    }
+}
 
 - (IBAction)cancelActionButton:(id)sender
 {
@@ -164,9 +187,9 @@
 
 - (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
     if ([[self checkAvailabilityAtAnEmail] isEqualToString:@"yes"] && [self.passwordTextField.text length] >= 5) {
-        self.signIngButton.backgroundColor = DARK_GRAY_COLOR;
+        self.signInButton.backgroundColor = DARK_GRAY_COLOR;
     } else {
-        self.signIngButton.backgroundColor = LIGHT_GRAY_COLOR;
+        self.signInButton.backgroundColor = LIGHT_GRAY_COLOR;
     }
     return YES;
 }
@@ -195,8 +218,9 @@
 //            self.signIngButton.frame = frame;
 //                CGRect fram = CGRectMake(22, 0, self.signIngButton.frame.size.width, self.signIngButton.frame.size.height);
 //            CGRect frame = CGRectOffset(self.signIngButton.frame, 0, - 440);
-            CGRect frame = CGRectOffset(self.signIngButton.frame, 0, offset);
-            self.signIngButton.frame = frame;
+            CGRect frame = CGRectMake(22, 215, 276, 39);
+            _signInButton.frame = frame;
+            NSLog(@"signIngButton %f %f %f %f", _signInButton.frame.origin.x, _signInButton.frame.origin.y, _signInButton.frame.size.width, _signInButton.frame.size.height);
         }];
         self.counter = 1;
     }

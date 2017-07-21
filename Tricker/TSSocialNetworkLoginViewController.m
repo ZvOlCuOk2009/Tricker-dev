@@ -165,6 +165,7 @@
             NSString *gender = @"";
             NSString *age = @"";
             NSString *online = @"";
+            NSString *blocked = @"";
             
             [userData setObject:userID forKey:@"userID"];
             [userData setObject:name forKey:@"displayName"];
@@ -173,11 +174,13 @@
             [userData setObject:gender forKey:@"gender"];
             [userData setObject:age forKey:@"age"];
             [userData setObject:online forKey:@"online"];
+            [userData setObject:blocked forKey:@"blocked"];
             
             NSData *avatarData = [NSData dataWithContentsOfURL:[NSURL URLWithString:stringPhoto]];
             TSFireImage *fireImage = [[TSFireImage alloc] init];
             fireImage.delegate = self;
-            [fireImage saveAvatarInTheDatabase:avatarData byPath:imagePath dictParam:userData];
+            [fireImage saveAvatarInTheDatabase:avatarData
+                                        byPath:imagePath dictParam:userData];
         }];
         NSString *token = user.uid;
         [[NSUserDefaults standardUserDefaults] setObject:token forKey:@"token"];

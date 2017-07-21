@@ -11,6 +11,7 @@
 #import "TSChatViewController.h"
 #import "TSTabBarViewController.h"
 #import "TSViewCell.h"
+#import "TSFireInterlocutor.h"
 #import "TSPhotoView.h"
 #import "TSLikeAndReviewSave.h"
 #import "TSGetInterlocutorParameters.h"
@@ -18,11 +19,14 @@
 #import "TSTrickerPrefixHeader.pch"
 
 #import <SVProgressHUD.h>
+#import <MessageUI/MessageUI.h>
+
+@import FirebaseDatabase;
 
 NSInteger recognizerTransitionOnChatController;
 NSInteger recognizerControllersCardsAndChat;
 
-@interface TSSwipeView () <UITableViewDataSource, UITableViewDelegate, UIGestureRecognizerDelegate>
+@interface TSSwipeView () <UITableViewDataSource, UITableViewDelegate, UIGestureRecognizerDelegate, MFMailComposeViewControllerDelegate>
 
 @property (strong, nonatomic) NSArray *dataSource;
 @property (strong, nonatomic) NSArray *allKeys;
@@ -33,6 +37,8 @@ NSInteger recognizerControllersCardsAndChat;
 @property (strong, nonatomic) IBOutlet UITableView *tableView;
 @property (weak, nonatomic) IBOutlet UIVisualEffectView *backgroundTableView;
 
+@property (strong, nonatomic) FIRDatabaseReference *ref;
+@property (strong, nonatomic) TSFireInterlocutor *fireInterlocutor;
 @property (strong, nonatomic) UITapGestureRecognizer *tapGesture;
 @property (strong, nonatomic) TSPhotoView *photoView;
 @property (strong, nonatomic) NSString *photosView;
@@ -286,7 +292,7 @@ NSInteger recognizerControllersCardsAndChat;
     [UIView beginAnimations:nil context:context];
     [UIView setAnimationTransition: UIViewAnimationTransitionFlipFromRight forView:self cache:YES];
     [UIView setAnimationCurve:UIViewAnimationCurveEaseInOut];
-    [UIView setAnimationDuration:0.5];
+    [UIView setAnimationDuration:0.35];
     [UIView commitAnimations];
     
     [self.tableView reloadData];
@@ -304,7 +310,7 @@ NSInteger recognizerControllersCardsAndChat;
 - (IBAction)chatActionButton:(id)sender
 {
     if (recognizerTransitionOnChatController == 2) {
-        [UIView animateWithDuration:0.5
+        [UIView animateWithDuration:0.35
                               delay:0
              usingSpringWithDamping:0.7
               initialSpringVelocity:0.6
@@ -362,58 +368,63 @@ NSInteger recognizerControllersCardsAndChat;
 {
     TSAlertController *alertController = [TSAlertController sharedAlertController:@"" size:20];
     
-    UIAlertAction *insults = [UIAlertAction actionWithTitle:@"Пишет оскорбления"
-                                                   style:UIAlertActionStyleDefault
-                                                 handler:^(UIAlertAction * _Nonnull action) {
-
-                                                 }];
-    
-    UIAlertAction *spam = [UIAlertAction actionWithTitle:@"Распространяет спам"
-                                                     style:UIAlertActionStyleDefault
-                                                   handler:^(UIAlertAction * _Nonnull action) {
-
-                                                   }];
-    
-    UIAlertAction *porno = [UIAlertAction actionWithTitle:@"Распространяет порнографические фото"
-                                                   style:UIAlertActionStyleDefault
-                                                 handler:^(UIAlertAction * _Nonnull action) {
-
-                                                 }];
-    
-    UIAlertAction *violence = [UIAlertAction actionWithTitle:@"Распространяет фото насильственного характера"
-                                                     style:UIAlertActionStyleDefault
-                                                   handler:^(UIAlertAction * _Nonnull action) {
-
-                                                   }];
-    
-    UIAlertAction *suicidec = [UIAlertAction actionWithTitle:@"Приывы к суициду"
-                                                      style:UIAlertActionStyleDefault
-                                                    handler:^(UIAlertAction * _Nonnull action) {
-
-                                                    }];
-    
-    UIAlertAction *cancel = [UIAlertAction actionWithTitle:@"Отменить"
-                                                     style:UIAlertActionStyleDefault
-                                                   handler:^(UIAlertAction * _Nonnull action) {
-                                                       
-                                                   }];
-    
-    [insults setValue:[UIColor blackColor] forKey:@"titleTextColor"];
-    [spam setValue:[UIColor blackColor] forKey:@"titleTextColor"];
-    [porno setValue:[UIColor blackColor] forKey:@"titleTextColor"];
-    [violence setValue:[UIColor blackColor] forKey:@"titleTextColor"];
-    [suicidec setValue:[UIColor blackColor] forKey:@"titleTextColor"];
-    [cancel setValue:[UIColor blackColor] forKey:@"titleTextColor"];
-    
-    [alertController addAction:insults];
-    [alertController addAction:spam];
-    [alertController addAction:porno];
-    [alertController addAction:violence];
-    [alertController addAction:suicidec];
-    [alertController addAction:cancel];
-    
-    UIViewController *currentTopVC = [self currentTopViewController];
-    [currentTopVC presentViewController:alertController animated:YES completion:nil];
+    self.ref = [[FIRDatabase database] reference];
+    [self.ref observeEventType:FIRDataEventTypeValue withBlock:^(FIRDataSnapshot * _Nonnull snapshot) {
+        self.fireInterlocutor = [TSFireInterlocutor initWithSnapshot:snapshot byIdentifier:self.interlocutorUid];
+        
+        UIAlertAction *insults = [UIAlertAction actionWithTitle:@"Пишет оскорбления"
+                                                          style:UIAlertActionStyleDefault
+                                                        handler:^(UIAlertAction * _Nonnull action) {
+                                                            [self complainAboutUser:0 name:self.fireInterlocutor.displayName uid:self.fireInterlocutor.uid];
+                                                        }];
+        
+        UIAlertAction *spam = [UIAlertAction actionWithTitle:@"Распространяет спам"
+                                                       style:UIAlertActionStyleDefault
+                                                     handler:^(UIAlertAction * _Nonnull action) {
+                                                         [self complainAboutUser:1 name:self.fireInterlocutor.displayName uid:self.fireInterlocutor.uid];
+                                                     }];
+        
+        UIAlertAction *porno = [UIAlertAction actionWithTitle:@"Распространяет порнографические фото"
+                                                        style:UIAlertActionStyleDefault
+                                                      handler:^(UIAlertAction * _Nonnull action) {
+                                                          [self complainAboutUser:2 name:self.fireInterlocutor.displayName uid:self.fireInterlocutor.uid];
+                                                      }];
+        
+        UIAlertAction *violence = [UIAlertAction actionWithTitle:@"Распространяет фото насилия"
+                                                           style:UIAlertActionStyleDefault
+                                                         handler:^(UIAlertAction * _Nonnull action) {
+                                                             [self complainAboutUser:3 name:self.fireInterlocutor.displayName uid:self.fireInterlocutor.uid];
+                                                         }];
+        
+        UIAlertAction *suicidec = [UIAlertAction actionWithTitle:@"Приывы к суициду"
+                                                           style:UIAlertActionStyleDefault
+                                                         handler:^(UIAlertAction * _Nonnull action) {
+                                                             [self complainAboutUser:4 name:self.fireInterlocutor.displayName uid:self.fireInterlocutor.uid];
+                                                         }];
+        
+        UIAlertAction *cancel = [UIAlertAction actionWithTitle:@"Отменить"
+                                                         style:UIAlertActionStyleDefault
+                                                       handler:^(UIAlertAction * _Nonnull action) {
+                                                           [self complainAboutUser:5 name:self.fireInterlocutor.displayName uid:self.fireInterlocutor.uid];
+                                                       }];
+        
+        [insults setValue:[UIColor blackColor] forKey:@"titleTextColor"];
+        [spam setValue:[UIColor blackColor] forKey:@"titleTextColor"];
+        [porno setValue:[UIColor blackColor] forKey:@"titleTextColor"];
+        [violence setValue:[UIColor blackColor] forKey:@"titleTextColor"];
+        [suicidec setValue:[UIColor blackColor] forKey:@"titleTextColor"];
+        [cancel setValue:[UIColor blackColor] forKey:@"titleTextColor"];
+        
+        [alertController addAction:insults];
+        [alertController addAction:spam];
+        [alertController addAction:porno];
+        [alertController addAction:violence];
+        [alertController addAction:suicidec];
+        [alertController addAction:cancel];
+        
+        UIViewController *currentTopVC = [self currentTopViewController];
+        [currentTopVC presentViewController:alertController animated:YES completion:nil];
+    }];
 }
 
 - (void)blockUser
@@ -423,7 +434,7 @@ NSInteger recognizerControllersCardsAndChat;
     UIAlertAction *confirm = [UIAlertAction actionWithTitle:@"Подтвердить блокировку"
                                                        style:UIAlertActionStyleDefault
                                                      handler:^(UIAlertAction * _Nonnull action) {
-
+                                                         [self blockedUser];
                                                      }];
     
     UIAlertAction *cancel = [UIAlertAction actionWithTitle:@"Отменить блокировку"
@@ -440,6 +451,72 @@ NSInteger recognizerControllersCardsAndChat;
     
     UIViewController *currentTopVC = [self currentTopViewController];
     [currentTopVC presentViewController:alertController animated:YES completion:nil];
+}
+
+//заблокировать пользоватля
+
+- (void)blockedUser
+{
+    self.ref = [[FIRDatabase database] reference];
+    [self.ref observeEventType:FIRDataEventTypeValue withBlock:^(FIRDataSnapshot * _Nonnull snapshot) {
+        self.fireInterlocutor = [TSFireInterlocutor initWithSnapshot:snapshot byIdentifier:self.interlocutorUid];
+        NSMutableDictionary *userData = [NSMutableDictionary dictionary];
+        [userData setValue:self.fireInterlocutor.age forKey:@"age"];
+        [userData setValue:@"blocked" forKey:@"blocked"];
+        [userData setValue:self.fireInterlocutor.dateOfBirth forKey:@"dateOfBirth"];
+        [userData setValue:self.fireInterlocutor.displayName forKey:@"displayName"];
+        [userData setValue:self.fireInterlocutor.gender forKey:@"gender"];
+        [userData setValue:self.fireInterlocutor.location forKey:@"location"];
+        [userData setValue:self.fireInterlocutor.online forKey:@"online"];
+        [userData setValue:self.fireInterlocutor.photoURL forKey:@"photoURL"];
+        [userData setValue:self.fireInterlocutor.uid forKey:@"userID"];
+        
+        [[[[[self.ref child:@"dataBase"] child:@"users"] child:self.fireInterlocutor.uid]
+          child:@"userData"] setValue:userData];
+    }];
+    
+    [UIView animateWithDuration:0.3 animations:^{
+        //self.frame = CGRectMake(self.frame.origin.x, 750, self.frame.size.width, self.frame.size.height);
+        self.alpha = 0;
+    }];
+}
+
+- (void)complainAboutUser:(NSInteger)numberComplaint name:(NSString *)name uid:(NSString *)uid
+{
+    NSString *complaint = nil;
+    switch (numberComplaint) {
+        case 0:
+            complaint = [NSString stringWithFormat:@"Пользователь %@ %@ пишет оскорбления", name, uid];
+            break;
+        case 1:
+            complaint = [NSString stringWithFormat:@"Пользователь %@ %@ распространяет спам", name, uid];
+            break;
+        case 2:
+            complaint = [NSString stringWithFormat:@"Пользователь %@ %@ распространяет порнографические фото", name, uid];
+            break;
+        case 3:
+            complaint = [NSString stringWithFormat:@"Пользователь %@ %@ распространяет фото насилия", name, uid];
+            break;
+        case 4:
+            complaint = [NSString stringWithFormat:@"Пользователь %@ %@ призывает к суициду", name, uid];
+            break;
+        case 5:
+        default:
+            break;
+    }
+    
+    if([MFMailComposeViewController canSendMail]) {
+        MFMailComposeViewController *mailCont = [[MFMailComposeViewController alloc] init];
+        mailCont.mailComposeDelegate = self;
+        
+        [mailCont setSubject:@"Жалоба!!!"];
+        [mailCont setToRecipients:[NSArray arrayWithObject:@"mircamnia@com.com"]];
+        [mailCont setMessageBody:complaint isHTML:NO];
+        
+        [[self currentTopViewController] presentViewController:mailCont
+                                                      animated:YES
+                                                    completion:nil];
+    }
 }
 
 //отобразить алерт с вьюхи

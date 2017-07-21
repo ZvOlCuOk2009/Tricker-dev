@@ -222,6 +222,7 @@
                                      completion:^(FIRUser * _Nullable user, NSError * _Nullable error) {
                                          if (!error) {
                                              if (user.uid) {
+                                                 [TSSVProgressHUD showProgressHud];
                                                  [self createdUser:user name:displayName];
                                              }
                                          } else {
@@ -247,6 +248,7 @@
     NSString *gender = @"";
     NSString *age = @"";
     NSString *online = @"";
+    NSString *blocked = @"";
     
     NSData *imageData = UIImageJPEGRepresentation(self.image, 0.8);
     
@@ -262,12 +264,11 @@
     [userData setObject:gender forKey:@"gender"];
     [userData setObject:age forKey:@"age"];
     [userData setObject:online forKey:@"online"];
+    [userData setObject:blocked forKey:@"blocked"];
     
     FIRStorageReference *imagesRef = [self.storageRef child:imagePath];
     FIRStorageMetadata *metadata = [FIRStorageMetadata new];
     metadata.contentType = @"image/jpeg";
-    
-    [TSSVProgressHUD showProgressHud];
     
     [[self.storageRef child:imagePath] putData:imageData metadata:metadata
                                     completion:^(FIRStorageMetadata * _Nullable metadata, NSError * _Nullable error) {
@@ -314,7 +315,6 @@
     UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"Ок"
                                                    style:UIAlertActionStyleDefault
                                                  handler:nil];
-//    [alertController customizationAlertView:@"Этот электронной адрес уже зарегистрирован в базе данных, или его не существует..." byFont:20.f];
     [alertController addAction:okAction];
     [self presentViewController:alertController animated:YES completion:nil];
 }
@@ -326,8 +326,6 @@
     UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"Ок"
                                                        style:UIAlertActionStyleDefault
                                                      handler:nil];
-//    [alertController customizationAlertView:@"Пожалуйста, заполните все текстовые поля для регистрации..."
-//                                     byFont:20.f];
     [alertController addAction:okAction];
     [self presentViewController:alertController animated:YES completion:nil];
 }

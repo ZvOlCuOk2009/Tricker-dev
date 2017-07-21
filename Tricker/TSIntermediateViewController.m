@@ -42,7 +42,6 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
     [[self navigationController] setNavigationBarHidden:YES animated:NO];
 }
 
@@ -80,7 +79,6 @@
         self.fireUser = [TSFireUser initWithSnapshot:snapshot];
         self.fireBase = [TSFireBase initWithSnapshot:snapshot]; 
         [self configureController];
-        
     }];
 }
 
@@ -108,7 +106,8 @@
             NSDictionary *userData = [selectedUserTheGender objectForKey:@"userData"];
             NSString *age = [userData objectForKey:@"age"];
             NSString *uid = [userData objectForKey:@"userID"];
-            if ([self computationSearchAge:self.ageSearch receivedAge:age] && ![self.fireUser.uid isEqualToString:uid]) {
+            NSString *blocked = [userData objectForKey:@"blocked"];
+            if ([self computationSearchAge:self.ageSearch receivedAge:age] && ![self.fireUser.uid isEqualToString:uid] && [self blockedUser:blocked] == NO) {
                 [self.usersFoundOnGenderAndAge addObject:selectedUserTheGender];
             }
         }
@@ -128,9 +127,8 @@
             NSDictionary *anyUser = [self.fireBase objectForKey:key];
             NSDictionary *userData = [anyUser objectForKey:@"userData"];
             NSString *genderAnyUser = [userData objectForKey:@"gender"];
-            
-            if (([genderAnyUser isEqualToString:man] && ![self.fireUser.uid isEqualToString:key]) ||
-                ([genderAnyUser isEqualToString:woman] && ![self.fireUser.uid isEqualToString:key])) {
+            if (([genderAnyUser isEqualToString:man] && ![self.fireUser.uid isEqualToString:key])
+                || ([genderAnyUser isEqualToString:woman] && ![self.fireUser.uid isEqualToString:key])) {
                 [self.usersFoundOnTheGender addObject:anyUser];
             }
         }
@@ -139,7 +137,6 @@
             NSDictionary *anyUser = [self.fireBase objectForKey:key];
             NSDictionary *userData = [anyUser objectForKey:@"userData"];
             NSString *genderAnyUser = [userData objectForKey:@"gender"];
-            
             if ([genderAnyUser isEqualToString:genderSearch] && ![self.fireUser.uid isEqualToString:key]) {
                 [self.usersFoundOnTheGender addObject:anyUser];
             }
@@ -177,6 +174,17 @@
     }
     
     return totalValue;
+}
+
+- (BOOL)blockedUser:(NSString *)blocked
+{
+    BOOL userState;
+    if ([blocked length] == 0) {
+        userState = NO;
+    } else {
+        userState = YES;
+    }
+    return userState;
 }
 
 - (void)prepareForSegue

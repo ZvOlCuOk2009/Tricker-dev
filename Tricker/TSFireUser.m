@@ -39,6 +39,7 @@
         FIRDataSnapshot *location = fireUser.value[@"location"];
         FIRDataSnapshot *gender = fireUser.value[@"gender"];
         FIRDataSnapshot *online = fireUser.value[@"online"];
+        FIRDataSnapshot *blocked = fireUser.value[@"blocked"];
         FIRDataSnapshot *parameters = fireUserParameters.value[@"parameters"];
         FIRDataSnapshot *chats = nil;
         if ([snapshot hasChild:keyToChats]) {
@@ -59,6 +60,7 @@
         user.location = (NSString *)location;
         user.gender = (NSString *)gender;
         user.online = (NSString *)online;
+        user.blocked = (NSString *)blocked;
         user.parameters = (NSMutableDictionary *)parameters;
         user.chats = (NSDictionary *)chats;
         user.photos = (NSMutableArray *)photos;
