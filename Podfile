@@ -15,4 +15,5 @@ pod 'ZLSwipeableView'
 pod 'JSQMessagesViewController'
 pod "MDCSwipeToChoose"
 pod 'Google-Mobile-Ads-SDK'
+pod 'mailcore2-ios'
 end

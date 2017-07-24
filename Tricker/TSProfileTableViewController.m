@@ -396,6 +396,8 @@
 
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
 {
+    
+    [TSSVProgressHUD showProgressHud];
     [picker dismissViewControllerAnimated:YES completion:NULL];
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
     
@@ -527,6 +529,7 @@
             self.progressHUD = 0;
             [self configureController];
             self.textFieldName.text = @"";
+            [TSSVProgressHUD dissmisProgressHud];
         });
     });
 }

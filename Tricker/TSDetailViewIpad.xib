@@ -35,6 +35,14 @@
                                     <userDefinedRuntimeAttribute type="boolean" keyPath="layer.masksToBounds" value="YES"/>
                                 </userDefinedRuntimeAttributes>
                             </imageView>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vbW-vR-ybJ">
+                                <rect key="frame" x="648" y="29" width="50" height="50"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" backgroundImage="more-2"/>
+                                <connections>
+                                    <action selector="yetActionButton:" destination="iN0-l3-epB" eventType="touchUpInside" id="irB-6u-gtq"/>
+                                </connections>
+                            </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7z4-nq-079">
                                 <rect key="frame" x="32" y="530" width="350" height="32"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -160,6 +168,7 @@
     <resources>
         <image name="chat" width="64" height="64"/>
         <image name="list" width="64" height="64"/>
+        <image name="more-2" width="20" height="20"/>
         <image name="photos" width="64" height="64"/>
     </resources>
 </document>

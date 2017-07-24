@@ -104,6 +104,14 @@
                                     <action selector="chatActionButton:" destination="iN0-l3-epB" eventType="touchUpInside" id="DHT-EJ-onQ"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="a9D-Bf-9G6">
+                                <rect key="frame" x="647" y="29" width="50" height="50"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" backgroundImage="more-2"/>
+                                <connections>
+                                    <action selector="yetActionButton:" destination="iN0-l3-epB" eventType="touchUpInside" id="3RA-Pj-guY"/>
+                                </connections>
+                            </button>
                             <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="cGq-YX-qC1">
                                 <rect key="frame" x="90" y="620" width="14" height="14"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -161,6 +169,7 @@
     <resources>
         <image name="chat" width="64" height="64"/>
         <image name="list" width="64" height="64"/>
+        <image name="more-2" width="20" height="20"/>
         <image name="photos" width="64" height="64"/>
     </resources>
 </document>

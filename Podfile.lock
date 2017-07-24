@@ -73,6 +73,7 @@ PODS:
   - JSQMessagesViewController (7.3.4):
     - JSQSystemSoundPlayer (~> 2.0.1)
   - JSQSystemSoundPlayer (2.0.1)
+  - mailcore2-ios (0.6.4)
   - MDCSwipeToChoose (0.2.3)
   - SVProgressHUD (2.1.2)
   - ZLSwipeableView (0.0.8)
@@ -88,6 +89,7 @@ DEPENDENCIES:
   - Google-Mobile-Ads-SDK
   - Google/SignIn
   - JSQMessagesViewController
+  - mailcore2-ios
   - MDCSwipeToChoose
   - SVProgressHUD
   - ZLSwipeableView
@@ -112,10 +114,11 @@ SPEC CHECKSUMS:
   GTMSessionFetcher: 30d874b96d0d76028f61fbd122801e3f030d47db
   JSQMessagesViewController: 39fed975e3c9f8eba7292071e29eeb541d105e66
   JSQSystemSoundPlayer: c5850e77a4363ffd374cd851154b9af93264ed8d
+  mailcore2-ios: 3ff0be2fa553d4da9c11d39c11d51863c768f24f
   MDCSwipeToChoose: 56239d98b4558c66e7c3c9069482befd26092270
   SVProgressHUD: c404a55d78acbeb7ebb78b76d3faf986475a6994
   ZLSwipeableView: df385760ff4838935cdbcb62878ac5acd7355949
 
-PODFILE CHECKSUM: 4faec0774efcbce61085906e766c1c6b67982cab
+PODFILE CHECKSUM: 313f97ecc494abf1a7d8a51a76796a64748ddf00
 
 COCOAPODS: 1.2.1

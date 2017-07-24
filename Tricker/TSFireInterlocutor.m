@@ -31,6 +31,7 @@
     FIRDataSnapshot *location = fireInterlocutor.value[@"location"];
     FIRDataSnapshot *gender = fireInterlocutor.value[@"gender"];
     FIRDataSnapshot *online = fireInterlocutor.value[@"online"];
+    FIRDataSnapshot *blocked = fireInterlocutor.value[@"blocked"];
     FIRDataSnapshot *parameters = fireInterlocutorParameters.value[@"parameters"];
     FIRDataSnapshot *photos = fireInterlocutorPhotos.value[@"photos"];
     
@@ -43,6 +44,7 @@
     interlocutor.location = (NSString *)location;
     interlocutor.gender = (NSString *)gender;
     interlocutor.online = (NSString *)online;
+    interlocutor.blocked = (NSString *)blocked;
     interlocutor.userData = (NSMutableDictionary *)fireInterlocutor;
     interlocutor.parameters = (NSMutableDictionary *)parameters;
     interlocutor.photos = (NSMutableArray *)photos;

@@ -122,8 +122,10 @@
                     NSLog(@"TSFireInterlocutor %ld", (long)self.count);
                     TSFireInterlocutor *fireInterlocutor = [TSFireInterlocutor initWithSnapshot:snapshot
                                                                                    byIdentifier:interlocetorIdent];
-                    [self.interlocutors addObject:fireInterlocutor];
-                    [self.interlocAvatar addObject:[self setInterlocutorsAvatarByUrl:fireInterlocutor.photoURL]];
+                    if (fireInterlocutor.blocked.length == 0) {
+                        [self.interlocutors addObject:fireInterlocutor];
+                        [self.interlocAvatar addObject:[self setInterlocutorsAvatarByUrl:fireInterlocutor.photoURL]];
+                    }
                     
                     dispatch_async(dispatch_get_main_queue(), ^{
                         [self.tableView reloadData];

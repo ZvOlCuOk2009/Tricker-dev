@@ -20,8 +20,7 @@
 @property (weak, nonatomic) IBOutlet UITextField *emailTextField;
 @property (weak, nonatomic) IBOutlet UITextField *passwordTextField;
 @property (strong, nonatomic) UITextField *recoverPasswordTextField;
-@property (assign, nonatomic) NSInteger counter;
-
+@property (assign, nonatomic) NSInteger topSignInButton;
 
 @end
 
@@ -43,14 +42,18 @@
                                              selector:@selector(keyboardWillShow:)
                                                  name:UIKeyboardWillShowNotification
                                                object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(keyboardWillHide:)
+                                                 name:UIKeyboardWillHideNotification
+                                               object:nil];
 }
 
 #pragma mark - configure controller
 
 - (void)configureController
 {
-    self.counter = 0;
-    CGRect frame = CGRectMake(22, 419, 276, 39);
+    CGRect frame = CGRectMake(22, self.view.frame.size.height - 61, self.view.frame.size.width - 44, 39);
     _signInButton = [[UIButton alloc] init];
     _signInButton.frame = frame;
     _signInButton.backgroundColor = LIGHT_GRAY_COLOR;
@@ -58,7 +61,20 @@
     _signInButton.layer.cornerRadius = 19.5f;
     [_signInButton addTarget:self action:@selector(signIn) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:_signInButton];
-    NSLog(@"signIngButton %f %f %f %f", _signInButton.frame.origin.x, _signInButton.frame.origin.y, _signInButton.frame.size.width, _signInButton.frame.size.height);
+    
+    if (IS_IPHONE_4) {
+        self.topSignInButton = 215;
+    } else if (IS_IPHONE_5) {
+        self.topSignInButton = 300;
+    } else if (IS_IPHONE_6) {
+        self.topSignInButton = 350;
+    } else if (IS_IPHONE_6_PLUS) {
+        self.topSignInButton = 450;
+    } else if (IS_IPAD_2) {
+        self.topSignInButton = 700;
+    } else if (IS_IPAD_PRO) {
+        self.topSignInButton = 930;
+    }
 }
 
 #pragma mark - Actions
@@ -66,7 +82,7 @@
 - (void)signIn
 {
     if ([[TSReachability sharedReachability] verificationInternetConnection]) {
-        if (![self.emailTextField.text isEqualToString:@""] && ![self.passwordTextField.text isEqualToString:@""]) {
+        if (![self.emailTextField.text isEqualToString:@""] && self.passwordTextField.text.length > 5) {
             [self signInWithEmailAndPassword];
         }
     } else {
@@ -99,12 +115,19 @@
 - (IBAction)resetPassword:(id)sender
 {
     TSAlertController *alertController =
-    [TSAlertController sharedAlertController:@"Сброс пароля!!!" size:18];
+    [TSAlertController sharedAlertController:@"Сброс пароля!!!\nВведите адрес электронной почты. На который будет отправленно письмо с инструкцией по восстановлению доступа к аккаунту" size:17];
     [alertController addTextFieldWithConfigurationHandler:^(UITextField * _Nonnull textField) {
         textField.placeholder = @"Електронная почта";
         textField.secureTextEntry = YES;
         self.recoverPasswordTextField = textField;
     }];
+    
+    UIAlertAction *cancel = [UIAlertAction actionWithTitle:@"Отменить"
+                                                       style:UIAlertActionStyleDefault
+                                                     handler:^(UIAlertAction * _Nonnull action) {
+                                                         
+                                                     }];
+    
     UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"Ок"
                                                        style:UIAlertActionStyleDefault
                                                      handler:^(UIAlertAction * _Nonnull action) {
@@ -119,9 +142,12 @@
                                                                                                  NSLog(@"ошибка");
                                                                                              }
                                                                                          }];
-                                                         
                                                      }];
+    [cancel setValue:[UIColor blackColor] forKey:@"titleTextColor"];
+    [okAction setValue:[UIColor blackColor] forKey:@"titleTextColor"];
+    [alertController addAction:cancel];
     [alertController addAction:okAction];
+
     [self presentViewController:alertController animated:YES completion:nil];
     
 }
@@ -176,8 +202,6 @@
     UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"Ок"
                                                        style:UIAlertActionStyleDefault
                                                      handler:nil];
-//    [alertController customizationAlertView:@"Неверный пароль или адрес электронной почты, попробуйте еще раз..."
-//                                     byFont:20.f];
     [okAction setValue:[UIColor blackColor] forKey:@"titleTextColor"];
     [alertController addAction:okAction];
     [self presentViewController:alertController animated:YES completion:nil];
@@ -205,25 +229,18 @@
 
 - (void)keyboardWillShow:(NSNotification *)notification {
     
-    if (self.counter == 0) {
-        NSInteger offset = 0;
-        if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone) {
-            offset = - 210;
-        } else {
-            offset = - 310;
-        }
-        [UIView animateWithDuration:0.35f animations:^{
-            
-//            CGRect frame = CGRectOffset(self.signIngButton.frame, 0, + 200);
-//            self.signIngButton.frame = frame;
-//                CGRect fram = CGRectMake(22, 0, self.signIngButton.frame.size.width, self.signIngButton.frame.size.height);
-//            CGRect frame = CGRectOffset(self.signIngButton.frame, 0, - 440);
-            CGRect frame = CGRectMake(22, 215, 276, 39);
-            _signInButton.frame = frame;
-            NSLog(@"signIngButton %f %f %f %f", _signInButton.frame.origin.x, _signInButton.frame.origin.y, _signInButton.frame.size.width, _signInButton.frame.size.height);
-        }];
-        self.counter = 1;
-    }
+    [UIView animateWithDuration:0.35f animations:^{
+        CGRect frame = CGRectMake(22, self.topSignInButton, self.view.frame.size.width - 44, 39);
+        _signInButton.frame = frame;
+    }];
+}
+
+- (void)keyboardWillHide:(NSNotification *)notification {
+    
+    [UIView animateWithDuration:0.35f animations:^{
+        CGRect frame = CGRectMake(22, self.view.frame.size.height - 61, self.view.frame.size.width - 44, 39);
+        _signInButton.frame = frame;
+    }];
 }
 
 - (NSString *)checkAvailabilityAtAnEmail
@@ -238,6 +255,5 @@
     }
     return availabilityAT;
 }
-
 
 @end

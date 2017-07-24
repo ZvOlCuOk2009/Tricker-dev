@@ -60,11 +60,13 @@
         BOOL recognizer = NO;
         
         for (NSString *review in reviews) {
-            if ([review isEqualToString:self.userUid]) {
-                recognizer = YES;
-                break;
-            } else {
-                recognizer = NO;
+            if (![review isMemberOfClass:[NSNull class]]) {
+                if ([review isEqualToString:self.userUid]) {
+                    recognizer = YES;
+                    break;
+                } else {
+                    recognizer = NO;
+                }
             }
         }
         

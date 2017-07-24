@@ -166,13 +166,11 @@
     NSInteger getAge = [receivedAge intValue];
     
     BOOL totalValue;
-    
     if (getAge >= specRangeOne && getAge <= specRangeTwo) {
         totalValue = YES;
     } else {
         totalValue = NO;
     }
-    
     return totalValue;
 }
 

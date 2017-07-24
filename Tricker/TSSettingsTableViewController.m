@@ -348,8 +348,6 @@ NSString * const UpdateParametersNotification = @"UpdateParametersNotification";
                                                        
                                                    }];
     
-//    [alertController customizationAlertView:@"Подтвердите выход!" byFont:20.f];
-    
     [exit setValue:[UIColor blackColor] forKey:@"titleTextColor"];
     [cancel setValue:[UIColor blackColor] forKey:@"titleTextColor"];
 

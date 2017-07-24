@@ -1214,7 +1214,7 @@
 					"\"$PODS_CONFIGURATION_BUILD_DIR/SVProgressHUD\"",
 					"\"$PODS_CONFIGURATION_BUILD_DIR/ZLSwipeableView\"",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "Tsvigun-Sasha.Tricker.1-Tsvigun-Sasha.Tricker.1";
+				PRODUCT_BUNDLE_IDENTIFIER = "Tsvigun-Sasha.Tricker.1";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -1253,7 +1253,7 @@
 					"\"$PODS_CONFIGURATION_BUILD_DIR/ZLSwipeableView\"",
 					"\"$(SRCROOT)\"/**",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "Tsvigun-Sasha.Tricker.1-Tsvigun-Sasha.Tricker.1";
+				PRODUCT_BUNDLE_IDENTIFIER = "Tsvigun-Sasha.Tricker.1";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};

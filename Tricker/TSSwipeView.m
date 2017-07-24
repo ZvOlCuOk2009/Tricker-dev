@@ -353,12 +353,19 @@ NSInteger recognizerControllersCardsAndChat;
                                                    handler:^(UIAlertAction * _Nonnull action) {
                                                        [self blockUser];
                                                    }];
+    UIAlertAction *cancel = [UIAlertAction actionWithTitle:@"Отмена"
+                                                    style:UIAlertActionStyleDefault
+                                                  handler:^(UIAlertAction * _Nonnull action) {
+
+                                                  }];
     
     [complain setValue:[UIColor blackColor] forKey:@"titleTextColor"];
     [block setValue:[UIColor blackColor] forKey:@"titleTextColor"];
+    [cancel setValue:[UIColor blackColor] forKey:@"titleTextColor"];
     
     [alertController addAction:complain];
     [alertController addAction:block];
+    [alertController addAction:cancel];
     
     UIViewController *currentTopVC = [self currentTopViewController];
     [currentTopVC presentViewController:alertController animated:YES completion:nil];
@@ -366,7 +373,7 @@ NSInteger recognizerControllersCardsAndChat;
 
 - (void)complainAboutUser
 {
-    TSAlertController *alertController = [TSAlertController sharedAlertController:@"" size:20];
+    TSAlertController *alertController = [TSAlertController sharedAlertController:@"Выберите" size:20];
     
     self.ref = [[FIRDatabase database] reference];
     [self.ref observeEventType:FIRDataEventTypeValue withBlock:^(FIRDataSnapshot * _Nonnull snapshot) {
@@ -475,10 +482,9 @@ NSInteger recognizerControllersCardsAndChat;
           child:@"userData"] setValue:userData];
     }];
     
-    [UIView animateWithDuration:0.3 animations:^{
-        //self.frame = CGRectMake(self.frame.origin.x, 750, self.frame.size.width, self.frame.size.height);
-        self.alpha = 0;
-    }];
+//    [UIView animateWithDuration:0.3 animations:^{
+//        self.alpha = 0;
+//    }];
 }
 
 - (void)complainAboutUser:(NSInteger)numberComplaint name:(NSString *)name uid:(NSString *)uid
@@ -510,7 +516,7 @@ NSInteger recognizerControllersCardsAndChat;
         mailCont.mailComposeDelegate = self;
         
         [mailCont setSubject:@"Жалоба!!!"];
-        [mailCont setToRecipients:[NSArray arrayWithObject:@"mircamnia@com.com"]];
+        [mailCont setToRecipients:[NSArray arrayWithObject:@"mircamnia@com.ua"]];
         [mailCont setMessageBody:complaint isHTML:NO];
         
         [[self currentTopViewController] presentViewController:mailCont
