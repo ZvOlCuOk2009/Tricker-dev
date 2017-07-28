@@ -129,6 +129,7 @@
                                         NSLog(@"Process error");
                                     } else if (result.isCancelled) {
                                         NSLog(@"Cancelled");
+                                        return;
                                     } else {
                                         NSLog(@"Logged in");
                                     }

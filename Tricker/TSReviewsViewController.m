@@ -171,8 +171,9 @@
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         [self.ref observeEventType:FIRDataEventTypeValue withBlock:^(FIRDataSnapshot * _Nonnull snapshot) {
             self.fireBase = [TSFireBase initWithSnapshot:snapshot];
-            for (NSString *reviewsUserUid in self.reviewsUsersUid) {
-                if (![self.fireUser.uid isEqualToString:reviewsUserUid]) {
+            for (NSString *reviewsUserUid in _reviewsUsersUid) {
+                if (![self.fireUser.uid isEqualToString:reviewsUserUid] &&
+                    ![reviewsUserUid isMemberOfClass:[NSNull class]]) {
                     NSDictionary *userDataReviews = [self.fireBase objectForKey:reviewsUserUid];
                     self.nameUserInterest = [[userDataReviews objectForKey:@"userData"] objectForKey:@"displayName"];
                     self.ageUserInterest = [[userDataReviews objectForKey:@"userData"] objectForKey:@"age"];
@@ -189,7 +190,11 @@
                                                           @"ageUserInterest":self.ageUserInterest,
                                                           @"onlineUserInterest":self.onlineUserInterest};
                     [self.reviewsUsers addObject:userDataReviewParam];
-                    [self.reviewsUsersAvatar addObject:[self convertAvatarByUrl:self.photoUserInterest]];
+                    UIImage *avatar = [self convertAvatarByUrl:self.photoUserInterest];
+                    if (avatar == nil) {
+                        avatar = [UIImage imageNamed:@"placeholder_avarar"];
+                    }
+                    [self.reviewsUsersAvatar addObject:avatar];
                     if (self.paramsReviews.count > 0) {
                         [self.reviewsUsersParams addObject:self.paramsReviews];
                     }

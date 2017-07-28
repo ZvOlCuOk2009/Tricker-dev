@@ -174,9 +174,10 @@
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         [self.ref observeEventType:FIRDataEventTypeValue withBlock:^(FIRDataSnapshot * _Nonnull snapshot) {
             self.fireBase = [TSFireBase initWithSnapshot:snapshot];
-            for (NSString *reviewsUserUid in self.likesUsersUid) {
-                if (![self.fireUser.uid isEqualToString:reviewsUserUid]) {
-                    NSDictionary *userDataLikes = [self.fireBase objectForKey:reviewsUserUid];
+            for (NSString *likesUserUid in self.likesUsersUid) {
+                if (![self.fireUser.uid isEqualToString:likesUserUid] &&
+                    ![likesUserUid isMemberOfClass:[NSNull class]]) {
+                    NSDictionary *userDataLikes = [self.fireBase objectForKey:likesUserUid];
                     self.nameUserInterest = [[userDataLikes objectForKey:@"userData"] objectForKey:@"displayName"];
                     self.ageUserInterest = [[userDataLikes objectForKey:@"userData"] objectForKey:@"age"];
                     self.onlineUserInterest = [[userDataLikes objectForKey:@"userData"] objectForKey:@"online"];
@@ -192,11 +193,15 @@
                                                         @"ageUserInterest":self.ageUserInterest,
                                                         @"onlineUserInterest":self.onlineUserInterest};
                     [self.likesUsers addObject:userDataLikeParam];
-                    [self.likesUsersAvatar addObject:[self convertAvatarByUrl:self.photoUserInterest]];
+                    UIImage *avatar = [self convertAvatarByUrl:self.photoUserInterest];
+                    if (avatar == nil) {
+                        avatar = [UIImage imageNamed:@"placeholder_avarar"];
+                    }
+                    [self.likesUsersAvatar addObject:avatar];
                     if (self.paramsLikes.count > 0) {
                         [self.likesUsersParams addObject:self.paramsLikes];
                     }
-                    [self.likesUsersUidUpdate addObject:reviewsUserUid];
+                    [self.likesUsersUidUpdate addObject:likesUserUid];
                     if (self.photosLikes) {
                         [self.likesPhotos addObject:self.photosLikes];
                     } else {
