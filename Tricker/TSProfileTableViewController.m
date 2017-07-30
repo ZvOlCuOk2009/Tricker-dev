@@ -17,12 +17,12 @@
 #import "TSReachability.h"
 #import "TSAlertController.h"
 #import "TSIntroductionViewController.h"
+#import "TSSitysViewController.h"
 #import "TSSVProgressHUD.h"
 #import "TSTrickerPrefixHeader.pch"
 
 @interface TSProfileTableViewController () <UINavigationControllerDelegate, UIImagePickerControllerDelegate>
 
-@property (strong, nonatomic) NSString *selectCity;
 @property (strong, nonatomic) NSUserDefaults *userDefaults;
 @property (strong, nonatomic) UIBarButtonItem *doneButton;
 @property (strong, nonatomic) TSFireUser *fireUser;
@@ -234,6 +234,10 @@
             });
         }];
     });
+    
+    if (self.selectCity.length > 0) {
+        self.cityLabel.text = self.selectCity;
+    }
     
     self.userDefaults = [NSUserDefaults standardUserDefaults];
     self.pointImage = [UIImage imageNamed:@"click"];
@@ -482,6 +486,7 @@
     } else {
         location = self.fireUser.location;
     }
+    self.cityLabel.text = location;
     
     if ([age length] == 0) {
         age = @"";
@@ -558,7 +563,7 @@
     if (indexPath.row == 0) {
         return self.heightHeader;
     }
-    if (indexPath.row == 9) {
+    if (indexPath.row == 10) {
         return kHeightCellButtonSaveAndOut;
     }
     if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
@@ -612,7 +617,7 @@
         self.stateDatePicker = YES;
     }
     
-    if (indexPath.row == 7) {
+    if (indexPath.row == 8) {
         NSString *sharedCountReviews = [NSString stringWithFormat:@"%ld",
                                         (long)[self.fireUser.reviews count]];
         if (!sharedCountReviews) {
@@ -621,7 +626,7 @@
         [[[[[self.ref child:@"dataBase"] child:@"users"] child:self.fireUser.uid] child:@"reviewsCount"] setValue:sharedCountReviews];
     }
     
-    if (indexPath.row == 8) {
+    if (indexPath.row == 9) {
         NSString *sharedCountLikes = [NSString stringWithFormat:@"%ld",
                                         (long)[self.fireUser.likes count]];
         if (!sharedCountLikes) {

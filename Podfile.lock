@@ -48,6 +48,13 @@ PODS:
   - Google/SignIn (3.1.0):
     - Google/Core
     - GoogleSignIn (~> 4.0)
+  - GoogleMaps (2.3.1):
+    - GoogleMaps/Maps (= 2.3.1)
+  - GoogleMaps/Base (2.3.1)
+  - GoogleMaps/Maps (2.3.1):
+    - GoogleMaps/Base
+  - GooglePlaces (2.3.1):
+    - GoogleMaps/Base (= 2.3.1)
   - GoogleSignIn (4.0.2):
     - GoogleToolboxForMac/NSDictionary+URLArguments (~> 2.1)
     - GoogleToolboxForMac/NSString+URLArguments (~> 2.1)
@@ -73,7 +80,6 @@ PODS:
   - JSQMessagesViewController (7.3.4):
     - JSQSystemSoundPlayer (~> 2.0.1)
   - JSQSystemSoundPlayer (2.0.1)
-  - mailcore2-ios (0.6.4)
   - MDCSwipeToChoose (0.2.3)
   - SVProgressHUD (2.1.2)
   - ZLSwipeableView (0.0.8)
@@ -88,8 +94,9 @@ DEPENDENCIES:
   - Firebase/Storage
   - Google-Mobile-Ads-SDK
   - Google/SignIn
+  - GoogleMaps
+  - GooglePlaces
   - JSQMessagesViewController
-  - mailcore2-ios
   - MDCSwipeToChoose
   - SVProgressHUD
   - ZLSwipeableView
@@ -108,17 +115,18 @@ SPEC CHECKSUMS:
   FirebaseStorage: a5c55b23741a49a72af8f30f95b3bb5ddbeda12d
   Google: 98da4b1a60ed0beb80a290387a28333406a1eb90
   Google-Mobile-Ads-SDK: 4a6f1b43c8cc0e1e95a3b59d9f52a01671c6f9f3
+  GoogleMaps: c66a71058b9b1294bcdd5463a68e357fa50c079f
+  GooglePlaces: 4a7b22debfa1af65017b82943431822607e45201
   GoogleSignIn: d7ad83f13480e1f30453471d00d19b5293ac46af
   GoogleToolboxForMac: 8e329f1b599f2512c6b10676d45736bcc2cbbeb0
   GTMOAuth2: 7fc9c10f5c745f4d9850419ea88889fe3baa6b7d
   GTMSessionFetcher: 30d874b96d0d76028f61fbd122801e3f030d47db
   JSQMessagesViewController: 39fed975e3c9f8eba7292071e29eeb541d105e66
   JSQSystemSoundPlayer: c5850e77a4363ffd374cd851154b9af93264ed8d
-  mailcore2-ios: 3ff0be2fa553d4da9c11d39c11d51863c768f24f
   MDCSwipeToChoose: 56239d98b4558c66e7c3c9069482befd26092270
   SVProgressHUD: c404a55d78acbeb7ebb78b76d3faf986475a6994
   ZLSwipeableView: df385760ff4838935cdbcb62878ac5acd7355949
 
-PODFILE CHECKSUM: 313f97ecc494abf1a7d8a51a76796a64748ddf00
+PODFILE CHECKSUM: f3e00a24edce5030eb15ea04c3ba3728111a9932
 
 COCOAPODS: 1.2.1

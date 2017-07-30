@@ -13,12 +13,12 @@
 #import "TSTrickerPrefixHeader.pch"
 
 #import <CoreLocation/CoreLocation.h>
-//#import <GoogleMaps/GoogleMaps.h>
-
+#import <GoogleMaps/GoogleMaps.h>
+#import <GooglePlaces/GooglePlaces.h>
 
 @interface TSSitysViewController () <UISearchBarDelegate>
 
-//@property (strong, nonatomic) GMSPlacesClient *placesClient;
+@property (strong, nonatomic) GMSPlacesClient *placesClient;
 
 @property (strong, nonatomic) IBOutlet UITableView *tableView;
 @property (strong, nonatomic) NSArray *searchCityes;
@@ -30,7 +30,32 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-//    [self configureController];
+    self.searchCityes = [NSArray array];
+    [self configureController];
+}
+
+- (void)cancelInteraction
+{
+    [self.navigationController popToViewController:[self.navigationController.viewControllers objectAtIndex:0]
+                                          animated:YES];
+}
+
+#pragma mark - configure the controller
+
+- (void)configureController
+{
+    TSSearchBar *searchBar = [[TSSearchBar alloc] initWithView:self.view];
+    UINavigationItem *item = self.navigationItem;
+    item.titleView = searchBar;
+    searchBar.autocorrectionType = NO;
+    searchBar.delegate = self;
+    
+    UIImage *imageBack = [UIImage imageNamed:@"back"];
+    [self.navigationItem.leftBarButtonItem setBackButtonBackgroundImage:imageBack forState:UIControlStateNormal barMetrics:0];
+    
+    [self.tableView setSeparatorColor:DARK_GRAY_COLOR];
+
+    self.placesClient = [GMSPlacesClient sharedClient];
     
     UIBarButtonItem *backItem = [[UIBarButtonItem alloc] init];
     [backItem setImage:[UIImage imageNamed:@"back"]];
@@ -41,44 +66,12 @@
     [backItem setAction:@selector(cancelInteraction)];
 }
 
-
-- (void)cancelInteraction
-{
-    [self.navigationController popToViewController:[self.navigationController.viewControllers objectAtIndex:0]
-                                          animated:YES];
-}
-
-
-#pragma mark - configure the controller
-
-
-/*
-- (void)configureController
-{
-    
-    UIImage *imageBack = [UIImage imageNamed:@"back"];
-    [self.navigationItem.leftBarButtonItem setBackButtonBackgroundImage:imageBack forState:UIControlStateNormal barMetrics:0];
-    
-    [self.tableView setSeparatorColor:DARK_GRAY_COLOR];
-    self.placesClient = [[GMSPlacesClient alloc] init];
-    
-    TSSearchBar *searchBar = [[TSSearchBar alloc] initWithView:self.view];
-    self.navigationItem.titleView = searchBar;
-    searchBar.autocorrectionType = NO;
-    searchBar.delegate = self;
-
-    
-}
-
-
 - (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText
 {
     [self placeAutocomplete:searchText];
 }
 
-
 #pragma mark -  UITableViewDataSource
-
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
@@ -98,35 +91,27 @@
     return cell;
 }
 
-
 - (void)configureCell:(TSTableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath
 {
-    
     NSArray *location = [self parsingJSONAutocompletePrediction:indexPath];
     NSString *city = [location objectAtIndex:0];
     NSString *region = [location objectAtIndex:1];
     
     cell.cityLabel.textColor = DARK_GRAY_COLOR;
     cell.cityLabel.text = [NSString stringWithFormat:@"%@, %@", city, region];
-    
 }
-
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    
     NSArray *location = [self parsingJSONAutocompletePrediction:indexPath];
     NSString *city = [location objectAtIndex:0];
     TSProfileTableViewController *controller = [self.navigationController.viewControllers objectAtIndex:0];
     controller.selectCity = city;
     [self.navigationController popToViewController:controller animated:YES];
-    
 }
-
 
 - (NSArray *)parsingJSONAutocompletePrediction:(NSIndexPath *)indexPath
 {
-    
     GMSAutocompletePrediction *autocompletePrediction = [self.searchCityes objectAtIndex:indexPath.row];
     NSAttributedString *attributedStringCity = autocompletePrediction.attributedPrimaryText;
     NSAttributedString *attributedStringRegion = autocompletePrediction.attributedSecondaryText;
@@ -134,16 +119,12 @@
     NSString *region = [attributedStringRegion string];
     NSArray *location = @[city, region];
     return location;
-    
 }
-
 
 - (void)placeAutocomplete:(NSString *)searchText
 {
-    
     GMSAutocompleteFilter *filter = [[GMSAutocompleteFilter alloc] init];
     filter.type = kGMSPlacesAutocompleteTypeFilterCity;
-    
     
     [self.placesClient autocompleteQuery:searchText
                               bounds:nil
@@ -161,15 +142,10 @@
                                 self.searchCityes = results;
                                 [self.tableView reloadData];
                             }];
-    
 }
-
- */
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
-
 }
-
 
 @end

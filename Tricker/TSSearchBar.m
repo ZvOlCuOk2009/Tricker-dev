@@ -26,6 +26,7 @@
     self.searchBarStyle = UISearchBarStyleMinimal;
     self.tintColor = LIGHT_YELLOW_COLOR;
     UITextField *txtSearchField = [self valueForKey:@"_searchField"];
+    txtSearchField.placeholder = @"Начните вводить название...";
     txtSearchField.textColor = DARK_GRAY_COLOR;
 }
 

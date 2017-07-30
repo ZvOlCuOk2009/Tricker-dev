@@ -776,7 +776,7 @@ trickersocial@gmail.com</string>
                 </viewControllerPlaceholder>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ktJ-BF-acw" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2650" y="390"/>
+            <point key="canvasLocation" x="2649" y="404"/>
         </scene>
         <!--ProfileStoryboard-->
         <scene sceneID="zXw-Qb-1td">
@@ -786,7 +786,7 @@ trickersocial@gmail.com</string>
                 </viewControllerPlaceholder>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="eYz-F8-xrp" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2650" y="60"/>
+            <point key="canvasLocation" x="2645" y="31"/>
         </scene>
         <!--ChatStoryboard-->
         <scene sceneID="aBe-SR-U9F">
@@ -796,7 +796,17 @@ trickersocial@gmail.com</string>
                 </viewControllerPlaceholder>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="6Zm-h6-sIE" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2638" y="280"/>
+            <point key="canvasLocation" x="2636" y="311"/>
+        </scene>
+        <!--MapStoryboard-->
+        <scene sceneID="W3S-rb-jJ0">
+            <objects>
+                <viewControllerPlaceholder storyboardName="MapStoryboard" referencedIdentifier="MapStoryboard" id="PXI-hf-Zhy" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="Item" image="map_no" selectedImage="map_click" id="ayy-H0-SUQ"/>
+                </viewControllerPlaceholder>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="eR1-pk-1b6" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2634" y="120"/>
         </scene>
         <!--CardsStoryboard-->
         <scene sceneID="haf-3y-MRc">
@@ -806,7 +816,7 @@ trickersocial@gmail.com</string>
                 </viewControllerPlaceholder>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="6Rc-96-BTN" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2642" y="172"/>
+            <point key="canvasLocation" x="2648" y="214"/>
         </scene>
         <!--Tab Bar View Controller-->
         <scene sceneID="THg-Sa-hN5">
@@ -828,6 +838,7 @@ trickersocial@gmail.com</string>
                     </tabBar>
                     <connections>
                         <segue destination="wqN-fg-hVu" kind="relationship" relationship="viewControllers" id="so6-nB-CCm"/>
+                        <segue destination="PXI-hf-Zhy" kind="relationship" relationship="viewControllers" id="2nD-HF-NRl"/>
                         <segue destination="JWK-t9-iSV" kind="relationship" relationship="viewControllers" id="wKM-nD-gfN"/>
                         <segue destination="JpS-Yo-8Hx" kind="relationship" relationship="viewControllers" id="zgC-2j-aXm"/>
                         <segue destination="pOQ-Yc-Xc5" kind="relationship" relationship="viewControllers" id="a38-nX-sAg"/>
@@ -891,6 +902,8 @@ trickersocial@gmail.com</string>
         <image name="chat_no" width="26" height="26"/>
         <image name="facebook_logo" width="316" height="111"/>
         <image name="google_logo" width="708" height="323"/>
+        <image name="map_click" width="26" height="26"/>
+        <image name="map_no" width="26" height="26"/>
         <image name="photo-camera" width="75" height="75"/>
         <image name="tabbar" width="187" height="24"/>
         <image name="tricker_logo" width="227" height="227"/>

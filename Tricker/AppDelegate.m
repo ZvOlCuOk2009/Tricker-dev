@@ -21,7 +21,8 @@
 @import GoogleMobileAds;
 
 //#import <Appodeal/Appodeal.h>
-//#import <GoogleMaps/GoogleMaps.h>
+#import <GoogleMaps/GoogleMaps.h>
+#import <GooglePlaces/GooglePlaces.h>
 //#import <VKSdk.h>
 
 NSString * AppDelegateStatusUserNotificatoin = @"AppDelegateStatusUserNotificatoin";
@@ -59,9 +60,10 @@ NSString * AppDelegateStatusUserNotificatoin = @"AppDelegateStatusUserNotificato
     
     [FIRApp configure];
     
-    [GADMobileAds configureWithApplicationID:API_KEY_ADMOB];
+    //[GADMobileAds configureWithApplicationID:API_KEY_ADMOB];
     
-//    [GMSServices provideAPIKey:API_KEY_GOOGLE_MAPS];
+    [GMSServices provideAPIKey:API_KEY_GOOGLE_MAPS];
+    [GMSPlacesClient provideAPIKey:API_KEY_GOOGLE_MAPS];
     
 //    [Appodeal initializeWithApiKey:API_KEY_APPODEAL types:(AppodealAdType)AppodealAdTypeRewardedVideo | AppodealAdTypeInterstitial];
     

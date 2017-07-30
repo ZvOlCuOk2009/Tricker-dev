@@ -1,17 +1,17 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11542" systemVersion="15G31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12120" systemVersion="16E195" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11524"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12088"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
         <!--Map View Controller-->
         <scene sceneID="vtu-b6-hc3">
             <objects>
-                <viewController storyboardIdentifier="MapStoryboard" id="0WI-Nr-Gam" customClass="TSMapViewController" sceneMemberID="viewController">
+                <viewController id="0WI-Nr-Gam" customClass="TSMapViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="Ntg-Sp-FWQ"/>
                         <viewControllerLayoutGuide type="bottom" id="b85-6L-wSY"/>
@@ -23,45 +23,44 @@
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="background" translatesAutoresizingMaskIntoConstraints="NO" id="Llg-Gq-lLK">
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                             </imageView>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="M7v-3o-nck">
-                                <rect key="frame" x="22" y="368" width="330" height="39"/>
-                                <color key="backgroundColor" red="0.51372549020000002" green="0.61960784310000006" blue="0.69803921570000005" alpha="1" colorSpace="calibratedRGB"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="39" id="t4Z-il-mNf"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" type="system" weight="light" pointSize="20"/>
-                                <state key="normal" title="Выйти">
-                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <userDefinedRuntimeAttributes>
-                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
-                                        <real key="value" value="19.5"/>
-                                    </userDefinedRuntimeAttribute>
-                                </userDefinedRuntimeAttributes>
-                                <connections>
-                                    <action selector="logOutAtionButton:" destination="0WI-Nr-Gam" eventType="touchUpInside" id="7CS-bn-D0b"/>
-                                </connections>
-                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="M7v-3o-nck" firstAttribute="leading" secondItem="svd-zv-nA3" secondAttribute="leading" constant="22" id="JWw-jd-qmt"/>
                             <constraint firstAttribute="trailing" secondItem="Llg-Gq-lLK" secondAttribute="trailing" id="QAp-1e-vJT"/>
                             <constraint firstItem="b85-6L-wSY" firstAttribute="top" secondItem="Llg-Gq-lLK" secondAttribute="bottom" id="TRR-Qj-H0f"/>
                             <constraint firstItem="Llg-Gq-lLK" firstAttribute="top" secondItem="svd-zv-nA3" secondAttribute="top" id="V3D-0g-Gng"/>
-                            <constraint firstAttribute="trailing" secondItem="M7v-3o-nck" secondAttribute="trailing" constant="23" id="hwW-QK-qU4"/>
                             <constraint firstItem="Llg-Gq-lLK" firstAttribute="leading" secondItem="svd-zv-nA3" secondAttribute="leading" id="mND-Pg-7H5"/>
-                            <constraint firstItem="M7v-3o-nck" firstAttribute="top" secondItem="Ntg-Sp-FWQ" secondAttribute="bottom" constant="348" id="tq4-GI-3n0"/>
-                            <constraint firstItem="M7v-3o-nck" firstAttribute="centerX" secondItem="svd-zv-nA3" secondAttribute="centerX" id="zA8-Ow-7gR"/>
                         </constraints>
                     </view>
-                    <tabBarItem key="tabBarItem" title="" image="map_no" selectedImage="map_click" id="rQA-dy-bzz">
-                        <inset key="imageInsets" minX="0.0" minY="5" maxX="0.0" maxY="-5"/>
-                    </tabBarItem>
+                    <navigationItem key="navigationItem" id="2q9-jN-Yab">
+                        <nil key="title"/>
+                    </navigationItem>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ZAe-52-o37" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3202" y="940"/>
+            <point key="canvasLocation" x="4140" y="939.58020989505258"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="Xaf-KS-81K">
+            <objects>
+                <navigationController storyboardIdentifier="MapStoryboard" automaticallyAdjustsScrollViewInsets="NO" id="7aN-8m-arm" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="" image="map_no" selectedImage="map_click" id="rQA-dy-bzz">
+                        <inset key="imageInsets" minX="0.0" minY="5" maxX="0.0" maxY="-5"/>
+                    </tabBarItem>
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="Czt-zk-NKN">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <color key="barTintColor" red="0.98823529409999999" green="0.87450980389999999" blue="0.6588235294" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="0WI-Nr-Gam" kind="relationship" relationship="rootViewController" id="NoK-dL-jwN"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="XJV-Ja-92m" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3342" y="940"/>
         </scene>
     </scenes>
     <resources>

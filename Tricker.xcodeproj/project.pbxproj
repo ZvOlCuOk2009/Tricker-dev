@@ -43,6 +43,7 @@
 		845F12AE1F044D39002A2B3A /* SafariServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 845F12AD1F044D39002A2B3A /* SafariServices.framework */; };
 		845F12B01F05891E002A2B3A /* libz.1.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 845F12AF1F05891E002A2B3A /* libz.1.dylib */; };
 		845F12B21F058996002A2B3A /* libiconv.2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 845F12B11F058996002A2B3A /* libiconv.2.dylib */; };
+		84F05DBA1F2E2ECE00E45029 /* TSMapViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 84F05DB91F2E2ECE00E45029 /* TSMapViewController.m */; };
 		FD002C651DFA162900D47428 /* TSChatsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FD002C641DFA162900D47428 /* TSChatsTableViewController.m */; };
 		FD06541C1DFCA24200AE45EF /* TSSwipeView6plus.xib in Resources */ = {isa = PBXBuildFile; fileRef = FD06541B1DFCA24200AE45EF /* TSSwipeView6plus.xib */; };
 		FD06541E1DFCBDD200AE45EF /* TSPhotoView6Plus.xib in Resources */ = {isa = PBXBuildFile; fileRef = FD06541D1DFCBDD200AE45EF /* TSPhotoView6Plus.xib */; };
@@ -174,6 +175,8 @@
 		845F12AD1F044D39002A2B3A /* SafariServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SafariServices.framework; path = System/Library/Frameworks/SafariServices.framework; sourceTree = SDKROOT; };
 		845F12AF1F05891E002A2B3A /* libz.1.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.1.dylib; path = ../../../../usr/lib/libz.1.dylib; sourceTree = "<group>"; };
 		845F12B11F058996002A2B3A /* libiconv.2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libiconv.2.dylib; path = ../../../../usr/lib/libiconv.2.dylib; sourceTree = "<group>"; };
+		84F05DB81F2E2ECE00E45029 /* TSMapViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSMapViewController.h; sourceTree = "<group>"; };
+		84F05DB91F2E2ECE00E45029 /* TSMapViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSMapViewController.m; sourceTree = "<group>"; };
 		94B94787D384A5D991ACF5EE /* Pods-Tricker.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Tricker.release.xcconfig"; path = "Pods/Target Support Files/Pods-Tricker/Pods-Tricker.release.xcconfig"; sourceTree = "<group>"; };
 		FD002C631DFA162900D47428 /* TSChatsTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSChatsTableViewController.h; sourceTree = "<group>"; };
 		FD002C641DFA162900D47428 /* TSChatsTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSChatsTableViewController.m; sourceTree = "<group>"; };
@@ -434,6 +437,8 @@
 				FD64A9401E241D440019BB94 /* TSReviewsViewController.m */,
 				FD64A93C1E241D1C0019BB94 /* TSLikesViewController.h */,
 				FD64A93D1E241D1C0019BB94 /* TSLikesViewController.m */,
+				84F05DB81F2E2ECE00E45029 /* TSMapViewController.h */,
+				84F05DB91F2E2ECE00E45029 /* TSMapViewController.m */,
 				FDE9273A1DE8EC4600FF884F /* TSIntermediateViewController.h */,
 				FDE9273B1DE8EC4600FF884F /* TSIntermediateViewController.m */,
 				FD0C1C9B1DE7810000D37B61 /* TSCardsViewController.h */,
@@ -1016,6 +1021,7 @@
 				FD45D0851DD7CF4200EB2640 /* TSTableViewCell.m in Sources */,
 				FDF9639C1DD14598000877B5 /* TSPhotoAndNameViewController.m in Sources */,
 				FDFDFC951DD26A28007811EF /* TSAutorizationViewController.m in Sources */,
+				84F05DBA1F2E2ECE00E45029 /* TSMapViewController.m in Sources */,
 				FD11E9041E259D6200E822ED /* TSGetInterlocutorParameters.m in Sources */,
 				FDEBE3F11DF1C7F40073A0FF /* TSCollCell.m in Sources */,
 				FD0C1C9D1DE7810000D37B61 /* TSCardsViewController.m in Sources */,

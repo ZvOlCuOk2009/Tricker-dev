@@ -17,6 +17,7 @@
 
 @interface TSProfileTableViewController : UITableViewController
 
+@property (strong, nonatomic) NSString *selectCity;
 @property (weak, nonatomic) IBOutlet UILabel *reviewsLabel;
 @property (weak, nonatomic) IBOutlet UILabel *likesLabel;
 
