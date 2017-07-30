@@ -21,7 +21,6 @@
     return self;
 }
 
-
 - (void)drawRect:(CGRect)rect {
     
     self.searchBarStyle = UISearchBarStyleMinimal;

@@ -110,6 +110,9 @@
 - (void)loginButton:(FBSDKLoginButton *)loginButton didCompleteWithResult:(FBSDKLoginManagerLoginResult *)result
               error:(NSError *)error
 {
+    if (result.isCancelled == YES) {
+        return;
+    }
     NSString *tokenFB = [[FBSDKAccessToken currentAccessToken] tokenString];
     
     if (tokenFB) {
