@@ -18,7 +18,7 @@
 #import <FBSDKCoreKit/FBSDKCoreKit.h>
 #import <FBSDKLoginKit/FBSDKLoginKit.h>
 #import <GoogleSignIn/GoogleSignIn.h>
-//#import <VKSdk.h>
+#import <VKSdk.h>
 
 //#import <JWT.h>
 
@@ -80,20 +80,20 @@
     [GIDSignIn sharedInstance].uiDelegate = self;
     [[GIDSignIn sharedInstance] signInSilently];
     
-//    VKSdk *sdkInstance = [VKSdk initializeWithAppId:APP_ID_VK];
-//    
-//    [sdkInstance registerDelegate:self];
-//    [sdkInstance setUiDelegate:self];
-//    
-//    self.scope = @[@"friends", @"email"];
-//    
-//    [VKSdk wakeUpSession:self.scope completeBlock:^(VKAuthorizationState state, NSError *error) {
-//        if (state == VKAuthorizationAuthorized) {
-//            NSLog(@"state %lu", (unsigned long)state);
-//        } else {
-//            NSLog(@"err %@", error.localizedDescription);
-//        }
-//    }];
+    VKSdk *sdkInstance = [VKSdk initializeWithAppId:APP_ID_VK];
+//
+    [sdkInstance registerDelegate:self];
+    [sdkInstance setUiDelegate:self];
+    
+    self.scope = @[@"friends", @"email"];
+    
+    [VKSdk wakeUpSession:self.scope completeBlock:^(VKAuthorizationState state, NSError *error) {
+        if (state == VKAuthorizationAuthorized) {
+            NSLog(@"state %lu", (unsigned long)state);
+        } else {
+            NSLog(@"err %@", error.localizedDescription);
+        }
+    }];
 }
 
 
@@ -243,13 +243,13 @@
                      }];
 }
 
-/*
+
 
 #pragma mark - VK autorization
 
 - (IBAction)vkButtonTouchUpInside:(id)sender
 {
-//    [VKSdk authorize:self.scope];
+    [VKSdk authorize:self.scope];
 }
 
 - (void)vkSdkAccessAuthorizationFinishedWithResult:(VKAuthorizationResult *)result
@@ -359,7 +359,7 @@
     
 }
 
-*/
+
 
 
 #pragma mark - Reachability
