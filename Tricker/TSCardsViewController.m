@@ -139,13 +139,13 @@
              UIAlertAction *repearAction = [UIAlertAction actionWithTitle:@"Просмотреть ещё раз"
                                                               style:UIAlertActionStyleDefault
                                                             handler:^(UIAlertAction * _Nonnull action) {
-                                                                 [self callTabBarControllerByIndex:1];
+                                                                 [self callTabBarControllerByIndex:2];
                                                             }];
              
              UIAlertAction *changeAction = [UIAlertAction actionWithTitle:@"Изменить параметры поиска"
                                                               style:UIAlertActionStyleDefault
                                                             handler:^(UIAlertAction * _Nonnull action) {
-                                                                 [self callTabBarControllerByIndex:3];
+                                                                 [self callTabBarControllerByIndex:4];
                                                             }];
              
              UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"Отменить"

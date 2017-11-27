@@ -332,7 +332,7 @@ NSInteger recognizerControllersCardsAndChat;
         UIStoryboard *mainStoryboard = [UIStoryboard storyboardWithName:@"Main" bundle:[NSBundle mainBundle]];
         TSTabBarViewController *tabBarViewController =
         [mainStoryboard instantiateViewControllerWithIdentifier:@"TSTabBarViewController"];
-        [tabBarViewController setSelectedIndex:2];
+        [tabBarViewController setSelectedIndex:3];
         UIViewController *currentTopVC = [self currentTopViewController];
         [currentTopVC presentViewController:tabBarViewController animated:YES completion:nil];
     }

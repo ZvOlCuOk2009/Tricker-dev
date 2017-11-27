@@ -24,6 +24,66 @@
     // Do any additional setup after loading the view.
 }
 
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    
+    GMSCameraPosition *camera = [GMSCameraPosition cameraWithLatitude:50.27
+                                                            longitude:30.31
+                                                                 zoom:6];
+    self.mapView = [GMSMapView mapWithFrame:CGRectZero camera:camera];
+    
+    
+    //    GMSPlacesClient *placeClient = [GMSPlacesClient sharedClient];
+    //    GMSAutocompleteFilter *filter = [[GMSAutocompleteFilter alloc] init];
+    //    filter.type = kGMSPlacesAutocompleteTypeFilterEstablishment;
+    //
+    //    [placeClient autocompleteQuery:@"текст"
+    //                            bounds:nil
+    //                            filter:filter
+    //                          callback:^(NSArray *results, NSError *error) {
+    //                              if (error != nil) {
+    //                                  NSLog(@"Autocomplete error %@", [error localizedDescription]);
+    //                                  return;
+    //                              }
+    //
+    //                              for (GMSAutocompletePrediction* result in results) {
+    //                                  //NSLog(@"Result '%@'", result.attributedFullText.string);
+    ////                                  [placeName addObject:[NSString stringWithFormat:@"%@",result.attributedFullText.string]];
+    ////                                  [placeID addObject:[NSString stringWithFormat:@"%@",result.placeID]];
+    //                                  NSLog(@"result %@", result.attributedFullText.string);
+    //                                  NSLog(@"%@", result.placeID);
+    //                              }
+    //
+    //                          }];
+    
+    self.mapView.myLocationEnabled = YES;
+    self.view = self.mapView;
+    
+    GMSMarker *marker = [[GMSMarker alloc] init];
+//    marker.position = CLLocationCoordinate2DMake(-33.86, 151.20);
+    marker.position = CLLocationCoordinate2DMake(50.27, 30.31);
+    
+    marker.title = @"Sydney";
+    marker.snippet = @"Australia";
+    marker.map = self.mapView;
+    
+    NSArray *items = @[@"Станд", @"Гибр", @"Спутн"];
+    
+    UISegmentedControl *typeMapSegmentedControl = [[UISegmentedControl alloc] initWithItems:items];
+    
+    NSInteger x = self.view.frame.size.width - 155;
+    NSInteger y = self.view.frame.size.height - 43;
+    typeMapSegmentedControl.frame = CGRectMake(x, y, 140, 28);
+    typeMapSegmentedControl.tintColor = DARK_GRAY_COLOR;
+    typeMapSegmentedControl.layer.masksToBounds = YES;
+    typeMapSegmentedControl.selectedSegmentIndex = 0;
+    [typeMapSegmentedControl addTarget:self
+                                action:@selector(segmentedControlValueDidChange:)
+                      forControlEvents:UIControlEventValueChanged];
+    [self.mapView addSubview:typeMapSegmentedControl];
+}
+
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
@@ -33,58 +93,57 @@
 - (void)loadView {
     
     [super loadView];
-    GMSCameraPosition *camera = [GMSCameraPosition cameraWithLatitude:-33.86
-                                                            longitude:151.20
-                                                                 zoom:6];
-    self.mapView = [GMSMapView mapWithFrame:CGRectZero camera:camera];
-    
-    
-//    GMSPlacesClient *placeClient = [GMSPlacesClient sharedClient];
-//    GMSAutocompleteFilter *filter = [[GMSAutocompleteFilter alloc] init];
-//    filter.type = kGMSPlacesAutocompleteTypeFilterEstablishment;
+//    GMSCameraPosition *camera = [GMSCameraPosition cameraWithLatitude:-33.86
+//                                                            longitude:151.20
+//                                                                 zoom:6];
+//    self.mapView = [GMSMapView mapWithFrame:CGRectZero camera:camera];
 //    
-//    [placeClient autocompleteQuery:@"текст"
-//                            bounds:nil
-//                            filter:filter
-//                          callback:^(NSArray *results, NSError *error) {
-//                              if (error != nil) {
-//                                  NSLog(@"Autocomplete error %@", [error localizedDescription]);
-//                                  return;
-//                              }
-//                              
-//                              for (GMSAutocompletePrediction* result in results) {
-//                                  //NSLog(@"Result '%@'", result.attributedFullText.string);
-////                                  [placeName addObject:[NSString stringWithFormat:@"%@",result.attributedFullText.string]];
-////                                  [placeID addObject:[NSString stringWithFormat:@"%@",result.placeID]];
-//                                  NSLog(@"result %@", result.attributedFullText.string);
-//                                  NSLog(@"%@", result.placeID);
-//                              }
-//                              
-//                          }];
-
-    self.mapView.myLocationEnabled = YES;
-    self.view = self.mapView;
-    
-    GMSMarker *marker = [[GMSMarker alloc] init];
-    marker.position = CLLocationCoordinate2DMake(-33.86, 151.20);
-    marker.title = @"Sydney";
-    marker.snippet = @"Australia";
-    marker.map = self.mapView;
-    
-    
-    
-
-    NSArray *items = @[@"Станд", @"Гибр", @"Спутн"];
-
-    UISegmentedControl *typeMapSegmentedControl = [[UISegmentedControl alloc] initWithItems:items];
-    typeMapSegmentedControl.frame = CGRectMake(170, 398, 140, 28);
-    typeMapSegmentedControl.tintColor = DARK_GRAY_COLOR;
-    typeMapSegmentedControl.layer.masksToBounds = YES;
-    typeMapSegmentedControl.selectedSegmentIndex = 0;
-    [typeMapSegmentedControl addTarget:self
-                                action:@selector(segmentedControlValueDidChange:)
-                      forControlEvents:UIControlEventValueChanged];
-    [self.mapView addSubview:typeMapSegmentedControl];
+//    
+////    GMSPlacesClient *placeClient = [GMSPlacesClient sharedClient];
+////    GMSAutocompleteFilter *filter = [[GMSAutocompleteFilter alloc] init];
+////    filter.type = kGMSPlacesAutocompleteTypeFilterEstablishment;
+////    
+////    [placeClient autocompleteQuery:@"текст"
+////                            bounds:nil
+////                            filter:filter
+////                          callback:^(NSArray *results, NSError *error) {
+////                              if (error != nil) {
+////                                  NSLog(@"Autocomplete error %@", [error localizedDescription]);
+////                                  return;
+////                              }
+////                              
+////                              for (GMSAutocompletePrediction* result in results) {
+////                                  //NSLog(@"Result '%@'", result.attributedFullText.string);
+//////                                  [placeName addObject:[NSString stringWithFormat:@"%@",result.attributedFullText.string]];
+//////                                  [placeID addObject:[NSString stringWithFormat:@"%@",result.placeID]];
+////                                  NSLog(@"result %@", result.attributedFullText.string);
+////                                  NSLog(@"%@", result.placeID);
+////                              }
+////                              
+////                          }];
+//
+//    self.mapView.myLocationEnabled = YES;
+//    self.view = self.mapView;
+//    
+//    GMSMarker *marker = [[GMSMarker alloc] init];
+//    marker.position = CLLocationCoordinate2DMake(-33.86, 151.20);
+//    marker.title = @"Sydney";
+//    marker.snippet = @"Australia";
+//    marker.map = self.mapView;
+//
+//    NSArray *items = @[@"Станд", @"Гибр", @"Спутн"];
+//
+//    UISegmentedControl *typeMapSegmentedControl = [[UISegmentedControl alloc] initWithItems:items];
+//    
+//    NSInteger x = self.view.frame.size.width - 155;
+//    typeMapSegmentedControl.frame = CGRectMake(170, 398, 140, 28);
+//    typeMapSegmentedControl.tintColor = DARK_GRAY_COLOR;
+//    typeMapSegmentedControl.layer.masksToBounds = YES;
+//    typeMapSegmentedControl.selectedSegmentIndex = 0;
+//    [typeMapSegmentedControl addTarget:self
+//                                action:@selector(segmentedControlValueDidChange:)
+//                      forControlEvents:UIControlEventValueChanged];
+//    [self.mapView addSubview:typeMapSegmentedControl];
 }
 
 - (void)segmentedControlValueDidChange:(UISegmentedControl *)sender {

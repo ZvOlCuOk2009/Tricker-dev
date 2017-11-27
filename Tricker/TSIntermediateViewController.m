@@ -86,8 +86,17 @@
 
 - (void)configureController
 {
-    self.genderSearch = [self.fireUser.parameters objectForKey:@"key1"];
-    self.ageSearch = [self.fireUser.parameters objectForKey:@"key2"];
+    _genderSearch = [self.fireUser.parameters objectForKey:@"key1"];
+    _ageSearch = [self.fireUser.parameters objectForKey:@"key2"];
+    
+//    if (_genderSearch == nil) {
+//        _genderSearch = @"man woman";
+//    }
+//    
+//    if (_ageSearch == nil) {
+//        _ageSearch = @"18 70";
+//    }
+    
     NSArray *keysTaBase = [self.fireBase allKeys];
     self.usersFoundOnTheGender = [NSMutableArray array];
     self.usersFoundOnTheAge = [NSMutableArray array];
